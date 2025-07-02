@@ -36,7 +36,6 @@ Installation
 Pisces is written in Python 3.8 and is compatible with Python 3.8+ with continued support for older versions of Python. For instructions
 on installation and getting started, check out the :ref:`getting_started` page.
 
-
 Resources
 =========
 

@@ -1,24 +1,849 @@
 """
-Density profiles for use in constructing astrophysical models.
+Density profiles for use in Pisces models.
+
+The :mod:`density` module provides a number of built-in profiles to model density and surface density
+profiles in various contexts, including for galaxies, clusters of galaxies, stars, etc.
 """
 from abc import ABC
-from typing import Any, Dict
+from typing import TYPE_CHECKING, Optional, Union
 
+import numpy as np
 import sympy as sp
-from unyt import unyt_quantity
+import unyt
+from scipy.integrate import quad, quad_vec
 
-from pisces.profiles.base import CylindricalProfile, RadialProfile, class_expression
+from pisces.profiles.base import BaseSphericalRadialProfile, derived_profile
+from pisces.utilities.config import pisces_config
+from pisces.utilities.math_ops import integrate_mass
+
+# Type Hints
+_UnitType = Union[str, unyt.Unit]
+_UnitValue = Union[unyt.unyt_array, unyt.unyt_quantity]
+
+if TYPE_CHECKING:
+    from astropy.cosmology import Cosmology
 
 
-class _RadialDensityProfile(RadialProfile, ABC):
-    r"""
-    Base class for radial density profiles. This class provides a location in which to define
-    various derived quantities which are shared across all the radial density profiles.
+# ======================================= #
+# Radial Profiles (Spherical)             #
+# ======================================= #
+class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
     """
-    _is_parent_profile = True
+    Abstract base class for spherically symmetric density profiles with
+    standard gravitationally derived attached profiles.
+
+    **Derived Profiles:**
+
+    - Enclosed Mass : ``enclosed_mass``
+    - Gravitational Field (acceleration) : ``gravitational_field``
+    - Gravitational Potential : ``gravitational_potential``
+
+    Notes
+    -----
+    - Gravitational constant ``G`` is included as a parameter with default units.
+    - All derived profiles propagate units based on the density expression.
+    """
+
+    __IS_ABSTRACT__ = True
+
+    # ------------------------------ #
+    # Derived Profile Implementation #
+    # ------------------------------ #
+    @derived_profile("enclosed_mass")
+    @classmethod
+    def _enclosed_mass(cls):
+        def _func(r, **params):
+            rho = cls.__function__(r, **params)
+            return 4 * sp.pi * sp.integrate(rho * r**2, (r, 0, r))
+
+        def _unit_func(r, **param_units):
+            rho_unit = cls.__function_units__(r, **param_units)
+            return rho_unit * r**3
+
+        return _func, _unit_func, ["r"], cls.__PARAMETERS__.copy()
+
+    @derived_profile("gravitational_field")
+    @classmethod
+    def _gravitational_field(cls):
+        def _func(r, **params):
+            G = params.pop("G")
+            rho = cls.__function__(r, **params)
+            M = 4 * sp.pi * sp.integrate(rho * r**2, (r, 0, r))
+            return G * M / r**2
+
+        def _unit_func(r, **param_units):
+            G = param_units.pop("G")
+            rho_unit = cls.__function_units__(r, **param_units)
+            return G * rho_unit * r
+
+        # Add G to the available parameters.
+        parameters = cls.__PARAMETERS__.copy()
+        # noinspection PyUnresolvedReferences
+        parameters["G"] = unyt.physical_constants.gravitational_constant
+
+        return _func, _unit_func, ["r"], parameters
+
+    @derived_profile("gravitational_potential")
+    @classmethod
+    def _gravitational_potential(cls):
+        def _func(r, **params):
+            G = params.pop("G")
+            rho = cls.__function__(r, **params)
+            M = 4 * sp.pi * sp.integrate(rho * r**2, (r, 0, r))
+            return -G * M / r
+
+        def _unit_func(r, **param_units):
+            G = param_units.pop("G")
+            rho_unit = cls.__function_units__(r, **param_units)
+            return G * rho_unit * r**2
+
+        # Add G to the available parameters.
+        parameters = cls.__PARAMETERS__.copy()
+        # noinspection PyUnresolvedReferences
+        parameters["G"] = unyt.physical_constants.gravitational_constant
+
+        return _func, _unit_func, ["r"], parameters
+
+    # ------------------------------ #
+    # Numerical Computations         #
+    # ------------------------------ #
+    def compute_surface_density(
+        self, R: _UnitValue, units: Optional[_UnitType] = None, **kwargs
+    ) -> _UnitValue:
+        r"""
+        Numerically compute the projected surface density at radius R.
+
+        .. math::
+
+            \Sigma(R) = 2 \int_0^\infty \rho \left( \sqrt{R^2 + z^2} \right) dz
+
+        Parameters
+        ----------
+        R : ~unyt.array.unyt_array or ~unyt.array.unyt_quantity
+            The projected radius from the origin in physical units with dimension length.
+            `R` may be either an array of values or a scalar.
+        units: ~unyt.unit_object.Unit or str, optional
+            The units in which to return the calculated surface density. By
+            default, the internal units are preserved.
+        kwargs:
+            Additional keyword arguments to pass on to :func:`~scipy.integrate.quad_vec`.
+
+        Returns
+        -------
+        sigma : ~unyt.array.unyt_array or ~unyt.array.unyt_quantity
+            Surface density at each R, with correct units.
+        """
+        # Coerce the input R array into a valid unyt_array and
+        # then extract the raw buffer and units.
+        R_array = unyt.array.unyt_array(R)
+        r_arr, r_units = R_array.d, R_array.units
+
+        # Begin with the actual integration step before
+        # concerning ourselves with the units. We define
+        # the integrand in a unit-less form.
+        def _integrand_(z, _rr):
+            xi = np.sqrt(_rr**2 + z**2)
+            return self.__call_no_units__(xi)
+
+        # Perform the integration vis-a-vis the quad_vec function
+        # from SciPy.
+        result = (
+            2
+            * quad_vec(
+                _integrand_, 0, np.inf, args=(r_arr,), full_output=False, **kwargs
+            )[0]
+        )
+
+        # Determine the units. We have standard propagation
+        # to get rho, and then we integrate through by z, which
+        # should ARBITRARILY have the same units as _rr, so we
+        # just multiply by a factor of the length unit.
+        sd_unit = self.__function_units__(r_units, **self.__parameter_units__) * r_units
+        sd = result * sd_unit
+
+        if units is not None:
+            sd = sd.to(units)
+
+        if np.isscalar(R):
+            return sd[0]
+        return sd
+
+    def compute_enclosed_mass(
+        self, r: _UnitValue, units: Optional[_UnitType] = None, **kwargs
+    ) -> _UnitValue:
+        r"""
+        Numerically compute the enclosed mass profile.
+
+        .. math::
+
+            M(r) = 4 \pi \int_0^r \rho(r') \, r'^2 \, dr'
+
+        Parameters
+        ----------
+        r : ~unyt.array.unyt_quantity or ~unyt.array.unyt_array
+            Radius or radii at which to compute the enclosed mass (must carry length units).
+        units: ~unyt.unit_object.Unit or str, optional
+            The output units to use.
+        kwargs : dict
+            Additional keyword arguments passed to :func:`~scipy.integrate.quad`.
+
+        Returns
+        -------
+        mass : ~unyt.array.unyt_quantity or ~unyt.array.unyt_array
+            Enclosed mass at each radius, with correct units.
+        """
+        r_array = unyt.array.unyt_array(r)
+        r_values, r_unit = r_array.value, r_array.units
+
+        # Units for density and mass
+        rho_unit = self.__function_units__(r_unit, **self.__parameter_units__)
+        mass_unit = rho_unit * r_unit**3
+
+        # Unitless density function for integration
+        def _density_fn(r_):
+            return self.__call_no_units__(r_)
+
+        # Enclosed mass integral for each radius
+        mass_values = integrate_mass(_density_fn, r_values, **kwargs)
+
+        mass = mass_values * mass_unit
+
+        if units is not None:
+            mass = mass.to(units)
+
+        if np.isscalar(r):
+            return mass[0]
+        return mass
+
+    def compute_total_mass(
+        self, units: Optional[_UnitType] = None, **kwargs
+    ) -> unyt.unyt_quantity:
+        r"""
+        Numerically compute the total mass of the profile.
+
+        .. math::
+
+            M_{\mathrm{tot}} = 4 \pi \int_0^\infty \rho(r) \, r^2 \, dr
+
+        Parameters
+        ----------
+        units: str or ~unyt.unit_object.Unit, optional
+            The units in which to return the mass. By default, this is :math:`M_{\rm sun}`.
+        kwargs : dict
+            Additional keyword arguments passed to :func:`~scipy.integrate.quad`.
+
+        Returns
+        -------
+        mass : unyt_quantity
+            Total mass with appropriate units.
+
+        Raises
+        ------
+        RuntimeError
+            If the integral is divergent or fails to converge to finite precision.
+        """
+        import warnings
+
+        from scipy.integrate import IntegrationWarning
+
+        # Use arbitrary length scale (units cancel internally)
+        r_unit = unyt.Unit("kpc")
+        rho_unit = self.__function_units__(r_unit, **self.__parameter_units__)
+        mass_unit = rho_unit * r_unit**3
+
+        with warnings.catch_warnings(record=True) as warning_list:
+            warnings.simplefilter("always", IntegrationWarning)
+
+            def _density_fn(r_):
+                return self(r_).value
+
+            result, err = quad(
+                lambda r_: _density_fn(r_) * 4 * np.pi * r_**2, 0, np.inf, **kwargs
+            )[:2]
+
+            # Check for divergence (nan/inf result)
+            if not np.isfinite(result):
+                raise RuntimeError(
+                    "Total mass integral did not converge: result is infinite or NaN."
+                )
+
+            # Check for integration warnings (e.g., max subdivisions exceeded)
+            for warn in warning_list:
+                if issubclass(warn.category, IntegrationWarning):
+                    raise RuntimeError(
+                        f"Total mass integral raised an IntegrationWarning: {warn.message}"
+                    )
+
+        # Handle the units.
+        value = result * mass_unit
+
+        if units is not None:
+            return value.to(units)
+        else:
+            return value
+
+    def compute_fractional_mass_radius(
+        self, rmin, rmax, fraction=0.5, units: Optional[_UnitType] = "kpc", **kwargs
+    ):
+        r"""
+        Compute the radius enclosing a given fraction of the total mass.
+
+        This method requires the profile to have finite total mass. It uses
+        :func:`~scipy.optimize.brentq` to numerically solve for the radius enclosing
+        the specified fraction of the total mass.
+
+        Parameters
+        ----------
+        rmin : float or ~unyt.unyt_quantity
+            Minimum search radius, interpreted as having units specified by ``units``.
+        rmax : float or ~unyt.unyt_quantity
+            Maximum search radius, interpreted as having units specified by ``units``.
+        fraction : float, optional
+            Fraction of total mass to enclose (must be between 0 and 1). Default is 0.5 (half-mass radius).
+        units : str or ~unyt.Unit, optional
+            Length units for ``rmin`` and ``rmax``. Default is "kpc".
+        kwargs : dict
+            Additional arguments passed to :meth:`compute_total_mass` and :meth:`compute_enclosed_mass`.
+
+        Returns
+        -------
+        radius : ~unyt.unyt_quantity
+            Radius enclosing the desired mass fraction, with specified units.
+
+        Raises
+        ------
+        ValueError
+            If fraction is invalid or total mass does not converge.
+        """
+        from scipy.optimize import brentq
+
+        if not 0 < fraction < 1:
+            raise ValueError("Fraction must be between 0 and 1.")
+
+        # Establish unit system
+        unit = unyt.Unit(units)
+
+        # Handle rmin and rmax as unit-consistent floats
+        rmin = unyt.array.unyt_quantity(rmin, unit).to_value(unit)
+        rmax = unyt.array.unyt_quantity(rmax, unit).to_value(unit)
+
+        if rmin <= 0 or rmax <= rmin:
+            raise ValueError("Require 0 < rmin < rmax for valid search bounds.")
+
+        # Compute total mass with error handling
+        try:
+            total_mass = self.compute_total_mass(units="g", **kwargs).value
+        except Exception as e:
+            raise ValueError(f"Total mass calculation did not converge: {e}") from e
+
+        # Residual function for root finding
+        def _residual(r_):
+            m_enc = self.compute_enclosed_mass(r_ * unit, **kwargs).to_value("g")
+            return m_enc - (fraction * total_mass)
+
+        # Root finding
+        r_solution = brentq(_residual, rmin, rmax)
+
+        return r_solution * unit
+
+    def compute_cosmological_overdensity_profile(
+        self, z: float, R: _UnitValue, cosmology: Optional["Cosmology"] = None, **kwargs
+    ):
+        r"""
+        Compute the spherical overdensity profile relative to the critical density.
+
+        .. math::
+
+            \Delta(R) = \frac{3 M(R)}{4 \pi R^3 \rho_{\mathrm{crit}}(z)}
+
+        Parameters
+        ----------
+        z : float
+            Redshift.
+        R : array-like or scalar
+            Radii at which to compute overdensity.
+        cosmology : ~astropy.cosmology.Cosmology, optional
+            The cosmology to use for the computation. This is used to compute
+            the critical density :math:`\rho_{\rm crit}(z)` which is then used
+            in the computation.
+
+            `cosmology` must be provided as a valid AstroPy cosmology. By
+            default, the default cosmology from pisces configuration is used.
+
+        kwargs : dict
+            Additional arguments for mass integration.
+
+        Returns
+        -------
+        overdensity : array-like or scalar
+            Overdensity at each radius (dimensionless).
+        """
+        # Determine the cosmology and extract the critical
+        # density from it. This requires accessing the configuration
+        # and loading astropy cosmology.
+        import astropy.cosmology as cosmo
+
+        if cosmology is None:
+            _default = pisces_config["physics.default_cosmology"]
+            try:
+                cosmology = getattr(cosmo, _default)
+            except Exception as exp:
+                raise ValueError(
+                    f"Default cosmology `{_default}` is not available in astropy cosmology."
+                ) from exp
+
+        # Coerce the inputs so that we have the
+        # relevant length units. We then propagate
+        # to get the density units so that we have minimal
+        # FPE issues.
+        R_array = unyt.array.unyt_array(R)
+        density_array = self(R_array)
+
+        # Try to obtain the critical density from
+        # the desired cosmology. We force to CGS units
+        # so that we don't have to worry about unyt / astropy unit
+        # operation parity.
+        try:
+            rho_crit = cosmology.critical_density(z).to_value(str(density_array.units))
+        except Exception as exp:
+            raise ValueError(
+                f"Provided cosmology object failed to compute critical density: {exp}"
+            ) from exp
+
+        # Compute the mass and the relevant overdensities.
+        rho_crit = rho_crit * density_array.units
+        mass = self.compute_enclosed_mass(R_array, **kwargs)
+        delta = (3 * mass) / (4 * np.pi * R_array**3 * rho_crit)
+
+        return delta.d
+
+    def compute_cosmological_overdensity_radius(
+        self,
+        z: float,
+        delta_target: float,
+        rmin: float,
+        rmax: float,
+        units: Optional[_UnitType] = "kpc",
+        cosmology: Optional["Cosmology"] = None,
+        **kwargs,
+    ):
+        """
+        Compute the radius enclosing a target overdensity relative to the critical density.
+
+        Uses :func:`~scipy.optimize.brentq` to solve for the radius enclosing a
+        specified overdensity relative to :math:`\rho_{\rm crit}(z)`.
+
+        Parameters
+        ----------
+        z : float
+            Redshift.
+        delta_target : float
+            Desired overdensity relative to critical density.
+        rmin : float
+            Minimum search radius, interpreted as having units specified by ``units``.
+        rmax : float
+            Maximum search radius, interpreted as having units specified by ``units``.
+        units : str or ~unyt.Unit, optional
+            Length units for ``rmin`` and ``rmax``. Default is "kpc".
+        cosmology : ~astropy.cosmology.Cosmology, optional
+            The cosmology to use. Defaults to the value from ``pisces_config`` if None.
+        kwargs : dict
+            Additional arguments passed to :meth:`compute_enclosed_mass`.
+
+        Returns
+        -------
+        radius : ~unyt.unyt_quantity
+            Radius enclosing the desired overdensity, with correct units.
+
+        Raises
+        ------
+        ValueError
+            If the search bounds are invalid or cosmology is not provided.
+        """
+        import astropy.cosmology as cosmo
+        from scipy.optimize import brentq
+
+        # Validate that the delta_target is legitimate and
+        # coerce the units so that they behave nicely.
+        if delta_target <= 0:
+            raise ValueError("Overdensity target must be positive.")
+
+        unit = unyt.Unit(units)
+        rmin = unyt.array.unyt_quantity(rmin, unit).to_value(unit)
+        rmax = unyt.array.unyt_quantity(rmax, unit).to_value(unit)
+
+        if rmin <= 0 or rmax <= rmin:
+            raise ValueError("Require 0 < rmin < rmax for valid search bounds.")
+
+        # Resolve cosmology, fallback to pisces_config
+        if cosmology is None:
+            _default = pisces_config["physics.default_cosmology"]
+            try:
+                cosmology = getattr(cosmo, _default)
+            except Exception as exp:
+                raise ValueError(
+                    f"Default cosmology `{_default}` is not available in astropy.cosmology."
+                ) from exp
+
+        # Get critical density with units consistent to profile density
+        rho_unit = self.__function_units__(unit, **self.__parameter_units__)
+        try:
+            rho_crit = cosmology.critical_density(z).to_value(str(rho_unit))
+        except Exception as exp:
+            raise ValueError(
+                f"Failed to compute critical density with provided cosmology: {exp}"
+            ) from exp
+
+        # Residual function for root-finding
+        rho_crit = rho_crit * rho_unit
+
+        def _residual(r_):
+            mass = self.compute_enclosed_mass(r_ * unit, **kwargs)
+            delta_r = (3 * mass) / (4 * np.pi * (r_ * unit) ** 3 * rho_crit)
+            return delta_r.to_value() - delta_target
+
+        # Root finding
+        r_solution = brentq(_residual, rmin, rmax)
+
+        return r_solution * unit
+
+    def compute_circular_velocity(
+        self,
+        r: _UnitValue,
+        units: Optional[_UnitType] = None,
+        G: Optional[unyt.unyt_quantity] = None,
+        **kwargs,
+    ) -> _UnitValue:
+        r"""
+        Compute the circular velocity at radius ``r``.
+
+        .. math::
+
+            v_c(r) = \sqrt{ \frac{G M(r)}{r} }
+
+        Parameters
+        ----------
+        r : ~unyt.unyt_quantity or array-like
+            Radius or radii at which to compute the circular velocity.
+        units : str or ~unyt.Unit, optional
+            Desired output units. By default, this will use the built-in
+            units of the various parameters.
+        G: ~unyt.array.unyt_quantity
+            The value of the gravitational constant. By default, this
+            is set to the standard value as implemented in unyt.
+        kwargs : dict
+            Additional arguments passed to :meth:`compute_enclosed_mass`.
+
+        Returns
+        -------
+        v_c : ~unyt.unyt_quantity or ~unyt.unyt_array
+            Circular velocity at each radius, with specified units.
+        """
+        # Extract G.
+        G = G if G is not None else unyt.physical_constants.gravitational_constant
+
+        # Enforce units on the radial array so
+        # that we know its an unyt_array.
+        r_array = unyt.array.unyt_array(r)
+        m_enc = self.compute_enclosed_mass(r_array, **kwargs)
+
+        # Now compute the profile.
+        v_c = np.sqrt(G * m_enc / r_array)
+
+        if units is None:
+            return v_c
+        else:
+            return v_c.to(units)
+
+    def compute_escape_velocity(
+        self,
+        r: _UnitValue,
+        units: Optional[_UnitType] = None,
+        G: Optional[unyt.unyt_quantity] = None,
+        **kwargs,
+    ) -> _UnitValue:
+        r"""
+        Compute the escape velocity at radius ``r``.
+
+        .. math::
+
+            v_{\mathrm{esc}}(r) = \sqrt{ \frac{2 G M(r)}{r} }
+
+        Parameters
+        ----------
+        r : ~unyt.unyt_quantity or array-like
+            Radius or radii at which to compute the escape velocity.
+        units : str or ~unyt.Unit, optional
+            Desired output units. By default, this will use the internal
+            units of the various parameters.
+        G : ~unyt.unyt_quantity, optional
+            Gravitational constant to use. Defaults to the standard value from unyt.
+        kwargs : dict
+            Additional arguments passed to :meth:`compute_enclosed_mass`.
+
+        Returns
+        -------
+        v_esc : ~unyt.unyt_quantity or ~unyt.unyt_array
+            Escape velocity at each radius, with specified units.
+        """
+        G = G if G is not None else unyt.physical_constants.gravitational_constant
+
+        r_array = unyt.array.unyt_array(r)
+        m_enc = self.compute_enclosed_mass(r_array, **kwargs)
+
+        v_esc = np.sqrt(2 * G * m_enc / r_array)
+
+        if units is None:
+            return v_esc
+        else:
+            return v_esc.to(units)
+
+    def compute_deflection_angle(
+        self,
+        R: _UnitValue,
+        mode: str = "angular",
+        units: Optional[_UnitType] = "arcsec",
+        G: Optional[unyt.unyt_quantity] = None,
+        z_lens: Optional[float] = None,
+        z_source: Optional[float] = None,
+        D_l: Optional[_UnitValue] = None,
+        D_s: Optional[_UnitValue] = None,
+        D_ls: Optional[_UnitValue] = None,
+        cosmology: Optional["Cosmology"] = None,
+        **kwargs,
+    ) -> _UnitValue:
+        r"""
+        Compute the gravitational lensing deflection angle at projected radius ``R``.
+
+        This method can return:
+
+        - **Physical deflection angle** in length units (default: kpc), computed as:
+
+          .. math::
+
+              \alpha_{\mathrm{phys}}(R) = \frac{4 G M(<R)}{c^2 R}
+
+        - **Angular deflection angle** in angular units (default: arcsec), computed as:
+
+          .. math::
+
+              \alpha_{\mathrm{ang}}(R) = \alpha_{\mathrm{phys}}(R) \times \frac{D_{ls}}{D_s}
+
+          where :math:`D_l`, :math:`D_s`, and :math:`D_{ls}` are the angular diameter distances to lens,
+          source, and between lens and source, respectively.
+
+        Parameters
+        ----------
+        R : ~unyt.unyt_quantity or array-like
+            Projected radius in the lens plane, with length units.
+        mode : {"physical", "angular"}, optional
+            Whether to return physical or angular deflection. Default is "angular".
+        units : str or ~unyt.Unit, optional
+            Output units. Default is "arcsec" for angular mode, or profile-consistent length units for physical mode.
+        G : ~unyt.unyt_quantity, optional
+            Gravitational constant to use. Defaults to `unyt.physical_constants.gravitational_constant`.
+        z_lens : float, optional
+            Redshift of the lens. Required if mode is "angular" and distances not provided.
+        z_source : float, optional
+            Redshift of the source. Required if mode is "angular" and distances not provided.
+        D_l : ~unyt.unyt_quantity, optional
+            Angular diameter distance to the lens.
+        D_s : ~unyt.unyt_quantity, optional
+            Angular diameter distance to the source.
+        D_ls : ~unyt.unyt_quantity, optional
+            Angular diameter distance between lens and source.
+        cosmology : ~astropy.cosmology.Cosmology, optional
+            Cosmology to use for distance calculations. Defaults to ``pisces_config['physics.default_cosmology']``.
+        kwargs : dict
+            Additional arguments passed to :meth:`compute_enclosed_mass`.
+
+        Returns
+        -------
+        alpha : ~unyt.unyt_quantity or ~unyt.unyt_array
+            Deflection angle at each radius, in specified units.
+
+        Raises
+        ------
+        ValueError
+            If required cosmological distances are missing for angular deflection.
+        """
+        import astropy.cosmology as cosmo
+
+        mode = mode.lower()
+        if mode not in {"physical", "angular"}:
+            raise ValueError(f"Invalid mode '{mode}'. Choose 'physical' or 'angular'.")
+
+        G = G if G is not None else unyt.physical_constants.gravitational_constant
+        c = unyt.physical_constants.speed_of_light
+
+        R_array = unyt.array.unyt_array(R)
+        m_enc = self.compute_enclosed_mass(R_array, **kwargs)
+
+        # Physical deflection term: length units
+        alpha_phys = (4 * G * m_enc) / (c**2 * R_array)
+
+        if mode == "physical":
+            return alpha_phys.to(units) if units else alpha_phys
+
+        # Angular deflection requires distances
+        if D_l is None or D_s is None or D_ls is None:
+            if z_lens is None or z_source is None:
+                raise ValueError(
+                    "Must provide either (D_l, D_s, D_ls) or (z_lens and z_source) for angular deflection."
+                )
+
+            if cosmology is None:
+                _default = pisces_config["physics.default_cosmology"]
+                try:
+                    cosmology = getattr(cosmo, _default)
+                except Exception as exp:
+                    raise ValueError(
+                        f"Default cosmology `{_default}` is not available in astropy.cosmology."
+                    ) from exp
+
+            D_s = cosmology.angular_diameter_distance(z_source).to("kpc")
+            D_ls = cosmology.angular_diameter_distance_z1z2(z_lens, z_source).to("kpc")
+
+        # Apply distance ratio for angular deflection
+        alpha_ang = alpha_phys * (D_ls / D_s)
+        return alpha_ang.to(units) if units else alpha_ang
+
+    def compute_einstein_radius(
+        self,
+        z_lens: float,
+        z_source: float,
+        units: Optional[_UnitType] = "arcsec",
+        G: Optional[unyt.unyt_quantity] = None,
+        cosmology: Optional["Cosmology"] = None,
+        **kwargs,
+    ) -> _UnitValue:
+        r"""
+        Compute the Einstein ring angular radius for a perfectly aligned source-lens system.
+
+        Solves for the angular radius :math:`\theta_E` satisfying:
+
+        .. math::
+
+            \alpha( \theta_E D_l ) = \theta_E
+
+        where:
+
+        - :math:`\alpha` is the angular deflection angle at projected radius :math:`R`
+        - :math:`D_l` is the angular diameter distance to the lens
+
+        Parameters
+        ----------
+        z_lens : float
+            Redshift of the lens.
+        z_source : float
+            Redshift of the source (must be > z_lens).
+        units : str or ~unyt.Unit, optional
+            Desired output units for the Einstein radius (default "arcsec").
+        G : ~unyt.unyt_quantity, optional
+            Gravitational constant to use. Defaults to `unyt.physical_constants.gravitational_constant`.
+        cosmology : ~astropy.cosmology.Cosmology, optional
+            Cosmology to use. Defaults to ``pisces_config['physics.default_cosmology']``.
+        kwargs : dict
+            Additional arguments passed to :meth:`compute_enclosed_mass`.
+
+        Returns
+        -------
+        theta_E : ~unyt.unyt_quantity
+            Einstein ring angular radius, in specified units.
+
+        Raises
+        ------
+        ValueError
+            If redshift ordering is invalid or cosmology is not provided.
+        """
+        import astropy.cosmology as cosmo
+        from scipy.optimize import brentq
+
+        if z_source <= z_lens:
+            raise ValueError("Source redshift must be greater than lens redshift.")
+
+        if cosmology is None:
+            _default = pisces_config["physics.default_cosmology"]
+            try:
+                cosmology = getattr(cosmo, _default)
+            except Exception as exp:
+                raise ValueError(
+                    f"Default cosmology `{_default}` is not available in astropy.cosmology."
+                ) from exp
+
+        D_l = cosmology.angular_diameter_distance(z_lens).to("kpc")
+
+        # Residual function: deflection angle minus angular radius
+        def _residual(theta):
+            R_proj = theta * D_l
+            alpha = self.compute_deflection_angle(
+                R_proj,
+                mode="angular",
+                units="rad",
+                G=G,
+                z_lens=z_lens,
+                z_source=z_source,
+                cosmology=cosmology,
+                **kwargs,
+            ).to_value("rad")
+            return alpha - theta
+
+        # Reasonable bracketing in radians: microarcsecond to 1 rad
+        theta_min = (1e-6 * unyt.Unit("arcsec")).to_value("rad")
+        theta_max = (1.0 * unyt.Unit("rad")).to_value("rad")
+
+        # Root finding
+        theta_E_rad = brentq(_residual, theta_min, theta_max)
+
+        return (theta_E_rad * unyt.Unit("rad")).to(units)
+
+    def compute_lensing_convergence(
+        self, R, z_lens, z_source, cosmology=None, units=None, **kwargs
+    ):
+        r"""
+        Compute lensing convergence :math:`\kappa(R)` at projected radius ``R``.
+
+        Parameters
+        ----------
+        R : ~unyt.unyt_quantity
+            Projected radius with length units.
+        z_lens : float
+            Redshift of the lens.
+        z_source : float
+            Redshift of the source.
+        cosmology : ~astropy.cosmology.Cosmology, optional
+            Cosmology to use. Defaults to ``pisces_config``.
+        units : str or ~unyt.Unit, optional
+            Desired output units for :math:`\kappa`. Default is dimensionless.
+
+        Returns
+        -------
+        kappa : ~unyt.unyt_quantity or array
+            Lensing convergence at each radius.
+        """
+        import astropy.cosmology as cosmo
+
+        Sigma = self.compute_surface_density(R, units="g/cm**2", **kwargs)
+
+        if cosmology is None:
+            _default = pisces_config["physics.default_cosmology"]
+            cosmology = getattr(cosmo, _default)
+
+        D_l = cosmology.angular_diameter_distance(z_lens).to("cm")
+        D_s = cosmology.angular_diameter_distance(z_source).to("cm")
+        D_ls = cosmology.angular_diameter_distance_z1z2(z_lens, z_source).to("cm")
+
+        c = unyt.physical_constants.speed_of_light.to("cm/s")
+        G = unyt.physical_constants.gravitational_constant.to("cm**3/g/s**2")
+
+        Sigma_crit = (c**2) / (4 * np.pi * G) * (D_s / (D_l * D_ls))
+
+        kappa = Sigma / Sigma_crit
+
+        return kappa.to(units) if units else kappa
 
 
-class NFWDensityProfile(_RadialDensityProfile):
+class NFWDensityProfile(BaseSphericalDensityProfile):
     r"""
     Navarro-Frenk-White :footcite:p:`NFWProfile` (NFW) Density Profile.
 
@@ -26,6 +851,7 @@ class NFWDensityProfile(_RadialDensityProfile):
     in a spherical, isotropic system. It is derived from simulations of structure formation.
 
     .. math::
+
         \rho(r) = \frac{\rho_0}{\frac{r}{r_s} \left(1 + \frac{r}{r_s}\right)^2}
 
     where:
@@ -49,26 +875,6 @@ class NFWDensityProfile(_RadialDensityProfile):
              - :math:`r_s`
              - Scale radius
 
-
-    .. dropdown:: Expressions
-
-        .. list-table:: Expressions for :py:class:`NFWDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Notes**
-           * - ``spherical_mass``
-             - :math:`M(r) = 4\pi\,\rho_0\,r_s^3\,\bigl[\ln(1 + \tfrac{r}{r_s}) \;-\; \tfrac{r}{r + r_s}\bigr]`
-             - None
-           * - ``spherical_potential``
-             - :math:`\Phi(r) = -\,\frac{4\pi\,\rho_0\,r_s^3}{r}\,\ln\!\Bigl(1 + \tfrac{r}{r_s}\Bigr)`
-             - None
-           * - ``ellipsoidal_psi``
-             - :math:`\psi(r) \;=\; 2\int_{0}^{r}\! \xi\,\rho(\xi)\,d\xi`
-             - Inherited from base. Set to `on_demand=True`
-
     References
     ----------
     .. footbibliography::
@@ -78,7 +884,6 @@ class NFWDensityProfile(_RadialDensityProfile):
     .. plot::
         :include-source:
 
-        >>> import numpy as np
         >>> import matplotlib.pyplot as plt
         >>> from pisces.profiles.density import NFWDensityProfile
 
@@ -96,683 +901,114 @@ class NFWDensityProfile(_RadialDensityProfile):
     --------
     HernquistDensityProfile, CoredNFWDensityProfile, SingularIsothermalDensityProfile
     """
-
-    # @@ CLASS ATTRIBUTES (INVARIANT) @@ #
-    # Generally, these do not need to be changed in subclasses; however, they
-    # may be if necessary. Ensure that any metaclasses / ABC's have _IS_ABC=True.
-    _is_parent_profile = False
-
-    # @@ CLASS ATTRIBUTES @@ #
-    # These attributes should be set / manipulated in all subclasses to
-    # implement the desired behavior.
-
-    DEFAULT_PARAMETERS: Dict[str, Any] = {
-        "rho_0": unyt_quantity(1.0, "Msun/pc**3"),
-        "r_s": unyt_quantity(1.0, "pc"),
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "rho_0": unyt.unyt_quantity(1.0, "Msun/pc**3"),
+        "r_s": unyt.unyt_quantity(1.0, "pc"),
     }
 
-    @staticmethod
-    def _profile(r, rho_0=1.0, r_s=1.0):
+    @classmethod
+    def __function__(cls, r, rho_0=1.0, r_s=1.0):
         return rho_0 / (r / r_s * (1 + r / r_s) ** 2)
 
-    @class_expression(name="spherical_potential", on_demand=False)
-    @staticmethod
-    def _spherical_potential(axes, parameters, _):
-        # Grab the symbols out.
-        r = axes[0]
-        r_s, rho_0 = parameters["r_s"], parameters["rho_0"]
-
-        # Produce the potential
-        return -(4 * sp.pi * rho_0 * r_s**3) * sp.log(1 + (r / r_s)) / r
-
-    @class_expression(name="spherical_mass", on_demand=False)
-    @staticmethod
-    def _spherical_mass(axes, parameters, _):
-        # Grab the symbols out.
-        r = axes[0]
-        r_s, rho_0 = parameters["r_s"], parameters["rho_0"]
-
-        # Produce the mass
-        return (4 * sp.pi * rho_0 * r_s**3) * (
-            sp.log(1 + (r / r_s)) - (r / (r_s + r))
-        )
+    @classmethod
+    def __function_units__(cls, r, rho_0="", r_s="") -> unyt.Unit:
+        r, rho_0, r_s = unyt.Unit(r), unyt.Unit(rho_0), unyt.Unit(r_s)
+        return rho_0 / (r / r_s) ** 3
 
 
-class HernquistDensityProfile(_RadialDensityProfile):
-    r"""
-    Hernquist Density Profile :footcite:p:`HernquistProfile`.
-
-    This profile is often used to model the density distribution of elliptical galaxies and bulges.
-
-    .. math::
-        \rho(r) = \frac{\rho_0}{\frac{r}{r_s} \left(1 + \frac{r}{r_s}\right)^3}
-
-    where:
-
-    - :math:`\rho_0` is the central density.
-    - :math:`r_s` is the scale radius.
-
-    .. dropdown:: Parameters
-
-        .. list-table:: Hernquist Profile Parameters
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Description**
-           * - ``rho_0``
-             - :math:`\rho_0`
-             - Central density
-           * - ``r_s``
-             - :math:`r_s`
-             - Scale radius
-
-
-
-    .. dropdown:: Expressions
-
-        .. list-table:: Expressions for :py:class:`HernquistDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Notes**
-           * - ``spherical_mass``
-             - :math:`M(r) = 2\pi\,\rho_0\,r_s^3 \,\bigl(\tfrac{r}{r_s + r}\bigr)^{2}`
-             - None
-           * - ``spherical_potential``
-             - :math:`\Phi(r) = -\,\frac{2\pi\,\rho_0\,r_s^3}{r + r_s}`
-             - None
-           * - ``ellipsoidal_psi``
-             - :math:`\psi(r) = 2\int_{0}^{r}\!\xi\,\rho(\xi)\,d\xi`
-             - Inherited from base
-
-
-
-    References
-    ----------
-    .. footbibliography::
-
-    Example
-    -------
-    .. plot::
-        :include-source:
-
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from pisces.profiles.density import HernquistDensityProfile
-
-        >>> r = np.linspace(0.1, 10, 100)
-        >>> profile = HernquistDensityProfile(rho_0=1.0, r_s=1.0)
-        >>> rho = profile(r)
-
-        >>> _ = plt.loglog(r, rho,'k-', label='Hernquist Profile')
-        >>> _ = plt.xlabel('Radius (r)')
-        >>> _ = plt.ylabel('Density (rho)')
-        >>> _ = plt.legend()
-        >>> plt.show()
-
-    See Also
-    --------
-    NFWDensityProfile, CoredNFWDensityProfile, SingularIsothermalDensityProfile
-    """
-    # @@ CLASS ATTRIBUTES (INVARIANT) @@ #
-    # Generally, these do not need to be changed in subclasses; however, they
-    # may be if necessary. Ensure that any metaclasses / ABC's have _IS_ABC=True.
-    _is_parent_profile = False
-
-    # @@ CLASS ATTRIBUTES @@ #
-    # These attributes should be set / manipulated in all subclasses to
-    # implement the desired behavior.
-
-    DEFAULT_PARAMETERS: Dict[str, Any] = {
-        "rho_0": unyt_quantity(1.0, "Msun/pc**3"),
-        "r_s": unyt_quantity(1.0, "pc"),
+class HernquistDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "rho_0": unyt.unyt_quantity(1.0, "Msun/pc**3"),
+        "r_s": unyt.unyt_quantity(1.0, "pc"),
     }
 
-    @staticmethod
-    def _profile(r, rho_0=1.0, r_s=1.0):
+    @classmethod
+    def __function__(cls, r, rho_0=1.0, r_s=1.0):
         return rho_0 / ((r / r_s) * (1 + r / r_s) ** 3)
 
-    @class_expression(name="spherical_potential", on_demand=False)
-    @staticmethod
-    def _spherical_potential(axes, parameters, _):
-        # Grab the symbols out.
-        r = axes[0]
-        r_s, rho_0 = parameters["r_s"], parameters["rho_0"]
-
-        # Produce the potential
-        return -(2 * sp.pi * rho_0 * r_s**3) / (r + r_s)
-
-    @class_expression(name="spherical_mass", on_demand=False)
-    @staticmethod
-    def _spherical_mass(axes, parameters, _):
-        # Grab the symbols out.
-        r = axes[0]
-        r_s, rho_0 = parameters["r_s"], parameters["rho_0"]
-
-        # Produce the mass
-        return (2 * sp.pi * rho_0 * r_s**3) * (r / (r_s + r)) ** 2
+    @classmethod
+    def __function_units__(cls, r, rho_0="", r_s=""):
+        r, rho_0, r_s = unyt.Unit(r), unyt.Unit(rho_0), unyt.Unit(r_s)
+        return rho_0 / (r / r_s) ** 3
 
 
-class EinastoDensityProfile(_RadialDensityProfile):
-    r"""
-    Einasto Density Profile :footcite:p:`EinastoProfile`.
-
-    This profile provides a flexible model for dark matter halos with a gradual density decline.
-
-    .. math::
-        \rho(r) = \rho_0 \exp\left(-2 \alpha \left[\left(\frac{r}{r_s}\right)^\alpha - 1\right]\right)
-
-    where:
-
-    - :math:`\rho_0` is the central density.
-    - :math:`r_s` is the scale radius.
-    - :math:`\alpha` is a shape parameter that controls the profile steepness.
-
-    .. dropdown:: Parameters
-
-        .. list-table:: Parameters for :py:class:`EinastoDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Description**
-           * - ``rho_0``
-             - :math:`\rho_0`
-             - Central density
-           * - ``r_s``
-             - :math:`r_s`
-             - Scale radius
-           * - ``alpha``
-             - :math:`\alpha`
-             - Shape parameter controlling profile steepness
-
-
-
-    .. dropdown:: Expressions
-
-        .. list-table:: Expressions for :py:class:`EinastoDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Notes**
-           * - ``ellipsoidal_psi``
-             - :math:`\psi(r) = 2\int_{0}^{r}\!\xi\,\rho(\xi)\,d\xi`
-             - Inherited from base
-
-
-    References
-    ----------
-    .. footbibliography::
-
-    Example
-    -------
-    .. plot::
-        :include-source:
-
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from pisces.profiles.density import EinastoDensityProfile
-
-        >>> r = np.linspace(0.1, 10, 100)
-        >>> profile = EinastoDensityProfile(rho_0=1.0, r_s=1.0, alpha=0.18)
-        >>> rho = profile(r)
-
-        >>> _ = plt.loglog(r, rho, 'k-', label='Einasto Profile')
-        >>> _ = plt.xlabel('Radius (r)')
-        >>> _ = plt.ylabel('Density (rho)')
-        >>> _ = plt.legend()
-        >>> plt.show()
-
-    See Also
-    --------
-    NFWDensityProfile, HernquistDensityProfile, CoredNFWDensityProfile
-    """
-    # @@ CLASS ATTRIBUTES (INVARIANT) @@ #
-    # Generally, these do not need to be changed in subclasses; however, they
-    # may be if necessary. Ensure that any metaclasses / ABC's have _IS_ABC=True.
-    _is_parent_profile = False
-
-    # @@ CLASS ATTRIBUTES @@ #
-    # These attributes should be set / manipulated in all subclasses to
-    # implement the desired behavior.
-
-    DEFAULT_PARAMETERS: Dict[str, Any] = {
-        "rho_0": unyt_quantity(1.0, "Msun/pc**3"),
-        "r_s": unyt_quantity(1.0, "pc"),
-        "alpha": unyt_quantity(0.18, ""),
+class EinastoDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "rho_0": unyt.unyt_quantity(1.0, "Msun/pc**3"),
+        "r_s": unyt.unyt_quantity(1.0, "pc"),
+        "alpha": 0.18,
     }
 
-    @staticmethod
-    def _profile(r, rho_0=1.0, r_s=1.0, alpha=0.18):
+    @classmethod
+    def __function__(cls, r, rho_0=1.0, r_s=1.0, alpha=0.18):
         return rho_0 * sp.exp(-2 * alpha * ((r / r_s) ** alpha - 1))
 
-
-class SingularIsothermalDensityProfile(_RadialDensityProfile):
-    r"""
-    Singular Isothermal Sphere (SIS) Density Profile :footcite:p:`BinneyTremaine`.
-
-    The SIS profile is a simple model commonly used to describe the density distribution
-    of dark matter in galaxies and galaxy clusters under the assumption of an isothermal system.
-
-    .. math::
-        \rho(r) = \frac{\rho_0}{r^2}
-
-    where:
-
-    - :math:`\rho_0` is the central density.
-
-    .. dropdown:: Parameters
-
-        .. list-table:: Parameters for :py:class:`SingularIsothermalDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Description**
-           * - ``rho_0``
-             - :math:`\rho_0`
-             - Central density
+    @classmethod
+    def __function_units__(cls, r, rho_0="", r_s="", alpha=""):
+        return unyt.Unit(rho_0)
 
 
+class SingularIsothermalDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {"rho_0": unyt.unyt_quantity(1.0, "Msun/kpc**3")}
 
-    .. dropdown:: Expressions
-
-        .. list-table:: Expressions for :py:class:`SingularIsothermalDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Notes**
-           * - ``spherical_mass``
-             - :math:`M(r) = 4\pi\,\rho_0\,r`
-             - Diverges as :math:`r\to\infty`.
-           * - ``ellipsoidal_psi``
-             - :math:`\psi(r) = 2\int_{0}^{r}\!\xi\,\rho(\xi)\,d\xi`
-             - Inherited from base
-
-
-
-    References
-    ----------
-    .. footbibliography::
-
-    Example
-    -------
-    .. plot::
-        :include-source:
-
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from pisces.profiles.density import SingularIsothermalDensityProfile
-
-        >>> r = np.linspace(0.1, 10, 100)
-        >>> profile = SingularIsothermalDensityProfile(rho_0=1.0)
-        >>> rho = profile(r)
-
-        >>> _ = plt.loglog(r, rho, 'k-', label='SIS Profile')
-        >>> _ = plt.xlabel('Radius (r)')
-        >>> _ = plt.ylabel('Density (rho)')
-        >>> _ = plt.legend()
-        >>> plt.show()
-
-    See Also
-    --------
-    NFWDensityProfile, HernquistDensityProfile, CoredIsothermalDensityProfile
-    """
-    # @@ CLASS ATTRIBUTES (INVARIANT) @@ #
-    # Generally, these do not need to be changed in subclasses; however, they
-    # may be if necessary. Ensure that any metaclasses / ABC's have _IS_ABC=True.
-    _is_parent_profile = False
-
-    # @@ CLASS ATTRIBUTES @@ #
-    # These attributes should be set / manipulated in all subclasses to
-    # implement the desired behavior.
-
-    DEFAULT_PARAMETERS: Dict[str, Any] = {
-        "rho_0": unyt_quantity(1.0, "Msun/pc**3"),
-    }
-
-    @staticmethod
-    def _profile(r, rho_0=1.0):
+    @classmethod
+    def __function__(cls, r, rho_0=1.0):
         return rho_0 / r**2
 
-    @class_expression(name="spherical_mass", on_demand=False)
-    @staticmethod
-    def _spherical_mass(axes, parameters, _):
-        # Grab the symbols out.
-        r = axes[0]
-        rho_0 = parameters["rho_0"]
-
-        # Produce the mass
-        return 4 * sp.pi * rho_0 * r
+    @classmethod
+    def __function_units__(cls, r, rho_0=""):
+        r, rho_0 = unyt.Unit(r), unyt.Unit(rho_0)
+        return rho_0 / r**2
 
 
-class CoredIsothermalDensityProfile(_RadialDensityProfile):
-    r"""
-    Cored Isothermal Sphere Density Profile :footcite:p:`BinneyTremaine`.
-
-    This profile modifies the Singular Isothermal Sphere (SIS) by introducing a core radius
-    to account for the central flattening of the density distribution.
-
-    .. math::
-        \rho(r) = \frac{\rho_0}{1 + \left(\frac{r}{r_c}\right)^2}
-
-    where:
-
-    - :math:`\rho_0` is the central density.
-    - :math:`r_c` is the core radius.
-
-    .. dropdown:: Parameters
-
-        .. list-table:: Cored Isothermal Profile Parameters
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Description**
-           * - ``rho_0``
-             - :math:`\rho_0`
-             - Central density
-           * - ``r_c``
-             - :math:`r_c`
-             - Core radius
-
-
-
-    .. dropdown:: Expressions
-
-        .. list-table:: Expressions for :py:class:`CoredIsothermalDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Notes**
-           * - ``ellipsoidal_psi``
-             - :math:`\psi(r) = 2\int_{0}^{r}\!\xi\,\rho(\xi)\,d\xi`
-             - Inherited from base
-
-
-
-    References
-    ----------
-    .. footbibliography::
-
-    Example
-    -------
-    .. plot::
-        :include-source:
-
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from pisces.profiles.density import CoredIsothermalDensityProfile
-
-        >>> r = np.linspace(0.1, 10, 100)
-        >>> profile = CoredIsothermalDensityProfile(rho_0=1.0, r_c=1.0)
-        >>> rho = profile(r)
-
-        >>> _ = plt.loglog(r, rho, 'k-', label='Cored Isothermal Profile')
-        >>> _ = plt.xlabel('Radius (r)')
-        >>> _ = plt.ylabel('Density (rho)')
-        >>> _ = plt.legend()
-        >>> plt.show()
-
-    See Also
-    --------
-    SingularIsothermalDensityProfile, NFWDensityProfile, BurkertDensityProfile
-    """
-    # @@ CLASS ATTRIBUTES (INVARIANT) @@ #
-    # Generally, these do not need to be changed in subclasses; however, they
-    # may be if necessary. Ensure that any metaclasses / ABC's have _IS_ABC=True.
-    _is_parent_profile = False
-
-    # @@ CLASS ATTRIBUTES @@ #
-    # These attributes should be set / manipulated in all subclasses to
-    # implement the desired behavior.
-
-    DEFAULT_PARAMETERS: Dict[str, Any] = {
-        "rho_0": unyt_quantity(1.0, "Msun/pc**3"),
-        "r_c": unyt_quantity(1.0, "pc"),
+class CoredIsothermalDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "rho_0": unyt.unyt_quantity(1.0, "Msun/kpc**3"),
+        "r_c": unyt.unyt_quantity(1.0, "kpc"),
     }
 
-    @staticmethod
-    def _profile(r, rho_0=1.0, r_c=1.0):
+    @classmethod
+    def __function__(cls, r, rho_0=1.0, r_c=1.0):
         return rho_0 / (1 + (r / r_c) ** 2)
 
-
-class PlummerDensityProfile(_RadialDensityProfile):
-    r"""
-    Plummer Density Profile :footcite:p:`PlummerProfile`.
-
-    The Plummer profile is commonly used to model the density distribution of star clusters
-    or spherical galaxies. It features a central core and a steep falloff at larger radii.
-
-    .. math::
-        \rho(r) = \frac{3M}{4\pi r_s^3} \left(1 + \left(\frac{r}{r_s}\right)^2\right)^{-5/2}
-
-    where:
-
-    - :math:`M` is the total mass.
-    - :math:`r_s` is the scale radius.
-
-    .. dropdown:: Parameters
-
-        .. list-table:: Parameters for :py:class:`PlummerDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Description**
-           * - ``M``
-             - :math:`M`
-             - Total mass
-           * - ``r_s``
-             - :math:`r_s`
-             - Scale radius
+    @classmethod
+    def __function_units__(cls, r, rho_0="", r_c=""):
+        r, rho_0, r_c = unyt.Unit(r), unyt.Unit(rho_0), unyt.Unit(r_c)
+        return rho_0
 
 
-
-    .. dropdown:: Expressions
-
-        .. list-table:: Expressions for :py:class:`PlummerDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Notes**
-           * - ``spherical_mass``
-             - :math:`M(r) = M\,\bigl(\tfrac{r}{\sqrt{r^2 + r_s^2}}\bigr)^{3}`
-             - None
-           * - ``spherical_potential``
-             - :math:`\Phi(r) = -\,\frac{M}{\sqrt{r^2 + r_s^2}}`
-             - Multiplicative constants (e.g. `G`) can be included externally
-           * - ``surface_density``
-             - :math:`\Sigma(R) = \frac{M\,r_s^2}{\pi\,\bigl(r_s^2 + R^2\bigr)^{2}}`
-             - On-demand expression for projected (2D) density
-           * - ``ellipsoidal_psi``
-             - :math:`\psi(r) = 2\int_{0}^{r}\!\xi\,\rho(\xi)\,d\xi`
-             - Inherited from base
-
-
-
-    References
-    ----------
-    .. footbibliography::
-
-    Example
-    -------
-    .. plot::
-        :include-source:
-
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from pisces.profiles.density import PlummerDensityProfile
-
-        >>> r = np.linspace(0.1, 10, 100)
-        >>> profile = PlummerDensityProfile(M=1.0, r_s=1.0)
-        >>> rho = profile(r)
-
-        >>> _ = plt.loglog(r, rho, 'k-', label='Plummer Profile')
-        >>> _ = plt.xlabel('Radius (r)')
-        >>> _ = plt.ylabel('Density (rho)')
-        >>> _ = plt.legend()
-        >>> plt.show()
-
-    See Also
-    --------
-    HernquistDensityProfile, NFWDensityProfile, JaffeDensityProfile
-    """
-    AXES = ["r"]
-
-    DEFAULT_PARAMETERS = {
-        "M": unyt_quantity(1.0, "Msun"),
-        "r_s": unyt_quantity(1.0, "pc"),
+class PlummerDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "M": unyt.unyt_quantity(1.0, "Msun"),
+        "r_s": unyt.unyt_quantity(1.0, "pc"),
     }
 
-    @staticmethod
-    def _profile(r, M=1.0, r_s=1.0):
+    @classmethod
+    def __function__(cls, r, M=1.0, r_s=1.0):
         return (3 * M) / (4 * sp.pi * r_s**3) * (1 + (r / r_s) ** 2) ** (-5 / 2)
 
-    @class_expression(name="spherical_potential", on_demand=False)
-    @staticmethod
-    def _spherical_potential(axes, parameters, _):
-        # Grab the symbols out.
-        r = axes[0]
-        r_s, M = parameters["r_s"], parameters["M"]
-
-        # Produce the potential
-        return -M / sp.sqrt(r**2 + r_s**2)
-
-    @class_expression(name="spherical_mass", on_demand=False)
-    @staticmethod
-    def _spherical_mass(axes, parameters, _):
-        # Grab the symbols out.
-        r = axes[0]
-        r_s, M = parameters["r_s"], parameters["M"]
-
-        # Produce the mass
-        return M * (r / sp.sqrt(r**2 + r_s**2)) ** 3
-
-    @class_expression(name="surface_density", on_demand=True)
-    @staticmethod
-    def _surface_density(axes, parameters, _):
-        r = axes[0]
-        r_s, M = parameters["r_s"], parameters["M"]
-        return (M * r_s**2) / (sp.pi * (r_s**2 + r**2) ** 2)
+    @classmethod
+    def __function_units__(cls, r, M="", r_s=""):
+        r, M, r_s = unyt.Unit(r), unyt.Unit(M), unyt.Unit(r_s)
+        return M / r_s**3
 
 
-class DehnenDensityProfile(_RadialDensityProfile):
-    r"""
-    Dehnen Density Profile :footcite:p:`DehnenProfile`.
-
-    This profile is widely used in modeling galactic bulges and elliptical galaxies.
-    It generalizes other profiles like Hernquist and Jaffe with an adjustable inner slope.
-
-    .. math::
-        \rho(r) = \frac{(3 - \gamma)M}{4\pi r_s^3}
-        \left(\frac{r}{r_s}\right)^{-\gamma} \left(1 + \frac{r}{r_s}\right)^{\gamma - 4}
-
-    where:
-
-    - :math:`M` is the total mass.
-    - :math:`r_s` is the scale radius.
-    - :math:`\gamma` controls the inner density slope.
-
-    .. dropdown:: Parameters
-
-        .. list-table:: Parameters for :py:class:`DehnenDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Description**
-           * - ``M``
-             - :math:`M`
-             - Total mass
-           * - ``r_s``
-             - :math:`r_s`
-             - Scale radius
-           * - ``gamma``
-             - :math:`\gamma`
-             - Controls the inner density slope
-
-
-
-    .. dropdown:: Expressions
-
-        .. list-table:: Expressions for :py:class:`DehnenDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Notes**
-           * - ``spherical_mass``
-             - :math:`M(r) = M\,\Bigl(\frac{r}{r + r_s}\Bigr)^{3 - \gamma}`
-             - Contains Hernquist (gamma=1) and Jaffe (gamma=2) as special cases
-           * - ``ellipsoidal_psi``
-             - :math:`\psi(r) = 2\int_{0}^{r}\!\xi\,\rho(\xi)\,d\xi`
-             - Inherited from base
-
-
-
-    References
-    ----------
-    .. footbibliography::
-
-    Example
-    -------
-    .. plot::
-        :include-source:
-
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from pisces.profiles.density import DehnenDensityProfile
-
-        >>> r = np.linspace(0.1, 10, 100)
-        >>> profile = DehnenDensityProfile(M=1.0, r_s=1.0, gamma=1.0)
-        >>> rho = profile(r)
-
-        >>> _ = plt.loglog(r, rho, 'k-', label='Dehnen Profile')
-        >>> _ = plt.xlabel('Radius (r)')
-        >>> _ = plt.ylabel('Density (rho)')
-        >>> _ = plt.legend()
-        >>> plt.show()
-
-    See Also
-    --------
-    HernquistDensityProfile, JaffeDensityProfile, NFWDensityProfile
-    """
-    # @@ CLASS ATTRIBUTES (INVARIANT) @@ #
-    # Generally, these do not need to be changed in subclasses; however, they
-    # may be if necessary. Ensure that any metaclasses / ABC's have _IS_ABC=True.
-    _is_parent_profile = False
-
-    # @@ CLASS ATTRIBUTES @@ #
-    # These attributes should be set / manipulated in all subclasses to
-    # implement the desired behavior.
-
-    DEFAULT_PARAMETERS: Dict[str, Any] = {
-        "M": unyt_quantity(1.0, "Msun"),
-        "r_s": unyt_quantity(1.0, "pc"),
-        "gamma": unyt_quantity(1.0, ""),
+class DehnenDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "M": unyt.unyt_quantity(1.0, "Msun"),
+        "r_s": unyt.unyt_quantity(1.0, "pc"),
+        "gamma": 1.0,
     }
 
-    @staticmethod
-    def _profile(r, M=1.0, r_s=1.0, gamma=1.0):
+    @classmethod
+    def __function__(cls, r, M=1.0, r_s=1.0, gamma=1.0):
         return (
             ((3 - gamma) * M)
             / (4 * sp.pi * r_s**3)
@@ -780,616 +1016,120 @@ class DehnenDensityProfile(_RadialDensityProfile):
             * (1 + r / r_s) ** (gamma - 4)
         )
 
-    @class_expression(name="spherical_mass", on_demand=False)
-    @staticmethod
-    def _spherical_mass(axes, parameters, _):
-        # Grab the symbols out.
-        r = axes[0]
-        r_s, M, gamma = parameters["r_s"], parameters["M"], parameters["gamma"]
-
-        # Produce the mass
-        return M * (r / (r + r_s)) ** (3 - gamma)
+    @classmethod
+    def __function_units__(cls, r, M="", r_s="", gamma=""):
+        r, M, r_s = unyt.Unit(r), unyt.Unit(M), unyt.Unit(r_s)
+        return M / r_s**3
 
 
-class JaffeDensityProfile(_RadialDensityProfile):
-    r"""
-    Jaffe Density Profile :footcite:p:`JaffeProfile`.
-
-    This profile is commonly used to describe the density distribution of elliptical galaxies.
-
-    .. math::
-        \rho(r) = \frac{\rho_0}{\frac{r}{r_s} \left(1 + \frac{r}{r_s}\right)^2}
-
-    where:
-
-    - :math:`\rho_0` is the central density.
-    - :math:`r_s` is the scale radius.
-
-    .. dropdown:: Parameters
-
-        .. list-table:: Parameters for :py:class:`JaffeDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Description**
-           * - ``rho_0``
-             - :math:`\rho_0`
-             - Central density
-           * - ``r_s``
-             - :math:`r_s`
-             - Scale radius
-
-
-
-    .. dropdown:: Expressions
-
-        .. list-table:: Expressions for :py:class:`JaffeDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Notes**
-           * - ``spherical_mass``
-             - :math:`M(r) = 4\pi\,\rho_0\,r_s^3\,\Bigl[\ln(r + r_s) + \ln(r_s) \;-\; 1 \;+\; \frac{r_s}{r + r_s}\Bigr]`
-             - (As coded; can simplify further)
-           * - ``ellipsoidal_psi``
-             - :math:`\psi(r) = 2\int_{0}^{r}\!\xi\,\rho(\xi)\,d\xi`
-             - Inherited from base
-
-
-
-    References
-    ----------
-    .. footbibliography::
-
-    Example
-    -------
-    .. plot::
-        :include-source:
-
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from pisces.profiles.density import JaffeDensityProfile
-
-        >>> r = np.linspace(0.1, 10, 100)
-        >>> profile = JaffeDensityProfile(rho_0=1.0, r_s=1.0)
-        >>> rho = profile(r)
-
-        >>> _ = plt.loglog(r, rho, 'k-', label='Jaffe Profile')
-        >>> _ = plt.xlabel('Radius (r)')
-        >>> _ = plt.ylabel('Density (rho)')
-        >>> _ = plt.legend()
-        >>> plt.show()
-
-    See Also
-    --------
-    HernquistDensityProfile, DehnenDensityProfile, NFWDensityProfile
-    """
-    # @@ CLASS ATTRIBUTES (INVARIANT) @@ #
-    # Generally, these do not need to be changed in subclasses; however, they
-    # may be if necessary. Ensure that any metaclasses / ABC's have _IS_ABC=True.
-    _is_parent_profile = False
-
-    # @@ CLASS ATTRIBUTES @@ #
-    # These attributes should be set / manipulated in all subclasses to
-    # implement the desired behavior.
-
-    DEFAULT_PARAMETERS: Dict[str, Any] = {
-        "rho_0": unyt_quantity(1.0, "Msun/pc**3"),
-        "r_s": unyt_quantity(1.0, "pc"),
+class JaffeDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "rho_0": unyt.unyt_quantity(1.0, "Msun/kpc**3"),
+        "r_s": unyt.unyt_quantity(1.0, "pc"),
     }
 
-    @staticmethod
-    def _profile(r, rho_0=1.0, r_s=1.0):
+    @classmethod
+    def __function__(cls, r, rho_0=1.0, r_s=1.0):
         return rho_0 / ((r / r_s) * (1 + r / r_s) ** 2)
 
-    @class_expression(name="spherical_mass", on_demand=False)
-    @staticmethod
-    def _spherical_mass(axes, parameters, _):
-        # Grab the symbols out.
-        r = axes[0]
-        r_s, rho_0 = parameters["r_s"], parameters["rho_0"]
-
-        # Produce the mass
-        return (4 * sp.pi * r_s**3 * rho_0) * (
-            (r_s / (r + r_s)) + sp.log(r_s + r) - 1 + sp.log(r_s)
-        )
+    @classmethod
+    def __function_units__(cls, r, rho_0="", r_s=""):
+        r, rho_0, r_s = unyt.Unit(r), unyt.Unit(rho_0), unyt.Unit(r_s)
+        return rho_0 / (r / r_s)
 
 
-class KingDensityProfile(_RadialDensityProfile):
-    r"""
-    King Density Profile :footcite:p:`KingProfile`.
-
-    This profile describes the density distribution in globular clusters and galaxy clusters,
-    accounting for truncation at larger radii.
-
-    .. math::
-        \rho(r) = \rho_0 \left[\left(1 + \left(\frac{r}{r_c}\right)^2\right)^{-3/2}
-        - \left(1 + \left(\frac{r_t}{r_c}\right)^2\right)^{-3/2}\right]
-
-    where:
-
-    - :math:`\rho_0` is the central density.
-    - :math:`r_c` is the core radius.
-    - :math:`r_t` is the truncation radius.
-
-    .. dropdown:: Parameters
-
-        .. list-table:: Parameters for :py:class:`KingDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Description**
-           * - ``rho_0``
-             - :math:`\rho_0`
-             - Central density
-           * - ``r_c``
-             - :math:`r_c`
-             - Core radius
-           * - ``r_t``
-             - :math:`r_t`
-             - Truncation radius
-
-
-
-    .. dropdown:: Expressions
-
-        .. list-table:: Expressions for :py:class:`KingDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Notes**
-           * - ``ellipsoidal_psi``
-             - :math:`\psi(r) = 2\int_{0}^{r}\!\xi\,\rho(\xi)\,d\xi`
-             - Inherited from base
-
-
-
-    References
-    ----------
-    .. footbibliography::
-
-    Example
-    -------
-    .. plot::
-        :include-source:
-
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from pisces.profiles.density import KingDensityProfile
-
-        >>> r = np.linspace(0.1, 10, 100)
-        >>> profile = KingDensityProfile(rho_0=1.0, r_c=1.0, r_t=5.0)
-        >>> rho = profile(r)
-
-        >>> _ = plt.loglog(r, rho, 'k-', label='King Profile')
-        >>> _ = plt.xlabel('Radius (r)')
-        >>> _ = plt.ylabel('Density (rho)')
-        >>> _ = plt.legend()
-        >>> plt.show()
-
-    See Also
-    --------
-    NFWDensityProfile, BurkertDensityProfile, PlummerDensityProfile
-    """
-    # @@ CLASS ATTRIBUTES (INVARIANT) @@ #
-    # Generally, these do not need to be changed in subclasses; however, they
-    # may be if necessary. Ensure that any metaclasses / ABC's have _IS_ABC=True.
-    _is_parent_profile = False
-
-    # @@ CLASS ATTRIBUTES @@ #
-    # These attributes should be set / manipulated in all subclasses to
-    # implement the desired behavior.
-
-    DEFAULT_PARAMETERS: Dict[str, Any] = {
-        "rho_0": unyt_quantity(1.0, "Msun/pc**3"),
-        "r_c": unyt_quantity(1.0, "pc"),
-        "r_t": unyt_quantity(1.0, "pc"),
+class BurkertDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "rho_0": unyt.unyt_quantity(1.0, "Msun/kpc**3"),
+        "r_s": unyt.unyt_quantity(1.0, "pc"),
     }
 
-    @staticmethod
-    def _profile(r, rho_0=1.0, r_c=1.0, r_t=1.0):
-        return rho_0 * (
-            (1 + (r / r_c) ** 2) ** (-3 / 2) - (1 + (r_t / r_c) ** 2) ** (-3 / 2)
-        )
-
-
-class BurkertDensityProfile(_RadialDensityProfile):
-    r"""
-    Burkert Density Profile :footcite:p:`BurkertProfile`.
-
-    This profile describes dark matter halos with a flat density core, often used to
-    fit rotation curves of dwarf galaxies.
-
-    .. math::
-        \rho(r) = \frac{\rho_0}{\left(1 + \frac{r}{r_s}\right) \left(1 + \left(\frac{r}{r_s}\right)^2\right)}
-
-    where:
-
-    - :math:`\rho_0` is the central density.
-    - :math:`r_s` is the scale radius.
-
-    .. dropdown:: Parameters
-
-        .. list-table:: Parameters for :py:class:`BurkertDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Description**
-           * - ``rho_0``
-             - :math:`\rho_0`
-             - Central density
-           * - ``r_s``
-             - :math:`r_s`
-             - Scale radius
-
-
-
-    .. dropdown:: Expressions
-
-        .. list-table:: Expressions for :py:class:`BurkertDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Notes**
-           * - ``ellipsoidal_psi``
-             - :math:`\psi(r) = 2\int_{0}^{r}\!\xi\,\rho(\xi)\,d\xi`
-             - Inherited from base
-
-
-    References
-    ----------
-    .. footbibliography::
-
-    Example
-    -------
-    .. plot::
-        :include-source:
-
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from pisces.profiles.density import BurkertDensityProfile
-
-        >>> r = np.linspace(0.1, 10, 100)
-        >>> profile = BurkertDensityProfile(rho_0=1.0, r_s=1.0)
-        >>> rho = profile(r)
-
-        >>> _ = plt.loglog(r, rho, 'k-', label='Burkert Profile')
-        >>> _ = plt.xlabel('Radius (r)')
-        >>> _ = plt.ylabel('Density (rho)')
-        >>> _ = plt.legend()
-        >>> plt.show()
-
-    See Also
-    --------
-    NFWDensityProfile, CoredNFWDensityProfile, KingDensityProfile
-    """
-    # @@ CLASS ATTRIBUTES (INVARIANT) @@ #
-    # Generally, these do not need to be changed in subclasses; however, they
-    # may be if necessary. Ensure that any metaclasses / ABC's have _IS_ABC=True.
-    _is_parent_profile = False
-
-    # @@ CLASS ATTRIBUTES @@ #
-    # These attributes should be set / manipulated in all subclasses to
-    # implement the desired behavior.
-
-    DEFAULT_PARAMETERS: Dict[str, Any] = {
-        "rho_0": unyt_quantity(1.0, "Msun/pc**3"),
-        "r_s": unyt_quantity(1.0, "pc"),
-    }
-
-    @staticmethod
-    def _profile(r, rho_0=1.0, r_s=1.0):
+    @classmethod
+    def __function__(cls, r, rho_0=1.0, r_s=1.0):
         return rho_0 / ((1 + r / r_s) * (1 + (r / r_s) ** 2))
 
-
-class MooreDensityProfile(_RadialDensityProfile):
-    r"""
-    Moore Density Profile :footcite:p:`MooreProfile`.
-
-    This profile describes the density of dark matter halos with a steeper central slope compared to NFW.
-
-    .. math::
-        \rho(r) = \frac{\rho_0}{\left(\frac{r}{r_s}\right)^{3/2} \left(1 + \frac{r}{r_s}\right)^{3/2}}
-
-    where:
-
-    - :math:`\rho_0` is the central density.
-    - :math:`r_s` is the scale radius.
-
-    .. dropdown:: Parameters
-
-        .. list-table:: Parameters for :py:class:`MooreDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Description**
-           * - ``rho_0``
-             - :math:`\rho_0`
-             - Central density
-           * - ``r_s``
-             - :math:`r_s`
-             - Scale radius
+    @classmethod
+    def __function_units__(cls, r, rho_0="", r_s=""):
+        r, rho_0, r_s = unyt.Unit(r), unyt.Unit(rho_0), unyt.Unit(r_s)
+        return rho_0
 
 
-
-    .. dropdown:: Expressions
-
-        .. list-table:: Expressions for :py:class:`MooreDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Notes**
-           * - ``ellipsoidal_psi``
-             - :math:`\psi(r) = 2\int_{0}^{r}\!\xi\,\rho(\xi)\,d\xi`
-             - Inherited from base
-
-
-
-    References
-    ----------
-    .. footbibliography::
-
-    Example
-    -------
-    .. plot::
-        :include-source:
-
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from pisces.profiles.density import MooreDensityProfile
-
-        >>> r = np.linspace(0.1, 10, 100)
-        >>> profile = MooreDensityProfile(rho_0=1.0, r_s=1.0)
-        >>> rho = profile(r)
-
-        >>> _ = plt.loglog(r, rho, 'k-', label='Moore Profile')
-        >>> _ = plt.xlabel('Radius (r)')
-        >>> _ = plt.ylabel('Density (rho)')
-        >>> _ = plt.legend()
-        >>> plt.show()
-
-    See Also
-    --------
-    NFWDensityProfile, CoredNFWDensityProfile, HernquistDensityProfile
-    """
-    AXES = ["r"]
-
-    DEFAULT_PARAMETERS = {
-        "rho_0": unyt_quantity(1.0, "Msun/pc**3"),
-        "r_s": unyt_quantity(1.0, "pc"),
+class MooreDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "rho_0": unyt.unyt_quantity(1.0, "Msun/kpc**3"),
+        "r_s": unyt.unyt_quantity(1.0, "pc"),
     }
 
-    @staticmethod
-    def _profile(r, rho_0=1.0, r_s=1.0):
+    @classmethod
+    def __function__(cls, r, rho_0=1.0, r_s=1.0):
         return rho_0 / ((r / r_s) ** (3 / 2) * (1 + r / r_s) ** (3 / 2))
 
-
-class CoredNFWDensityProfile(_RadialDensityProfile):
-    r"""
-    Cored Navarro-Frenk-White (NFW) Density Profile :footcite:p:`CNFWProfile`.
-
-    This profile modifies the standard NFW profile by introducing a core, leading to
-    a shallower density slope near the center.
-
-    .. math::
-        \rho(r) = \frac{\rho_0}{\left(1 + \left(\frac{r}{r_s}\right)^2\right) \left(1 + \frac{r}{r_s}\right)^2}
-
-    where:
-
-    - :math:`\rho_0` is the central density.
-    - :math:`r_s` is the scale radius.
-
-    .. dropdown:: Parameters
-
-        .. list-table:: Cored NFW Profile Parameters
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Description**
-           * - ``rho_0``
-             - :math:`\rho_0`
-             - Central density
-           * - ``r_s``
-             - :math:`r_s`
-             - Scale radius
+    @classmethod
+    def __function_units__(cls, r, rho_0="", r_s=""):
+        r, rho_0, r_s = unyt.Unit(r), unyt.Unit(rho_0), unyt.Unit(r_s)
+        return rho_0 / ((r / r_s) ** (3 / 2))
 
 
-
-    .. dropdown:: Expressions
-
-        .. list-table:: Expressions for :py:class:`CoredNFWDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Notes**
-           * - ``ellipsoidal_psi``
-             - :math:`\psi(r) = 2\int_{0}^{r}\!\xi\,\rho(\xi)\,d\xi`
-             - Inherited from base
-
-
-
-    References
-    ----------
-    .. footbibliography::
-
-    Example
-    -------
-    .. plot::
-        :include-source:
-
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from pisces.profiles.density import CoredNFWDensityProfile
-
-        >>> r = np.linspace(0.1, 10, 100)
-        >>> profile = CoredNFWDensityProfile(rho_0=1.0, r_s=1.0)
-        >>> rho = profile(r)
-
-        >>> _ = plt.loglog(r, rho, 'k-', label='Cored NFW Profile')
-        >>> _ = plt.xlabel('Radius (r)')
-        >>> _ = plt.ylabel('Density (rho)')
-        >>> _ = plt.legend()
-        >>> plt.show()
-
-    See Also
-    --------
-    NFWDensityProfile, HernquistDensityProfile, BurkertDensityProfile
-    """
-    # @@ CLASS ATTRIBUTES (INVARIANT) @@ #
-    # Generally, these do not need to be changed in subclasses; however, they
-    # may be if necessary. Ensure that any metaclasses / ABC's have _IS_ABC=True.
-    _is_parent_profile = False
-
-    # @@ CLASS ATTRIBUTES @@ #
-    # These attributes should be set / manipulated in all subclasses to
-    # implement the desired behavior.
-
-    DEFAULT_PARAMETERS: Dict[str, Any] = {
-        "rho_0": unyt_quantity(1.0, "Msun/pc**3"),
-        "r_s": unyt_quantity(1.0, "pc"),
+class CoredNFWDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "rho_0": unyt.unyt_quantity(1.0, "Msun/kpc**3"),
+        "r_s": unyt.unyt_quantity(1.0, "pc"),
     }
 
-    @staticmethod
-    def _profile(r, rho_0=1.0, r_s=1.0):
+    @classmethod
+    def __function__(cls, r, rho_0=1.0, r_s=1.0):
         return rho_0 / ((1 + (r / r_s) ** 2) * (1 + r / r_s) ** 2)
 
-
-class VikhlininDensityProfile(_RadialDensityProfile):
-    r"""
-    Vikhlinin Density Profile :footcite:p:`VikhlininProfile`.
-
-    This profile is used to model the density of galaxy clusters, incorporating
-    a truncation at large radii and additional flexibility for inner slopes.
-
-    .. math::
-        \rho(r) = \rho_0 \left(\frac{r}{r_c}\right)^{-0.5 \alpha}
-        \left(1 + \left(\frac{r}{r_c}\right)^2\right)^{-1.5 \beta + 0.25 \alpha}
-        \left(1 + \left(\frac{r}{r_s}\right)^{\gamma}\right)^{-0.5 \epsilon / \gamma}
-
-    where:
-
-    - :math:`\rho_0` is the central density.
-    - :math:`r_c` is the core radius.
-    - :math:`r_s` is the truncation radius.
-    - :math:`\alpha, \beta, \gamma, \epsilon` control the slope and truncation behavior.
-
-    .. dropdown:: Parameters
-
-        .. list-table:: Parameters for :py:class:`VikhlininDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Description**
-           * - ``rho_0``
-             - :math:`\rho_0`
-             - Central density
-           * - ``r_c``
-             - :math:`r_c`
-             - Core radius
-           * - ``r_s``
-             - :math:`r_s`
-             - Truncation radius
-           * - ``alpha``
-             - :math:`\alpha`
-             - Controls the innermost slope
-           * - ``beta``
-             - :math:`\beta`
-             - Governs the outer slope
-           * - ``epsilon``
-             - :math:`\epsilon`
-             - Steepens the outer decline
-           * - ``gamma``
-             - :math:`\gamma`
-             - Exponent in the truncation factor
+    @classmethod
+    def __function_units__(cls, r, rho_0="", r_s=""):
+        r, rho_0, r_s = unyt.Unit(r), unyt.Unit(rho_0), unyt.Unit(r_s)
+        return rho_0
 
 
-
-    .. dropdown:: Expressions
-
-        .. list-table:: Expressions for :py:class:`VikhlininDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Notes**
-           * - ``ellipsoidal_psi``
-             - :math:`\psi(r) = 2\int_{0}^{r}\!\xi\,\rho(\xi)\,d\xi`
-             - Inherited from base
-
-
-
-    References
-    ----------
-    .. footbibliography::
-
-    Example
-    -------
-    .. plot::
-        :include-source:
-
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from pisces.profiles.density import VikhlininDensityProfile
-
-        >>> r = np.linspace(0.1, 10, 100)
-        >>> profile = VikhlininDensityProfile(rho_0=1.0, r_c=1.0, r_s=5.0, alpha=1.0, beta=1.0, epsilon=1.0, gamma=3.0)
-        >>> rho = profile(r)
-
-        >>> _ = plt.loglog(r, rho, 'k-', label='Vikhlinin Profile')
-        >>> _ = plt.xlabel('Radius (r)')
-        >>> _ = plt.ylabel('Density (rho)')
-        >>> _ = plt.legend()
-        >>> plt.show()
-
-    See Also
-    --------
-    KingDensityProfile, NFWDensityProfile, BurkertDensityProfile
-    """
-    # @@ CLASS ATTRIBUTES (INVARIANT) @@ #
-    # Generally, these do not need to be changed in subclasses; however, they
-    # may be if necessary. Ensure that any metaclasses / ABC's have _IS_ABC=True.
-    _is_parent_profile = False
-
-    # @@ CLASS ATTRIBUTES @@ #
-    # These attributes should be set / manipulated in all subclasses to
-    # implement the desired behavior.
-
-    DEFAULT_PARAMETERS: Dict[str, Any] = {
-        "rho_0": unyt_quantity(1.0, "Msun/pc**3"),
-        "r_c": unyt_quantity(1.0, "pc"),
-        "r_s": unyt_quantity(1.0, "pc"),
-        "alpha": unyt_quantity(1.0, ""),
-        "beta": unyt_quantity(1.0, ""),
-        "epsilon": unyt_quantity(1.0, ""),
-        "gamma": unyt_quantity(3.0, ""),
+class KingDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "rho_0": unyt.unyt_quantity(1.0, "Msun/kpc**3"),
+        "r_c": unyt.unyt_quantity(1.0, "kpc"),
+        "r_t": unyt.unyt_quantity(1.0, "kpc"),
     }
 
-    @staticmethod
-    def _profile(
-        r, rho_0=1.0, r_c=1.0, r_s=1.0, alpha=1.0, beta=1.0, epsilon=1.0, gamma=3.0
+    @classmethod
+    def __function__(cls, r, rho_0=1.0, r_c=1.0, r_t=1.0):
+        return rho_0 * (
+            (1 + (r / r_c) ** 2) ** (-1.5) - (1 + (r_t / r_c) ** 2) ** (-1.5)
+        )
+
+    @classmethod
+    def __function_units__(cls, r, rho_0="", r_c="", r_t=""):
+        r, rho_0, r_c, r_t = (
+            unyt.Unit(r),
+            unyt.Unit(rho_0),
+            unyt.Unit(r_c),
+            unyt.Unit(r_t),
+        )
+        return rho_0
+
+
+class VikhlininDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "rho_0": unyt.unyt_quantity(1.0, "Msun/kpc**3"),
+        "r_c": unyt.unyt_quantity(1.0, "kpc"),
+        "r_s": unyt.unyt_quantity(1.0, "pc"),
+        "alpha": 1.0,
+        "beta": 1.0,
+        "epsilon": 1.0,
+        "gamma": 3.0,
+    }
+
+    @classmethod
+    def __function__(
+        cls, r, rho_0=1.0, r_c=1.0, r_s=1.0, alpha=1.0, beta=1.0, epsilon=1.0, gamma=3.0
     ):
         return (
             rho_0
@@ -1398,498 +1138,205 @@ class VikhlininDensityProfile(_RadialDensityProfile):
             * (1 + (r / r_s) ** gamma) ** (-0.5 * epsilon / gamma)
         )
 
-
-class AM06DensityProfile(_RadialDensityProfile):
-    r"""
-    Ascasibar and Markevitch (2006) Density Profile :footcite:p:`AM06Profile`.
-
-    This density profile is a generalized model that allows flexibility in fitting
-    the density distributions of dark matter halos. It includes additional parameters
-    for controlling inner and outer slopes, truncation, and other scaling properties.
-
-    .. math::
-        \rho(r) = \rho_0 \left(1 + \frac{r}{a_c}\right) \left(1 + \frac{r}{a_c c}\right)^{\alpha} \left(1 + \frac{r}{a}\right)^{\beta}
-
-    where:
-
-    - :math:`\rho_0` is the central density.
-    - :math:`a_c` is the core radius.
-    - :math:`c` is the concentration parameter.
-    - :math:`a` is the scale radius.
-    - :math:`\alpha` controls the slope of the transition near the core.
-    - :math:`\beta` controls the outer slope.
-
-    .. dropdown:: Parameters
-
-        .. list-table:: Parameters for :py:class:`AM06DensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Description**
-           * - ``rho_0``
-             - :math:`\rho_0`
-             - Central density
-           * - ``a_c``
-             - :math:`a_c`
-             - Core radius
-           * - ``c``
-             - :math:`c`
-             - Concentration parameter
-           * - ``a``
-             - :math:`a`
-             - Scale radius
-           * - ``alpha``
-             - :math:`\alpha`
-             - Controls slope near the core
-           * - ``beta``
-             - :math:`\beta`
-             - Controls outer slope
+    @classmethod
+    def __function_units__(
+        cls, r, rho_0="", r_c="", r_s="", alpha="", beta="", epsilon="", gamma=""
+    ):
+        r, rho_0, r_c, r_s = (
+            unyt.Unit(r),
+            unyt.Unit(rho_0),
+            unyt.Unit(r_c),
+            unyt.Unit(r_s),
+        )
+        return rho_0
 
 
-
-    .. dropdown:: Expressions
-
-        .. list-table:: Expressions for :py:class:`AM06DensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Notes**
-           * - ``ellipsoidal_psi``
-             - :math:`\psi(r) = 2\int_{0}^{r}\!\xi\,\rho(\xi)\,d\xi`
-             - Inherited from base
-
-
-    Use Case
-    --------
-    This profile is well-suited for modeling dark matter halos with detailed inner and outer slope behaviors.
-
-
-    References
-    ----------
-    .. footbibliography::
-
-    Example
-    -------
-    .. plot::
-        :include-source:
-
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from pisces.profiles.density import AM06DensityProfile
-
-        >>> r = np.linspace(0.1, 10, 100)
-        >>> profile = AM06DensityProfile(rho_0=1.0, a_c=1.0, c=2.0, a=3.0, alpha=1.0, beta=3.0)
-        >>> rho = profile(r)
-
-        >>> _ = plt.loglog(r, rho, 'k-', label='AM06 Profile')
-        >>> _ = plt.xlabel('Radius (r)')
-        >>> _ = plt.ylabel('Density (rho)')
-        >>> _ = plt.legend()
-        >>> plt.show()
-
-    See Also
-    --------
-    NFWDensityProfile, VikhlininDensityProfile, HernquistDensityProfile
-    """
-    # @@ CLASS ATTRIBUTES (INVARIANT) @@ #
-    # Generally, these do not need to be changed in subclasses; however, they
-    # may be if necessary. Ensure that any metaclasses / ABC's have _IS_ABC=True.
-    _is_parent_profile = False
-
-    # @@ CLASS ATTRIBUTES @@ #
-    # These attributes should be set / manipulated in all subclasses to
-    # implement the desired behavior.
-
-    DEFAULT_PARAMETERS: Dict[str, Any] = {
-        "rho_0": unyt_quantity(1.0, "Msun/pc**3"),
-        "a": unyt_quantity(1.0, "pc"),
-        "a_c": unyt_quantity(1.0, "pc"),
-        "c": unyt_quantity(1.0, ""),
-        "alpha": unyt_quantity(1.0, ""),
-        "beta": unyt_quantity(1.0, ""),
+class AM06DensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "rho_0": unyt.unyt_quantity(1.0, "Msun/kpc**3"),
+        "a": unyt.unyt_quantity(1.0, "kpc"),
+        "a_c": unyt.unyt_quantity(1.0, "kpc"),
+        "c": 1.0,
+        "alpha": 1.0,
+        "beta": 1.0,
     }
 
-    @staticmethod
-    def _profile(r, rho_0=1.0, a=1.0, a_c=1.0, c=1.0, alpha=1.0, beta=1.0):
+    @classmethod
+    def __function__(cls, r, rho_0=1.0, a=1.0, a_c=1.0, c=1.0, alpha=1.0, beta=1.0):
         return (
             rho_0 * (1 + r / a_c) * (1 + r / (a_c * c)) ** alpha * (1 + r / a) ** beta
         )
 
-
-class SNFWDensityProfile(_RadialDensityProfile):
-    r"""
-    Simplified Navarro-Frenk-White (SNFW) Density Profile :footcite:p:`SNFWProfile`.
-
-    This profile is a simplified version of the NFW profile, widely used for modeling
-    dark matter halos with specific scaling.
-
-    .. math::
-        \rho(r) = \frac{3M}{16\pi a^3} \frac{1}{\frac{r}{a} \left(1 + \frac{r}{a}\right)^{2.5}}
-
-    where:
-
-    - :math:`M` is the total mass.
-    - :math:`a` is the scale radius.
-
-    .. dropdown:: Parameters
-
-        .. list-table:: Parameters for :py:class:`SNFWDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Description**
-           * - ``M``
-             - :math:`M`
-             - Total mass
-           * - ``a``
-             - :math:`a`
-             - Scale radius
+    @classmethod
+    def __function_units__(cls, r, rho_0="", a="", a_c="", c="", alpha="", beta=""):
+        r, rho_0, a, a_c = unyt.Unit(r), unyt.Unit(rho_0), unyt.Unit(a), unyt.Unit(a_c)
+        return rho_0
 
 
-
-    .. dropdown:: Expressions
-
-        .. list-table:: Expressions for :py:class:`SNFWDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Notes**
-           * - ``ellipsoidal_psi``
-             - :math:`\psi(r) = 2\int_{0}^{r}\!\xi\,\rho(\xi)\,d\xi`
-             - Inherited from base (no direct mass/potential expression coded here)
-
-
-
-    References
-    ----------
-    .. footbibliography::
-
-    Example
-    -------
-    .. plot::
-        :include-source:
-
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from pisces.profiles.density import SNFWDensityProfile
-
-        >>> r = np.linspace(0.1, 10, 100)
-        >>> profile = SNFWDensityProfile(M=1.0, a=1.0)
-        >>> rho = profile(r)
-
-        >>> _ = plt.loglog(r, rho, 'k-', label='SNFW Profile')
-        >>> _ = plt.xlabel('Radius (r)')
-        >>> _ = plt.ylabel('Density (rho)')
-        >>> _ = plt.legend()
-        >>> plt.show()
-
-    See Also
-    --------
-    NFWDensityProfile, TNFWDensityProfile, HernquistDensityProfile
-    """
-    # @@ CLASS ATTRIBUTES (INVARIANT) @@ #
-    # Generally, these do not need to be changed in subclasses; however, they
-    # may be if necessary. Ensure that any metaclasses / ABC's have _IS_ABC=True.
-    _is_parent_profile = False
-
-    # @@ CLASS ATTRIBUTES @@ #
-    # These attributes should be set / manipulated in all subclasses to
-    # implement the desired behavior.
-
-    DEFAULT_PARAMETERS: Dict[str, Any] = {
-        "M": unyt_quantity(1.0, "Msun"),
-        "a": unyt_quantity(1.0, "pc"),
+class SNFWDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "M": unyt.unyt_quantity(1.0, "Msun"),
+        "a": unyt.unyt_quantity(1.0, "kpc"),
     }
 
-    @staticmethod
-    def _profile(r, M=1.0, a=1.0):
-        return 3.0 * M / (16.0 * sp.pi * a**3) / ((r / a) * (1.0 + r / a) ** 2.5)
+    @classmethod
+    def __function__(cls, r, M=1.0, a=1.0):
+        return 3 * M / (16 * sp.pi * a**3) / ((r / a) * (1 + r / a) ** 2.5)
+
+    @classmethod
+    def __function_units__(cls, r, M="", a=""):
+        r, M, a = unyt.Unit(r), unyt.Unit(M), unyt.Unit(a)
+        return M / (a**3 * (r / a))
 
 
-class TNFWDensityProfile(_RadialDensityProfile):
-    r"""
-    Truncated Navarro-Frenk-White (TNFW) Density Profile :footcite:p:`TNFWProfile`.
-
-    This profile is a modification of the NFW profile with an additional truncation
-    term to account for finite halo sizes.
-
-    .. math::
-        \rho(r) = \frac{\rho_0}{\frac{r}{r_s} \left(1 + \frac{r}{r_s}\right)^2}
-        \frac{1}{1 + \left(\frac{r}{r_t}\right)^2}
-
-    where:
-
-    - :math:`\rho_0` is the central density.
-    - :math:`r_s` is the scale radius.
-    - :math:`r_t` is the truncation radius.
-
-    .. dropdown:: Parameters
-
-        .. list-table:: Parameters for :py:class:`TNFWDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Description**
-           * - ``rho_0``
-             - :math:`\rho_0`
-             - Central density
-           * - ``r_s``
-             - :math:`r_s`
-             - Scale radius
-           * - ``r_t``
-             - :math:`r_t`
-             - Truncation radius
-
-
-
-    .. dropdown:: Expressions
-
-        .. list-table:: Expressions for :py:class:`TNFWDensityProfile`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Notes**
-           * - ``ellipsoidal_psi``
-             - :math:`\psi(r) = 2\int_{0}^{r}\!\xi\,\rho(\xi)\,d\xi`
-             - Inherited from base
-
-
-
-    References
-    ----------
-    .. footbibliography::
-
-    Example
-    -------
-    .. plot::
-        :include-source:
-
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from pisces.profiles.density import TNFWDensityProfile
-
-        >>> r = np.linspace(0.1, 10, 100)
-        >>> profile = TNFWDensityProfile(rho_0=1.0, r_s=1.0, r_t=10.0)
-        >>> rho = profile(r)
-
-        >>> _ = plt.loglog(r, rho, 'k-', label='TNFW Profile')
-        >>> _ = plt.xlabel('Radius (r)')
-        >>> _ = plt.ylabel('Density (rho)')
-        >>> _ = plt.legend()
-        >>> plt.show()
-
-    See Also
-    --------
-    NFWDensityProfile, CoredNFWDensityProfile, SNFWDensityProfile
-    """
-    # @@ CLASS ATTRIBUTES (INVARIANT) @@ #
-    # Generally, these do not need to be changed in subclasses; however, they
-    # may be if necessary. Ensure that any metaclasses / ABC's have _IS_ABC=True.
-    _is_parent_profile = False
-
-    # @@ CLASS ATTRIBUTES @@ #
-    # These attributes should be set / manipulated in all subclasses to
-    # implement the desired behavior.
-
-    DEFAULT_PARAMETERS: Dict[str, Any] = {
-        "rho_0": unyt_quantity(1.0, "Msun/pc**3"),
-        "r_s": unyt_quantity(1.0, "pc"),
-        "r_t": unyt_quantity(1.0, "pc"),
+class TNFWDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "rho_0": unyt.unyt_quantity(1.0, "Msun/kpc**3"),
+        "r_s": unyt.unyt_quantity(1.0, "pc"),
+        "r_t": unyt.unyt_quantity(1.0, "kpc"),
     }
 
-    @staticmethod
-    def _profile(r, rho_0=1.0, r_s=1.0, r_t=1.0):
+    @classmethod
+    def __function__(cls, r, rho_0=1.0, r_s=1.0, r_t=1.0):
         return rho_0 / ((r / r_s) * (1 + r / r_s) ** 2) / (1 + (r / r_t) ** 2)
 
+    @classmethod
+    def __function_units__(cls, r, rho_0="", r_s="", r_t=""):
+        r, rho_0, r_s, r_t = (
+            unyt.Unit(r),
+            unyt.Unit(rho_0),
+            unyt.Unit(r_s),
+            unyt.Unit(r_t),
+        )
+        return rho_0 / (r / r_s)
 
-class _CylindricalDensityProfile(CylindricalProfile, ABC):
-    r"""
-    Base class for cylindrical density profiles. This class provides a location in which to define
-    various derived quantities which are shared across all the cylindrical profiles.
-    """
-    _is_parent_profile = True
 
-
-class DoubleExponentialDisk(_CylindricalDensityProfile):
-    r"""
-    Double-Exponential Disk Density Profile :footcite:p:`DoubleExpProfile`.
-
-    This profile models the density distribution of galactic disks using a double-exponential
-    form, where the density falls off exponentially both radially and vertically.
-
-    .. math::
-        \rho(R, z) = \rho_0 \exp\left(-\frac{R}{h_r} - \frac{|z|}{h_z}\right)
-
-    where:
-
-    - :math:`\rho_0` is the central density.
-    - :math:`h_r` is the radial scale length.
-    - :math:`h_z` is the vertical scale height.
-
-    .. dropdown:: Parameters
-
-        .. list-table:: Parameters for :py:class:`DoubleExponentialDisk`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Description**
-           * - ``rho_0``
-             - :math:`\rho_0`
-             - Central density
-           * - ``h_r``
-             - :math:`h_r`
-             - Radial scale length
-           * - ``h_z``
-             - :math:`h_z`
-             - Vertical scale height
-
-    Use Case
-    --------
-    This profile is widely used to model the mass distribution of spiral galaxy disks,
-    particularly in edge-on systems where vertical structure is visible.
-
-    References
-    ----------
-    .. footbibliography::
-
-    Example
-    -------
-    .. plot::
-        :include-source:
-
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from pisces.profiles.density import DoubleExponentialDisk
-
-        >>> R = np.linspace(0.1, 10, 100)
-        >>> Z = 0  # Mid-plane slice
-        >>> profile = DoubleExponentialDisk(rho_0=1.0, h_r=2.5, h_z=0.3)
-        >>> rho = profile(R, Z)
-
-        >>> _ = plt.semilogy(R, rho, 'k-', label='Double-Exponential Disk')
-        >>> _ = plt.xlabel('Radius (R)')
-        >>> _ = plt.ylabel('Density (rho)')
-        >>> _ = plt.legend()
-        >>> plt.show()
-
-    See Also
-    --------
-    MiyamotoNagaiDisk
-    """
-    DEFAULT_PARAMETERS: Dict[str, Any] = {
-        "rho_0": unyt_quantity(1.0, "Msun/pc**3"),
-        "h_r": unyt_quantity(1.0, "pc"),
-        "h_z": unyt_quantity(1.0, "pc"),
+class PseudoIsothermalDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "rho_0": unyt.unyt_quantity(1.0, "Msun/kpc**3"),
+        "r_c": unyt.unyt_quantity(1.0, "kpc"),
     }
 
-    def _set_output_units(self):
-        return self._parameters["rho_0"].units
+    @classmethod
+    def __function__(cls, r, rho_0=1.0, r_c=1.0):
+        return rho_0 / (1 + (r / r_c) ** 2)
 
-    @staticmethod
-    def _profile(r, z, rho_0=1.0, h_r=1.0, h_z=1.0):
-        return rho_0 * sp.exp(-(r / h_r) - (sp.Abs(z) / h_z))
+    @classmethod
+    def __function_units__(cls, r, rho_0="", r_c=""):
+        r, rho_0, r_c = unyt.Unit(r), unyt.Unit(rho_0), unyt.Unit(r_c)
+        return rho_0
 
 
-class MiyamotoNagaiDisk(_CylindricalDensityProfile):
-    r"""
-    Miyamoto-Nagai Disk Density Profile :footcite:p:`MiyamotoNagaiProfile`.
-
-    This profile is an axisymmetric potential-density model that smoothly transitions between
-    a disk-like and spherical shape. It is commonly used in dynamical models of galaxies.
-
-    .. math::
-        \rho(R, z) = \frac{b^2 M}{4\pi} \frac{(a R^2) + (3\sqrt{z^2 + b^2} + a)(\sqrt{z^2 + b^2} + a)^2}
-        {(R^2 + (\sqrt{z^2 + b^2} + a)^2)^{5/2} (z^2 + b^2)^{3/2}}
-
-    where:
-
-    - :math:`M` is the total mass of the disk.
-    - :math:`a` is the radial scale length.
-    - :math:`b` is the vertical scale height.
-
-    .. dropdown:: Parameters
-
-        .. list-table:: Parameters for :py:class:`MiyamotoNagaiDisk`
-           :widths: 25 25 50
-           :header-rows: 1
-
-           * - **Name**
-             - **Symbol**
-             - **Description**
-           * - ``M``
-             - :math:`M`
-             - Total mass
-           * - ``a``
-             - :math:`a`
-             - Radial scale length
-           * - ``b``
-             - :math:`b`
-             - Vertical scale height
-
-    Use Case
-    --------
-    The Miyamoto-Nagai disk is widely used in galactic dynamics because it provides
-    an analytic potential that smoothly interpolates between a thick disk and a
-    quasi-spherical mass distribution.
-
-    References
-    ----------
-    .. footbibliography::
-
-    Example
-    -------
-    .. plot::
-        :include-source:
-
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from pisces.profiles.density import MiyamotoNagaiDisk
-
-        >>> R = np.linspace(0.1, 10, 100)
-        >>> Z = 0  # Mid-plane slice
-        >>> profile = MiyamotoNagaiDisk(M=1.0, a=3.0, b=0.5)
-        >>> rho = profile(R, Z)
-
-        >>> _ = plt.semilogy(R, rho, 'k-', label='Miyamoto-Nagai Disk')
-        >>> _ = plt.xlabel('Radius (R)')
-        >>> _ = plt.ylabel('Density (rho)')
-        >>> _ = plt.legend()
-        >>> plt.show()
-
-    See Also
-    --------
-    DoubleExponentialDisk
-    """
-    DEFAULT_PARAMETERS: Dict[str, Any] = {
-        "M": unyt_quantity(1.0, "Msun"),
-        "a": unyt_quantity(1.0, "pc"),
-        "b": unyt_quantity(1.0, "pc"),
+class DoublePowerLawDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "rho_0": unyt.unyt_quantity(1.0, "Msun/kpc**3"),
+        "r_s": unyt.unyt_quantity(1.0, "pc"),
+        "alpha": 1.0,
+        "beta": 3.0,
+        "gamma": 1.0,
     }
 
-    def _set_output_units(self):
-        return self._parameters["M"].units / self.axes_units["r"] ** 3
+    @classmethod
+    def __function__(cls, r, rho_0=1.0, r_s=1.0, alpha=1.0, beta=3.0, gamma=1.0):
+        return (
+            rho_0
+            / (r / r_s) ** gamma
+            / (1 + (r / r_s) ** alpha) ** ((beta - gamma) / alpha)
+        )
 
-    @staticmethod
-    def _profile(r, z, M=1.0, a=1.0, b=1.0):
-        coeff = b**2 * M / (4 * sp.pi)
-        num = (a * r**2) + (3 * sp.sqrt(z**2 + b**2) + a) * (
-            sp.sqrt(z**2 + b**2) + a
-        ) ** 2
-        den = (r**2 + (sp.sqrt(z**2 + b**2) + a) ** 2) ** (5 / 2) * (
-            z**2 + b**2
-        ) ** (3 / 2)
-        return coeff * num / den
+    @classmethod
+    def __function_units__(cls, r, rho_0="", r_s="", alpha="", beta="", gamma=""):
+        r, rho_0, r_s = unyt.Unit(r), unyt.Unit(rho_0), unyt.Unit(r_s)
+        return rho_0 / (r / r_s) ** gamma
+
+
+class CoredPowerLawDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "rho_0": unyt.unyt_quantity(1.0, "Msun/kpc**3"),
+        "r_c": unyt.unyt_quantity(1.0, "kpc"),
+        "gamma": 1.0,
+    }
+
+    @classmethod
+    def __function__(cls, r, rho_0=1.0, r_c=1.0, gamma=1.0):
+        return rho_0 * (1 + (r / r_c) ** 2) ** (-gamma / 2)
+
+    @classmethod
+    def __function_units__(cls, r, rho_0="", r_c="", gamma=""):
+        r, rho_0, r_c = unyt.Unit(r), unyt.Unit(rho_0), unyt.Unit(r_c)
+        return rho_0
+
+
+class GeneralizedNFWDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "rho_0": unyt.unyt_quantity(1.0, "Msun/kpc**3"),
+        "r_s": unyt.unyt_quantity(1.0, "pc"),
+        "gamma": 1.0,
+    }
+
+    @classmethod
+    def __function__(cls, r, rho_0=1.0, r_s=1.0, gamma=1.0):
+        return rho_0 / (r / r_s) ** gamma / (1 + r / r_s) ** (3 - gamma)
+
+    @classmethod
+    def __function_units__(cls, r, rho_0="", r_s="", gamma=""):
+        r, rho_0, r_s = unyt.Unit(r), unyt.Unit(rho_0), unyt.Unit(r_s)
+        return rho_0 / (r / r_s) ** gamma
+
+
+class BetaModelDensityProfile(BaseSphericalDensityProfile):
+    __IS_ABSTRACT__ = False
+    __PARAMETERS__ = {
+        "rho_0": unyt.unyt_quantity(1.0, "Msun/kpc**3"),
+        "r_c": unyt.unyt_quantity(1.0, "kpc"),
+        "beta": 1.0,
+    }
+
+    @classmethod
+    def __function__(cls, r, rho_0=1.0, r_c=1.0, beta=1.0):
+        return rho_0 * (1 + (r / r_c) ** 2) ** (-1.5 * beta)
+
+    @classmethod
+    def __function_units__(cls, r, rho_0="", r_c="", beta=""):
+        r, rho_0, r_c = unyt.Unit(r), unyt.Unit(rho_0), unyt.Unit(r_c)
+        return rho_0
+
+
+# ======================================= #
+# Disk Profiles (Cylindrical)             #
+# ======================================= #
+#
+# class MiyamotoNagaiDensityProfile(BaseSymmetricCylindricalProfile):
+#     __IS_ABSTRACT__ = False
+#     __PARAMETERS__ = {"M": unyt.unyt_quantity(1.0, "Msun"), "a": unyt.unyt_quantity(1.0, "kpc"), "b": 1.0}
+#
+#     @classmethod
+#   def __function__(cls, R, z, M=1.0, a=1.0, b=1.0):
+#         B = sp.sqrt(z**2 + b**2)
+#         denominator = (R**2 + (a + B)**2) ** 2.5
+#         return (b**2 * M) / (4 * sp.pi) * (a * R**2 + (a + 3 * B) * (a + B)**2) / (denominator * B**3)
+#
+#     @classmethod
+#    def __function_units__(cls, R, z, M="", a="", b=""):
+#         R, z, M, a, b = unyt.Unit(R), unyt.Unit(z), unyt.Unit(M), unyt.Unit(a), unyt.Unit(b)
+#         return M / a ** 3
+#
+# class ExponentialDiskDensityProfile(BaseSymmetricCylindricalProfile):
+#     __IS_ABSTRACT__ = False
+#     __PARAMETERS__ = {"rho_0": unyt.unyt_quantity(1.0, "Msun/kpc**3"), "R_d": 1.0, "z_d": 1.0}
+#
+#     @classmethod
+#    def __function__(cls, R, z, rho_0=1.0, R_d=1.0, z_d=1.0):
+#         return rho_0 * sp.exp(-R / R_d) * sp.sech(z / z_d) ** 2
+#
+#     @classmethod
+#    def __function_units__(cls, R, z, rho_0="", R_d="", z_d=""):
+#         R, z, rho_0, R_d, z_d = unyt.Unit(R), unyt.Unit(z), unyt.Unit(rho_0), unyt.Unit(R_d), unyt.Unit(z_d)
+#         return rho_0

@@ -1,61 +1,25 @@
-#======================================================================================================================#
-#                                            Pisces  Configuration File                                                #
-#                                     +--------------------------------------+                                         #
-#                                                                                                                      #
-# This file contains the basic configuration settings for Pisces. See the line comments for details on                 #
-#   specific settings. Users are encouraged to edit settings and / or change settings as necessary.                    #
-#                                                                                                                      #
-# --- These settings are accessed using the pc.pisces_params variable -------------------------------------------------#
-#======================================================================================================================#
-system:
-  # -- These are system-wide settings for basic usage. -- #
-  preferences:
-    # General user preferences
-    disable_progress_bars: false    # Change to true to disable all progress bars in the module.
-  cache:
-    # Settings regarding internal cache storage during runtime.
-    cache_sizes:
-      # Settings for cache size restrictions.
-      grid_interpolator_cache_size: 100 # Set's maximum cache size for interpolator storage to 100 Mb.
-logging:
-  # -- Settings pertaining to the logging system in Pisces -- #
-  # There are 2 loggers in the Pisces module: mainlog and devlog.
-  mylog:
-    # Settings for the mainlog. This is the log which displays to stdout for most processes.
-    format: "%(name)-3s : [%(levelname)-9s] %(asctime)s %(message)s" # Logger's string format for output
-    level: INFO     # Only logging passed to this level or higher are displayed.
-    stream: stderr   # Can be STDERR or STDOUT.
-  devlog:
-    # The developer log. This will increase the ammount of technical detail printed to stdout.
-    enabled: false
-    format: '%(name)-3s : [%(levelname)-9s] %(asctime)s %(message)s' # Logger's string format for output
-    level: INFO    # Only logging passed to this level or higher are displayed.
-    stream: stderr   # Can be STDERR or STDOUT.
-  code:
-    enabled: true
-    format: '%(name)-3s : [%(levelname)-9s] %(message)s' # Logger's string format for output
-    level: DEBUG    # Only logging passed to this level or higher are displayed.
-    stream: stderr   # Can be STDERR or STDOUT.
-
-#======================================================================================================================#
+# ---------------------------------------------------
+# Pisces Default Configuration File
+# ---------------------------------------------------
+# This file provides default settings for Pisces.
+# Users can override these defaults using:
+# - PISCES_CONFIG environment variable
+# - .piscesrc in the project directory
+# - ~/.config/pisces/config.yaml
+#
+# Values in this file are safe defaults suitable for most environments.
+# ---------------------------------------------------
 physics:
-  # -- The physics settings are basic user-configurable physical parameters -- #
-  hydrogen_abundance: 0.76 # The primordial hydrogen abundance (0.76 generally accepted value)
-#======================================================================================================================#
-plotting:
-  # These are options for any of the default plots generated in cluster generator.
-  figures:
-    # Default settings for figure sizes, DPI, etc.
-    figure_size: [10,10]
-  colormaps:
-    default_colormap: 'inferno'
-  defaults:
-    # -- Latex settings -- #
-    text.usetex: false
-    # -- Tick Settings -- #
-    xtick.major.size: 8
-    ytick.major.size: 8
-    xtick.minor.size: 5
-    ytick.minor.size: 5
-    xtick.direction: "in"
-    ytick.direction: "in"
+  default_cosmology: 'Planck15' # The default cosmology to assume unless overridden.
+
+logging:
+  # Logging configuration settings. These are overridden
+  # in library configurations and are only relevant as
+  # fallback.
+  main:
+    # Settings for the main logger accessed in utilities.logging.
+    level: INFO
+    format: "[Pisces]-%(levelname)s: %(message)s"
+
+sympy:
+  skip_constant_checks: 5  # The number of operations in a sympy exp. before we no longer check for constant.

@@ -1,9 +1,113 @@
+# ================================== #
+# Build System Configuration         #
+# ================================== #
+# Setup the build system for setup.py
 [build-system]
 requires = [
   "setuptools>=61.2",
   "setuptools_scm[toml]>=6.2",
   "oldest-supported-numpy",
-  "Cython"
+  "Cython>=0.29",
+]
+build-backend = "setuptools.build_meta"
+
+# ================================== #
+# Project Configuration              #
+# ================================== #
+# Configuration for the project details.
+[project]
+name = "pyics"
+dynamic = ["version"]
+description = "Multi-purpose astrophysical modeling library for simulation."
+authors = [
+  { name = "Eliza Diggins", email = 'eliza.diggins@berkeley.edu'}
+]
+license = { text = "GPL-3.0-or-later" }
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+  "Operating System :: OS Independent",
+]
+dependencies = [
+  "numpy>=1.22",
+  "unyt>=2.9",
+  "h5py>=3.0",
+  "scipy>=1.10",
+  "matplotlib",
+  "tqdm",
+  "pymetric-lib",
+  "platformdirs"
 ]
 
-build-backend = "setuptools.build_meta"
+# ================================== #
+# Optional Dependencies              #
+# ================================== #
+# Configuration for the project details.
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.0",
+  "pytest-cov",
+  "mypy",
+  "black",
+  "pre-commit",
+  "jupyter",
+]
+docs = [
+  'alabaster>=1.0.0',
+  'matplotlib>=3.9.2',
+  'myst-parser>=4.0.0',
+  "pydata-sphinx-theme>=0.15.2",
+  'nbsphinx>=0.9.5',
+  'jupyter>=1.1.1',
+  'sphinx>=8.1.3',
+  'sphinx_design>=0.6.1',
+  'sphinx-gallery>=0.19.0',
+  'sphinx-plot-directive>=1.0.5',
+  'sphinxcontrib-applehelp>=2.0.0',
+  'sphinxcontrib-bibtex>=2.6.3',
+  'sphinxcontrib-devhelp>=2.0.0',
+  'sphinxcontrib-htmlhelp>=2.1.0',
+  'sphinxcontrib-jsmath>=1.0.1',
+  'sphinxcontrib-qthelp>=2.0.0',
+  'sphinxcontrib-serializinghtml>=2.0.0',
+  'sphinxcontrib-tikz>=0.4.20',
+  "numpydoc",
+]
+test = [
+  "pytest",
+  "pytest-xdist",
+  "pytest-cov",
+  "hypothesis"
+]
+
+# ================================== #
+# Tools                              #
+# ================================== #
+[tool.setuptools]
+packages = { find = { include = ["pisces*"] } }
+include-package-data = true
+
+[tool.setuptools_scm]
+version_file = "pisces/_version.py"
+local_scheme = "no-local-version"
+fallback_version = "0.0.0"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --strict-markers"
+testpaths = ["tests"]
+
+
+[tool.black]
+line-length = 88
+target-version = ["py39"]
+
+[tool.coverage.run]
+branch = true
+source = ["pisces"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true

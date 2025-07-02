@@ -1,707 +1,820 @@
 """
-Profile base classes.
+Profile base class module.
 
-Profiles are one of the core components of Pisces, enabling users to model and manipulate mathematical profiles
-with symbolic and numerical capabilities. Profiles can represent various physical and mathematical entities, such as
-density, mass, or temperature distributions.
-
-For readers who are not familiar with the usage of profiles, we suggest reading :ref:`profiles_overview`. For developers,
-the :ref:`profiles_developers` is worth a read before diving into the API.
-
+This module provides the core base classes from which all other
+profiles are constructed and includes skeletons for developers to
+use when adding new profiles to the package.
 """
 from abc import ABC, ABCMeta, abstractmethod
 from functools import wraps
-from typing import TYPE_CHECKING, Any, Callable, Dict, List, Union
+from typing import Any, Callable, Dict, List, Literal, Optional, Type, Union
 
-import h5py
-import numpy as np
 import sympy as sp
-from unyt import Unit, unyt_array, unyt_quantity
+import unyt
 
-from pisces.utilities.general import find_in_subclasses
-from pisces.utilities.logging import devlog
+from pisces._registries import __default_profile_registry__
+from pisces.utilities.symbols import lambdify_expression
 
-if TYPE_CHECKING:
-    pass
+from ._exceptions import ProfileClassSetupError
+
+# ============================= #
+# Core Structures               #
+# ============================= #
+# These are the core structures for defining
+# the behavior of profiles in Pisces across a
+# variety of different scenarios.
 
 
-def class_expression(name: str = None, on_demand: bool = True):
+def derived_profile(name: Optional[str] = None) -> classmethod:
     """
-    Decorator to register a symbolic expression at the class level.
+    Mark a class method as a derived profile generator.
 
-    This decorator is designed to streamline the definition of class-level symbolic expressions for subclasses of
-    :py:class:`Profile`. These expressions are derived from the symbolic representation of the profile's function
-    and are shared across all instances of the class.
+    Derived profiles define secondary symbolic profiles (e.g., gradients, potentials)
+    associated with this class. When decorated, the method is automatically registered
+    at class construction and the profile can be instantiated on demand via
+    :meth:`BaseProfile.get_derived_profile`.
+
+    The decorated method must be a ``@classmethod`` with the following signature:
+
+    .. code-block:: python
+
+        @classmethod
+        def my_derived(cls, *variable_symbols, **parameter_symbols):
+            return symbolic_func, units_func, variables, parameters
+
+    The method must return a tuple:
+
+    - ``symbolic_func(*variable_symbols, **parameter_symbols)`` — Callable generating a SymPy expression
+    - ``units_func(*variable_units, **parameter_units)`` — Callable computing units with unyt
+    - ``variables`` — List of str, independent variables for the derived profile
+    - ``parameters`` — Dict of str: default parameters for the derived profile
 
     Parameters
     ----------
     name : str, optional
-        The name of the derived symbolic expression. If not provided, the name of the decorated method will be used.
-        This is the name by which the expression is registered and then looked up by the user. It therefore should
-        generally be intuitive.
-    on_demand : bool, optional
-        If ``True`` (default), this won't be loaded until it is requested. Otherwise it is loaded as soon as the
-        class is instantiated.
+        A custom name for the derived profile. Defaults to the method name.
+
     Returns
     -------
-    Callable
-        The decorated method.
+    classmethod
+        The decorated classmethod, with registration metadata.
 
     Notes
     -----
-    To use this decorator, define a method in your :py:class:`Profile` subclass that computes the desired symbolic
-    expression. The decorated method must have the following signature:
+    - Derived profiles are instantiated as dynamic subclasses of :attr:`__DERIVED_BASE__`, or
+      :class:`BaseProfile` if unspecified.
+    - Use :meth:`BaseProfile.get_derived_profile` to access an instantiated version.
 
-    .. code-block:: python
-
-        class ProfileClass(Profile):
-
-            @class_expression(name='my_expression')
-            def method(
-                axes: List[sp.Symbol],
-                parameters: Dict[str, sp.Symbol],
-                expression: sp.Basic): -> sp.Basic
-
-                # Insert the code to manipulate the axes, parameters, and expression
-                # as needed here.
-
-                return expression
-
-    Here, the arguments are as follows:
-
-    - **axes**: A list of ``sympy.Symbol`` objects representing the symbolic axes of the profile.
-    - **parameters**: A dictionary mapping parameter names to their ``sympy.Symbol`` representations.
-    - **expression**: The symbolic function of the profile.
-
-    The decorated method should return a symbolic expression derived from these inputs. The returned expression is
-    automatically registered at the class level under the specified or inferred name.
-
-    Tips
-    ----
-    - Use this decorator for expressions that are static and depend only on the symbolic representation of the profile,
-      not on instance-specific parameters.
-    - Derived expressions can be used to add meaningful symbolic attributes to the class, such as analytical derivatives
-      or scaling factors.
-
+    Raises
+    ------
+    TypeError
+        If applied to a method that is not a @classmethod.
     """
 
     def decorator(func):
-        @wraps(func)
-        def wrapper(cls, *args, **kwargs):
-            return func(cls, *args, **kwargs)
+        """Add the wrapper around the class expression."""
+        if not isinstance(func, classmethod):
+            raise TypeError(
+                "The @derived_profile decorator must be applied to a @classmethod."
+            )
 
-        wrapper.class_expression = True
-        wrapper.expression_name = name or func.__name__
-        wrapper.on_demand = on_demand
-        return wrapper
+        original_func = func.__func__  # Extract underlying function from classmethod
+
+        @wraps(original_func)
+        def wrapper(*args, **kwargs):
+            """Wrap original function."""
+            return original_func(*args, **kwargs)
+
+        # Rewrap as a classmethod
+        wrapped_method = classmethod(wrapper)
+
+        # Attach metadata
+        wrapped_method.derived_profile = True
+        wrapped_method.expression_name = name or original_func.__name__
+
+        return wrapped_method
 
     return decorator
 
 
-class ProfileMeta(ABCMeta):
-    """
-    Metaclass parent for all profiles in Pisces. This metaclass ensures that all of the
-    relevant class attributes are present and specified and that the symbolic attributes are
-    correctly manipulated.
-    """
+class _ProfileMeta(ABCMeta):
+    def __new__(mcs, name, bases, namespace, **kwargs):
+        """
+        Generate a new ProfileMeta class. This procedure creates a generic
+        object subclass before performing the following 3 procedures:
 
-    def __new__(mcs, name, bases, cls_dict):
-        # Identify if the class is abstract or concrete. This step is necessary so that
-        # we don't force abstract classes to have properties which are not necessary given
-        # that they are never instantiated.
-        is_parent = cls_dict.get("_is_parent_profile", False)
+        1. Check for abstraction: if the class is abstract, we just return the
+           generic ``object`` baseclass.
+        2. Validate the class: Check for required profile structures.
+        3. Setup the class: Construct all of the relevant symbolics, etc.
+        """
+        # --- Generate the generic class --- #
+        # Perform the standard operation to create an `object` descended
+        # base class which can then be altered as needed.
+        cls_object: Type[BaseProfile] = super().__new__(
+            mcs, name, bases, namespace, **kwargs
+        )
 
-        # Create the base class object without adulteration from the
-        # metaclass.
-        cls = super().__new__(mcs, name, bases, cls_dict)
+        # --- Check for abstraction --- #
+        _cls_is_abstract = getattr(cls_object, "__IS_ABSTRACT__", False)
+        if _cls_is_abstract:
+            # We do not process this class at all.
+            return cls_object
 
-        # If the class is not an abstract base class, we need to register
-        # symbols and parse the relevant class-level expressions.
-        cls._expression_dictionary = {}
-        if not is_parent:
-            mcs._validate_class(cls)
-            mcs._generate_symbolics(cls)
-            mcs._register_class_expressions(cls, cls_dict)
+        # --- Validate Class --- #
+        mcs.validate_profile_class(cls_object)
 
-        return cls
+        # -- Setup the Class -- #
+        # We now setup the class and register it.
+        if cls_object.__REGISTER__ and not __default_profile_registry__.has(
+            cls_object.__name__
+        ):
+            __default_profile_registry__.register(cls_object.__name__, cls_object)
+
+        if cls_object.__SETUP_AT__ == "import":
+            cls_object.__cls_setup__()
+
+        return cls_object
 
     @staticmethod
-    def _validate_class(cls):
+    def validate_profile_class(cls):
         """
-        This method simply checks over the class and ensures that it is self-consistent.
-        """
-        # Check for the required components of the class.
-        _required_components = [
-            "AXES",
-            "DEFAULT_PARAMETERS",
-            "_profile",
-            "_expression_dictionary",
-            "DEFAULT_AXES_UNITS",
-            "SYMBAXES",
-            "SYMBPARAMS",
-            "profile_expression",
-        ]
+        Validate a new profile class.
 
-        for component in _required_components:
-            if not hasattr(cls, component):
-                raise SyntaxError(
-                    "Class '{}' has no attribute '{}'".format(cls.__name__, component)
+        This includes determining the number of dimensions and ensuring
+        that bounds and coordinates are all accurate.
+        """
+        # Check the new class for the required attributes that all classes should have.
+        __required_elements__ = [
+            "__VARIABLES__",
+            "__PARAMETERS__",
+            "__cls_var_symbols__",
+            "__cls_param_symbols__",
+        ]
+        for _re_ in __required_elements__:
+            if not hasattr(cls, _re_):
+                raise ProfileClassSetupError(
+                    f"Profile class {cls.__name__} does not define or inherit an expected "
+                    f"class attribute: `{_re_}`."
                 )
 
-        # Ensure that the axes units are valid and that the default parameters all have units as well.
-        cls.DEFAULT_AXES_UNITS = {
-            au: Unit(av) if av is not None else Unit("")
-            for au, av in getattr(cls, "AXES_UNITS").items()
-        }
-        cls.DEFAULT_PARAMETERS = {
-            pn: pv if hasattr(pv, "units") else unyt_quantity(pv, "")
-            for pn, pv in getattr(cls, "DEFAULT_PARAMETERS").items()
-        }
-
-    @staticmethod
-    def _generate_symbolics(cls):
-        """
-        Generate the symbolic attributes for the profile class.
-        """
-        # Fetch the axes and the parameters and the profile.
-        AXES, DEFAULT_PARAMETERS = getattr(cls, "AXES_UNITS"), getattr(
-            cls, "DEFAULT_PARAMETERS"
-        )
-        _profile = getattr(cls, "_profile")
-
-        # Build the sympy symbols for each of the symbolic axes
-        # and for each of the parameters.
-        cls.SYMBAXES = [sp.Symbol(ax) for ax in AXES]
-        cls.SYMBPARAMS = {param: sp.Symbol(param) for param in DEFAULT_PARAMETERS}
-
-        # Attempt to construct the class level function by sending the symbolic attributes
-        # through the function to generate an expression. If this fails, we get an error.
-        try:
-            cls.profile_expression = _profile(*cls.SYMBAXES, **cls.SYMBPARAMS)
-        except Exception as e:
-            raise ValueError(
-                f"Failed to generate symbolic function for '{cls.__name__}' due to: {e}"
+        # Ensure that we have specified axes and that they have the correct length.
+        # The AXES_BOUNDS need to be validated to ensure that they have the correct
+        # structure and only specify valid conventions for boundaries.
+        if cls.__VARIABLES__ is None:
+            raise ProfileClassSetupError(
+                f"Profile class {cls.__name__} does not define a set of variables"
+                "using the `__VARIABLES__` attribute."
             )
 
-    @staticmethod
-    def _register_class_expressions(cls, clsdict):
+
+class BaseProfile(ABC, metaclass=_ProfileMeta):
+    """
+    Abstract base class for constructing symbolic profile functions.
+
+    :class:`BaseProfile` provides the infrastructure for defining parameterized, symbolic expressions
+    that can be evaluated numerically with units. Subclasses define their behavior by specifying
+    independent variables, parameters, and symbolic expressions. Additional derived profiles,
+    such as gradients or potentials, can be attached via :func:`derived_profile`.
+
+    This class integrates:
+
+    - SymPy for symbolic construction
+    - unyt for unit-aware parameter handling
+    - Automated symbolic setup and expression management via a custom metaclass
+    - Optional serialization to and from minimal dictionaries
+    - Dynamic construction of secondary (derived) profiles
+
+    Intended Usage
+    --------------
+    Subclasses must define the following:
+
+    - `__VARIABLES__` : list of str
+      Independent variables of the profile.
+
+    - `__PARAMETERS__` : dict of str, default values
+      Named parameters for the profile function. These are provided at instantiation with units.
+
+    - `__function__` : abstractmethod
+      Returns the symbolic expression as a SymPy object.
+
+    - `__function_units__` : abstractmethod
+      Returns the dimensional units of the profile output.
+
+    Additional customization is possible using:
+
+    - `__IS_ABSTRACT__` : bool
+      Prevents symbolic setup and registration for base or template classes.
+
+    - `__REGISTER__` : bool
+      Controls whether the class is added to the global profile registry.
+
+    - `__SETUP_AT__` : "init" or "import"
+      Controls when symbolic setup occurs.
+
+    - `__DERIVED_BASE__` : type
+      Specifies the base class for any derived profiles.
+
+    Derived Profiles
+    ----------------
+    Developers can attach secondary symbolic profiles using the `@derived_profile` decorator.
+    These are dynamically constructed as subclasses and accessed via `get_derived_profile`.
+
+    Example
+    -------
+    .. code-block:: python
+
+        class MyProfile(BaseProfile):
+            __IS_ABSTRACT__ = False
+            __VARIABLES__ = ["x"]
+            __PARAMETERS__ = {"a": 1.0}
+
+            def __function__(self, x, a):
+                return a * x ** 2
+
+            def __function_units__(self, x_unit, a_unit):
+                return a_unit * x_unit ** 2
+
+            @derived_profile()
+            @classmethod
+            def gradient(cls, x, a):
+                def func(x, a):
+                    return 2 * a * x
+                def units(x_unit, a_unit):
+                    return a_unit * x_unit
+                return func, units, ["x"], {"a": 1.0}
+
+    Notes
+    -----
+    - Subclasses must explicitly disable `__IS_ABSTRACT__` to trigger full setup.
+    - Symbolic variables and parameter symbols are generated during class setup.
+    - Parameters provided at initialization can include units and are stored internally as magnitude/unit pairs.
+    - Numerical evaluation supports unit-aware input and output via `__call__`.
+    """
+
+    # =============================== #
+    # Class Level Flags               #
+    # =============================== #
+    # Class flags for BaseProfile descendants
+    # allow developers to control and customize
+    # subclass behavior during metaclass processing,
+    # symbolic setup, and profile registration.
+
+    # CONVENTION: All class-level flags are defined
+    # with ALL_CAPS naming for clarity and consistency.
+
+    __IS_ABSTRACT__: bool = True
+    """
+    bool : Marks this profile class as abstract.
+
+    If set to ``True``, the class is treated as an abstract template.
+    The metaclass will skip validation, symbolic setup, and registration steps
+    during class construction.
+
+    This flag is intended for base classes or incomplete implementations that
+    define a structural framework but should not be directly instantiated or
+    registered in the profile registry.
+
+    Notes
+    -----
+    - Concrete subclasses **must** set ``__IS_ABSTRACT__ = False`` to enable full setup.
+    - Failure to do so results in bypassing all symbolic infrastructure.
+    """
+
+    __REGISTER__: bool = True
+    """
+    bool : Controls automatic registration of the profile.
+
+    If ``True``, the profile class is added to the global
+    ``__default_profile_registry__`` during class construction,
+    allowing it to be retrieved dynamically by name.
+
+    If ``False``, the profile class is fully constructed and functional
+    but omitted from the registry. This is useful for:
+
+    - Internal helper classes
+    - Dynamically generated derived profiles
+    - Experimental or private implementations
+
+    Notes
+    -----
+    - Abstract classes are never registered, regardless of this flag.
+    - To prevent registry pollution, most temporary or internal profiles
+      should explicitly set ``__REGISTER__ = False``.
+    """
+
+    __SETUP_AT__: Literal["init", "import"] = "init"
+    """
+    str : Controls when symbolic setup occurs for the profile class.
+
+    Valid options are:
+
+    - ``"import"`` : Symbolic setup runs during class construction (at import time).
+    - ``"init"``   : Symbolic setup is deferred until the first instance is initialized.
+
+    Use ``"import"`` for:
+
+    - Profiles that require immediate symbolic availability
+    - Classes where derived profiles or symbolic methods depend on setup at import time
+
+    Use ``"init"`` for:
+
+    - Profiles that should minimize startup cost
+    - Cases where symbolic setup is only required on first use
+
+    Notes
+    -----
+    - Deferred setup with ``"init"`` is idempotent; setup only runs once, even across instances.
+    - Changing this flag does not affect already constructed classes.
+    """
+
+    __DERIVED_BASE__: Optional[Type["BaseProfile"]] = None
+    """
+    type or None : Specifies the base class for dynamically generated derived profiles.
+
+    When using the ``@derived_profile`` decorator, derived profiles are constructed
+    as subclasses of this type.
+
+    Defaults to ``BaseProfile`` if not specified, but developers can override to:
+
+    - Enforce specific behavior in derived profiles
+    - Introduce specialized methods or infrastructure
+    - Provide alternative symbolic backends
+
+    Examples
+    --------
+    To force all derived profiles of a custom base to inherit from a shared subclass:
+
+    .. code-block:: python
+
+        class MyBaseProfile(BaseProfile):
+            __IS_ABSTRACT__ = True
+            __DERIVED_BASE__ = MyDerivedBase
+
+    Notes
+    -----
+    - Derived profiles respect the ``__DERIVED_BASE__`` of the defining class,
+      not necessarily the base-most ancestor.
+    - The provided type must itself be a subclass of ``BaseProfile`` or compatible.
+    """
+
+    # =============================== #
+    # Class Attributes                #
+    # =============================== #
+    # These settings are used to determine how the
+    # profile will behave from a mathematical standpoint. These
+    # should be set in almost all subclasses to define the
+    # relevant variables, parameters, etc.
+    __VARIABLES__: List[str] = None
+    """list of str: The independent variables of the profile function.
+    These are converted at instantiation to sympy variables in order to construct
+    the relevant profile.
+    """
+    __PARAMETERS__: Dict[str, Any] = dict()
+    """ dict of str, Any: The parameters which define this profile and its
+    behavior. This should include any scale lengths, masses, etc. Each of the parameters
+    is set by specifying the corresponding kwarg when initializing the class.
+    """
+    # ============================== #
+    # Class Initialization Vars      #
+    # ============================== #
+    # These components of the class should always be left as
+    # sentinels and then filled during the metaclass initialization.
+    # This is where sympy symbols are stored.
+    #
+    # This section also includes the methods accessed during
+    # class construction so that they can be overwritten as needed
+    # in subclasses.
+    __cls_var_symbols__: List[sp.Symbol] = None
+    __cls_param_symbols__: Dict[str, sp.Symbol] = dict()
+    __cls_derived_profiles__: Dict[str, Any] = dict()
+    __cls_is_setup_flag__: bool = False
+
+    @classmethod
+    def __cls_setup_symbols__(cls):
         """
-        Register class-level symbolic expressions from decorated methods.
+        Create the symbols for the parameters and the variables
+        of the class.
 
-        This method identifies methods in the class dictionary (`clsdict`) that are decorated with
-        the `@class_expression` decorator. For each such method, it:
+        This is executed by the metaclass when the class is generated vis-a-vis
+        the ``__setup_class__`` method. It is the first step in class creation.
 
-        1. Retrieves the symbolic expression generated by the method using the class's symbolic axes,
-           symbolic parameters, and main symbolic function expression (`_func_expr`).
-        2. Registers the resulting expression under the name specified in the decorator (or the method name
-           if not explicitly specified) using the `set_class_expression` method.
+        Requirements
+        ------------
+        Whatever form this method takes, it must fill the ``__cls_var_symbols__``
+        and ``__cls_param_symbols__`` successfully with SymPy symbols representing
+        each of the relevant variables and parameters. ``__cls_var_symbols__`` should
+        be a list of symbols while ``__cls_param_symbols__`` should be a dictionary
+        with the string of the parameter and then the symbol as the value.
+        """
+        # --- DEFAULT --- #
+        cls.__cls_var_symbols__ = [sp.Symbol(_var_) for _var_ in cls.__VARIABLES__]
+        cls.__cls_param_symbols__ = {
+            _param_name_: sp.Symbol(_param_name_) for _param_name_ in cls.__PARAMETERS__
+        }
 
-        Parameters
-        ----------
-        cls : Type['Profile']
-            The Profile subclass for which class-level expressions are being registered.
-        clsdict : dict
-            The dictionary of attributes and methods belonging to the Profile subclass.
+    @classmethod
+    def __cls_setup_implicit_symbolic_attributes__(cls):
+        """
+        Register all class-level symbolic expressions defined with @derived_profile.
 
-        Raises
-        ------
-        ValueError
-            If a decorated method fails to generate a valid symbolic expression.
+        Scans the method resolution order (MRO) of the class and identifies class methods
+        tagged as symbolic expressions.
+
+        Adds them to the `__cls_symbolic_attrs__` dictionary. The expressions are evaluated
+        on demand when requested via `get_derived_profile()`.
 
         Notes
         -----
-        - This method assumes that decorated methods accept three arguments:
-          `SYMBAXES` (list of symbolic axes), `SYMBPARAMS` (dict of symbolic parameters),
-          and `func_expr` (the symbolic function expression of the profile).
-        - The expressions registered via this method are shared across all instances of the Profile class.
+        This only registers the expression. Evaluation is deferred until the first access.
         """
+        # Set the derived profiles blank so that we do not
+        # get overlap between constructors / behavior between classes.
+        cls.__cls_derived_profiles__ = dict()
+
+        # begin the iteration through the class __mro__ to find objects
+        # in the entire inheritance structure.
         seen = set()
-        for base in cls.__mro__:
-            # You might skip object or other base classes if desired
+        for base in reversed(cls.__mro__):  # reversed to ensure subclass -> baseclass
+            # Check if we need to search this element of the __mro__. We only exit if we find
+            # `object` because it's not going to have any worthwhile symbolics.
             if base is object:
                 continue
+
+            # Check this element of the __mro__ for any relevant elements that
+            # we might want to attach to this class.
             for attr_name, method in base.__dict__.items():
+                # Check if we have any interest in processing these methods. If the method is already
+                # seen, then we skip it. Additionally, if the class expression is missing the correct
+                # attributes, we skip it.
                 if (base, attr_name) in seen:
                     continue
-                seen.add((base, attr_name))
+                if (not isinstance(method, classmethod)) and not (
+                    callable(method) and getattr(method, "derived_profile", False)
+                ):
+                    seen.add((base, attr_name))
+                    continue
+                elif (isinstance(method, classmethod)) and not (
+                    callable(method.__func__)
+                    and getattr(method, "derived_profile", False)
+                ):
+                    seen.add((base, attr_name))  # type: ignore
+                    continue
+                seen.add((base, attr_name))  # type: ignore
 
-                if callable(method) and getattr(method, "class_expression", False):
-                    expression_name = getattr(
-                        method, "expression_name"
-                    )  # Retrieve the name for the expression
-                    on_demand = getattr(method, "on_demand", True)
-                    devlog.debug(
-                        "Registering class expression %s to class %s. (ON_DEMAND=%s)",
-                        expression_name,
-                        cls.__name__,
-                        on_demand,
-                    )
+                # At this point, any remaining methods are relevant class expressions which should
+                # be registered. We create the dynamic class at this stage and then only instantiate
+                # when required by the user.
+                expression_name = getattr(method, "expression_name", attr_name)
+                _func, _ufunc, _vars, _params = getattr(cls, method.__name__)()
+                cls.__cls_derived_profiles__[
+                    expression_name
+                ] = build_dynamic_profile_class(
+                    _func,
+                    _ufunc,
+                    variables=_vars,
+                    parameters=_params,
+                    base=cls.__DERIVED_BASE__,
+                )
 
-                    if not on_demand:
-                        devlog.debug(
-                            "Evaluating class expression %s...", expression_name
-                        )
-                        try:
-                            # Generate the symbolic expression using the method
-                            expression = method(
-                                cls.SYMBAXES, cls.SYMBPARAMS, cls.profile_expression
-                            )
-                            # Register the expression at the class level
-                            cls._expression_dictionary[expression_name] = expression
-                        except Exception as e:
-                            raise ValueError(
-                                f"Failed to register class-level expression '{expression_name}' for "
-                                f"class '{cls.__name__}' due to: {e}"
-                            )
-                    else:
-                        cls._expression_dictionary[expression_name] = attr_name
-
-
-class Profile(ABC, metaclass=ProfileMeta):
-    """
-    Core base class for Pisces profiles.
-    """
-
-    # @@ FLAGS @@ #
-    # These flags can be used to direct the metaclass on how to handle the class.
-    _is_parent_profile: bool = True  # Skip symbolic registration (useful for a 'parent profile' that can't actually be used).
-
-    # @@ AXES AND PARAMETER SETUP @@ #
-    # These class attributes specify the base structure of the profile including
-    # what independent axes are available and what parameters exist (and what units are associated with
-    # each axis). Subclasses need to alter these to suit their use case.
-    AXES: List[str] = None
-    """ list of str: The axes (free parameters) of the profile.
-        These should be strings and be specified in order. The metaclass will process
-        them into the symbolic axes of :py:attr:`Profile.SYMBAXES`.
-    """
-    DEFAULT_PARAMETERS: Dict[str, Any] = None
-    """ dict of str, float or :py:class:`unyt.unyt_quantity`: Default parameters for this profile class.
-    This dictionary contains the default parameters for the profile with each key representing a parameter name and
-    each value corresponding to the default value.
-
-    The units of the values in :py:attr:`DEFAULT_PARAMETERS` are interpreted as the default parameter units. If a float
-    is specified, then it is assumed that the parameter is unitless. The units for particular parameters can be changed
-    at ``__init__``.
-    """
-    DEFAULT_AXES_UNITS: Dict[str, Unit] = None
-    """ dict of str, :py:class:`unyt.Unit`: The units to associate with each independent variable.
-    Each unit should be specified as an unyt unit object or ``None``. If ``None`` is used, then we assume that this
-    axis is just a float.
-    """
-
-    # @@ SYMBOL CONTAINERS @@ #
-    # These class attributes hold the various class-level symbolic objects that are needed for
-    # profile manipulation.
-    # These should NOT BE SET, they are set dynamically by the metaclass.
-    _expression_dictionary: dict[str, sp.Basic] = None
-    """ dict[str, sp.Basic]: The dictionary of symbolic expressions for this class."""
-    profile_expression: sp.Basic = None
-    """ sp.Basic: Symbolic representation of this profile."""
-    SYMBAXES: List[sp.Symbol] = None
-    """ list of sp.Symbol: The symbolic axes of the profile."""
-    SYMBPARAMS: Dict[str, sp.Symbol] = None
-    """ dict of sp.Symbol, float: The symbolic parameters of the profile."""
-
-    # @@ INITIALIZATION PROCEDURES @@ #
-    # All of these methods play a role in the initialization process.
-    def _setup_parameters(
-        self, parameter_values: Dict[str, Union[unyt_quantity, float]]
-    ) -> Dict[str, unyt_quantity]:
+    @classmethod
+    def __cls_setup__(cls):
         """
-        Set up the parameters for the profile. This function processes the parameter values,
-        axis and parameter units, and determines the correct (permanent) units for the profile.
+        Orchestrates the symbolic setup for a profile class.
+
+        This is the main entry point used during class construction. It performs the following steps:
+
+        1. Initializes variables and parameter symbols.
+        2. Builds explicit class symbols (things like the metric and metric density)
+        3. Registers class expressions.
+        4. Sets up internal flags to avoid re-processing.
+
+        Raises
+        ------
+        CoordinateClassException
+            If any part of the symbolic setup fails (e.g., axes, metric, or expressions).
+        """
+        # Check for abstraction or existing configuration. If either of these has
+        # occurred, the execution should stop.
+        if cls.__IS_ABSTRACT__:
+            raise TypeError(
+                f"CoordinateSystem class {cls.__name__} is abstract and cannot be instantiated or constructed."
+            )
+        if cls.__cls_is_setup_flag__:
+            return
+
+        # Step 1: Construct the symbols.
+        try:
+            cls.__cls_setup_symbols__()
+        except Exception as e:
+            raise ProfileClassSetupError(
+                f"Failed to setup the variable symbols for profile class {cls.__name__} due to"
+                f" an error: {e}."
+            ) from e
+
+        # Step 2: Construct implicit symbolic attributes.
+        try:
+            cls.__cls_setup_implicit_symbolic_attributes__()
+        except Exception as e:
+            raise ProfileClassSetupError(
+                f"Failed to setup derived class expressions for profile class {cls.__name__} due to"
+                f" an error: {e}."
+            ) from e
+
+    # ============================== #
+    # Initialization                 #
+    # ============================== #
+    def _setup_parameters(self, **kwargs):
+        # Create the storage buffers for the parameter
+        # values and units.
+        _pvalues, _punits = dict(), dict()
+
+        for _parameter_name in kwargs:
+            if _parameter_name not in self.__PARAMETERS__:
+                raise ValueError(
+                    f"Parameter `{_parameter_name}` is not a recognized parameter of the {self.__class__.__name__} profile."
+                )
+
+        # Iterate through the parameters, strip the units,
+        # and assign.
+        for _parameter_name in self.__PARAMETERS__:
+            # Check that the parameter is valid.
+            if _parameter_name in kwargs:
+                _parameter_value = kwargs[_parameter_name]
+            else:
+                _parameter_value = self.__PARAMETERS__[_parameter_name]
+
+            # Now set them in
+            if hasattr(_parameter_value, "units"):
+                _pvalues[_parameter_name] = _parameter_value.value
+                _punits[_parameter_name] = _parameter_value.units
+            else:
+                _pvalues[_parameter_name] = _parameter_value
+                _punits[_parameter_name] = unyt.Unit("")
+
+        return _pvalues, _punits
+
+    @classmethod
+    @abstractmethod
+    def __function__(cls, *args, **kwargs) -> Any:
+        ...
+
+    @classmethod
+    @abstractmethod
+    def __function_units__(cls, *args, **kwargs) -> unyt.Unit:
+        ...
+
+    def __init__(self, **kwargs):
+        """
+        Initialize a profile instance with specific parameter values.
+
+        This constructor sets up the symbolic and numerical infrastructure for the profile
+        by performing the following steps:
+
+        1. If the class has not already been set up, trigger symbolic construction of metric tensors,
+           symbols, and expressions.
+        2. Validate and store user-provided parameter values, overriding class defaults.
+        3. Substitute parameter values into symbolic expressions to produce instance-specific forms.
+        4. Lambdify key expressions (metric tensor, inverse metric, metric density) for numerical evaluation.
 
         Parameters
         ----------
-        parameter_values : dict
-            Dictionary of parameter values.
-
-        Returns
-        -------
-        dict of str, unyt_quantity
-            Dictionary of parameter values with correct units.
+        **kwargs : dict
+            Keyword arguments specifying values for profile parameters. Each key should match
+            a parameter name defined in ``__PARAMETERS__``. Any unspecified parameters will use the class-defined
+            default values.
 
         Raises
         ------
         ValueError
-            If a provided parameter cannot be converted to the default units.
+            If a provided parameter name is not defined in the profile.
+
         """
-        # Copy default parameters to avoid modifying class attributes
-        _params = self.DEFAULT_PARAMETERS.copy()
+        # -- Class Initialization -- #
+        # For profiles with setup flags for 'init', it is necessary to process
+        # symbolics at this point if the class is not initialized.
+        self.__class__.__cls_setup__()
 
-        for param, value in parameter_values.items():
-            if param not in _params:
-                raise KeyError(f"Invalid parameter '{param}' provided.")
+        # -- Parameter Creation -- #
+        # The profile takes a set of kwargs (potentially empty) which specify
+        # the parameters of the profile. Each should be adapted into a self.__parameters__ dictionary.
+        self.__parameters__, self.__parameter_units__ = self._setup_parameters(**kwargs)
 
-            # Determine the unit, defaulting to the parameter's default unit
-            units = getattr(value, "units", _params[param].units)
+        # -- Numerical Implementation -- #
+        # We now realize the symbolic version of this particular
+        # instance as well as the numerical version.
+        self.__symbolic_profile__ = self.__function__(
+            *self.__cls_var_symbols__, **self.__cls_param_symbols__
+        )
+        self.__numeric_profile__ = self.lambdify_expression(self.__symbolic_profile__)
 
-            # Validate unit conversion
-            try:
-                units.get_conversion_factor(_params[param].units)
-            except Exception:
-                raise ValueError(
-                    f"Cannot convert units for parameter '{param}'. Expected compatible units with {_params[param].units}."
-                )
+        # -- Expression Management -- #
+        self.__derived_profiles__: Dict[str, Any] = dict()
 
-            # Assign the value with the determined units
-            _params[param] = unyt_quantity(value, units)
+    # =============================== #
+    # Dunder Methods                  #
+    # =============================== #
+    def __repr__(self):
+        return f"<{self.__class__.__name__} - Parameters={self.__parameters__}> "
 
-        return _params
+    def __str__(self):
+        return f"<{self.__class__.__name__}>"
 
-    def _setup_axes_units(
-        self, axes_units: Dict[str, Union[str, Unit]]
-    ) -> Dict[str, Unit]:
-        """
-        Validate and set up axis units for the profile.
+    def __hash__(self):
+        r"""
+        Compute a hash value for the profile instance.
 
-        This function ensures that provided axis units are compatible with the default
-        units specified in `AXES_UNITS`, filling in defaults where needed.
-
-        Parameters
-        ----------
-        axes_units : dict
-            Dictionary mapping axis names to their specified units.
+        The hash is based on the class name and keyword arguments (``__parameters__``).
+        This ensures that two instances with the same class and initialization parameters produce the same hash.
 
         Returns
         -------
-        dict of str, Unit
-            A dictionary mapping each axis to its corresponding unit.
+        int
+            The hash value of the instance.
+        """
+        # Create a parameter tuple with each parameter linked
+        # to the string of its unit in a tuple.
+        _parameter_linked_tuple = tuple(
+            (pname, p_value.value, str(p_value.units))
+            for pname, p_value in sorted(self.parameters.items())
+        )
+        return hash((self.__class__.__name__, _parameter_linked_tuple))
+
+    def __getitem__(self, item: str) -> unyt.unyt_quantity:
+        """
+        Return the value of a parameter with a given name.
+
+        Parameters
+        ----------
+        item : str
+            The parameter to fetch.
+
+        Returns
+        -------
+        ~unyt.array.unyt_quantity
+            The resulting parameter.
 
         Raises
         ------
         KeyError
-            If an axis in `axes_units` is not defined in `AXES_UNITS`.
-        ValueError
-            If a provided axis unit is incompatible with the expected default unit.
+            If the parameter doesn't exist.
+
         """
-        # Copy default axis units to avoid modifying class attributes
-        axis_units = self.DEFAULT_AXES_UNITS.copy()
-        axes_units = axes_units or {}
+        return self.__parameters__[item] * self.__parameter_units__[item]
 
-        for axis, unit in axes_units.items():
-            if axis not in axis_units:
-                raise KeyError(
-                    f"Invalid axis '{axis}' provided. Expected one of {list(axis_units.keys())}."
-                )
-
-            # Determine the unit, defaulting to the axis' default unit
-            assigned_unit = getattr(unit, "units", axis_units[axis])
-
-            # Validate unit conversion
-            try:
-                assigned_unit.get_conversion_factor(axis_units[axis])
-            except Exception:
-                raise ValueError(
-                    f"Incompatible units for axis '{axis}'. Expected compatible units with {axis_units[axis]}."
-                )
-
-            # Assign the validated unit
-            axis_units[axis] = assigned_unit
-
-        return axis_units
-
-    def _set_output_units(self):
-        return self._profile(
-            *[1 * au for au in self.axes_units.values()], **self._parameters
-        ).units
-
-    def _validate_units(self):
-        # This function can be used to check that units are valid if necessary.
-        pass
-
-    def _setup_call_function(self):
+    def __contains__(self, parameter: str) -> bool:
         """
-        Set up the callable function by substituting parameter values
-        and creating a numerical function.
-        """
-        # Symbolically substitute in the parameters for this profile.
-        symbolic_expr = self.substitute_expression(self.__class__.profile_expression)
-
-        # Set up the call function (symbolically) and then
-        # set the call function numerical via lambdify.
-        self._call_function_symbolic = symbolic_expr
-        self._call_function = self.lambdify_expression(symbolic_expr)
-
-    def __init__(self, axes_units: Dict[str, Union[str, Unit]] = None, **kwargs):
-        # Configure the instances parameters and the corresponding units.
-        self._parameters: Dict[str, unyt_quantity] = self._setup_parameters(kwargs)
-        self._axes_units: Dict[str, Unit] = self._setup_axes_units(axes_units)
-
-        # Set up the call function. This simply takes the class level
-        # expression and substitutes the values of the various parameters into
-        # it.
-        self._setup_call_function()
-
-        # Set up the output units.
-        self._output_units: Unit = self._set_output_units()
-        self._validate_units()
-
-        # Set up the repository for derived symbolics and lambdified methods
-        self._inst_expression_dictionary: Dict[str, sp.Basic] = {}
-        self._inst_numeric_dictionary: Dict[str, Callable] = {}
-
-    # @@ PROPERTIES AND BASIC MUTABILITY @@ #
-    @property
-    def parameters(self) -> Dict[str, unyt_quantity]:
-        """
-        Provides an immutable copy of the parameters for this profile.
-        """
-        return self._parameters.copy()
-
-    @property
-    def axes_units(self) -> Dict[str, Unit]:
-        """
-        Provides an immutable copy of the units for each of the independent axes.
-        """
-        return self._axes_units.copy()
-
-    @property
-    def symbolic_expression(self) -> sp.Basic:
-        """
-        The symbolic (sympy) expression for this profile with all the parameters
-        substituted into the expression.
-        """
-        return self._call_function_symbolic
-
-    @property
-    def class_symbolic_expression(self) -> sp.Basic:
-        """
-        The symbolic (sympy) expression for this profile with all the parameters retained
-        as symbols.
-        """
-        return self.__class__.profile_expression
-
-    @property
-    def output_units(self) -> Unit:
-        """
-        The natural units in which the results of this profile are expressed.
-        """
-        return self._output_units
-
-    # @@ Class Expressions @@ #
-    # These methods manage interactions with the class-level expressions.
-    @classmethod
-    def get_class_expression(cls, expression_name: str) -> sp.Basic:
-        """
-        Retrieve a symbolic expression derived from this profile without any parameter substitutions.
+        Check whether a given parameter exists for this profile.
 
         Parameters
         ----------
-        expression_name : str
-            The name of the symbolic expression to retrieve.
-
-        Returns
-        -------
-        sp.Basic
-            The requested symbolic expression.
-
-        Raises
-        ------
-        KeyError
-            If the requested expression name does not exist.
-        """
-        # Check if the expression name is in the expression dictionary. If it is,
-        # we have the expression and just need to perform processing if It's needed before
-        # returning.
-        if expression_name in cls._expression_dictionary:
-            _class_expr = cls._expression_dictionary[expression_name]
-
-            # Check if the expression is a string. If it is, we have on-demand loading of the
-            # symbolic profile so we need to generate a symbolic equivalent.
-            if isinstance(_class_expr, str):
-                devlog.debug("Evaluating class expression %s...", expression_name)
-                try:
-                    _class_expr = getattr(cls, _class_expr)(
-                        cls.SYMBAXES, cls.SYMBPARAMS, cls.profile_expression
-                    )
-                    cls._expression_dictionary[expression_name] = _class_expr
-                except Exception as e:
-                    raise RuntimeError(
-                        f"Failed to register expression '{expression_name}' at class level. ERROR: {e}"
-                    ) from e
-
-            return _class_expr
-
-        else:
-            raise KeyError(f"Class-level expression '{expression_name}' not found.")
-
-    @classmethod
-    def list_class_expressions(cls) -> List[str]:
-        """
-        List the available class-level expressions.
-
-        Returns
-        -------
-        list of str
-            The list of available class-level expressions.
-        """
-        return list(cls._expression_dictionary.keys())
-
-    @classmethod
-    def has_class_expression(cls, expression_name: str) -> bool:
-        """
-        Check if a symbolic expression is registered at the class level.
-
-        Parameters
-        ----------
-        expression_name: str
-            The name of the symbolic expression to check.
+        parameter : str
+            The parameter name to check.
 
         Returns
         -------
         bool
-            ``True`` if the symbolic expression is registered at the class level.
-        """
-        return expression_name in cls._expression_dictionary
+            True if the parameter name is present; False otherwise.
 
-    # @@ Instance Expressions @@ #
-    # These methods manage the instance level expressions for the
-    # profiles.
-    def get_expression(self, expression_name: str) -> sp.Basic:
         """
-        Retrieve a symbolic expression derived from this profile given the name of the
-        derived quantity. The returned profile already has parameter substitutions.
+        return parameter in self.__PARAMETERS__
 
-        Parameters
-        ----------
-        expression_name : str
-            The name of the symbolic expression to retrieve.
+    def __copy__(self):
+        """
+        Create a shallow copy of the coordinate system.
 
         Returns
         -------
-        sp.Basic
-            The requested symbolic expression.
+        _CoordinateSystemBase
+            A new instance of the same class, initialized with the same parameters.
 
-        Raises
-        ------
-        KeyError
-            If the expression is not found at either the instance or class level.
         """
-        # Look for the expression in the instance directory first.
-        if expression_name in self._inst_expression_dictionary:
-            return self._inst_expression_dictionary[expression_name]
+        # Shallow copy: re-init with same parameters
+        cls = self.__class__
+        new_obj = cls(**self.parameters)
+        return new_obj
 
-        # We couldn't find it in the instance directory, now we try to fetch it
-        # and perform a substitution.
-        if expression_name in self.__class__._expression_dictionary:
-            self._inst_expression_dictionary[
-                expression_name
-            ] = self.substitute_expression(
-                self.__class__._expression_dictionary[expression_name]
-            )
-            return self._inst_expression_dictionary[expression_name]
-
-        raise KeyError(f"Expression '{expression_name}' not found.")
-
-    def set_expression(
-        self, expression_name: str, expression: sp.Basic, overwrite: bool = False
-    ):
-        """
-        Set a symbolic expression at the instance level.
-
-        Parameters
-        ----------
-        expression_name : str
-            The name of the symbolic expression to register.
-        expression : sp.Basic
-            The symbolic expression to register.
-        overwrite : bool, optional
-            If True, overwrite an existing expression with the same name. Defaults to False.
-
-        Raises
-        ------
-        ValueError
-            If the expression name already exists and `overwrite` is False.
-        """
-        if (expression_name in self._inst_expression_dictionary) and (not overwrite):
-            raise ValueError(
-                f"Expression '{expression_name}' already exists. Use `overwrite=True` to replace it."
-            )
-        self._inst_expression_dictionary[expression_name] = expression
-
-    def list_expressions(self, include_class_level: bool = True) -> List[str]:
-        """
-        List the available instance-level expressions.
-
-        Parameters
-        ----------
-        include_class_level : bool, optional
-            If True, include the class level symbolic expressions. Defaults to True.
-
-        Returns
-        -------
-        list of str
-            The list of available class-level expressions.
-        """
-        return list(
-            set(self._expression_dictionary.keys())
-            | set(self._inst_expression_dictionary.keys())
+    def __call__(
+        self, *x, units: Optional[Union[str, unyt.Unit]] = None, no_units: bool = False
+    ) -> Union[unyt.unyt_quantity, unyt.unyt_array]:
+        # separate the x args from their units.
+        xnum, xunit = (
+            [_x.value if hasattr(_x, "units") else _x for _x in x],
+            [_x.units if hasattr(_x, "units") else unyt.Unit("") for _x in x],
         )
 
-    def has_expression(self, expression_name: str) -> bool:
-        """
-        Check if a symbolic expression is registered at the instance level.
+        # Evaluate the numerical function using the xnum
+        output_value = self.__numeric_profile__(*xnum)
+        output_units = self.__function_units__(*xunit, **self.__parameter_units__)
 
-        Parameters
-        ----------
-        expression_name: str
-            The name of the symbolic expression to check.
+        if no_units:
+            return output_value
+        elif units is None:
+            return output_value * output_units
+        else:
+            return (output_value * output_units).to(units)
+
+    def __call_no_units__(self, *x):
+        return self.__numeric_profile__(*x)
+
+    # =============================== #
+    # Properties                      #
+    # =============================== #
+    @property
+    def variables(self) -> List[str]:
+        """The axes names present in this coordinate system."""
+        return self.__VARIABLES__[:]
+
+    @property
+    def parameters(self) -> Dict[str, Any]:
+        """
+        The parameters of this coordinate system. Note that modifications made to the returned dictionary
+        are not reflected in the class itself. To change a parameter value, the class must be re-instantiated.
+        """
+        return {
+            k: self.__parameters__[k] * self.__parameter_units__[k]
+            for k in self.__parameters__
+        }
+
+    @property
+    def variable_symbols(self) -> List[sp.Symbol]:
+        """
+        The symbols representing each of the coordinate axes in this coordinate system.
+        """
+        return self.__class__.__cls_var_symbols__[:]
+
+    @property
+    def parameter_symbols(self):
+        """
+        Get the symbolic representations of the coordinate system parameters.
 
         Returns
         -------
-        bool
-            ``True`` if the symbolic expression is registered.
-        """
-        return expression_name in self._inst_expression_dictionary
+        dict of str, ~sympy.core.symbol.Symbol
+            A dictionary mapping parameter names to their corresponding SymPy symbols.
+            These symbols are used in all symbolic expressions defined by the coordinate system.
 
-    def get_numeric_expression(self, expression_name: str) -> Callable:
+        Notes
+        -----
+        - The returned dictionary is a copy, so modifying it will not affect the internal state.
+        - These symbols are created during class setup and correspond to keys in `self.parameters`.
         """
-        Retrieve or create a numeric (callable) version of a symbolic expression.
+        return self.__cls_param_symbols__.copy()
 
-        Parameters
-        ----------
-        expression_name : str
-            The name of the symbolic expression to retrieve or convert.
+    @property
+    def derived_profile_classes(self) -> Dict[str, Type["BaseProfile"]]:
+        """
+        Get the available derived profile classes for this instance.
 
         Returns
         -------
-        Callable
-            A numeric (callable) version of the symbolic expression.
-
-        Raises
-        ------
-        KeyError
-            If the symbolic expression is not found.
+        dict of str, Type[BaseProfile]
+            A dictionary mapping derived profile names to their dynamically
+            generated profile classes.
         """
-        if expression_name not in self._inst_numeric_dictionary:
-            symbolic_expression = self.get_expression(expression_name)
-            self._inst_numeric_dictionary[expression_name] = self.lambdify_expression(
-                symbolic_expression
-            )
-        return self._inst_numeric_dictionary[expression_name]
+        return self.__class__.__cls_derived_profiles__.copy()
 
-    # @@ Utility Functions @@ #
-    # These utility methods provide interaction for the symbolic / numerical
-    # expressions and some other features of the class which are useful.
-    def substitute_expression(self, expression: Union[str, sp.Basic]) -> sp.Basic:
+    # ==================================== #
+    # Expressions Management               #
+    # ==================================== #
+    def substitute_expression(self, expression: Any) -> Any:
         """
-        Substitute the parameter values (:py:attr:`Profile.parameters`) into a symbolic expression.
+        Replace symbolic parameters with numerical values in an expression.
+
+        This method takes a symbolic expression that may include parameter symbols and
+        substitutes them with the numerical values assigned at instantiation.
 
         Parameters
         ----------
-        expression : str or sp.Basic
-            The symbolic expression to substitute into.
+        expression : str or sympy expression
+            The symbolic expression to substitute parameter values into.
 
         Returns
         -------
-        sp.Basic
-            Substituted symbolic expression.
+        sympy expression
+            The expression with parameters replaced by their numeric values.
+
+        Notes
+        -----
+        - Only parameters defined in ``self.__parameters__`` are substituted.
+        - If an expression does not contain any parameters, it remains unchanged.
+        - This method is useful for obtaining instance-specific symbolic representations.
+
+        Example
+        -------
+
+        .. code-block:: python
+
+            from sympy import Symbol
+            expr = Symbol('a') * Symbol('x')
+            coords = MyCoordinateSystem(a=3)
+            print(coords.substitute_expression(expr))
+            3*x
+
         """
         # Substitute in each of the parameter values.
-        _params = {k: v.d for k, v in self._parameters.items()}
-        return sp.sympify(expression).subs(_params)
+        _params = {k: v for k, v in self.__parameters__.items()}
+        return sp.simplify(sp.sympify(expression).subs(_params))
 
     def lambdify_expression(self, expression: Union[str, sp.Basic]) -> Callable:
         """
@@ -709,7 +822,7 @@ class Profile(ABC, metaclass=ProfileMeta):
 
         Parameters
         ----------
-        expression : str or sp.Basic
+        expression : :py:class:`str` or sp.Basic
             The symbolic expression to lambdify.
 
         Returns
@@ -717,219 +830,467 @@ class Profile(ABC, metaclass=ProfileMeta):
         Callable
             A callable numerical function.
         """
-        expression = sp.sympify(expression)
-        return sp.lambdify(self.__class__.SYMBAXES, expression, "numpy")
+        return lambdify_expression(
+            expression, self.__cls_var_symbols__, self.__parameters__
+        )
 
-    @staticmethod
-    @abstractmethod
-    def _profile(*args, **kwargs):
-        pass
-
-    def __call__(self, *args, units: Union[str, Unit] = None) -> Any:
+    def get_derived_profile(self, profile_name: str, **kwargs):
         """
-        Evaluate the profile's mathematical function with the given inputs.
+        Access and instantiate a derived profile by name.
 
-        This method allows the profile instance to be used as a callable, evaluating
-        its associated function with the provided input values for the independent variables.
+        If the profile has already been instantiated and no additional kwargs
+        are provided, the cached version is returned.
 
         Parameters
         ----------
-        *args : tuple
-            Input values corresponding to the independent variables defined in the :py:attr:`Profile.AXES` class attribute.
-            The number and order of inputs must match the defined axes.
-        units: str or Unit, optional
-            The output units to use.
+        profile_name : str
+            The name of the derived profile as registered via @derived_profile.
+        **kwargs : dict
+            Optional parameter overrides for the derived profile.
 
         Returns
         -------
-        Any
-            The computed result of the profile's function evaluated at the specified inputs.
+        BaseProfile
+            An instance of the derived profile, initialized with inherited and/or overridden parameters.
+
+        Raises
+        ------
+        KeyError
+            If the requested derived profile is not defined.
+        """
+        if profile_name not in self.__class__.__cls_derived_profiles__:
+            raise KeyError(
+                f"Derived profile '{profile_name}' not found for class {self.__class__.__name__}."
+            )
+
+        # If already cached and no new kwargs, return cached version
+        if profile_name in self.__derived_profiles__ and not kwargs:
+            return self.__derived_profiles__[profile_name]
+
+        DerivedCls = self.__class__.__cls_derived_profiles__[profile_name]
+
+        # Combine inherited parameters with any overrides
+        init_params = DerivedCls.__PARAMETERS__.copy()
+        init_params.update(
+            {k: v for k, v in self.parameters.items() if k in init_params}
+        )
+        init_params.update(kwargs)
+
+        derived_instance = DerivedCls(**init_params)
+        self.__derived_profiles__[profile_name] = derived_instance
+        return derived_instance
+
+    def list_derived_profiles(self) -> List[str]:
+        """
+        List all available derived profiles for this instance.
+
+        Returns
+        -------
+        list of str
+            The names of all registered derived profiles.
+        """
+        return list(self.__class__.__cls_derived_profiles__.keys())
+
+    # ==================================== #
+    # Utilities                            #
+    # ==================================== #
+    def to_dict(self) -> Dict[str, Any]:
+        """
+        Serialize this profile to a minimal dictionary representation.
+
+        The dictionary contains:
+
+        - ``class`` : The profile class name (for reconstruction)
+        - ``parameters`` : A nested dictionary of parameters with explicit unit strings
+
+        Example output:
+
+        .. code-block:: python
+
+            {
+                "class": "MyProfile",
+                "parameters": {
+                    "a": {"value": 3.0, "unit": "kpc"},
+                    "b": {"value": 5.0, "unit": ""}
+                }
+            }
+
+        Returns
+        -------
+        dict
+            Serialized profile representation suitable for storage or reconstruction.
+        """
+        return {
+            "class": self.__class__.__name__,
+            "parameters": {
+                pname: {
+                    "value": self.__parameters__[pname],
+                    "unit": str(self.__parameter_units__[pname]),
+                }
+                for pname in self.__parameters__
+            },
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        """
+        Reconstruct a profile instance from a dictionary.
+
+        Parameters
+        ----------
+        data : dict
+            Dictionary containing ``parameters`` in the format produced by :meth:`to_dict`.
+
+        Returns
+        -------
+        BaseProfile
+            A new instance of the profile with the specified parameters.
 
         Raises
         ------
         ValueError
-            If the number of input arguments does not match the number of independent variables (:py:attr:`Profile.AXES`).
-        TypeError
-            If the input values are incompatible with the profile's function.
+            If required keys are missing or invalid parameter names are provided.
+        """
+        params = {
+            pname: unyt.unyt_quantity(pdata["value"], pdata["unit"])
+            for pname, pdata in data.get("parameters", {}).items()
+        }
+        return cls(**params)
+
+    def to_yaml(self, filepath: str, **kwargs):
+        """
+        Serialize the profile to a YAML file.
+
+        Parameters
+        ----------
+        filepath : str
+            Path to the output YAML file.
+        kwargs : dict
+            Additional arguments passed to yaml.dump.
+        """
+        import yaml
+
+        with open(filepath, "w") as f:
+            yaml.dump(self.to_dict(), f, **kwargs)
+
+    def to_json(self, filepath: str, **kwargs):
+        """
+        Serialize the profile to a JSON file.
+
+        Parameters
+        ----------
+        filepath : str
+            Path to the output JSON file.
+        kwargs : dict
+            Additional arguments passed to json.dump.
+        """
+        import json
+
+        with open(filepath, "w") as f:
+            json.dump(self.to_dict(), f, indent=2, **kwargs)
+
+    @classmethod
+    def from_yaml(cls, filepath: str) -> "BaseProfile":
+        """
+        Reconstruct a profile from a YAML file.
+
+        Parameters
+        ----------
+        filepath : str
+            Path to the YAML file.
+
+        Returns
+        -------
+        BaseProfile
+            Reconstructed profile instance.
+        """
+        import yaml
+
+        with open(filepath, "r") as f:
+            data = yaml.safe_load(f)
+        return profile_from_dict(data)
+
+    @classmethod
+    def from_json(cls, filepath: str) -> "BaseProfile":
+        """
+        Reconstruct a profile from a JSON file.
+
+        Parameters
+        ----------
+        filepath : str
+            Path to the JSON file.
+
+        Returns
+        -------
+        BaseProfile
+            Reconstructed profile instance.
+        """
+        import json
+
+        with open(filepath, "r") as f:
+            data = json.load(f)
+        return profile_from_dict(data)
+
+    def to_hdf5(self, h5obj, name=None):
+        """
+        Store profile metadata into an HDF5 object as attributes.
+
+        Parameters
+        ----------
+        h5obj : ~h5py.File, ~h5py.Group, or ~h5py.Dataset
+            The HDF5 container to attach metadata to. All of the metadata
+            representing this profile is attached with `name` prefixed.
+        name : str, optional
+            Namespace prefix for attribute keys. Defaults to none, in which
+            case parameters are given no prefix. This can be unsafe if saving
+            multiple profiles to the same object.
 
         Notes
         -----
-        - The profile's function is generated during initialization using symbolic expressions and lambdified for numerical evaluation.
-        - The inputs provided must conform to the expected type and dimensionality required by the function.
-        - This method provides a convenient interface for directly evaluating the profile, e.g., `result = profile(x, y, z)`.
-
+        Only metadata is stored. This does not save large arrays or derived results.
         """
-        # Validate that the arguments have the correct length.
-        if len(args) != len(self.AXES):
-            raise ValueError(f"Expected {len(self.AXES)} arguments, got {len(args)}.")
+        data = self.to_dict()
 
-        # Coerce the arg units.
-        args = [
-            arg.to_value(unit) if hasattr(arg, "units") else arg
-            for arg, unit in zip(args, self.axes_units.values())
-        ]
+        if name is not None:
+            prefix = f"{name}."
+        else:
+            prefix = ""
 
-        # Coerce the output units.
-        if units is None:
-            units = self.output_units
+        h5obj.attrs[f"{prefix}class"] = data["class"]
 
-        return unyt_array(self._call_function(*args), self.output_units).to(units)
-
-    def __repr__(self) -> str:
-        param_str = ", ".join(f"{k}={v}" for k, v in self.parameters.items())
-        return f"<{self.__class__.__name__}({param_str})>"
-
-    def __str__(self) -> str:
-        return self.__repr__()
-
-    # @@ IO PROCEDURES @@ #
-    # These methods manage reading and writing profiles to HDF5.
-    def to_hdf5(
-        self,
-        h5_obj: Union[h5py.File, h5py.Group],
-        group_name: str,
-        overwrite: bool = False,
-    ):
-        """
-        Save this profile to an HDF5 file. The HDF5 should be opened using ``h5py`` and
-        provided as ``h5_obj``. This method saves the data for the profile into a specific group (``group_name``),
-        which will be created if necessary.
-
-        ``overwrite`` will determine whether an existing group is overwritten.
-
-        Parameters
-        ----------
-        h5_obj : h5py.File or h5py.Group
-            HDF5 object where the Profile will be saved.
-        group_name : str
-            Name of the group in the HDF5 file.
-        overwrite : bool, optional
-            If True, overwrite existing group with the same name.
-
-        Raises
-        ------
-        ValueError
-            If the group already exists and overwrite is False.
-        """
-        # Validate overwrite scenarios.
-        if (group_name in h5_obj) and overwrite:
-            # Remove the group and prepare to overwrite.
-            del h5_obj[group_name]
-        elif (group_name in h5_obj) and not overwrite:
-            raise ValueError(
-                f"Group '{group_name}' already exists. Use `overwrite=True` to replace it."
-            )
-
-        # Create the HDF5 group object into which the data should get written.
-        group = h5_obj.create_group(group_name)
-
-        # Save the data to HDF5. The basic scheme here is to write out the class name
-        # to that a backward search can identify the correct class on read and then to
-        # provide the axes units and parameters as attributes.
-        group.attrs["class_name"] = self.__class__.__name__
-        group.attrs["axes_units"] = np.asarray(self.axes_units.values(), dtype="S")
-
-        # Write out each of the parameter values and add a units version as well.
-        for key, value in self.parameters.items():
-            group.attrs[key] = value
-            group.attrs[key + "_u"] = str(value.units)
+        for pname, pinfo in data["parameters"].items():
+            h5obj.attrs[f"{prefix}param.{pname}.value"] = pinfo["value"]
+            h5obj.attrs[f"{prefix}param.{pname}.unit"] = pinfo["unit"]
 
     @classmethod
-    def from_hdf5(
-        cls, h5_obj: Union[h5py.File, h5py.Group], group_name: str
-    ) -> "Profile":
+    def from_hdf5(cls, h5obj, name=None) -> "BaseProfile":
         """
-        Load a :py:class:`Profile` instance from disk. The HDF5 file should have a specific
-        group (``group_name``), which contains the data for the profile.
+        Reconstruct a profile from HDF5 attributes.
 
         Parameters
         ----------
-        h5_obj : h5py.File or h5py.Group
-            HDF5 object from which the Profile will be loaded.
-        group_name : str
-            Name of the group in the HDF5 file.
+        h5obj : ~h5py.File, ~h5py.Group, or ~h5py.Dataset
+            HDF5 object containing profile metadata as attributes.
+        name : str, optional
+            Namespace prefix for attribute keys. If None, parameters are read without a prefix.
 
         Returns
         -------
-        Profile
-            An instance of the loaded Profile subclass.
+        BaseProfile
+            Reconstructed profile instance.
 
         Raises
         ------
         ValueError
-            If the group does not exist in the HDF5 file or required attributes are missing.
+            If required metadata is missing or incomplete.
         """
-        # Check that the group actually exists and then access it
-        # so that we can directly interact with the data.
-        if group_name not in h5_obj:
-            raise ValueError(f"Group '{group_name}' does not exist in the HDF5 file.")
-        group = h5_obj[group_name]
+        if name is not None:
+            prefix = f"{name}."
+        else:
+            prefix = ""
 
-        # Find the correct subclass from which to load this profile. This will
-        # search all the descendant classes and find any matches.
-        class_name = group.attrs.get("class_name", None)
-        _subcls = find_in_subclasses(cls, class_name)
+        # Validate required class entry
+        if f"{prefix}class" not in h5obj.attrs:
+            raise ValueError(
+                f"HDF5 object does not contain profile metadata with prefix '{prefix}'."
+            )
 
-        # Read the units for the axes - these are the only "special" parameters that
-        # need to be handled.
-        # noinspection PyUnresolvedReferences
-        axes_units = group.attrs.get("axes_units", list(_subcls.AXES_UNITS.values()))
-        # noinspection PyUnresolvedReferences
-        axes_units = {k: axes_units[i] for i, k in enumerate(_subcls.AXES_UNITS.keys())}
+        cls_name = h5obj.attrs[f"{prefix}class"]
 
-        # Now parse through all the core parameters and their units.
-        _parameter_names = [
-            key
-            for key in group.attrs
-            if (key not in ["class_name", "axes_units"]) and (not key.endswith("_u"))
-        ]
+        # Extract parameter values and units
+        params = {}
+        for attr in h5obj.attrs:
+            if attr.startswith(f"{prefix}param.") and attr.endswith(".value"):
+                pname = attr[len(f"{prefix}param.") : -len(".value")]
+                pval = h5obj.attrs[attr]
+                punit = h5obj.attrs.get(f"{prefix}param.{pname}.unit", "")
+                params[pname] = unyt.unyt_quantity(pval, punit)
 
-        parameters = {
-            _pn: unyt_quantity(group.attrs[_pn], group.attrs.get(_pn + "_u", ""))
-            for _pn in _parameter_names
-        }
-        # noinspection PyCallingNonCallable
-        return _subcls(axes_units=group.attrs["units"], **parameters)
+        return profile_from_dict(
+            {
+                "class": cls_name,
+                "parameters": {
+                    pname: {"value": param.value, "unit": str(param.units)}
+                    for pname, param in params.items()
+                },
+            }
+        )
 
 
-class RadialProfile(Profile, ABC):
-    r"""
-    Abstract base class for radial profiles.
+# ============================= #
+# Special Case Subclasses       #
+# ============================= #
+# Special subclasses with general purpose structures.
 
-    This class extends the :py:class:`Profile` to include methods specific to radial profiles,
-    particularly the ability to extract limiting power-law behaviors at small (inner) or large (outer)
-    radii.
+
+class BaseSphericalRadialProfile(BaseProfile, ABC):
     """
-    _is_parent_profile = True
+    Abstract base class for spherically symmetric, 1D radial profiles.
 
-    # Class attribute for the radial axis
-    AXES: List[str] = ["r"]
-    """
-    list of str: The axes (free parameters) of the profile.
-        These should be strings and specified in order. The metaclass processes
-        them into symbolic axes via :py:attr:`Profile.SYMBAXES`.
-    """
-    DEFAULT_AXES_UNITS = {"r": Unit("pc")}
+    This class provides standard conventions for radial profiles, defining:
 
-    @class_expression("derivative", on_demand=True)
-    @staticmethod
-    def _r_derivative(axes, params, expression):
-        # Determines the derivative of the profile with respect to radius.
-        # This is ON_DEMAND, so we only grab this when it's requested.
-        return sp.simplify(sp.diff(expression, axes[0]))
+    - A single independent variable ``r`` (radius)
+    - Automatic symbolic setup for ``r``
+    - A derived profile for the radial derivative
+
+    Subclasses define specific profile behavior by implementing:
+
+    - ``__function__`` : returns the symbolic expression as a SymPy object
+    - ``__function_units__`` : returns the dimensional units of the profile
+
+    Notes
+    -----
+    - This class is abstract. Concrete subclasses must set ``__IS_ABSTRACT__ = False``.
+    - Units for ``r`` are propagated through the derivative profile.
+    - The radial derivative is accessible via :meth:`get_derived_profile("derivative")`.
+
+    Example
+    -------
+    .. code-block:: python
+
+        class DensityProfile(BaseRadialProfile):
+            __IS_ABSTRACT__ = False
+            __PARAMETERS__ = {"rho0": 1.0}
+
+            def __function__(self, r, rho0):
+                return rho0 / (r**2)
+
+            def __function_units__(self, r_unit, rho0_unit):
+                return rho0_unit / r_unit**2
+    """
+
+    __IS_ABSTRACT__ = True
+    __VARIABLES__ = ["r"]
+
+    @derived_profile("derivative")
+    @classmethod
+    def _radial_derivative(cls):
+        """
+        Construct the symbolic radial derivative of the profile.
+        """
+
+        # define the new function as the sp.diff of the
+        # class profile.
+        def _func(_r, **_params):
+            return sp.diff(cls.__function__(_r, **_params), _r)
+
+        # Define the unit propagation function as
+        # a simple extension of the class's unit function.
+        def _unit_func(_r_unit, **_param_units):
+            return cls.__function_units__(_r_unit, **_param_units) / _r_unit
+
+        return _func, _unit_func, ["r"], cls.__PARAMETERS__.copy()
 
 
-class CylindricalProfile(Profile, ABC):
-    r"""
-    Abstract base class for cylindrical profiles.
+# ============================= #
+# Utility Functions             #
+# ============================= #
+def profile_from_dict(
+    data: Dict[str, Any], registry: Optional[Dict[str, Type[BaseProfile]]] = None
+) -> BaseProfile:
     """
-    _is_parent_profile = True
+    Reconstruct a profile instance from a dictionary with optional registry support.
 
-    # Class attribute for the radial axis
-    AXES: List[str] = ["r", "z"]
+    Parameters
+    ----------
+    data : dict
+        Dictionary with ``class`` and ``parameters`` fields, as produced by :meth:`BaseProfile.to_dict`.
+    registry : dict, optional
+        Mapping of class names to profile classes. Defaults to the global ``__default_profile_registry__``.
+
+    Returns
+    -------
+    BaseProfile
+        The reconstructed profile instance.
+
+    Raises
+    ------
+    ValueError
+        If the class name is missing or the class cannot be resolved.
     """
-    list of str: The axes (free parameters) of the profile.
-        These should be strings and specified in order. The metaclass processes
-        them into symbolic axes via :py:attr:`Profile.SYMBAXES`.
+    if registry is None:
+        registry = __default_profile_registry__
+
+    cls_name = data.get("class")
+    if cls_name is None:
+        raise ValueError("Serialized profile is missing the 'class' field.")
+
+    if cls_name not in registry:
+        raise ValueError(f"Profile class '{cls_name}' not found in registry.")
+
+    cls = registry[cls_name]
+    return cls.from_dict(data)
+
+
+def build_dynamic_profile_class(
+    func: Callable,
+    unit_func: Callable,
+    variables: List[str],
+    parameters: Optional[Dict[str, str]] = None,
+    base: Optional[Type[BaseProfile]] = None,
+) -> Type[BaseProfile]:
     """
-    DEFAULT_AXES_UNITS = {"r": Unit("pc"), "z": Unit("pc")}
+    Dynamically construct a profile class from a specified function and other metadata.
+
+    Parameters
+    ----------
+    func : Callable
+        Function to generate the symbolic expression for the profile. This must be a callable with
+        signature ``func(*variables,**parameters)`` which returns a valid SymPy expression.
+    unit_func : Callable
+        Function to determine the result units of the profile. This must be a callable with
+        signature ``func(*variable_units,**parameter_units)`` which returns a :class:`~unyt.unit_object.Unit`
+        instance with the resulting units.
+    variables : list of str
+        The independent variables of the profile. These should be provided as strings in the order
+        in which they appear in `func` and `unit_func`.
+    parameters : dict of str, float, optional
+        Dictionary mapping parameter names to their default values. These
+        parameters define required inputs for the derived profile. By default,
+        no parameters are required. Derived profiles do **not** inherit parameters
+        from the base class automatically — all parameters must be explicitly defined here.
+    base : type, optional
+        The base class from which to construct the profile. By default, this is the base class
+        :class:`BaseProfile`; however, it may be changed to allow general subclassing behavior.
+
+    Returns
+    -------
+    type
+        A dynamically constructed, ready-to-instantiate profile class for the derived quantity.
+
+    Notes
+    -----
+    - The ``variables`` list defines the symbolic input order for the derived profile. Must match
+      the argument structure expected by ``func`` and ``unit_func``.
+    - Derived profiles inherit from ``base`` (defaults to :class:`BaseProfile`), unless
+      overridden via :attr:`__DERIVED_BASE__`.
+    """
+    # Determine the base class to use for the
+    # profile class. By default, this is the
+    # base class.
+    if base is None:
+        base = BaseProfile
+
+    # Fix the parameters to be a
+    # fully realized dictionary.
+    if parameters is None:
+        parameters = {}
+
+    # Generate the dynamic class using the provided
+    # data.
+    class _DynamicProfile(base):
+        __IS_ABSTRACT__ = False
+        __REGISTER__ = False  # Derived profiles should not register globally
+        __SETUP_AT__ = "init"
+        __VARIABLES__ = variables
+        __PARAMETERS__ = parameters
+
+        @classmethod
+        def __function__(cls, *args, **kwargs) -> Any:
+            return func(*args, **kwargs)
+
+        @classmethod
+        def __function_units__(cls, *argu, **kwargu) -> unyt.Unit:
+            return unit_func(*argu, **kwargu)
+
+    return _DynamicProfile
