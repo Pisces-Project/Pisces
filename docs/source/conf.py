@@ -83,7 +83,7 @@ napoleon_preprocess_types = True
 # Configure autodoc mock imports to ensure that we don't need to
 # actually compile C level tools.
 autodoc_mock_imports = [
-    "physics.virialization._eddington_sampling",
+    "pisces.physics.virialization._eddington_sampling",
 ]
 
 
