@@ -1,9 +1,24 @@
-""" Configuration setup and access for Pisces.
+"""Pisces global configuration system.
+
+This module provides a hierarchical, YAML-backed configuration manager for
+Pisces. Configurations can be accessed and updated via dot-separated keys
+(e.g., ``pisces_config['appearance.progress_bars'] = False``) and changes are
+persisted to disk if autosave is enabled.
+
+Configuration files are located using the following precedence:
+
+    1. Environment variable ``$PISCES_CONFIG`` (if set)
+    2. Local project file ``.piscesrc`` in the current working directory
+    3. User-specific config at ``~/.config/pisces/config.yaml``
+    4. Package default config distributed with Pisces
+
+Use :attr:`pisces_config` to access the active configuration. It behaves like a
+nested dictionary with automatic loading and saving.
 """
+
 import os
 from collections.abc import MutableMapping
 from pathlib import Path
-from typing import Union
 
 import yaml
 from platformdirs import user_config_dir
@@ -26,9 +41,10 @@ class ConfigManager(MutableMapping):
         Path to the YAML configuration file.
     autosave: bool
         If True, automatically save changes to disk. Defaults to True.
+
     """
 
-    def __init__(self, path: Union[str, Path], autosave: bool = True):
+    def __init__(self, path: str | Path, autosave: bool = True):
         self._path = Path(path).expanduser().resolve()
         self._autosave = autosave
         self._data = self._load()
@@ -48,15 +64,23 @@ class ConfigManager(MutableMapping):
     def _traverse(self, key: str, create_missing: bool = False):
         """Navigate nested dictionaries using dot-separated keys.
 
-        Args:
-            key (str): Dot-separated key (e.g., "database.host").
-            create_missing (bool): If True, create intermediate dictionaries as needed.
+        Parameters
+        ----------
+        key : str
+            Dot-separated key (e.g., "database.host").
+        create_missing : bool, optional
+            If True, create intermediate dictionaries as needed.
 
-        Returns:
-            tuple: (parent dictionary, final key)
+        Returns
+        -------
+        tuple
+            A tuple (parent dictionary, final key).
 
-        Raises:
-            KeyError: If a key is missing and create_missing is False.
+        Raises
+        ------
+        KeyError
+            If a key is missing and `create_missing` is False.
+
         """
         keys = key.split(".")
         node = self._data
@@ -70,28 +94,101 @@ class ConfigManager(MutableMapping):
         return node, keys[-1]
 
     def __getitem__(self, key: str):
+        """Retrieve a value from the configuration using a dot-separated key.
+
+        Parameters
+        ----------
+        key : str
+            The dot-separated key identifying the configuration value.
+
+        Returns
+        -------
+        Any
+            The corresponding value from the configuration.
+
+        Raises
+        ------
+        KeyError
+            If the specified key does not exist.
+
+        """
         node, final_key = self._traverse(key)
         return node[final_key]
 
     def __setitem__(self, key: str, value):
+        """Set a configuration value using a dot-separated key.
+
+        Parameters
+        ----------
+        key : str
+            The dot-separated key identifying the configuration value.
+        value : Any
+            The value to assign.
+
+        Notes
+        -----
+        If `autosave` is enabled, the configuration will be written to disk after setting.
+
+        """
         node, final_key = self._traverse(key, create_missing=True)
         node[final_key] = value
         if self._autosave:
             self._save()
 
     def __delitem__(self, key: str):
+        """Delete a configuration value using a dot-separated key.
+
+        Parameters
+        ----------
+        key : str
+            The dot-separated key identifying the configuration value to delete.
+
+        Raises
+        ------
+        KeyError
+            If the specified key does not exist.
+
+        Notes
+        -----
+        If `autosave` is enabled, the change is written to disk immediately.
+
+        """
         node, final_key = self._traverse(key)
         del node[final_key]
         if self._autosave:
             self._save()
 
     def __iter__(self):
+        """Return an iterator over the top-level keys in the configuration.
+
+        Returns
+        -------
+        Iterator[str]
+            An iterator over the top-level keys in the root configuration dictionary.
+
+        """
         return iter(self._data)
 
     def __len__(self) -> int:
+        """Return the number of top-level keys in the configuration.
+
+        Returns
+        -------
+        int
+            Number of top-level entries in the configuration.
+
+        """
         return len(self._data)
 
     def __repr__(self) -> str:
+        """Return a string representation of the configuration manager.
+
+        Returns
+        -------
+        str
+            A string showing the path to the config file and current in-memory state.
+
+        """
         return f"<ConfigManager path={self._path} data={self._data}>"
 
     def to_dict(self) -> dict:
@@ -135,10 +232,7 @@ def get_config() -> ConfigManager:
             __PCONFIG__ = ConfigManager(path)
             break
     else:
-        raise OSError(
-            f"Missing default configuration file at {default_path}.\nWas"
-            "Pisces install corrupted?"
-        )
+        raise OSError(f"Missing default configuration file at {default_path}.\nWasPisces install corrupted?")
 
     return __PCONFIG__
 

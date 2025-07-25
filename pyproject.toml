@@ -90,9 +90,14 @@ packages = { find = { include = ["pisces*"] } }
 include-package-data = true
 
 [tool.setuptools_scm]
+# Use git tags to determine the project version dynamically.
+# Tags should follow the format `stable_vX.Y.Z` or `dev_vX.Y.Z`.
+# This configuration extracts the version number (X.Y.Z) from the tag.
+
 version_file = "pisces/_version.py"
-local_scheme = "no-local-version"
-fallback_version = "0.0.0"
+local_scheme = "no-local-version"       # Omit local version info (e.g. +gHASH)
+fallback_version = "0.0.0"              # Used if no tag is found
+tag_regex = "^(?:stable|dev)_v(?P<version>\\d+\\.\\d+\\.\\d+(?:[-a-zA-Z0-9\\.]+)?)$"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
@@ -100,9 +105,53 @@ addopts = "-ra -q --strict-markers"
 testpaths = ["tests"]
 
 
+# ================================== #
+# Linting and Formatting Settings    #
+# ================================== #
+# Configuration for linting, formatting, and type checking tools.
 [tool.black]
-line-length = 88
-target-version = ["py39"]
+line-length = 120
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+format.docstring-code-format = true
+format.docstring-code-line-length = 50
+lint.pydocstyle.convention = "numpy"  # Use NumPy style for docstrings
+lint.select = [
+  "E",    # pycodestyle errors (style violations)
+  "F",    # pyflakes (undefined names, etc.)
+  "W",    # pycodestyle warnings
+  "I",    # isort (import sorting)
+  "D",    # pydocstyle (docstring formatting)
+  "UP",   # pyupgrade (modern syntax)
+  "B",    # flake8-bugbear (common bugs & bad patterns)
+  "C4",   # flake8-comprehensions (efficiency in comprehensions)
+  "A",    # flake8-builtins (avoid shadowing builtins)
+  "PERF", # Ruff native perf improvements
+  "NPY",  # NumPy-specific style rules
+  "ICN",  # Import conventions (e.g. disallow wildcard imports)
+]
+
+# Disable some too-noisy docstring rules (especially for scientific code)
+lint.ignore = [
+  "D105",  # Don't require docstrings for magic methods
+  "D107",  # Don't require docstrings for __init__
+  "D203",  # One blank line before class docstring (conflicts with D211)
+  "D213",  # Multi-line docstring summary should start at the second line
+  "D102",  # Ignore missing docstring in public method (flexibility)
+  "E731",  # Do not assign a lambda expression, use def instead
+  "B008",  # Do not perform function calls in default arguments (unyt uses this)
+  "UP007", # Do not use Union in type annotations (use | instead)
+  "UP038", # Use | in isinstance checks (e.g. isinstance(x, int | str))
+]
+
+# Optional: you can also ignore docstring warnings in examples or test files
+lint.exclude = [
+    "tests/*",     # Exclude tests from linting.
+    "docs/*",      # Exclude documentation from linting.
+]
 
 [tool.coverage.run]
 branch = true
@@ -111,3 +160,6 @@ source = ["pisces"]
 [tool.coverage.report]
 show_missing = true
 skip_covered = true
+
+[tool.commitizen]
+name = "cz_conventional_gitmoji"

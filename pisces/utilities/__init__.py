@@ -1,13 +1,32 @@
+"""General-purpose utility functions and configuration for the Pisces astrophysics library.
+
+This module aggregates common functionality used throughout Pisces, including:
+
+- Global configuration settings (:mod:`utilities.config`).
+- Logging (:mod:`utilities.logging`).
+- Numerical integration routines (:mod:`utilities.math_ops`).
+- Fundamental physics utilities (e.g., mean molecular weights) (:mod:`utilities.physics`).
+- Symbolic manipulation routines (:mod:`utilities.symbols`).
+
 """
-General utility module for pisces.
-"""
+
 __all__ = [
     "pisces_config",
     "pisces_logger",
-    "integrate",
-    "integrate_mass",
-    "integrate_toinf",
+    "__RNG__",
 ]
+
+# Import pisces configuration components. At the public level,
+# we only import the configuration object itself.
 from .config import pisces_config
-from .logging import pisces_logger
-from .math_ops import integrate, integrate_mass, integrate_toinf
+
+# Import the logging configuration and setup. At the public level,
+# we only include the actual logger.
+from .log import pisces_logger
+
+# Import the RNG object.
+from .rng import __RNG__
+
+# We do not explicitly import any of the mathematics operations or
+# the symbolic operations here. They must be retrieved directly from
+# the lower level modules.

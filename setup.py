@@ -1,88 +1,25 @@
-#!/usr/bin/env python
-"""
-Setup file for Pisces module.
+"""Setup script for building Cython extensions in the pisces package.
 
-Written by: Eliza Diggins
-Last Updated: 01/04/24
+Most of the build process is handled by setuptools via the `pyproject.toml` file;
+however, this script is required to compile the Cython modules that are part of the
+pisces package. It defines the Cython extensions and their compilation settings.
 """
-import os
 
 import numpy as np
 from Cython.Build import cythonize
-from setuptools import Extension, find_packages, setup
+from setuptools import Extension, setup
 
-print(os.path)
-# @@ CYTHON UTILITIES @@ #
-# All of the cython extensions for the package have to be added
-# here to ensure that they are accessible and installed on use.
-linterp_utils = Extension(
-    "pisces.utilities.math_utils._linterp",
-    sources=["pisces/utilities/math_utils/_linterp.pyx"],
-    language="c",
-    libraries=["m"],
-    include_dirs=[np.get_include()],
+extensions = cythonize(
+    [
+        Extension(
+            name="pisces.physics.virialization._eddington_sampling",
+            sources=["pisces/physics/virialization/_eddington_sampling.pyx"],
+            include_dirs=[np.get_include()],
+        ),
+    ],
+    language_level="3",
 )
-eddington_utils = Extension(
-    "pisces.dynamics.eddington_sample",
-    sources=["pisces/dynamics/eddington_sample.pyx"],
-    language="c",
-    libraries=["m"],
-    include_dirs=[np.get_include()],
-)
-inv_sample_utils = Extension(
-    "pisces.particles.sampling._invsamp",
-    sources=["pisces/particles/sampling/_invsamp.pyx"],
-    language="c",
-    libraries=["m"],
-    include_dirs=[np.get_include()],
-)
-rej_sample_utils = Extension(
-    "pisces.particles.sampling._rejsamp",
-    sources=["pisces/particles/sampling/_rejsamp.pyx"],
-    language="c",
-    libraries=["m"],
-    include_dirs=[np.get_include()],
-)
-# Read the readme from /Pisces/README.rst. As long as we are in the
-# project directory, this should be accessible directly in path.
-with open("README.rst", "r", encoding="utf-8") as fh:
-    long_description = fh.read()
 
-# Setup function
 setup(
-    name="pisces",
-    version="0.0.1",
-    description="Multipurpose astrophysical modeling in Python.",
-    long_description=long_description,
-    long_description_content_type="text/x-rst",
-    author="Eliza C. Diggins",
-    author_email="eliza.diggins@utah.edu",
-    url="https://github.com/eliza-diggins/pisces",
-    setup_requires=[
-        "numpy",
-        "cython",
-    ],  # Ensure numpy and cython are installed before setup
-    download_url="https://github.com/eliza-diggins/pisces/tarbar/0.0.1",
-    packages=find_packages(),
-    install_requires=[
-        "numpy<2",
-        "scipy",
-        "cython",
-        "matplotlib",
-        "tqdm",
-        "ruamel.yaml",
-        "h5py",
-        "sympy",
-    ],
-    classifiers=[
-        "Intended Audience :: Science/Research",
-        "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3",
-        "Topic :: Scientific/Engineering :: Visualization",
-    ],
-    include_package_data=True,
-    ext_modules=cythonize(
-        [linterp_utils, inv_sample_utils, rej_sample_utils, eddington_utils]
-    ),
-    python_requires=">=3.6",
+    ext_modules=extensions,
 )

@@ -1,0 +1,34 @@
+name: 💡 Feature Request
+description: Suggest new functionality, enhancements, or API improvements
+title: "[FEATURE] "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We welcome ideas for improving PyMetric! Please be as specific as possible.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: ✨ What would you like to see?
+      description: Describe the new feature or improvement you'd like.
+      placeholder: e.g., "Support for gradient and divergence in cylindrical coordinates"
+    validations:
+      required: true
+
+  - type: textarea
+    id: rationale
+    attributes:
+      label: 💭 Why is this important?
+      description: Describe how this feature would help your workflow or research.
+      placeholder: e.g., "This would simplify modeling for plasma simulations in cylindrical domains."
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: 🧩 Additional Details
+      description: Include mockups, related packages, or other helpful context.
+      placeholder: "Add references, alternative APIs, or ideas here."

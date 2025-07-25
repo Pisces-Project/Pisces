@@ -1,40 +1,59 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
+default_install_hook_types:
+  - pre-commit
+  - commit-msg
 
 ci:
-    autoupdate_schedule: monthly
+  autoupdate_schedule: monthly
 
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
+  # 1. Core Hygiene Hooks (Whitespace, YAML, File Size)
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
-    -   id: trailing-whitespace
-    -   id: end-of-file-fixer
-    -   id: check-yaml
+      - id: trailing-whitespace
+        name: "🧼 Strip trailing whitespace"
+      - id: end-of-file-fixer
+        name: "📄 Ensure EOF newline"
+      - id: check-yaml
+        name: "📦 Validate YAML syntax"
         args: ["--unsafe"]
-    -   id: check-added-large-files
+      - id: check-added-large-files
+        name: "🚫 Prevent large files"
         args: ["--maxkb=2000"]
--   repo: https://github.com/psf/black
-    rev: 23.12.1
-    hooks:
-    - id: black-jupyter
 
--   repo: https://github.com/PyCQA/isort
+  # 2. Code Formatters
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.1
+    hooks:
+      - id: ruff-format
+        name: "🐍 Format with Ruff"
+      - id: ruff
+        name: "🔍 Lint with Ruff"
+        args: ["--fix"]
+
+  - repo: https://github.com/PyCQA/isort
     rev: 5.13.2
     hooks:
-    - id: isort
-      name: isort (python)
-      args: ["--profile", "black"]
-    - id: isort
-      name: isort (cython)
-      types: [cython]
--   repo: https://github.com/PyCQA/flake8
-    rev: 6.1.0
+      - id: isort
+        name: "📚 Sort imports (Python)"
+        args: ["--profile", "black"]
+      - id: isort
+        name: "📚 Sort imports (Cython)"
+        types: [cython]
+
+  # 4. Typo Checking
+  - repo: https://github.com/crate-ci/typos
+    rev: v1.34.0
     hooks:
-    - id: flake8
-      additional_dependencies: [
-        flake8-bugbear==22.7.1,
-        flake8-logging-format==0.7.4,
-        flake8-2020==1.6.1,
-        setuptools
-      ]
+      - id: typos
+        name: "🔡 Spellcheck (typos)"
+
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.1.0
+    hooks:
+      - id: commitizen
+        name: "🌳 git · Validate commit message"
+        stages: [commit-msg]
+        additional_dependencies: [cz-conventional-gitmoji] # NEW

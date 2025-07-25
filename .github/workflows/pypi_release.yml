@@ -1,0 +1,42 @@
+# .github/workflows/release.yml
+# ------------------------------------------ #
+# GitHub Actions Workflow for PyPI Release
+# ------------------------------------------ #
+# This workflow publishes the package to PyPI when a new version tag is pushed.
+# To be eligible for release, there must be a new tag matching the conventional (PEP400)
+# versioning pattern: vX.Y.Z. This will then trigger automatic release to PyPI.
+name: Publish to PyPI
+
+# Workflow triggers on the inclusion of a new version tag
+# on the main branch.
+on:
+  push:
+    tags:
+      - "v*"
+
+# ----------------------------------- #
+# Build the package and publish       #
+# ----------------------------------- #
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          pip install build twine
+
+      - name: Build package
+        run: python -m build
+
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: twine upload dist/*

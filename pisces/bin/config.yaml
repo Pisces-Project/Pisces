@@ -8,10 +8,31 @@
 # - ~/.config/pisces/config.yaml
 #
 # Values in this file are safe defaults suitable for most environments.
+
 # ---------------------------------------------------
+# Physics Configuration
+# ---------------------------------------------------
+# This section contains default physics-related settings.
+# Users can override these settings in their project-specific or user-specific configurations.
+
 physics:
   default_cosmology: 'Planck15' # The default cosmology to assume unless overridden.
+  hydrogen_abundance: &default_X_H 0.76  # The default hydrogen abundance to assume unless overridden.
 
+# ---------------------------------------------------
+# Numerical Configuration
+# ---------------------------------------------------
+# This section contains default numerical settings.
+numeric:
+  random:
+    # Random number generation settings. This is used by
+    # the random number generator to ensure that seeding is
+    # propagated correctly
+    seed: null # Default seed for random number generation. If null, uses system time.
+
+# ---------------------------------------------------
+# Logging Configuration
+# ---------------------------------------------------
 logging:
   # Logging configuration settings. These are overridden
   # in library configurations and are only relevant as
@@ -20,6 +41,33 @@ logging:
     # Settings for the main logger accessed in utilities.logging.
     level: INFO
     format: "[Pisces]-%(levelname)s: %(message)s"
+  models:
+    # Settings for the models logger accessed in utilities.logging.
+    level: INFO
+    enabled: true
+    format: "[%(name)s]-%(levelname)s: %(message)s"
 
+appearance:
+  # Appearance settings for Pisces.
+  disable_progress_bars: false  # Disable progress bars in the console.
+
+
+# ---------------------------------------------------
+# SymPy Configuration
+# ---------------------------------------------------
 sympy:
   skip_constant_checks: 5  # The number of operations in a sympy exp. before we no longer check for constant.
+
+# ==================================================================================================================== #
+# MODELING CONFIGURATION
+# ==================================================================================================================== #
+# These settings are specific to different models and dictate various aspects of their default
+# behavior.
+models:
+  # Each model configuration is stored here with a direct reference to its
+  # model class name.
+  SphericalGalaxyClusterModel:
+    hydrogen_abundance: *default_X_H
+
+  MagnetizedSphericalGalaxyClusterModel:
+        hydrogen_abundance: *default_X_H

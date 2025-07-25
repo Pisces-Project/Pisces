@@ -1,0 +1,59 @@
+name: 🐛 Bug Report
+description: Report incorrect behavior or errors in PyMetric
+title: "[BUG] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug! Please fill out the following so we can reproduce and fix the issue.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 🧩 Description
+      description: What went wrong? Be specific.
+      placeholder: e.g., "Calling `gradient` on HDF5Buffer crashes with shape mismatch"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 🧪 Steps to Reproduce
+      description: Include sample code, inputs, or files.
+      placeholder: |
+        1. Create grid
+        2. Apply Laplacian
+        3. Observe shape error
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: 🧮 PyMetric Version
+      placeholder: e.g., v0.4.1 or main branch commit SHA
+
+  - type: input
+    id: python
+    attributes:
+      label: 🐍 Python Version
+      placeholder: e.g., 3.10.12
+
+  - type: dropdown
+    id: backend
+    attributes:
+      label: 💾 Buffer Backend
+      options:
+        - numpy
+        - unyt
+        - hdf5
+        - unknown
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 🧵 Stack Trace or Logs
+      description: Paste the traceback if there is one.
+      render: shell

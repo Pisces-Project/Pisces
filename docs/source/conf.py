@@ -16,7 +16,7 @@ import sys
 import matplotlib  # noqa: F401
 
 sys.path.insert(0, os.path.abspath("../.."))
-
+sys.path.insert(0, os.path.abspath("../../pisces"))
 # -- Project information -----------------------------------------------------
 
 project = "Pisces"
@@ -34,13 +34,14 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.todo",
     "sphinx.ext.napoleon",
+    "sphinx.ext.intersphinx",
     "myst_parser",
     "sphinx.ext.mathjax",
-    "nbsphinx",
     "sphinx_design",
     "sphinx.ext.doctest",
     "matplotlib.sphinxext.plot_directive",
     "sphinxcontrib.bibtex",
+    "sphinx_gallery.gen_gallery",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -65,12 +66,34 @@ html_static_path = ["_static"]
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-    "https://docs.python.org/3/": None,
-    "https://numpy.org/doc/stable/": None,
-    "https://matplotlib.org/stable/": None,
-    "https://yt-project.org/doc/": None,
-    "https://docs.astropy.org/en/stable": None,
+    "python": ("https://docs.python.org/3/", None),
+    "numpy": ("https://numpy.org/doc/stable/", None),
+    "matplotlib": ("https://matplotlib.org/stable/", None),
+    "yt": ("https://yt-project.org/doc/", None),
+    "astropy": ("https://docs.astropy.org/en/stable/", None),
+    "sympy": ("https://docs.sympy.org/latest/", None),
+    "unyt": ("https://unyt.readthedocs.io/en/latest/", None),
+    "h5py": ("https://docs.h5py.org/en/latest/", None),
+    "scipy": ("https://docs.scipy.org/doc/scipy/", None),
 }
 
 napoleon_use_param = True
 napoleon_preprocess_types = True
+
+# Configure autodoc mock imports to ensure that we don't need to
+# actually compile C level tools.
+autodoc_mock_imports = [
+    "physics.virialization._eddington_sampling",
+]
+
+
+# Configure the sphinx galleries. These are contained in the
+# /examples gallery.
+sphinx_gallery_conf = {
+    "examples_dirs": [
+        "./galleries/examples",
+    ],  # path to your example scripts
+    "gallery_dirs": [
+        "auto_examples",
+    ],  # path to where to save gallery generated output
+}

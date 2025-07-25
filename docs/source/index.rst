@@ -5,7 +5,7 @@
 Pisces
 =========
 
-|yt-project| |isort| |black| |Pre-Commit| |docformatter| |NUMPSTYLE| |COMMIT| |CONTRIBUTORS| |docs|
+|YT-PROJECT| |RUFF| |PRE-COMMIT| |NUMPYDOC| |COMMITIZEN| |CONVENTIONAL-COMMITS| |LAST-COMMIT| |CONTRIBUTORS| |DOCS|
 
 .. raw:: html
 
@@ -71,7 +71,7 @@ Resources
 
         +++
 
-        .. button-ref:: examples
+        .. button-ref:: auto_examples/index
             :expand:
             :color: secondary
             :click-parent:
@@ -88,7 +88,7 @@ Resources
 
         +++
 
-        .. button-ref:: reference/index
+        .. button-ref:: reference/user_guide
             :expand:
             :color: secondary
             :click-parent:
@@ -124,8 +124,8 @@ Contents
    :maxdepth: 1
 
    api
-   reference/index
-   examples
+   reference/user_guide
+   auto_examples/index
    getting_started
 
 
@@ -141,29 +141,38 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-.. |yt-project| image:: https://img.shields.io/static/v1?label="works%20with"&message="yt"&color="blueviolet"
+.. |yt-project| image:: https://img.shields.io/static/v1?label=yt&message=compatible&color=blueviolet
    :target: https://yt-project.org
+   :alt: Works with yt
 
-.. |docs| image:: https://img.shields.io/badge/docs-latest-brightgreen
+.. |docs| image:: https://img.shields.io/badge/docs-latest-brightgreen.svg
    :target: https://eliza-diggins.github.io/Pisces
+   :alt: Latest Docs
 
-.. |black| image:: https://img.shields.io/badge/code%20style-black-000000
-   :target: https://github.com/psf/black
+.. |ruff| image:: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json
+    :target: https://github.com/astral-sh/ruff
+    :alt: Ruff
 
-.. |isort| image:: https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336
-   :target: https://pycqa.github.io/isort/
-
-.. |Pre-Commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
+.. |pre-commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit
    :target: https://github.com/pre-commit/pre-commit
    :alt: pre-commit
 
-.. |CONTRIBUTORS| image:: https://img.shields.io/github/contributors/eliza-diggins/Pisces
-    :target: https://github.com/eliza-diggins/Pisces/graphs/contributors
+.. |numpydoc| image:: https://img.shields.io/badge/docstyle-numpydoc-459db9
+   :target: https://numpydoc.readthedocs.io/en/latest/
+   :alt: Docstring style: numpydoc
 
-.. |COMMIT| image:: https://img.shields.io/github/last-commit/eliza-diggins/Pisces
+.. |commitizen| image:: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
+   :target: https://commitizen-tools.github.io/commitizen/
+   :alt: Commit style: Conventional + Gitmoji
 
-.. |NUMPSTYLE| image:: https://img.shields.io/badge/%20style-numpy-459db9
-    :target: https://numpydoc.readthedocs.io/en/latest/format.html
+.. |conventional-commits| image:: https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white
+   :target: https://www.conventionalcommits.org/en/v1.0.0/
+   :alt: Commit style: Conventional Commits
 
-.. |docformatter| image:: https://img.shields.io/badge/%20formatter-docformatter-fedcba
-    :target: https://github.com/PyCQA/docformatter
+.. |contributors| image:: https://img.shields.io/github/contributors/eliza-diggins/Pisces
+   :target: https://github.com/eliza-diggins/Pisces/graphs/contributors
+   :alt: GitHub Contributors
+
+.. |last-commit| image:: https://img.shields.io/github/last-commit/eliza-diggins/Pisces
+   :target: https://github.com/eliza-diggins/Pisces
+   :alt: Last Commit

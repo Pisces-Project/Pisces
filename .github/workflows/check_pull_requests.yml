@@ -1,0 +1,97 @@
+# .github/workflows/check_pull_requests.yml
+# ------------------------------------------------ #
+# GitHub Actions Workflow for Pull Request Checks  #
+# ------------------------------------------------ #
+# This workflow runs checks on pull requests to ensure code quality and consistency.
+# The following checks are performed:
+#
+# When a pull request is opened against a development branch:
+#
+# 1. Pre-commit run on the codebase.
+# 2. Check the changelog for missing entries.
+# 3. Run the test suite (fast version).
+#
+# When a pull request is merged into the main branch:
+#
+# 1. Pre-commit run on the codebase.
+# 2. Check the changelog for missing entries.
+# 3. Build the documentation with Sphinx.
+# 4. Run the full test suite across multiple Python versions.
+#
+# These checks help maintain a high standard of code quality.
+name: Pull Request Checks
+
+# This workflow is triggered on all pull requests. Some additional checks are
+# performed when a pull request is merged into the main branch.
+on:
+  pull_request:
+
+# --- Run the Workflow --- #
+jobs:
+  pre-commit:
+    # Perform the pre-commit checks on the codebase.
+    name: Pre-commit checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          pip install pre-commit
+          pip install .[dev]
+      - name: Run pre-commit hooks
+        run: pre-commit run --all-files
+
+  # Check that the changelog is correctly structured
+  # and up to date.
+  changelog:
+    name: Check for changelog entry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ensure changelog is updated
+        run: |
+          if ! git diff --cached --name-only | grep -q "CHANGELOG.md"; then
+            echo "❌ No CHANGELOG.md update found in commit."
+            exit 1
+          fi
+
+  # Ensure that the docs generate properly.
+  docs:
+    name: Build documentation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install documentation dependencies
+        run: |
+          pip install .[docs]
+      - name: Build documentation with Sphinx
+        run: |
+          sphinx-build -b html -n -W -j auto docs/source docs/_build/html
+
+  # Run the test suite with pytest.
+  tests:
+    name: Run test suite
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install test dependencies
+        run: |
+          pip install .[dev,test]
+      - name: Run pytest
+        run: |
+          pytest -ra -q --strict-markers

@@ -1,59 +1,89 @@
-# =================================================== #
-# DOCUMENTATION ACTION                                #
-# ----------------------                              #
-# Automatically generate the documentation any time   #
-# there is a push to the master branch.               #
-#                                                     #
-# This will ensure that there is live documentation   #
-# hosted on github which is always up-to-date with    #
-# master.                                             #
-# =================================================== #
-name: build-docs
+# .github/workflows/docs.yml
+# ------------------------------------------------------------- #
+# GitHub Actions Workflow to Build and Deploy Pisces Docs      #
+# ------------------------------------------------------------- #
+# This workflow builds and deploys the documentation for the
+# Pisces project using Sphinx. It supports two deployment modes:
+#
+# 1. Dev docs:   pushed to `/dev` when a `dev_*` branch is updated
+# 2. Stable docs: pushed to `/stable` when a `vX.Y.Z` tag is pushed
+#
+# A redirect index is also deployed to root `/` on main or version tag.
+name: Build and Deploy Documentation
 
+# This workflow builds and deploys the documentation for the Pisces project.
+# It supports two deployment modes:
+# 1. Dev docs:   pushed to `/dev` when a `dev_*` branch is updated
+# 2. Stable docs: pushed to `/stable` when a `vX.Y.Z` tag is pushed
+# A redirect index is also deployed to root `/` on main or version tag.
 on:
   push:
     branches:
       - main
-  workflow_dispatch:  # Allows manual triggering of this workflow from the GitHub Actions interface
+      - dev_*              # Match dev branches like dev_v1.4.0
+    tags:
+      - "v*"               # Match version tags like v1.2.0
+  workflow_dispatch:
 
+# Perform the workflow.
 jobs:
-  deploy:
+  docs:
+    name: Build and Deploy Documentation
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        os: [ ubuntu-latest]
-        python-version: [ '3.11' ]
+        python-version: ["3.11"]
 
     steps:
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Check out repository
-      uses: actions/checkout@v2
+      # Setup the python environment for the operation.
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
 
-    - name: Install Cython
-      run: pip install cython numpy setuptools
+      # Cache pip dependencies to speed up builds. This
+      # depends on the os and the hash of the pyproject.toml file.
+      # It will therefore be invalidated when the dependencies change.
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-docs-${{ hashFiles('pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-docs-
 
-    - name: Build Cython extensions
-      run: python setup.py build_ext --inplace
+      # Install the dependencies required to build the documentation.
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install .[docs]
 
-    - name: Install the package
-      run: pip install .
+      # Actually build the documentation. We use the `-j auto` flag to
+      # allow Sphinx to use all available CPU cores for faster builds.
+      - name: Build documentation with Sphinx
+        run: |
+          mkdir -p docs/_build/html
+          sphinx-build -b html -n -W -j auto docs/source docs/_build/html
 
-    - name: Install dependencies
-      run: pip install -r requirements.txt
+      # Deploy redirect index.html to root (only on main or stable tag)
+      - name: Deploy redirect index.html to root
+        if: github.ref_name == 'main' || startsWith(github.ref, 'refs/tags/v')
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: docs/redirect
+          destination_dir: .
 
-    - name: run
-      run: |
-        sudo apt install pandoc
-        cd ./docs
-        make html
-
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs
-        publish_branch: gh-pages
+      # Deploy the built HTML to /stable or /dev
+      - name: Deploy versioned documentation
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: docs/_build/html
+          destination_dir: ${{ startsWith(github.ref, 'refs/tags/v') && 'stable' || 'dev' }}
