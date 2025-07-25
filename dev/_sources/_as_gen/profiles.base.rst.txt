@@ -1,0 +1,47 @@
+profiles.base
+=============
+
+.. automodule:: profiles.base
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+
+   
+      build_dynamic_profile_class
+      derived_profile
+      profile_from_dict
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class.rst
+      :recursive:
+   
+      BaseCylindricalDiskProfile
+      BaseProfile
+      BaseSphericalRadialProfile
+   
+   
+
+   
+   
+   

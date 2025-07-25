@@ -1,0 +1,6 @@
+profiles.temperature.DoubleBetaTemperatureProfile.get\_parameters\_latex
+========================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: DoubleBetaTemperatureProfile.get_parameters_latex

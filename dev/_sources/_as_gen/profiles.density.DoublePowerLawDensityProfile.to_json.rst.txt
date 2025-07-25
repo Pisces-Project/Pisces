@@ -1,0 +1,6 @@
+profiles.density.DoublePowerLawDensityProfile.to\_json
+======================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DoublePowerLawDensityProfile.to_json

@@ -1,0 +1,6 @@
+profiles.temperature.AM06TemperatureProfile.from\_hdf5
+======================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: AM06TemperatureProfile.from_hdf5

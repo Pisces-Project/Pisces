@@ -1,0 +1,23 @@
+LogDescriptor
+==================================
+
+.. currentmodule:: pisces.utilities.log
+
+.. autoclass:: pisces.utilities.log.LogDescriptor
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~LogDescriptor.__init__
+   
+   
+
+   
+   
+   

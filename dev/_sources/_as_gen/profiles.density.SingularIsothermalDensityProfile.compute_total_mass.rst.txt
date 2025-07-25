@@ -1,0 +1,6 @@
+profiles.density.SingularIsothermalDensityProfile.compute\_total\_mass
+======================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SingularIsothermalDensityProfile.compute_total_mass

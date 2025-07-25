@@ -1,0 +1,6 @@
+profiles.density.FlaredDiskDensityProfile.derived\_profile\_classes
+===================================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: FlaredDiskDensityProfile.derived_profile_classes

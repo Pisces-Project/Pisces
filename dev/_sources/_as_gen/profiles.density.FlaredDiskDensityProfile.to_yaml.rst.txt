@@ -1,0 +1,6 @@
+profiles.density.FlaredDiskDensityProfile.to\_yaml
+==================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: FlaredDiskDensityProfile.to_yaml

@@ -1,0 +1,37 @@
+﻿models
+======
+
+.. automodule:: models
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Modules
+
+   .. autosummary::
+      :toctree:
+      :template: module.rst
+      :recursive:
+
+   
+      core
+      galaxies
+      galaxy_clusters
+      stars
+   
+   
+
+   
+   
+   
+
+   
+   
+   

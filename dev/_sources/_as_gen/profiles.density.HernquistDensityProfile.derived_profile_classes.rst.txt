@@ -1,0 +1,6 @@
+profiles.density.HernquistDensityProfile.derived\_profile\_classes
+==================================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: HernquistDensityProfile.derived_profile_classes

@@ -1,0 +1,6 @@
+profiles.density.DehnenDensityProfile.compute\_deflection\_angle
+================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DehnenDensityProfile.compute_deflection_angle

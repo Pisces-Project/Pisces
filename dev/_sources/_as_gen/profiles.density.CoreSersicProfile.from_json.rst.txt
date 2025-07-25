@@ -1,0 +1,6 @@
+profiles.density.CoreSersicProfile.from\_json
+=============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoreSersicProfile.from_json

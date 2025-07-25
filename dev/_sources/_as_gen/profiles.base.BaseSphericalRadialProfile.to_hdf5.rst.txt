@@ -1,0 +1,6 @@
+profiles.base.BaseSphericalRadialProfile.to\_hdf5
+=================================================
+
+.. currentmodule:: profiles.base
+
+.. automethod:: BaseSphericalRadialProfile.to_hdf5

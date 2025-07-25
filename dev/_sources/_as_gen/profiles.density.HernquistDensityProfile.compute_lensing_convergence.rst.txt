@@ -1,0 +1,6 @@
+profiles.density.HernquistDensityProfile.compute\_lensing\_convergence
+======================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: HernquistDensityProfile.compute_lensing_convergence

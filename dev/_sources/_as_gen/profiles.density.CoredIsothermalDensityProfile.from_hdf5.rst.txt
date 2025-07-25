@@ -1,0 +1,6 @@
+profiles.density.CoredIsothermalDensityProfile.from\_hdf5
+=========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoredIsothermalDensityProfile.from_hdf5

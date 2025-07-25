@@ -1,0 +1,6 @@
+profiles.entropy.BaseSphericalEntropyProfile.substitute\_expression
+===================================================================
+
+.. currentmodule:: profiles.entropy
+
+.. automethod:: BaseSphericalEntropyProfile.substitute_expression

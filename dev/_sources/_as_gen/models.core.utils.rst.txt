@@ -1,0 +1,34 @@
+models.core.utils
+=================
+
+.. automodule:: models.core.utils
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class.rst
+      :recursive:
+   
+      ModelConfig
+   
+   
+
+   
+   
+   

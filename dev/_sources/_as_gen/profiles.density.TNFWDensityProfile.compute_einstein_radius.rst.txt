@@ -1,0 +1,6 @@
+profiles.density.TNFWDensityProfile.compute\_einstein\_radius
+=============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: TNFWDensityProfile.compute_einstein_radius

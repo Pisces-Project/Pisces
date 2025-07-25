@@ -1,0 +1,6 @@
+profiles.temperature.BaseSphericalTemperatureProfile.derived\_profile\_classes
+==============================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoproperty:: BaseSphericalTemperatureProfile.derived_profile_classes
