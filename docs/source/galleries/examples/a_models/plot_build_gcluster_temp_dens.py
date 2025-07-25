@@ -18,9 +18,9 @@ hydrostatic equilibrium.
 # -----
 # We'll use the following classes:
 #
-# - :class:`~pisces.models.galaxy_clusters.spherical.SphericalGalaxyClusterModel`
-# - :class:`~pisces.profiles.NFWDensityProfile`
-# - :class:`~pisces.profiles.VikhlininTemperatureProfile`
+# - :class:`~models.galaxy_clusters.spherical.SphericalGalaxyClusterModel`
+# - :class:`~profiles.density.NFWDensityProfile`
+# - :class:`~profiles.temperature.VikhlininTemperatureProfile`
 
 import tempfile
 

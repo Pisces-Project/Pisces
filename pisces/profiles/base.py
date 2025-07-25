@@ -32,7 +32,7 @@ def derived_profile(name: str | None = None) -> classmethod:
     Derived profiles define secondary symbolic profiles (e.g., gradients, potentials)
     associated with this class. When decorated, the method is automatically registered
     at class construction and the profile can be instantiated on demand via
-    :meth:`BaseProfile.get_derived_profile`.
+    :meth:`~profiles.base.BaseProfile.get_derived_profile`.
 
     The decorated method must be a ``@classmethod`` with the following signature:
 
@@ -68,9 +68,7 @@ def derived_profile(name: str | None = None) -> classmethod:
 
     Notes
     -----
-    - Derived profiles are instantiated as dynamic subclasses of :attr:`__DERIVED_BASE__`, or
-      :class:`BaseProfile` if unspecified.
-    - Use :meth:`BaseProfile.get_derived_profile` to access an instantiated version.
+    - Use :meth:`~profiles.base.BaseProfile.get_derived_profile` to access an instantiated version.
 
     Raises
     ------
@@ -171,7 +169,7 @@ class _ProfileMeta(ABCMeta):
 class BaseProfile(ABC, metaclass=_ProfileMeta):
     """Abstract base class for constructing symbolic profile functions.
 
-    :class:`BaseProfile` provides the infrastructure for defining parameterized, symbolic expressions
+    :class:`~profiles.base.BaseProfile` provides the infrastructure for defining parameterized, symbolic expressions
     that can be evaluated numerically with units. Subclasses define their behavior by specifying
     independent variables, parameters, and symbolic expressions. Additional derived profiles,
     such as gradients or potentials, can be attached via :func:`derived_profile`.
@@ -822,7 +820,7 @@ class BaseProfile(ABC, metaclass=_ProfileMeta):
 
         Returns
         -------
-        dict of str, :class:`BaseProfile`
+        dict of str, :class:`~profiles.base.BaseProfile`
             A dictionary mapping derived profile names to their dynamically
             generated profile classes.
 
@@ -840,12 +838,12 @@ class BaseProfile(ABC, metaclass=_ProfileMeta):
 
         Parameters
         ----------
-        expression : str or sympy expression
+        expression : str or ~sympy.core.expr.Expr
             The symbolic expression to substitute parameter values into.
 
         Returns
         -------
-        sympy expression
+        ~sympy.core.expr.Expr
             The expression with parameters replaced by their numeric values.
 
         Notes
@@ -876,7 +874,7 @@ class BaseProfile(ABC, metaclass=_ProfileMeta):
 
         Parameters
         ----------
-        expression : :py:class:`str` or sp.Basic
+        expression : :py:class:`str` or ~sympy.core.basic.Basic
             The symbolic expression to lambdify.
 
         Returns
@@ -902,7 +900,7 @@ class BaseProfile(ABC, metaclass=_ProfileMeta):
 
         Returns
         -------
-        BaseProfile
+        ~profiles.base.BaseProfile
             An instance of the derived profile, initialized with inherited and/or overridden parameters.
 
         Raises
@@ -1091,7 +1089,7 @@ class BaseProfile(ABC, metaclass=_ProfileMeta):
 
         Returns
         -------
-        BaseProfile
+        ~profiles.base.BaseProfile
             A new instance of the profile with the specified parameters.
 
         Raises
@@ -1149,7 +1147,7 @@ class BaseProfile(ABC, metaclass=_ProfileMeta):
 
         Returns
         -------
-        BaseProfile
+        ~profiles.base.BaseProfile
             Reconstructed profile instance.
 
         """
@@ -1170,7 +1168,7 @@ class BaseProfile(ABC, metaclass=_ProfileMeta):
 
         Returns
         -------
-        BaseProfile
+        ~profiles.base.BaseProfile
             Reconstructed profile instance.
 
         """
@@ -1224,7 +1222,7 @@ class BaseProfile(ABC, metaclass=_ProfileMeta):
 
         Returns
         -------
-        BaseProfile
+        ~profiles.base.BaseProfile
             Reconstructed profile instance.
 
         Raises
@@ -1285,7 +1283,7 @@ class BaseSphericalRadialProfile(BaseProfile, ABC):
     -----
     - This class is abstract. Concrete subclasses must set ``__IS_ABSTRACT__ = False``.
     - Units for ``r`` are propagated through the derivative profile.
-    - The radial derivative is accessible via :meth:`get_derived_profile("derivative")`.
+    - The radial derivative is accessible via :meth:`get_derived_profile`.
 
     Example
     -------
@@ -1351,7 +1349,7 @@ class BaseCylindricalDiskProfile(BaseProfile, ABC):
       - ``r`` : Cylindrical radius
       - ``z`` : Vertical coordinate
     - Units for ``r`` and ``z`` are automatically propagated in derived expressions.
-    - Radial and vertical derivatives are implemented via :func:`~pisces.profiles.base.derived_profile`.
+    - Radial and vertical derivatives are implemented via :func:`~profiles.base.derived_profile`.
 
     Example
     -------
@@ -1453,13 +1451,13 @@ def profile_from_dict(data: dict[str, Any], registry: dict[str, type[BaseProfile
     Parameters
     ----------
     data : dict
-        Dictionary with ``class`` and ``parameters`` fields, as produced by :meth:`BaseProfile.to_dict`.
+        Dictionary with ``class`` and ``parameters`` fields, as produced by :meth:`~profiles.base.BaseProfile.to_dict`.
     registry : dict, optional
         Mapping of class names to profile classes. Defaults to the global ``__default_profile_registry__``.
 
     Returns
     -------
-    BaseProfile
+    ~profiles.base.BaseProfile
         The reconstructed profile instance.
 
     Raises
@@ -1516,7 +1514,8 @@ def build_dynamic_profile_class(
         parameters from the base class automatically; all parameters must be explicitly defined here.
     base : type, optional
         The base class to inherit from when constructing the profile.
-        Defaults to :class:`BaseProfile`. Alternative base classes can be specified for advanced subclassing
+        Defaults to :class:`~profiles.base.BaseProfile`. Alternative base classes can be specified for advanced
+        subclassing
         behavior, as long as they follow the expected profile interface.
 
     Returns

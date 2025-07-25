@@ -73,7 +73,7 @@ def compute_relative_potential(
     ----------
     gravitational_potential : unyt_array
         The 1D gravitational potential profile :math:`\Phi(r)`, with units of velocity squared.
-    boundary_value : unyt_quantity, optional
+    boundary_value : ~unyt.array.unyt_quantity, optional
         The potential at the boundary, :math:`\Phi_0`. This is typically set to zero,
         but may be chosen differently depending on the problem. Default is 0.
 
@@ -109,7 +109,7 @@ def compute_relative_energy(
     ----------
     energy : unyt_array
         The total energy values, typically of the form :math:`\frac{1}{2}v^2 + \Phi(r)`.
-    boundary_value : unyt_quantity, optional
+    boundary_value : ~unyt.array.unyt_quantity, optional
         The energy at the reference boundary (default is 0, with units inferred from `energy`).
 
     Returns
@@ -151,7 +151,7 @@ def compute_eddington_distribution(
     num_points : int, optional
         Number of evaluation points in relative energy :math:`\mathcal{E}`. Default is 1000.
 
-    boundary_value : unyt_quantity, optional
+    boundary_value : ~unyt.array.unyt_quantity, optional
         Value of :math:`\Phi_0` used to define the relative potential :math:`\Psi = -(\Phi - \Phi_0)`.
         Default is 0.
 

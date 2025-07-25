@@ -339,16 +339,16 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
 
         Parameters
         ----------
-        r : :class:`~unyt.unyt_quantity` or :class:`~unyt.unyt_array`
+        r : ~unyt.array.unyt_quantity or ~unyt.array.unyt_array
             Radius or array of radii at which to compute enclosed mass. Must carry length units (e.g., kpc, pc).
-        units : str or :class:`~unyt.Unit`, optional
+        units : str or ~unyt.unit_object.Unit, optional
             Desired output units for mass. If not provided, output units follow from the profile parameters.
         **kwargs
             Additional arguments passed to :func:`scipy.integrate.quad`.
 
         Returns
         -------
-        mass : :class:`~unyt.unyt_quantity` or :class:`~unyt.unyt_array`
+        mass : ~unyt.array.unyt_quantity or ~unyt.array.unyt_array
             Enclosed mass at each radius with appropriate units.
 
         Notes
@@ -421,14 +421,14 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
 
         Parameters
         ----------
-        units : str or :class:`~unyt.Unit`, optional
+        units : str or ~unyt.unit_object.Unit, optional
             Desired output units for mass. Defaults to units implied by the profile parameters.
         **kwargs
             Additional arguments passed to :func:`scipy.integrate.quad`.
 
         Returns
         -------
-        mass : :class:`~unyt.unyt_quantity`
+        mass : ~unyt.array.unyt_quantity
             Total mass with correct units.
 
         Raises
@@ -514,20 +514,20 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
 
         Parameters
         ----------
-        rmin : float or :class:`~unyt.unyt_quantity`
+        rmin : float or ~unyt.array.unyt_quantity
             Lower bound for the radius search interval.
-        rmax : float or :class:`~unyt.unyt_quantity`
+        rmax : float or ~unyt.array.unyt_quantity
             Upper bound for the radius search interval.
         fraction : float, optional
             Mass fraction to enclose, between 0 and 1. Default is 0.5 (half-mass radius).
-        units : str or :class:`~unyt.Unit`, optional
+        units : str or ~unyt.unit_object.Unit, optional
             Units for `rmin` and `rmax`. Default is ``kpc``.
         **kwargs
             Additional arguments passed to :meth:`compute_enclosed_mass` and :meth:`compute_total_mass`.
 
         Returns
         -------
-        radius : :class:`~unyt.unyt_quantity`
+        radius : ~unyt.array.unyt_quantity
             Radius enclosing the specified mass fraction.
 
         Raises
@@ -610,7 +610,7 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
         ----------
         z : float
             Redshift at which to compute the critical density.
-        R : :class:`~unyt.unyt_quantity` or :class:`~unyt.unyt_array`
+        R : ~unyt.array.unyt_quantity or ~unyt.array.unyt_array
             Radius or array of radii where overdensity is computed (must carry length units).
         cosmology : ~astropy.cosmology.Cosmology, optional
             Cosmology used to compute :math:`\rho_{\mathrm{crit}}(z)`. Defaults to
@@ -620,7 +620,7 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
 
         Returns
         -------
-        overdensity : :class:`numpy.ndarray`
+        overdensity : ~numpy.ndarray
             Dimensionless overdensity :math:`\Delta(R)` at each radius.
 
         Raises
@@ -721,7 +721,7 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
             Lower bound for root-finding search interval, in units specified by ``units``.
         rmax : float
             Upper bound for root-finding search interval.
-        units : str or :class:`~unyt.Unit`, optional
+        units : str or ~unyt.unit_object.Unit, optional
             Units for ``rmin`` and ``rmax``. Default is ``kpc``.
         cosmology : :class:`~astropy.cosmology.Cosmology`, optional
             Cosmology used to compute :math:`\rho_{\mathrm{crit}}(z)`. Defaults to ``pisces_config``.
@@ -730,7 +730,7 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
 
         Returns
         -------
-        r_delta : :class:`~unyt.unyt_quantity`
+        r_delta : ~unyt.array.unyt_quantity
             Radius enclosing the target overdensity.
 
         Raises
@@ -836,14 +836,14 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
         units : str or ~unyt.Unit, optional
             Desired output units for the circular velocity. By default, uses the internal
             units determined by `G` and the profile parameters.
-        G : ~unyt.unyt_quantity, optional
+        G : ~unyt.array.unyt_quantity, optional
             Gravitational constant to use. Defaults to :data:`~unyt.physical_constants.gravitational_constant`.
         kwargs : dict
             Additional keyword arguments passed to :meth:`compute_enclosed_mass`.
 
         Returns
         -------
-        v_c : ~unyt.unyt_quantity or ~unyt.unyt_array
+        v_c : ~unyt.array.unyt_quantity or ~unyt.unyt_array
             Circular velocity at each input radius, with appropriate units.
 
         Example
@@ -906,14 +906,14 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
         units : str or ~unyt.Unit, optional
             Desired output units for the escape velocity. By default,
             uses the internal units determined by `G` and the profile parameters.
-        G : ~unyt.unyt_quantity, optional
+        G : ~unyt.array.unyt_quantity, optional
             Gravitational constant to use. Defaults to :data:`~unyt.physical_constants.gravitational_constant`.
         kwargs : dict
             Additional keyword arguments passed to :meth:`compute_enclosed_mass`.
 
         Returns
         -------
-        v_esc : ~unyt.unyt_quantity or ~unyt.unyt_array
+        v_esc : ~unyt.array.unyt_quantity or ~unyt.unyt_array
             Escape velocity at each input radius, with appropriate units.
 
         Example
@@ -987,23 +987,23 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
 
         Parameters
         ----------
-        R : :class:`~unyt.unyt_quantity` or :class:`~unyt.unyt_array`
+        R : ~unyt.array.unyt_quantity or ~unyt.array.unyt_array
             Projected radius in the lens plane with length units.
         mode : {"physical", "angular"}, optional
             Type of deflection to compute. Default is ``angular``.
-        units : str or :class:`~unyt.Unit`, optional
+        units : str or ~unyt.unit_object.Unit, optional
             Output units. For angular deflection, defaults to ``arcsec``.
-        G : :class:`~unyt.unyt_quantity`, optional
+        G : ~unyt.array.unyt_quantity, optional
             Gravitational constant to use. Defaults to :data:`unyt.physical_constants.gravitational_constant`.
         z_lens : float, optional
             Redshift of the lens (required for angular mode if distances not provided).
         z_source : float, optional
             Redshift of the source (required for angular mode if distances not provided).
-        D_l : :class:`~unyt.unyt_quantity`, optional
+        D_l : ~unyt.array.unyt_quantity, optional
             Angular diameter distance to the lens.
-        D_s : :class:`~unyt.unyt_quantity`, optional
+        D_s : ~unyt.array.unyt_quantity, optional
             Angular diameter distance to the source.
-        D_ls : :class:`~unyt.unyt_quantity`, optional
+        D_ls : ~unyt.array.unyt_quantity, optional
             Angular diameter distance between lens and source.
         cosmology : :class:`astropy.cosmology.Cosmology`, optional
             Cosmology used to compute distances if not provided. Defaults to
@@ -1013,7 +1013,7 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
 
         Returns
         -------
-        alpha : :class:`~unyt.unyt_quantity` or :class:`~unyt.unyt_array`
+        alpha : ~unyt.array.unyt_quantity or ~unyt.array.unyt_array
             Deflection angle at each radius, in specified units.
 
         Raises
@@ -1118,9 +1118,9 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
             Redshift of the lens.
         z_source : float
             Redshift of the source (must satisfy :math:`z_{\mathrm{source}} > z_{\mathrm{lens}}`).
-        units : str or :class:`~unyt.Unit`, optional
+        units : str or ~unyt.unit_object.Unit, optional
             Desired output units for :math:`\\theta_E`. Default is ``arcsec``.
-        G : :class:`~unyt.unyt_quantity`, optional
+        G : ~unyt.array.unyt_quantity, optional
             Gravitational constant to use. Defaults to :data:`unyt.physical_constants.gravitational_constant`.
         cosmology : :class:`astropy.cosmology.Cosmology`, optional
             Cosmology used to compute distances. Defaults to ``pisces_config['physics.default_cosmology']``.
@@ -1129,7 +1129,7 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
 
         Returns
         -------
-        theta_E : :class:`~unyt.unyt_quantity`
+        theta_E : ~unyt.array.unyt_quantity
             Einstein radius in specified angular units.
 
         Raises
@@ -1220,7 +1220,7 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
 
         Parameters
         ----------
-        R : :class:`~unyt.unyt_quantity` or :class:`~unyt.unyt_array`
+        R : ~unyt.array.unyt_quantity or ~unyt.array.unyt_array
             Projected radius with length units.
         z_lens : float
             Redshift of the lens.
@@ -1228,14 +1228,14 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
             Redshift of the source (must satisfy :math:`z_{\mathrm{source}} > z_{\mathrm{lens}}`).
         cosmology : :class:`astropy.cosmology.Cosmology`, optional
             Cosmology to compute distances. Defaults to ``pisces_config['physics.default_cosmology']``.
-        units : str or :class:`~unyt.Unit`, optional
+        units : str or ~unyt.unit_object.Unit, optional
             Output units for :math:`\\kappa`. Default is dimensionless.
         **kwargs
             Additional arguments passed to :meth:`compute_surface_density`.
 
         Returns
         -------
-        kappa : :class:`~unyt.unyt_quantity` or :class:`~unyt.unyt_array`
+        kappa : ~unyt.array.unyt_quantity or ~unyt.array.unyt_array
             Lensing convergence at each radius.
 
         Examples
@@ -3960,7 +3960,8 @@ class SersicProfile(BaseProfile):
 
     See Also
     --------
-    BaseProfile, ExponentialDiskDensityProfile
+    ~profiles.base.BaseProfile,
+    ExponentialDiskDensityProfile
 
     """
 

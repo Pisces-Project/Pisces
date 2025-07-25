@@ -19,7 +19,7 @@ Instance = TypeVar("Instance")
 class LogDescriptor:
     """A descriptor for dynamically creating and managing loggers for a class.
 
-    At its core, the :py:class:`LogDescriptor` is used for classes like :py:class:`~pisces.models.base.BaseModel` to
+    At its core, the :py:class:`LogDescriptor` is used for classes like :py:class:`~models.base.BaseModel` to
     create a class-specific logger.
     """
 

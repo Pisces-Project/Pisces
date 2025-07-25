@@ -16,8 +16,8 @@ profile under spherical symmetry.
 # -----
 # We begin by importing the required profiles and model class. This example uses:
 #
-# - :class:`~pisces.models.galaxy_clusters.spherical.SphericalGalaxyClusterModel`
-# - :class:`~pisces.profiles.NFWDensityProfile`
+# - :class:`~models.galaxy_clusters.spherical.SphericalGalaxyClusterModel`
+# - :class:`~profiles.density.NFWDensityProfile`
 
 import tempfile
 

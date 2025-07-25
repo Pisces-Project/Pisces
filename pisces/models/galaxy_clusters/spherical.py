@@ -240,9 +240,9 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
 
         Parameters
         ----------
-        min_radius : unyt_quantity
+        min_radius : ~unyt.array.unyt_quantity
             The minimum radius (e.g., 1 * kpc).
-        max_radius : unyt_quantity
+        max_radius : ~unyt.array.unyt_quantity
             The maximum radius (e.g., 1 * Mpc).
         num_points : int
             Number of radial samples to generate.
@@ -311,9 +311,9 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             Radial grid (:math:`r`), in units of length.
         density_profile : BaseSphericalDensityProfile
             Gas density profile :math:`\\rho(r)`.
-        gravitational_field : unyt_array, optional
+        gravitational_field : unyt.array.unyt_array, optional
             Gravitational field :math:`g(r)`, used to compute pressure.
-        pressure_field : unyt_array, optional
+        pressure_field : unyt.array.unyt_array, optional
             Pressure profile :math:`P(r)`, used to compute gravitational field.
 
         Returns
@@ -726,9 +726,9 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             Profile object representing the radial **gas** temperature.
         filename : str or Path
             Output HDF5 file path.
-        min_radius : unyt_quantity or str, optional
+        min_radius : ~unyt.array.unyt_quantity or str, optional
             Minimum radius for sampling (default: 1 kpc).
-        max_radius : unyt_quantity or str, optional
+        max_radius : ~unyt.array.unyt_quantity or str, optional
             Maximum radius for sampling (default: 1 Mpc).
         num_points : int, optional
             Number of radial samples (default: 1000).
@@ -890,9 +890,9 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             Profile object representing the entropy of the ICM gas.
         filename : str or Path
             Output HDF5 file path.
-        min_radius : unyt_quantity or str, optional
+        min_radius : ~unyt.array.unyt_quantity or str, optional
             Minimum radius for sampling (default: 1 kpc).
-        max_radius : unyt_quantity or str, optional
+        max_radius : ~unyt.array.unyt_quantity or str, optional
             Maximum radius for sampling (default: 1 Mpc).
         num_points : int, optional
             Number of radial samples (default: 1000).
@@ -1116,7 +1116,7 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             - "linear": Uniform spacing from 0 to :math:`\Psi_0`.
             - "log": Logarithmic spacing over a fixed dynamic range (default: "linear").
 
-        boundary_value : unyt_quantity, optional
+        boundary_value : ~unyt.array.unyt_quantity, optional
             The potential at the outer boundary :math:`\Phi_0`, used to define the
             relative potential :math:`\Psi = - (\Phi - \Phi_0)`. Default is 0.
 
@@ -1623,9 +1623,9 @@ class MagnetizedSphericalGalaxyClusterModel(SphericalGalaxyClusterModel):
             Profile object representing the radial **gas** temperature.
         filename : str or Path
             Output HDF5 file path.
-        min_radius : unyt_quantity or str, optional
+        min_radius : ~unyt.array.unyt_quantity or str, optional
             Minimum radius for sampling (default: 1 kpc).
-        max_radius : unyt_quantity or str, optional
+        max_radius : ~unyt.array.unyt_quantity or str, optional
             Maximum radius for sampling (default: 1 Mpc).
         num_points : int, optional
             Number of radial samples (default: 1000).
@@ -1808,9 +1808,9 @@ class MagnetizedSphericalGalaxyClusterModel(SphericalGalaxyClusterModel):
             Profile object representing the entropy of the ICM gas.
         filename : str or Path
             Output HDF5 file path.
-        min_radius : unyt_quantity or str, optional
+        min_radius : ~unyt.array.unyt_quantity or str, optional
             Minimum radius for sampling (default: 1 kpc).
-        max_radius : unyt_quantity or str, optional
+        max_radius : ~unyt.array.unyt_quantity or str, optional
             Maximum radius for sampling (default: 1 Mpc).
         num_points : int, optional
             Number of radial samples (default: 1000).

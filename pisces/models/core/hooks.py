@@ -544,7 +544,7 @@ class ParticleGenerationHook(BaseHook, ABC):
 
         Returns
         -------
-        ~pisces.particles.base.ParticleDataset
+        ~particles.base.ParticleDataset
             A particle dataset containing the generated realization of this model.
             Includes physical fields (e.g., positions, velocities, mass) and
             metadata specific to the model type.
