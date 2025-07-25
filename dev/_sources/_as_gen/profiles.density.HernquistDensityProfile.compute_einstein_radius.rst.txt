@@ -1,6 +1,0 @@
-profiles.density.HernquistDensityProfile.compute\_einstein\_radius
-==================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: HernquistDensityProfile.compute_einstein_radius

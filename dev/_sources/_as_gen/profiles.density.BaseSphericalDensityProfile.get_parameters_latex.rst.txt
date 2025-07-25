@@ -1,6 +1,0 @@
-profiles.density.BaseSphericalDensityProfile.get\_parameters\_latex
-===================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BaseSphericalDensityProfile.get_parameters_latex

@@ -1,6 +1,0 @@
-profiles.base.BaseCylindricalDiskProfile.variable\_symbols
-==========================================================
-
-.. currentmodule:: profiles.base
-
-.. autoproperty:: BaseCylindricalDiskProfile.variable_symbols

@@ -1,6 +1,0 @@
-profiles.density.EinastoDensityProfile.lambdify\_expression
-===========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: EinastoDensityProfile.lambdify_expression

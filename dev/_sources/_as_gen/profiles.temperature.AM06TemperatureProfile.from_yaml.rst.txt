@@ -1,6 +1,0 @@
-profiles.temperature.AM06TemperatureProfile.from\_yaml
-======================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: AM06TemperatureProfile.from_yaml

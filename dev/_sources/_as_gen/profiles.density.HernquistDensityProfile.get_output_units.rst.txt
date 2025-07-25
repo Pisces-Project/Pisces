@@ -1,6 +1,0 @@
-profiles.density.HernquistDensityProfile.get\_output\_units
-===========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: HernquistDensityProfile.get_output_units

@@ -1,6 +1,0 @@
-profiles.density.MooreDensityProfile.compute\_cosmological\_overdensity\_radius
-===============================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: MooreDensityProfile.compute_cosmological_overdensity_radius

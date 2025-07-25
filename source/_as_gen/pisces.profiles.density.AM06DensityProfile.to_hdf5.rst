@@ -1,6 +1,0 @@
-pisces.profiles.density.AM06DensityProfile.to\_hdf5
-===================================================
-
-.. currentmodule:: pisces.profiles.density
-
-.. automethod:: AM06DensityProfile.to_hdf5

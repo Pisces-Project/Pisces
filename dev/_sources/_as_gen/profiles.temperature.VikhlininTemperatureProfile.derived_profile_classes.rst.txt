@@ -1,6 +1,0 @@
-profiles.temperature.VikhlininTemperatureProfile.derived\_profile\_classes
-==========================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. autoproperty:: VikhlininTemperatureProfile.derived_profile_classes

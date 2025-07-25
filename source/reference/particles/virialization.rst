@@ -1,5 +1,0 @@
-.. _virialization:
-
-=========================
-Virializing Particles
-=========================

@@ -1,6 +1,0 @@
-pisces.physics.virialization.eddington.sample\_eddington\_velocities
-====================================================================
-
-.. currentmodule:: pisces.physics.virialization.eddington
-
-.. autofunction:: sample_eddington_velocities

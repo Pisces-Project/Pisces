@@ -1,6 +1,0 @@
-models.galaxy\_clusters.spherical.MagnetizedSphericalGalaxyClusterModel.has\_dark\_matter\_df
-=============================================================================================
-
-.. currentmodule:: models.galaxy_clusters.spherical
-
-.. autoproperty:: MagnetizedSphericalGalaxyClusterModel.has_dark_matter_df

@@ -1,6 +1,0 @@
-pisces.utilities.config.ConfigManager.update
-============================================
-
-.. currentmodule:: pisces.utilities.config
-
-.. automethod:: ConfigManager.update

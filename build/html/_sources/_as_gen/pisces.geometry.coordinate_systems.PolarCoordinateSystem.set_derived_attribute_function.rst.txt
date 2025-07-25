@@ -1,6 +1,0 @@
-pisces.geometry.coordinate\_systems.PolarCoordinateSystem.set\_derived\_attribute\_function
-===========================================================================================
-
-.. currentmodule:: pisces.geometry.coordinate_systems
-
-.. automethod:: PolarCoordinateSystem.set_derived_attribute_function

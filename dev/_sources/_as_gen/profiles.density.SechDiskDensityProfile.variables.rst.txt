@@ -1,6 +1,0 @@
-profiles.density.SechDiskDensityProfile.variables
-=================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: SechDiskDensityProfile.variables

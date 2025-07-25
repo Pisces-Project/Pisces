@@ -1,6 +1,0 @@
-models.core.base.BaseModel.fields
-=================================
-
-.. currentmodule:: models.core.base
-
-.. autoproperty:: BaseModel.fields
