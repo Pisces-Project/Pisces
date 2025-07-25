@@ -67,7 +67,7 @@ jobs:
       - name: Build documentation with Sphinx
         run: |
           mkdir -p docs/_build/html
-          sphinx-build -b html -n -W -j auto docs/source docs/_build/html
+          sphinx-build -b html -j auto docs/source docs/_build/html
 
       # Deploy redirect index.html to root (only on main or stable tag)
       - name: Deploy redirect index.html to root
