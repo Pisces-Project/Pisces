@@ -1,0 +1,6 @@
+profiles.density.BaseSphericalDensityProfile.variable\_symbols
+==============================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: BaseSphericalDensityProfile.variable_symbols

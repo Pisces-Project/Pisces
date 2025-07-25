@@ -1,0 +1,6 @@
+profiles.density.BetaModelDensityProfile.parameters
+===================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: BetaModelDensityProfile.parameters

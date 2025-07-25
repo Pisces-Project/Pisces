@@ -1,0 +1,50 @@
+BaseDiskDensityProfile
+=======================================
+
+.. currentmodule:: profiles.density
+
+.. autoclass:: profiles.density.BaseDiskDensityProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~BaseDiskDensityProfile.__init__
+      ~BaseDiskDensityProfile.from_dict
+      ~BaseDiskDensityProfile.from_hdf5
+      ~BaseDiskDensityProfile.from_json
+      ~BaseDiskDensityProfile.from_yaml
+      ~BaseDiskDensityProfile.get_derived_profile
+      ~BaseDiskDensityProfile.get_expression_latex
+      ~BaseDiskDensityProfile.get_output_units
+      ~BaseDiskDensityProfile.get_parameters_latex
+      ~BaseDiskDensityProfile.lambdify_expression
+      ~BaseDiskDensityProfile.list_derived_profiles
+      ~BaseDiskDensityProfile.substitute_expression
+      ~BaseDiskDensityProfile.to_dict
+      ~BaseDiskDensityProfile.to_hdf5
+      ~BaseDiskDensityProfile.to_json
+      ~BaseDiskDensityProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~BaseDiskDensityProfile.derived_profile_classes
+      ~BaseDiskDensityProfile.parameter_symbols
+      ~BaseDiskDensityProfile.parameters
+      ~BaseDiskDensityProfile.variable_symbols
+      ~BaseDiskDensityProfile.variables
+   
+   

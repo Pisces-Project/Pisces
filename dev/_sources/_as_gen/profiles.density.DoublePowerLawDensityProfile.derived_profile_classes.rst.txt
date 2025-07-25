@@ -1,0 +1,6 @@
+profiles.density.DoublePowerLawDensityProfile.derived\_profile\_classes
+=======================================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: DoublePowerLawDensityProfile.derived_profile_classes

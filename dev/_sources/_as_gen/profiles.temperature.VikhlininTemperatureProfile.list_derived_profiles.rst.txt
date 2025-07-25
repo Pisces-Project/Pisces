@@ -1,0 +1,6 @@
+profiles.temperature.VikhlininTemperatureProfile.list\_derived\_profiles
+========================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: VikhlininTemperatureProfile.list_derived_profiles

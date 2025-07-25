@@ -1,0 +1,6 @@
+profiles.density.EinastoDensityProfile.substitute\_expression
+=============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: EinastoDensityProfile.substitute_expression

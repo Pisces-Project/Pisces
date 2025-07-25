@@ -1,0 +1,6 @@
+profiles.temperature.DoubleBetaTemperatureProfile.to\_yaml
+==========================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: DoubleBetaTemperatureProfile.to_yaml

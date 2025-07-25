@@ -1,0 +1,6 @@
+profiles.density.PseudoIsothermalDensityProfile.compute\_circular\_velocity
+===========================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: PseudoIsothermalDensityProfile.compute_circular_velocity

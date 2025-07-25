@@ -1,0 +1,35 @@
+pisces.math_utils.integration
+=============================
+
+.. automodule:: pisces.math_utils.integration
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+
+   
+      integrate
+      integrate_mass
+      integrate_toinf
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   

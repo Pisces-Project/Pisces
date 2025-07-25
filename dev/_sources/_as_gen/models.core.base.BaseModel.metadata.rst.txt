@@ -1,0 +1,6 @@
+models.core.base.BaseModel.metadata
+===================================
+
+.. currentmodule:: models.core.base
+
+.. autoproperty:: BaseModel.metadata

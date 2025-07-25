@@ -1,0 +1,6 @@
+profiles.density.BaseSphericalDensityProfile.substitute\_expression
+===================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseSphericalDensityProfile.substitute_expression

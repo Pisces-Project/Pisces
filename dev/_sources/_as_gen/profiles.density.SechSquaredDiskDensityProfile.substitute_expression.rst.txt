@@ -1,0 +1,6 @@
+profiles.density.SechSquaredDiskDensityProfile.substitute\_expression
+=====================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SechSquaredDiskDensityProfile.substitute_expression

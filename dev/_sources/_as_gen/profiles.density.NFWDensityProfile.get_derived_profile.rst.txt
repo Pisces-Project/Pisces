@@ -1,0 +1,6 @@
+profiles.density.NFWDensityProfile.get\_derived\_profile
+========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: NFWDensityProfile.get_derived_profile

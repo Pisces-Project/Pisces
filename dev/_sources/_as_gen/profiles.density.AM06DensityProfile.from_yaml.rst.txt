@@ -1,0 +1,6 @@
+profiles.density.AM06DensityProfile.from\_yaml
+==============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: AM06DensityProfile.from_yaml

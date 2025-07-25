@@ -1,0 +1,6 @@
+profiles.density.DoublePowerLawDensityProfile.to\_dict
+======================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DoublePowerLawDensityProfile.to_dict

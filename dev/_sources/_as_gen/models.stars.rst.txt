@@ -1,0 +1,24 @@
+models.stars
+============
+
+.. automodule:: models.stars
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   

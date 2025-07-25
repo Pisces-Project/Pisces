@@ -1,0 +1,6 @@
+profiles.density.CoredNFWDensityProfile.from\_json
+==================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoredNFWDensityProfile.from_json

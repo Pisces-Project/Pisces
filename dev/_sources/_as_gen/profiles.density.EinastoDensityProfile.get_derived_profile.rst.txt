@@ -1,0 +1,6 @@
+profiles.density.EinastoDensityProfile.get\_derived\_profile
+============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: EinastoDensityProfile.get_derived_profile

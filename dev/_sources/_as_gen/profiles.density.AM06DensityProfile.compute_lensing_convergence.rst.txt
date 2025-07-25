@@ -1,0 +1,6 @@
+profiles.density.AM06DensityProfile.compute\_lensing\_convergence
+=================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: AM06DensityProfile.compute_lensing_convergence

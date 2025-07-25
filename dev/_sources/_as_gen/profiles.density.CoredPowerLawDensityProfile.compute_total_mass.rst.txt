@@ -1,0 +1,6 @@
+profiles.density.CoredPowerLawDensityProfile.compute\_total\_mass
+=================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoredPowerLawDensityProfile.compute_total_mass

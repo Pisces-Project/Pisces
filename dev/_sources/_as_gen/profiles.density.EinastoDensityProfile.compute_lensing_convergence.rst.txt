@@ -1,0 +1,6 @@
+profiles.density.EinastoDensityProfile.compute\_lensing\_convergence
+====================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: EinastoDensityProfile.compute_lensing_convergence

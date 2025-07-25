@@ -1,0 +1,6 @@
+profiles.temperature.IsothermalTemperatureProfile.\_\_init\_\_
+==============================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: IsothermalTemperatureProfile.__init__
