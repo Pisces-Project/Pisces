@@ -1,0 +1,11 @@
+Field Name,Description,Symbol,Notes
+``K_constant``,Polytropic constant,:math:`K`,
+``alpha_constant``,Lane-Emden scale length,:math:`\alpha`,
+``stellar_radius``,Radius at truncation point,:math:`R_\star`,
+``total_mass``,Final enclosed mass,:math:`M_\star`,
+``polytropic_index``,Polytropic index,:math:`n`,
+``core_density``,Central density,:math:`\rho_c`,
+``core_temperature``,Central temperature,:math:`T_c`,
+``mean_molecular_weight``,Mean molecular weight,:math:`\mu`,
+``date_created``,Timestamp of model creation,:math:`t_{\mathrm{create}}`,
+``__model_class__``,Model class name,:math:`\mathrm{ModelClass}`,

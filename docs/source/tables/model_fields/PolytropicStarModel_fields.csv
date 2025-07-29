@@ -1,0 +1,9 @@
+Field Name,Description,Symbol,Notes
+``radii``,Radial coordinate grid,:math:`r`,""
+``Theta``,Lane-Emden solution function,:math:`\Theta(\xi)`,""
+``density``,Mass density profile,:math:`\rho(r)``,""
+``pressure``,Pressure profile,:math:`P(r)`,""
+``temperature``,Temperature profile,:math:`T(r)`,""
+``mass``,Enclosed mass profile,:math:`M(<r)`,""
+``potential``,Gravitational potential,:math:`\Phi(r)`,""
+``gravitational_field``,Gravitational acceleration,:math:`g(r) = -\frac{d\Phi}{dr}`,""

@@ -58,15 +58,13 @@ Stellar Models
 
 Stellar model generators (e.g., for polytropes, ZAMS stars, or neutron stars) will be included here.
 
+.. currentmodule:: models.stars.polytropes
+
 .. autosummary::
     :nosignatures:
 
-    # Placeholder for future entries
+    PolytropicStarModel
 
-.. note::
-
-    Uh Oh! Looks like we haven't implemented any stellar models yet. Want to help us
-    get started? Check out the developer documentation for how to contribute: :ref:`developer_guide`.
 
 Galaxy Models
 ''''''''''''''''''''''

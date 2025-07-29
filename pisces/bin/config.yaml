@@ -71,3 +71,6 @@ models:
 
   MagnetizedSphericalGalaxyClusterModel:
         hydrogen_abundance: *default_X_H
+
+  PolytropicStarModel:
+    mean_molecular_weight: 0.61  # Default mean molecular weight for polytropic stars.

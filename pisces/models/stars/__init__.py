@@ -9,7 +9,10 @@ organized by type.
 For details on the nature of the different models in this module, refer
 to the documentation: :ref:`stars_overview`.
 
-.. warning::
-
-    This module is not yet implemented. It is a placeholder for future development.
 """
+
+__all__ = [
+    "PolytropicStarModel",
+]
+
+from .polytropes import PolytropicStarModel
