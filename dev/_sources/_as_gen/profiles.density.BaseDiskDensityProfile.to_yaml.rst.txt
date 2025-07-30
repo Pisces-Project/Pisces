@@ -1,6 +1,0 @@
-profiles.density.BaseDiskDensityProfile.to\_yaml
-================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BaseDiskDensityProfile.to_yaml

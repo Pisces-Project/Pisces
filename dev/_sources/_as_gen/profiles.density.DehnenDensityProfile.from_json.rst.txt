@@ -1,6 +1,0 @@
-profiles.density.DehnenDensityProfile.from\_json
-================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: DehnenDensityProfile.from_json

@@ -1,6 +1,0 @@
-profiles.density.PlummerDensityProfile.lambdify\_expression
-===========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: PlummerDensityProfile.lambdify_expression

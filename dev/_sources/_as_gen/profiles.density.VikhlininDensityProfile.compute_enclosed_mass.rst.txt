@@ -1,6 +1,0 @@
-profiles.density.VikhlininDensityProfile.compute\_enclosed\_mass
-================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: VikhlininDensityProfile.compute_enclosed_mass

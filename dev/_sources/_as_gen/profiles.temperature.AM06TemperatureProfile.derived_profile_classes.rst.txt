@@ -1,6 +1,0 @@
-profiles.temperature.AM06TemperatureProfile.derived\_profile\_classes
-=====================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. autoproperty:: AM06TemperatureProfile.derived_profile_classes

@@ -1,6 +1,0 @@
-profiles.density.PlummerDensityProfile.substitute\_expression
-=============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: PlummerDensityProfile.substitute_expression

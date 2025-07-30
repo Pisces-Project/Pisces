@@ -1,6 +1,0 @@
-profiles.density.CoredPowerLawDensityProfile.to\_dict
-=====================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredPowerLawDensityProfile.to_dict

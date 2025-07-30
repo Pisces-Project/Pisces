@@ -1,6 +1,0 @@
-profiles.density.BaseDiskDensityProfile.get\_output\_units
-==========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BaseDiskDensityProfile.get_output_units

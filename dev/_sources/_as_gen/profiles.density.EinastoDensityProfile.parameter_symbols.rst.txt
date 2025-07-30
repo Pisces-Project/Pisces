@@ -1,6 +1,0 @@
-profiles.density.EinastoDensityProfile.parameter\_symbols
-=========================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: EinastoDensityProfile.parameter_symbols

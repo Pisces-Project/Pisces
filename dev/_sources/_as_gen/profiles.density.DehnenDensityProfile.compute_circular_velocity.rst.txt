@@ -1,6 +1,0 @@
-profiles.density.DehnenDensityProfile.compute\_circular\_velocity
-=================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: DehnenDensityProfile.compute_circular_velocity

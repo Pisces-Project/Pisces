@@ -1,6 +1,0 @@
-profiles.temperature.CoolingFlowTemperatureProfile.substitute\_expression
-=========================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: CoolingFlowTemperatureProfile.substitute_expression

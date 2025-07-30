@@ -1,6 +1,0 @@
-profiles.density.VikhlininDensityProfile.compute\_lensing\_convergence
-======================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: VikhlininDensityProfile.compute_lensing_convergence

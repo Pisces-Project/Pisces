@@ -1,6 +1,0 @@
-profiles.density.BetaModelDensityProfile.compute\_fractional\_mass\_radius
-==========================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BetaModelDensityProfile.compute_fractional_mass_radius

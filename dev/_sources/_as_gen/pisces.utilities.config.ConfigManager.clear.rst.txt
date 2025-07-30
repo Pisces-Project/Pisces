@@ -1,6 +1,0 @@
-pisces.utilities.config.ConfigManager.clear
-===========================================
-
-.. currentmodule:: pisces.utilities.config
-
-.. automethod:: ConfigManager.clear

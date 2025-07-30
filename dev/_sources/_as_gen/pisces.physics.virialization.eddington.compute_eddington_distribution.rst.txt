@@ -1,6 +1,0 @@
-pisces.physics.virialization.eddington.compute\_eddington\_distribution
-=======================================================================
-
-.. currentmodule:: pisces.physics.virialization.eddington
-
-.. autofunction:: compute_eddington_distribution

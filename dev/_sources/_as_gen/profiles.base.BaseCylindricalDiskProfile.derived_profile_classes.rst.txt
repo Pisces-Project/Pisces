@@ -1,6 +1,0 @@
-profiles.base.BaseCylindricalDiskProfile.derived\_profile\_classes
-==================================================================
-
-.. currentmodule:: profiles.base
-
-.. autoproperty:: BaseCylindricalDiskProfile.derived_profile_classes

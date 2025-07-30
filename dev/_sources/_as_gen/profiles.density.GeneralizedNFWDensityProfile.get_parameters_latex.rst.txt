@@ -1,6 +1,0 @@
-profiles.density.GeneralizedNFWDensityProfile.get\_parameters\_latex
-====================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: GeneralizedNFWDensityProfile.get_parameters_latex

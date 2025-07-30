@@ -1,6 +1,0 @@
-profiles.density.CoredNFWDensityProfile.get\_expression\_latex
-==============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredNFWDensityProfile.get_expression_latex
