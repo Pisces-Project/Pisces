@@ -248,7 +248,7 @@ def compute_lame_emden_solution(
     # For non-integer n, we need to catch instances where we start getting
     # close to theta = 0 because we will not have stability in that case.
     # We use an event in the integrator to achieve this.
-    if not n.is_integer() or end_at_first_zero:
+    if not float(n).is_integer() or end_at_first_zero:
 
         def _theta_crossing_event_callable(xi, y):
             return y[0] - 1e-2
