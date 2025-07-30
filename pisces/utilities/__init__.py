@@ -14,11 +14,15 @@ __all__ = [
     "pisces_config",
     "pisces_logger",
     "__RNG__",
+    "unyt_yaml",
 ]
 
 # Import pisces configuration components. At the public level,
 # we only import the configuration object itself.
 from .config import pisces_config
+
+# Import the yaml configuration manager.
+from .io_tools import unyt_yaml
 
 # Import the logging configuration and setup. At the public level,
 # we only include the actual logger.

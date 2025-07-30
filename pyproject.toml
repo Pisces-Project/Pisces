@@ -16,7 +16,7 @@ build-backend = "setuptools.build_meta"
 # ================================== #
 # Configuration for the project details.
 [project]
-name = "pyics"
+name = "pisces-lib"
 dynamic = ["version"]
 description = "Multi-purpose astrophysical modeling library for simulation."
 authors = [
@@ -38,7 +38,8 @@ dependencies = [
   "matplotlib",
   "tqdm",
   "pymetric-lib",
-  "platformdirs"
+  "platformdirs",
+  "ruamel.yaml"
 ]
 
 # ================================== #

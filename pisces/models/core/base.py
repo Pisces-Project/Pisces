@@ -7,16 +7,16 @@ components. For more details on the Pisces model format and conventions, see :re
 """
 
 import datetime
-import json
 from abc import ABC
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import h5py
 import numpy as np
-from unyt import unyt_array, unyt_quantity
+from unyt import unyt_array
 
 from pisces.profiles.base import BaseProfile
+from pisces.utilities.io_tools import HDF5Serializer
 from pisces.utilities.log import LogDescriptor
 
 from .hooks import _HookTools
@@ -128,6 +128,20 @@ class BaseModel(_HookTools, ABC):
     your Python code. If the model class is not registered in the config file,
     accessing `self.config` will raise an error with guidance.
     """
+    metadata_serializer: HDF5Serializer = HDF5Serializer
+    """~pisces.utilities.io.HDF5Serializer: Serializer for model metadata.
+
+    This serializer is used to convert complex Python objects (like `unyt` arrays,
+    quantities, and custom types) into JSON-compatible formats that can be stored
+    as attributes in HDF5 files. It provides methods for serializing and deserializing
+    model metadata, ensuring that all necessary information can be preserved and
+    reconstructed when loading models.
+
+    The serializer for a particular model can be customized by subclassing
+    `HDF5Serializer` and overriding the `metadata_serializer` property in your model
+    class. This allows you to define custom serialization logic for any additional
+    types or structures you need to store in the model's metadata.
+    """
 
     # ========================================= #
     # Initialization and Configuration          #
@@ -212,151 +226,6 @@ class BaseModel(_HookTools, ABC):
 
         return fields
 
-    @staticmethod
-    def __serialize_metadata__(metadata: dict[str, Any]) -> dict[str, str]:
-        r"""
-        Serialize model metadata into a dictionary of JSON strings suitable for HDF5 attributes.
-
-        This method converts Python metadata values—including units-aware quantities from `unyt`—
-        into JSON-encoded strings that can be safely stored as HDF5 root-level attributes.
-
-        Each metadata value is converted to a simple JSON-compatible structure and then encoded
-        using `json.dumps()`. The resulting dictionary maps metadata keys to encoded string values.
-
-        Supported Types
-        ---------------
-        - `unyt_quantity`:
-            Serialized as: {"__CLS_FLAG__": "unyt_quantity", "value": <float>, "unit": <str>}
-        - `unyt_array`:
-            Serialized as: {"__CLS_FLAG__": "unyt_array", "value": <list of floats>, "unit": <str>}
-        - JSON primitives:
-            Strings, numbers, booleans, and None are passed through and encoded directly.
-        - Other types:
-            Not supported. Will raise `TypeError`.
-
-        Extension Guidance
-        ------------------
-        To add support for new types:
-        1. Detect the type using `isinstance(...)`
-        2. Create a simple serializable `dict` payload with a `"__CLS_FLAG__"` key.
-        3. Add corresponding logic in the deserialization method to reconstruct the object.
-
-        Returns
-        -------
-        dict[str, str]
-            A dictionary mapping metadata keys to JSON-encoded string values.
-
-        Raises
-        ------
-        TypeError
-            If a value has an unsupported type and cannot be serialized.
-
-        Example
-        -------
-        Input:
-            {"core_density": unyt_quantity(1e5, "kg/m**3"), "label": "solar core"}
-
-        Output:
-            {
-                "core_density": "{\"__CLS_FLAG__\": \"unyt_quantity\", \"value\": 100000.0, \"unit\": \"kg/m**3\"}",
-                "label": "\"solar core\""
-            }
-        """
-        serialized_metadata = {}
-
-        for key, value in metadata.items():
-            # Handle unyt_quantity: scalar quantity with units (e.g., "1e5 kg/m**3")
-            if isinstance(value, unyt_quantity):
-                payload = {
-                    "__CLS_FLAG__": "unyt_quantity",
-                    "value": float(value.value),
-                    "unit": str(value.units),
-                }
-
-            # Handle unyt_array: array with units (e.g., radial grid, density profile samples)
-            elif isinstance(value, unyt_array):
-                payload = {
-                    "__CLS_FLAG__": "unyt_array",
-                    "value": value.value.tolist(),  # convert to plain Python list
-                    "unit": str(value.units),
-                }
-
-            # Handle simple types: strings, numbers, booleans, None
-            elif isinstance(value, (str, int, float, bool)) or value is None:
-                serialized_metadata[key] = value  # no json.dumps here!
-                continue
-
-            # Unsupported type: raise error to enforce clarity
-            else:
-                raise TypeError(f"Unsupported metadata type for key '{key}': {type(value)}")
-
-            # Store JSON-encoded version of the payload in the output dictionary
-            serialized_metadata[key] = json.dumps(payload)
-
-        return serialized_metadata
-
-    @staticmethod
-    def __deserialize_metadata__(serialized: dict[str, str]) -> dict[str, Any]:
-        """
-        Deserialize model metadata from JSON-encoded HDF5 attribute strings.
-
-        This method reverses the operation of `__serialize_metadata__`. It interprets
-        each JSON-encoded attribute string and reconstructs the original Python object,
-        including unit-aware quantities such as `unyt_quantity` and `unyt_array`.
-
-        The method looks for special `"__CLS_FLAG__"` keys in decoded objects to determine
-        whether custom reconstruction logic is needed.
-
-        Supported Deserialization Formats
-        ---------------------------------
-        - `unyt_quantity`:
-            Stored as: {"__CLS_FLAG__": "unyt_quantity", "value": <float>, "unit": <str>}
-        - `unyt_array`:
-            Stored as: {"__CLS_FLAG__": "unyt_array", "value": <list of floats>, "unit": <str>}
-        - JSON primitives:
-            Strings, ints, floats, booleans, and nulls are returned as-is.
-
-        Extension Guidance
-        ------------------
-        To support additional custom metadata types:
-        1. Add a new `elif` block below that checks for a new `"__CLS_FLAG__"` value.
-        2. Reconstruct the appropriate Python object using the stored data.
-        3. Keep the format compatible with `json.dumps()` / `json.loads()`.
-
-        Parameters
-        ----------
-        serialized : dict[str, str]
-            Metadata attributes loaded from an HDF5 file (stored as JSON strings).
-
-        Returns
-        -------
-        dict[str, Any]
-            Dictionary with deserialized Python objects.
-        """
-        deserialized = {}
-
-        for key, raw in serialized.items():
-            try:
-                # Attempt to decode the JSON-encoded string
-                value = json.loads(raw)
-            except (TypeError, json.JSONDecodeError):
-                # If not JSON, treat it as a literal string fallback
-                deserialized[key] = raw
-                continue
-
-            # Reconstruct known types from payload structure
-            if isinstance(value, dict) and value.get("__CLS_FLAG__") == "unyt_quantity":
-                deserialized[key] = unyt_quantity(value["value"], value["unit"])
-
-            elif isinstance(value, dict) and value.get("__CLS_FLAG__") == "unyt_array":
-                deserialized[key] = unyt_array(value["value"], value["unit"])
-
-            else:
-                # No special reconstruction needed — use plain decoded value
-                deserialized[key] = value
-
-        return deserialized
-
     def __read_metadata__(self) -> dict[str, Any]:
         """Load model metadata from the root-level attributes of the Pisces HDF5 model file.
 
@@ -429,8 +298,7 @@ class BaseModel(_HookTools, ABC):
             }
 
         """
-        metadata = self.__deserialize_metadata__(dict(self.__handle__.attrs))
-        return metadata
+        return self.__class__.metadata_serializer.deserialize_dict(dict(self.__handle__.attrs))
 
     def __read_profiles__(self) -> dict[str, "BaseProfile"]:
         """Load all analytic profiles from the `/PROFILES` group of the model file.
@@ -682,7 +550,7 @@ class BaseModel(_HookTools, ABC):
         # -------------------------------------------------- #
         metadata["date_created"] = datetime.datetime.now().isoformat()
         metadata["__model_class__"] = cls.__name__
-        metadata = cls.__serialize_metadata__(dict(metadata))  # ensure copy
+        metadata = cls.metadata_serializer.serialize_dict(metadata)
 
         with h5py.File(filepath, "r+") as f:
             # Store metadata in root attributes

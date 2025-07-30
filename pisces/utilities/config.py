@@ -20,8 +20,9 @@ import os
 from collections.abc import MutableMapping
 from pathlib import Path
 
-import yaml
 from platformdirs import user_config_dir
+
+from .io_tools import unyt_yaml
 
 
 # --------------------------------- #
@@ -54,12 +55,12 @@ class ConfigManager(MutableMapping):
         if not self._path.exists():
             return {}
         with open(self._path) as f:
-            return yaml.safe_load(f) or {}
+            return unyt_yaml.load(f) or {}
 
     def _save(self) -> None:
         """Save configuration data to the YAML file."""
         with open(self._path, "w") as f:
-            yaml.safe_dump(self._data, f, default_flow_style=False)
+            unyt_yaml.dump(self._data, f)
 
     def _traverse(self, key: str, create_missing: bool = False):
         """Navigate nested dictionaries using dot-separated keys.

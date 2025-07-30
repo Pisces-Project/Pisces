@@ -1,6 +1,6 @@
-# ---------------------------------------------------
-# Pisces Default Configuration File
-# ---------------------------------------------------
+# ======================================================== #
+# Pisces Default Configuration File                        #
+# ======================================================== #
 # This file provides default settings for Pisces.
 # Users can override these defaults using:
 # - PISCES_CONFIG environment variable
@@ -9,68 +9,92 @@
 #
 # Values in this file are safe defaults suitable for most environments.
 
-# ---------------------------------------------------
-# Physics Configuration
-# ---------------------------------------------------
-# This section contains default physics-related settings.
-# Users can override these settings in their project-specific or user-specific configurations.
+# ------------------------------- #
+# SYSTEM CONFIGURATION            #
+# ------------------------------- #
+# These settings are used to configure various system-wide aspects of Pisces'
+# behavior. These are things like logging, appearance, etc.
+system:
 
+  # LOGGING
+  # -------
+  logging:
+    # The main logger is the core logger for Pisces that
+    # is used when no other more specialized logger is
+    # relevant.
+    main:
+      level: INFO
+      format: '[Pisces]-%(levelname)s: %(message)s'
+    # The model logger settings are the default behavior settings
+    # for the loggers attached to each model. They can be
+    # overridden in the model code or by the user.
+    models:
+      level: INFO
+      enabled: true
+      format: '[%(name)s]-%(levelname)s: %(message)s'
+
+  # APPEARANCE
+  # ----------
+  # These settings control the appearance of Pisces in the console.
+  # They can be overridden by the user in their
+  # project-specific or user-specific configurations.
+  appearance:
+    disable_progress_bars: false  # Disable progress bars in the console.
+
+  # SYMPY
+  # ------
+  # These settings control the behavior of SymPy in Pisces.
+  sympy:
+    skip_constant_checks: 5  # The number of operations in a sympy exp. before we no longer check for constant.
+
+# ------------------------------- #
+# NUMERICAL CONFIGURATION         #
+# ------------------------------- #
+# These settings control various aspects of the nitty-gritty behavior
+# of numerical operations. This includes default values for things like
+# sufficient tolerances on computations, etc.
+numeric:
+
+  # RANDOM NUMBER GENERATION
+  # ------------------------
+  # These settings can be used to control the behavior of
+  # random number generation in Pisces. Note that these
+  # will not influence random number generation in external libraries
+  # or at the Cython / C level.
+  random:
+    seed:      # Default seed for random number generation. If null, uses system time.
+
+# ---------------------------------------------------
+# PHYSICS CONFIGURATION
+# ---------------------------------------------------
+# Physics specific settings and constants that are used throughout Pisces.
+# In some cases, these are copied in model-specific configurations. In that case,
+# either modify the default or override the model-specific configuration.
 physics:
-  default_cosmology: 'Planck15' # The default cosmology to assume unless overridden.
+  default_cosmology: Planck15   # The default cosmology to assume unless overridden.
   hydrogen_abundance: &default_X_H 0.76  # The default hydrogen abundance to assume unless overridden.
 
-# ---------------------------------------------------
-# Numerical Configuration
-# ---------------------------------------------------
-# This section contains default numerical settings.
-numeric:
-  random:
-    # Random number generation settings. This is used by
-    # the random number generator to ensure that seeding is
-    # propagated correctly
-    seed: null # Default seed for random number generation. If null, uses system time.
-
-# ---------------------------------------------------
-# Logging Configuration
-# ---------------------------------------------------
-logging:
-  # Logging configuration settings. These are overridden
-  # in library configurations and are only relevant as
-  # fallback.
-  main:
-    # Settings for the main logger accessed in utilities.logging.
-    level: INFO
-    format: "[Pisces]-%(levelname)s: %(message)s"
-  models:
-    # Settings for the models logger accessed in utilities.logging.
-    level: INFO
-    enabled: true
-    format: "[%(name)s]-%(levelname)s: %(message)s"
-
-appearance:
-  # Appearance settings for Pisces.
-  disable_progress_bars: false  # Disable progress bars in the console.
-
-
-# ---------------------------------------------------
-# SymPy Configuration
-# ---------------------------------------------------
-sympy:
-  skip_constant_checks: 5  # The number of operations in a sympy exp. before we no longer check for constant.
-
-# ==================================================================================================================== #
-# MODELING CONFIGURATION
-# ==================================================================================================================== #
-# These settings are specific to different models and dictate various aspects of their default
-# behavior.
+# ------------------------------- #
+# MODEL CONFIGURATION             #
+# ------------------------------- #
+# Model configuration settings are specific to different model classes
+# and may be modified to override hyperparameters of the models. If a model
+# is missing, it will not have a model level configuration.
+#
+# Each model is identified exactly by its class name. Developers can
+# add new models to this section as needed and add a section for modified
+# versions of existing models.
 models:
-  # Each model configuration is stored here with a direct reference to its
-  # model class name.
+
+  # GALAXY CLUSTER MODELS
+  # ---------------------
+  # Models from the models.galaxy_clusters module.
   SphericalGalaxyClusterModel:
     hydrogen_abundance: *default_X_H
-
   MagnetizedSphericalGalaxyClusterModel:
-        hydrogen_abundance: *default_X_H
+    hydrogen_abundance: *default_X_H
 
+  # STELLAR MODELS
+  # ----------------
   PolytropicStarModel:
     mean_molecular_weight: 0.61  # Default mean molecular weight for polytropic stars.
