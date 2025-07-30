@@ -87,4 +87,6 @@ expand its functionality with minimal effort.
 
 .. toctree::
    :maxdepth: 1
-   :caption: Extensions
+   :caption: Extension Datatypes
+
+   particles/overview

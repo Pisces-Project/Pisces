@@ -81,14 +81,27 @@ Future models for galaxies (e.g., stellar+dark matter composites, rotating disks
     Uh Oh! Looks like we haven't implemented any galaxy models yet. Want to help us
     get started? Check out the developer documentation for how to contribute: :ref:`developer_guide`.
 
+Extension Modules & Data Representation
+------------------------------------------------
+These modules provide additional support / functionality for Pisces, including data representation
+and extension modules for handling specific data formats or structures. This is where Pisces houses connections
+to 3rd-party libraries / software.
+
+.. currentmodule:: pisces
+
+.. autosummary::
+    :toctree: _as_gen
+    :recursive:
+    :template: module.rst
+
+    particles
+
 Mathematics & Physics
 --------------------------
 
 Depending on the model you're using and its assumptions, any number of physics or mathematical calculations may
 occur, ranging from simple expressions to complex tensor manipulations. These modules contain specialized
 subsystems for such computations.
-
-.. currentmodule:: pisces
 
 .. autosummary::
     :toctree: _as_gen

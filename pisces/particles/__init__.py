@@ -5,5 +5,6 @@ sampling particles, preparing SPH initial conditions, etc.
 """
 
 __all__ = ["ParticleDataset", "concatenate_particles"]
+
 from .base import ParticleDataset
 from .utils import concatenate_particles
