@@ -1,0 +1,6 @@
+profiles.temperature.BaseSphericalTemperatureProfile.get\_output\_units
+=======================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: BaseSphericalTemperatureProfile.get_output_units

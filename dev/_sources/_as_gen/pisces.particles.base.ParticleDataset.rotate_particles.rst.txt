@@ -1,0 +1,6 @@
+pisces.particles.base.ParticleDataset.rotate\_particles
+=======================================================
+
+.. currentmodule:: pisces.particles.base
+
+.. automethod:: ParticleDataset.rotate_particles

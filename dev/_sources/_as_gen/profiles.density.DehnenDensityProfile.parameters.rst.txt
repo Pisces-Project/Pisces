@@ -1,0 +1,6 @@
+profiles.density.DehnenDensityProfile.parameters
+================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: DehnenDensityProfile.parameters

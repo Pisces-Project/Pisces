@@ -1,0 +1,6 @@
+profiles.density.HernquistDensityProfile.variable\_symbols
+==========================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: HernquistDensityProfile.variable_symbols

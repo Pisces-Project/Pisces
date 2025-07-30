@@ -1,0 +1,6 @@
+pisces.particles.base.ParticleDataset.group\_metadata
+=====================================================
+
+.. currentmodule:: pisces.particles.base
+
+.. autoproperty:: ParticleDataset.group_metadata

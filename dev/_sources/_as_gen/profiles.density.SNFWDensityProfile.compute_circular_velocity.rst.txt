@@ -1,0 +1,6 @@
+profiles.density.SNFWDensityProfile.compute\_circular\_velocity
+===============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SNFWDensityProfile.compute_circular_velocity

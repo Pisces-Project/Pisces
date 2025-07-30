@@ -1,0 +1,6 @@
+profiles.density.AM06DensityProfile.get\_expression\_latex
+==========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: AM06DensityProfile.get_expression_latex

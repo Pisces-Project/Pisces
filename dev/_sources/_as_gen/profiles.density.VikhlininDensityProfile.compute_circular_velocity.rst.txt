@@ -1,0 +1,6 @@
+profiles.density.VikhlininDensityProfile.compute\_circular\_velocity
+====================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: VikhlininDensityProfile.compute_circular_velocity

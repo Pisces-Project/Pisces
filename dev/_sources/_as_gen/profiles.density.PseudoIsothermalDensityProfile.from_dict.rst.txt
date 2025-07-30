@@ -1,0 +1,6 @@
+profiles.density.PseudoIsothermalDensityProfile.from\_dict
+==========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: PseudoIsothermalDensityProfile.from_dict

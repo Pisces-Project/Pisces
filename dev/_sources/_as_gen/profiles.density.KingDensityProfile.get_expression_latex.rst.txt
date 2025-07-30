@@ -1,0 +1,6 @@
+profiles.density.KingDensityProfile.get\_expression\_latex
+==========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: KingDensityProfile.get_expression_latex

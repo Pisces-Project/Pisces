@@ -1,0 +1,34 @@
+pisces.physics.virialization
+============================
+
+.. automodule:: pisces.physics.virialization
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Modules
+
+   .. autosummary::
+      :toctree:
+      :template: module.rst
+      :recursive:
+
+   
+      eddington
+   
+   
+
+   
+   
+   
+
+   
+   
+   

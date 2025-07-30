@@ -1,0 +1,6 @@
+profiles.temperature.DoubleBetaTemperatureProfile.\_\_init\_\_
+==============================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: DoubleBetaTemperatureProfile.__init__

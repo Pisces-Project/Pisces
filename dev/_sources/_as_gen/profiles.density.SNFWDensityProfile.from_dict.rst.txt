@@ -1,0 +1,6 @@
+profiles.density.SNFWDensityProfile.from\_dict
+==============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SNFWDensityProfile.from_dict

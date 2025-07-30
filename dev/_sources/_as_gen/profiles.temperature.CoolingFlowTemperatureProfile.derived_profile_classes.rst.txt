@@ -1,0 +1,6 @@
+profiles.temperature.CoolingFlowTemperatureProfile.derived\_profile\_classes
+============================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoproperty:: CoolingFlowTemperatureProfile.derived_profile_classes

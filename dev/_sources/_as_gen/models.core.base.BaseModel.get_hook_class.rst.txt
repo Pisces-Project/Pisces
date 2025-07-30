@@ -1,0 +1,6 @@
+models.core.base.BaseModel.get\_hook\_class
+===========================================
+
+.. currentmodule:: models.core.base
+
+.. automethod:: BaseModel.get_hook_class

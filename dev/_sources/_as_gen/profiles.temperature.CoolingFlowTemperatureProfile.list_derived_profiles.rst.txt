@@ -1,0 +1,6 @@
+profiles.temperature.CoolingFlowTemperatureProfile.list\_derived\_profiles
+==========================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: CoolingFlowTemperatureProfile.list_derived_profiles
