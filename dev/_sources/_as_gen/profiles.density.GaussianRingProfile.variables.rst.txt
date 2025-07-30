@@ -1,6 +1,0 @@
-profiles.density.GaussianRingProfile.variables
-==============================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: GaussianRingProfile.variables

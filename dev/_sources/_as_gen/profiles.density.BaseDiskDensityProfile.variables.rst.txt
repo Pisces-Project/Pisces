@@ -1,6 +1,0 @@
-profiles.density.BaseDiskDensityProfile.variables
-=================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: BaseDiskDensityProfile.variables

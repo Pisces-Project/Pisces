@@ -1,6 +1,0 @@
-profiles.temperature.CoolingFlowTemperatureProfile.to\_yaml
-===========================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: CoolingFlowTemperatureProfile.to_yaml

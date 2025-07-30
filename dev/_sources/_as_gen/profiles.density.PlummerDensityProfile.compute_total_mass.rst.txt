@@ -1,6 +1,0 @@
-profiles.density.PlummerDensityProfile.compute\_total\_mass
-===========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: PlummerDensityProfile.compute_total_mass

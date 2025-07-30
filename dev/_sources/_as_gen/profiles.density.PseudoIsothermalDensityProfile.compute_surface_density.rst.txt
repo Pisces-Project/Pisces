@@ -1,6 +1,0 @@
-profiles.density.PseudoIsothermalDensityProfile.compute\_surface\_density
-=========================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: PseudoIsothermalDensityProfile.compute_surface_density

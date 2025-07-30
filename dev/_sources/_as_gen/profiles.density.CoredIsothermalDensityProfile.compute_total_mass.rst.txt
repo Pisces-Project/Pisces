@@ -1,6 +1,0 @@
-profiles.density.CoredIsothermalDensityProfile.compute\_total\_mass
-===================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredIsothermalDensityProfile.compute_total_mass

@@ -1,6 +1,0 @@
-profiles.density.BurkertDensityProfile.lambdify\_expression
-===========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BurkertDensityProfile.lambdify_expression

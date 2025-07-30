@@ -1,6 +1,0 @@
-profiles.temperature.BaseSphericalTemperatureProfile.\_\_init\_\_
-=================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: BaseSphericalTemperatureProfile.__init__

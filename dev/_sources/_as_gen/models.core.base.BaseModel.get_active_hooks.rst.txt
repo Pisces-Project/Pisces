@@ -1,6 +1,0 @@
-models.core.base.BaseModel.get\_active\_hooks
-=============================================
-
-.. currentmodule:: models.core.base
-
-.. automethod:: BaseModel.get_active_hooks

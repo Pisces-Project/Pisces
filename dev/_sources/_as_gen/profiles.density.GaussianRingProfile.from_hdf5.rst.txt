@@ -1,6 +1,0 @@
-profiles.density.GaussianRingProfile.from\_hdf5
-===============================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: GaussianRingProfile.from_hdf5

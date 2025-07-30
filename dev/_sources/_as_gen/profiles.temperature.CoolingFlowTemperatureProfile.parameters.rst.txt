@@ -1,6 +1,0 @@
-profiles.temperature.CoolingFlowTemperatureProfile.parameters
-=============================================================
-
-.. currentmodule:: profiles.temperature
-
-.. autoproperty:: CoolingFlowTemperatureProfile.parameters

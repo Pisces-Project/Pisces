@@ -1,6 +1,0 @@
-profiles.density.BurkertDensityProfile.compute\_lensing\_convergence
-====================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BurkertDensityProfile.compute_lensing_convergence

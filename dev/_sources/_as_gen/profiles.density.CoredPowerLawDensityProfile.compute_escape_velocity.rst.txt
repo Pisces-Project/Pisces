@@ -1,6 +1,0 @@
-profiles.density.CoredPowerLawDensityProfile.compute\_escape\_velocity
-======================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredPowerLawDensityProfile.compute_escape_velocity

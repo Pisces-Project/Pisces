@@ -1,6 +1,0 @@
-profiles.density.ExponentialDiskDensityProfile.derived\_profile\_classes
-========================================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: ExponentialDiskDensityProfile.derived_profile_classes

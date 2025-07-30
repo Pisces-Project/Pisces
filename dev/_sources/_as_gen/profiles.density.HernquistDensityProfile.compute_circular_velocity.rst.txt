@@ -1,6 +1,0 @@
-profiles.density.HernquistDensityProfile.compute\_circular\_velocity
-====================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: HernquistDensityProfile.compute_circular_velocity

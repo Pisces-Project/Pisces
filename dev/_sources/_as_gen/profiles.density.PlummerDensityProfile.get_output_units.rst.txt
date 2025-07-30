@@ -1,6 +1,0 @@
-profiles.density.PlummerDensityProfile.get\_output\_units
-=========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: PlummerDensityProfile.get_output_units

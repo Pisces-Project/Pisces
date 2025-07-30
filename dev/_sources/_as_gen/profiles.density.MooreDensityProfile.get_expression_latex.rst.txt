@@ -1,6 +1,0 @@
-profiles.density.MooreDensityProfile.get\_expression\_latex
-===========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: MooreDensityProfile.get_expression_latex

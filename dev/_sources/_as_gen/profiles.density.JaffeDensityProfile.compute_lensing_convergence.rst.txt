@@ -1,6 +1,0 @@
-profiles.density.JaffeDensityProfile.compute\_lensing\_convergence
-==================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: JaffeDensityProfile.compute_lensing_convergence
