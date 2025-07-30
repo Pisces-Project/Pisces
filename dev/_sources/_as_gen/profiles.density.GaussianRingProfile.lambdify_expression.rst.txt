@@ -1,0 +1,6 @@
+profiles.density.GaussianRingProfile.lambdify\_expression
+=========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: GaussianRingProfile.lambdify_expression

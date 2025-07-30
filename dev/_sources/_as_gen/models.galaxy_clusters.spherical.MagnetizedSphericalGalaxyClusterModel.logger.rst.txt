@@ -1,0 +1,6 @@
+models.galaxy\_clusters.spherical.MagnetizedSphericalGalaxyClusterModel.logger
+==============================================================================
+
+.. currentmodule:: models.galaxy_clusters.spherical
+
+.. autoattribute:: MagnetizedSphericalGalaxyClusterModel.logger

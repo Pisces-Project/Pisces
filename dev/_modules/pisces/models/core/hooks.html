@@ -1,0 +1,960 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pisces.models.core.hooks &#8212; Pisces  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pisces/models/core/hooks';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Pisces  documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../reference/user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../reference/user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">pisces.models.core.hooks</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for pisces.models.core.hooks</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Pisces model hook framework.</span>
+
+<span class="sd">This module defines the infrastructure for attaching modular, reusable</span>
+<span class="sd">components—called *hooks*—to Pisces models. Hooks encapsulate specialized</span>
+<span class="sd">behavior such as sampling, diagnostics, or derived computation, and can be</span>
+<span class="sd">selectively enabled or disabled on a per-model basis.</span>
+
+<span class="sd">Usage</span>
+<span class="sd">-----</span>
+<span class="sd">To use a hook, mix it into a model class and optionally configure it via</span>
+<span class="sd">class-level attributes. Hooks are automatically detected and can be accessed</span>
+<span class="sd">via the tools in `_HookTools`.</span>
+
+<span class="sd">Examples</span>
+<span class="sd">--------</span>
+<span class="sd">.. code-block:: python</span>
+
+<span class="sd">    class MyModel(BaseModel, MyCustomHook):</span>
+<span class="sd">        __MyCustomHook_HOOK_ENABLED__ = True</span>
+<span class="sd">        _MyCustomHook_option = 42</span>
+
+
+<span class="sd">    model = MyModel()</span>
+<span class="sd">    model.get_active_hooks()  # -&gt; [&#39;my_custom_hook&#39;]</span>
+
+<span class="sd">Design Notes</span>
+<span class="sd">------------</span>
+<span class="sd">Hooks are designed to be:</span>
+
+<span class="sd">- **Non-intrusive**: They extend model behavior without modifying the base logic.</span>
+<span class="sd">- **Declarative**: They rely on class-level flags and naming conventions for control.</span>
+<span class="sd">- **Discoverable**: They support standardized metadata for reflection and documentation.</span>
+
+<span class="sd">For more details on creating or customizing hooks, see the docstring for `BaseHook`.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pisces.particles.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParticleDataset</span>
+
+
+<span class="c1"># -------------------------------------------------- #</span>
+<span class="c1"># Template Class                                     #</span>
+<span class="c1"># -------------------------------------------------- #</span>
+<span class="c1"># This is the base class / template for all hook classes. This</span>
+<span class="c1"># should be the starting point for implementing any new hook classes in</span>
+<span class="c1"># this module.</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BaseHook</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for all Pisces model hooks.</span>
+
+<span class="sd">    This abstract base class defines a standardized interface and a set of</span>
+<span class="sd">    conventions for modular &quot;hooks&quot; that can be mixed into Pisces model classes.</span>
+<span class="sd">    Hooks encapsulate auxiliary logic such as sampling, initialization,</span>
+<span class="sd">    diagnostics, or derived calculations, and are used to extend models</span>
+<span class="sd">    non-intrusively without polluting the core behavior of the model.</span>
+
+<span class="sd">    .. hint::</span>
+
+<span class="sd">        An archetypal example of a hook is a particle sampler, which</span>
+<span class="sd">        provides methods for generating or sampling particles from a model.</span>
+<span class="sd">        This might not be possible in all models, but it is a common</span>
+<span class="sd">        use-case and therefore can be mixed into models that support it.</span>
+
+<span class="sd">    Hooks inheriting from this base class gain access to a standardized structure</span>
+<span class="sd">    for declaration, configuration, and integration.</span>
+
+<span class="sd">    Structure and Conventions</span>
+<span class="sd">    -------------------------</span>
+
+<span class="sd">    Hooks follow a set of naming and structural conventions to ensure that they</span>
+<span class="sd">    are clearly organized, easily discoverable, and do not interfere with model</span>
+<span class="sd">    internals unless explicitly intended.</span>
+
+<span class="sd">    Feature Status Flag</span>
+<span class="sd">    ^^^^^^^^^^^^^^^^^^^</span>
+<span class="sd">    Each hook can be selectively enabled or disabled at the model level using a</span>
+<span class="sd">    class-level flag with the format:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        __&lt;HookClassName&gt;_HOOK_ENABLED__ = True  # or False</span>
+
+<span class="sd">    For example:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        class MyClusterModel(BaseModel):</span>
+<span class="sd">            __SphericalGalaxyClusterParticleHook_HOOK_ENABLED__ = False</span>
+
+<span class="sd">    This flag allows models to opt out of specific hook functionality without</span>
+<span class="sd">    modifying the hook or base class definitions.</span>
+
+<span class="sd">    At the level of the hook class, the hook class will define the feature status flag</span>
+<span class="sd">    and set it generically to ``True`` so that any class which mixes in the hook</span>
+<span class="sd">    will have the hook enabled by default. This is done to ensure that hooks</span>
+<span class="sd">    are enabled by default, but can be disabled on a per-model basis.</span>
+
+<span class="sd">    Metadata and Integration Support</span>
+<span class="sd">    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+<span class="sd">    Hooks may optionally define metadata attributes:</span>
+
+<span class="sd">    - ``_&lt;HookClassName&gt;_NAME``: A short identifier string (e.g., ``&quot;particle_sampler&quot;``)</span>
+<span class="sd">    - ``_&lt;HookClassName&gt;_DOC``: A human-readable summary for documentation / summarizing.</span>
+
+<span class="sd">    These are useful for introspection or automated tooling but are not required.</span>
+
+<span class="sd">    Class Settings / Attributes</span>
+<span class="sd">    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+<span class="sd">    Hooks can define class-level configuration settings using the pattern:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        _&lt;HookClassName&gt;_&lt;setting_name&gt; = &lt;value&gt;</span>
+
+<span class="sd">    For example:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        class ParticleSamplerHook(BaseHook):</span>
+<span class="sd">            _ParticleSamplerHook_max_attempts = 1000</span>
+
+
+<span class="sd">        class MyCluster(</span>
+<span class="sd">            SphericalGalaxyClusterModel,</span>
+<span class="sd">            ParticleSamplerHook,</span>
+<span class="sd">        ):</span>
+<span class="sd">            _ParticleSamplerHook_max_attempts = (</span>
+<span class="sd">                10  # Override the default</span>
+<span class="sd">            )</span>
+
+<span class="sd">    This enables per-model customization of hook behavior.</span>
+
+<span class="sd">    Utility Methods</span>
+<span class="sd">    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+<span class="sd">    Non-public helper methods in hooks should follow the naming pattern:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        def _&lt;HookClassName&gt;_&lt;method_name&gt;(self, ...):</span>
+<span class="sd">            ...</span>
+
+<span class="sd">    This avoids namespace pollution and clarifies which hook a utility belongs to.</span>
+
+<span class="sd">    Public API Methods</span>
+<span class="sd">    ------------------</span>
+<span class="sd">    Hooks may expose methods intended for use by the model or end user.</span>
+<span class="sd">    These should:</span>
+
+<span class="sd">    - Follow standard Python naming conventions (no leading underscore)</span>
+<span class="sd">    - Avoid overly generic names like ``apply`` or ``run`` unless context-specific</span>
+<span class="sd">    - Be explicitly documented</span>
+
+<span class="sd">    Invocation Lifecycle</span>
+<span class="sd">    --------------------</span>
+<span class="sd">    Hook methods may be:</span>
+
+<span class="sd">    - Explicitly called by model methods</span>
+<span class="sd">    - Automatically invoked by Pisces during construction or export</span>
+<span class="sd">    - Used by other hooks</span>
+
+<span class="sd">    Hook logic should be self-contained and avoid side effects or global state.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># ----------------------------------- #</span>
+    <span class="c1"># Feature Status Flag                 #</span>
+    <span class="c1"># ----------------------------------- #</span>
+    <span class="c1"># The feature status flag is a variable which indicates to pisces whether</span>
+    <span class="c1"># or not this hook is enabled for a given model class. It may be explicitly</span>
+    <span class="c1"># set to `False` in a specific model class to disable the hook for that class.</span>
+    <span class="c1">#</span>
+    <span class="c1"># The hook flag should be named ``__&lt;HookClassName&gt;_HOOK_ENABLED__``, where</span>
+    <span class="c1"># ``&lt;HookClassName&gt;`` is the name of the hook class.</span>
+    <span class="c1">#</span>
+    <span class="c1"># The ``_IS_TEMPLATE__`` flag is used to indicate that this hook is a template</span>
+    <span class="c1"># and should not be used directly.</span>
+
+    <span class="c1"># __HOOK_ENABLED__ = True</span>
+    <span class="c1"># __HOOK_IS_TEMPLATE__ = True # Mark this as a template hook.</span>
+
+    <span class="c1"># ----------------------------------- #</span>
+    <span class="c1"># Metadata and Integration Support    #</span>
+    <span class="c1"># ----------------------------------- #</span>
+    <span class="c1"># Hooks may optionally define metadata attributes such as:</span>
+    <span class="c1">#</span>
+    <span class="c1"># - `_&lt;HookClassName&gt;_NAME`: A short name or identifier for introspection.</span>
+    <span class="c1"># - `_&lt;HookClassName&gt;_DOC`: A short description for use in automated docs or GUIs.</span>
+    <span class="c1">#</span>
+    <span class="c1"># These are not required, but help standardize discovery and documentation.</span>
+
+    <span class="c1"># ----------------------------------- #</span>
+    <span class="c1"># Class Settings / Attributes         #</span>
+    <span class="c1"># ----------------------------------- #</span>
+    <span class="c1"># Hooks often need special information / configuration about</span>
+    <span class="c1"># how to work for a particular model class. This can be managed</span>
+    <span class="c1"># using class attributes that are defined in the hook class.</span>
+    <span class="c1">#</span>
+    <span class="c1"># Each attribute in this section should be __&lt;HookClassName&gt;_&lt;setting_name&gt;__ and</span>
+    <span class="c1"># should be documented in the class docstring. Model subclasses which mixin</span>
+    <span class="c1"># this hook can then override these settings to modify behavior of the hook for</span>
+    <span class="c1"># their specific model cases.</span>
+
+    <span class="c1"># _&lt;HookClassName&gt;_hook_example_setting__ = &quot;default_value&quot;</span>
+
+    <span class="c1"># ----------------------------------- #</span>
+    <span class="c1"># Utility methods / sub-methods       #</span>
+    <span class="c1"># ----------------------------------- #</span>
+    <span class="c1"># To avoid cluttering the namespace of models, any methods in</span>
+    <span class="c1"># the hook that are not directly exposed to the user should be</span>
+    <span class="c1"># private (prefixed with _) and should have the following naming</span>
+    <span class="c1"># convention: ``_&lt;HookClassName&gt;_&lt;method_name&gt;``. This ensures that</span>
+    <span class="c1"># the methods are clearly associated with the hook and avoids</span>
+    <span class="c1"># potential naming conflicts with other methods in the model class.</span>
+    <span class="c1">#</span>
+    <span class="c1"># Hooks may have any number of utility methods.</span>
+
+    <span class="c1"># ----------------------------------- #</span>
+    <span class="c1"># Public API Methods                  #</span>
+    <span class="c1"># ----------------------------------- #</span>
+    <span class="c1"># Any methods intended for use by the model or end-user should follow standard</span>
+    <span class="c1"># Python naming conventions (no leading underscores) and should be explicitly</span>
+    <span class="c1"># documented. Avoid overly generic names (e.g., `apply`, `update`) to reduce</span>
+    <span class="c1"># name conflicts when hooks are mixed into multiple model classes.</span>
+
+
+<span class="c1"># -------------------------------------------------- #</span>
+<span class="c1"># Hook Tools                                         #</span>
+<span class="c1"># -------------------------------------------------- #</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">_HookTools</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mixin class providing introspection utilities for Pisces model hooks.</span>
+
+<span class="sd">    This class is intended to be inherited by all Pisces models to provide</span>
+<span class="sd">    reflection-based tools for discovering, filtering, and interacting with</span>
+<span class="sd">    attached hooks.</span>
+
+<span class="sd">    It assumes that hook mixins are subclasses of :class:`BaseHook` and that</span>
+<span class="sd">    each hook follows the naming conventions described in :class:`BaseHook`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># --- Hook Retrieval Methods --- #</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_all_hooks</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">names</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">BaseHook</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return all hook classes mixed into the model, regardless of activation status.</span>
+
+<span class="sd">        If `names` is True, return a list of hook class names instead of class objects.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        names : bool, optional</span>
+<span class="sd">            If True, return a list of hook class names. If False, return the actual hook classes.</span>
+<span class="sd">            Defaults to True.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of type</span>
+<span class="sd">            List of hook classes (subclasses of BaseHook) in MRO.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Retrieve the relevant hook classes by seeking the subclasses of</span>
+        <span class="c1"># BaseHook in the method resolution order (MRO) of the class.</span>
+        <span class="n">_hook_classes</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">hook_class</span>
+            <span class="k">for</span> <span class="n">hook_class</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__mro__</span>
+            <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">hook_class</span><span class="p">,</span> <span class="n">BaseHook</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="p">(</span><span class="n">hook_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">BaseHook</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">hook_class</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;__</span><span class="si">{</span><span class="n">hook_class</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">_IS_TEMPLATE__&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="p">]</span>
+
+        <span class="c1"># if `names` is True, we need to parse for the names of</span>
+        <span class="c1"># the hooks, defaulting to the class name. Otherwise, we return the classes themselves.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">names</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_hook_classes</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_hook_names</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="nb">getattr</span><span class="p">(</span><span class="n">hook_class</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="n">hook_class</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">_NAME&quot;</span><span class="p">,</span> <span class="n">hook_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span> <span class="k">for</span> <span class="n">hook_class</span> <span class="ow">in</span> <span class="n">_hook_classes</span>
+            <span class="p">]</span>
+            <span class="k">return</span> <span class="n">_hook_names</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_active_hooks</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">names</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">BaseHook</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return all active hook classes mixed into the model.</span>
+
+<span class="sd">        A hook is considered active if the model class has not explicitly disabled it</span>
+<span class="sd">        via a ``__&lt;HookClassName&gt;_HOOK_ENABLED__ = False`` flag.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        names : bool, optional</span>
+<span class="sd">            If True, return a list of hook names (via ``_&lt;HookClassName&gt;_NAME`` if available,</span>
+<span class="sd">            or fall back to class name). If False, return the hook class objects themselves.</span>
+<span class="sd">            Defaults to True.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of str or list of type</span>
+<span class="sd">            List of active hook names or hook class objects.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Begin by fetching ALL of the hooks using .get_all_hooks.</span>
+        <span class="n">all_hooks</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_all_hooks</span><span class="p">(</span><span class="n">names</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># Now, for each of these classes, we check whether the flag</span>
+        <span class="c1"># is enabled or disabled in self.</span>
+        <span class="n">active_hooks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">hook_class</span> <span class="ow">in</span> <span class="n">all_hooks</span><span class="p">:</span>
+            <span class="n">hook_flag_value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;__</span><span class="si">{</span><span class="n">hook_class</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">_HOOK_ENABLED__&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">hook_flag_value</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">active_hooks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hook_class</span><span class="p">)</span>
+
+        <span class="c1"># Now handle names the same way it was done</span>
+        <span class="c1"># in the all_hooks method.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">names</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">active_hooks</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">active_hook_names</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="nb">getattr</span><span class="p">(</span><span class="n">hook_class</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="n">hook_class</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">_NAME&quot;</span><span class="p">,</span> <span class="n">hook_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span> <span class="k">for</span> <span class="n">hook_class</span> <span class="ow">in</span> <span class="n">active_hooks</span>
+            <span class="p">]</span>
+            <span class="k">return</span> <span class="n">active_hook_names</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_hook_class</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">hook_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the hook class associated with a given hook name.</span>
+
+<span class="sd">        This resolves against the symbolic name stored in ``_&lt;HookClassName&gt;_NAME``</span>
+<span class="sd">        if present, and falls back to the class name.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        hook_name : str</span>
+<span class="sd">            The name of the hook, either the symbolic name or class name.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        type</span>
+<span class="sd">            The hook class object.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If no hook matches the provided name.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">hook_class</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_all_hooks</span><span class="p">(</span><span class="n">names</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">hook_class</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="n">hook_class</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">_NAME&quot;</span><span class="p">,</span> <span class="n">hook_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="n">hook_name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">hook_class</span>
+
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No hook found with name &#39;</span><span class="si">{</span><span class="n">hook_name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_hook_name</span><span class="p">(</span><span class="n">hook_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the symbolic name for a given hook class.</span>
+
+<span class="sd">        If ``_&lt;HookClassName&gt;_NAME`` is defined, it is used;</span>
+<span class="sd">        otherwise the class name is returned.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        hook_cls : type</span>
+<span class="sd">            The hook class.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The symbolic name or class name.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">hook_cls</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="n">hook_cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">_NAME&quot;</span><span class="p">,</span> <span class="n">hook_cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_hook_description</span><span class="p">(</span><span class="n">hook_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the human-readable description for a given hook class.</span>
+
+<span class="sd">        If ``_&lt;HookClassName&gt;_DOC`` is defined, it is used; otherwise an empty string.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        hook_cls : type</span>
+<span class="sd">            The hook class.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The description or an empty string.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">hook_cls</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="n">hook_cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">_DOC&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">has_hook</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">hook</span><span class="p">:</span> <span class="n">BaseHook</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if a given hook is mixed into the model (regardless of activation status).</span>
+
+<span class="sd">        The hook may be specified either as a class (subclass of BaseHook) or as a string name.</span>
+<span class="sd">        When a string is provided, it is matched against both the symbolic name</span>
+<span class="sd">        (``_&lt;HookClassName&gt;_NAME``) and the class name.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        hook : type or str</span>
+<span class="sd">            A hook class or hook name to test for.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            True if the hook is present in the model&#39;s MRO, False otherwise.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">get_hook_class</span><span class="p">(</span><span class="n">hook</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">BaseHook</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">hook</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_all_hooks</span><span class="p">(</span><span class="n">names</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;hook must be a subclass of BaseHook or a string name&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># -------------------------------------------------- #</span>
+<span class="c1"># Custom Hooks                                       #</span>
+<span class="c1"># -------------------------------------------------- #</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ParticleGenerationHook</span><span class="p">(</span><span class="n">BaseHook</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract hook for converting models into particle datasets.</span>
+
+<span class="sd">    This hook defines a standardized interface for models that can be</span>
+<span class="sd">    transformed into particle-based representations. This hook defines a</span>
+<span class="sd">    single public method, :meth:`generate_particles`, which tells the model</span>
+<span class="sd">    how to convert itself into a particle dataset.</span>
+
+<span class="sd">    Models which implement this hook may override the default</span>
+<span class="sd">    implementation to provide custom logic for generating particles. Subclasses</span>
+<span class="sd">    of the hook may also specify the logic for particle generation. The resulting</span>
+<span class="sd">    particle datasets meet all of the standards and requirements for Pisces particle datasets,</span>
+<span class="sd">    see :ref:`particles_overview` for more information.</span>
+
+<span class="sd">    This hook is useful for models that support Monte Carlo sampling,</span>
+<span class="sd">    numerical realizations, or forward modeling of observables in a</span>
+<span class="sd">    particle-based format.</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        This class is a **template hook** and should not be directly mixed into</span>
+<span class="sd">        user-facing models. Instead, it should be subclassed to define concrete</span>
+<span class="sd">        implementations with appropriate sampling logic and class-level settings.</span>
+<span class="sd">        It is marked as a template using the flag:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            __ParticleGenerationHook_IS_TEMPLATE__ = True</span>
+
+<span class="sd">        This flag ensures that automated discovery tools will skip this hook</span>
+<span class="sd">        when scanning for active hook implementations.</span>
+
+<span class="sd">    Hook Settings and Configuration</span>
+<span class="sd">    -------------------------------</span>
+<span class="sd">    Concrete implementations of this hook may define additional class-level</span>
+<span class="sd">    configuration options, such as the number of particles to generate,</span>
+<span class="sd">    sampling accuracy, or physical constraints. These options should follow</span>
+<span class="sd">    the naming pattern:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        _&lt;HookClassName&gt;_&lt;setting_name&gt; = &lt;default_value&gt;</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    A concrete hook might look like:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        class MyParticleHook(ParticleGenerationHook):</span>
+<span class="sd">            __MyParticleHook_HOOK_ENABLED__ = True</span>
+<span class="sd">            _MyParticleHook_max_particles = 10000</span>
+
+<span class="sd">            def generate_particles(</span>
+<span class="sd">                self, resolution: int = 1000</span>
+<span class="sd">            ):</span>
+<span class="sd">                # sampling logic here</span>
+<span class="sd">                return ParticleDataset(...)</span>
+
+<span class="sd">    Integration</span>
+<span class="sd">    -----------</span>
+<span class="sd">    When mixed into a model, Pisces will detect this hook using the standard</span>
+<span class="sd">    hook introspection tools defined in :class:`_HookTools`. Models using this</span>
+<span class="sd">    hook will typically support conversion to particle-based outputs for use</span>
+<span class="sd">    in pipelines such as mock observables, synthetic catalogs, or simulations.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># ----------------------------------- #</span>
+    <span class="c1"># Class Settings / Attributes         #</span>
+    <span class="c1"># ----------------------------------- #</span>
+    <span class="c1"># Feature status flag: this flag ensures that we have a way</span>
+    <span class="c1"># of inspecting to detect whether or not a particular hook is enabled</span>
+    <span class="c1"># for a given model class.</span>
+    <span class="n">__ParticleGenerationHook_ENABLED__</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">__ParticleGenerationHook_IS_TEMPLATE__</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Mark this as a template hook.</span>
+
+    <span class="c1"># --- Particle Generation Settings --- #</span>
+    <span class="c1"># This section of the class should define any</span>
+    <span class="c1"># relevant, class-level settings that are required</span>
+    <span class="c1"># for the particle generation hook to function correctly.</span>
+
+    <span class="c1"># ----------------------------------- #</span>
+    <span class="c1"># Generator Methods                   #</span>
+    <span class="c1"># ----------------------------------- #</span>
+    <span class="c1"># This section of the hook should be used to</span>
+    <span class="c1"># encapsulate the logic for generating the particle dataset.</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_particles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ParticleDataset&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert this model into a particle-based representation.</span>
+
+<span class="sd">        This method creates a synthetic particle dataset that captures the physical</span>
+<span class="sd">        structure described by the model. The returned dataset contains positions,</span>
+<span class="sd">        velocities, masses, and other relevant fields for each particle, and is</span>
+<span class="sd">        suitable for use in mock observations, simulations, or analysis pipelines.</span>
+
+<span class="sd">        The specific method of generation—such as random sampling, grid population,</span>
+<span class="sd">        or numerical evaluation—depends on the model and the hook subclass providing</span>
+<span class="sd">        the implementation.</span>
+
+<span class="sd">        Common use cases include:</span>
+
+<span class="sd">        - Creating Monte Carlo realizations of galaxy clusters</span>
+<span class="sd">        - Exporting a model as particles for visualization or N-body input</span>
+<span class="sd">        - Generating mock data for pipelines expecting discrete samples</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        *args : tuple</span>
+<span class="sd">            Optional positional arguments passed to the model’s particle generator.</span>
+<span class="sd">            These depend on the specific implementation (e.g., number of particles,</span>
+<span class="sd">            coordinate frame, sampling mode).</span>
+
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Optional keyword arguments that control sampling resolution, included</span>
+<span class="sd">            components, or output structure. Supported options vary by model.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ~particles.base.ParticleDataset</span>
+<span class="sd">            A particle dataset containing the generated realization of this model.</span>
+<span class="sd">            Includes physical fields (e.g., positions, velocities, mass) and</span>
+<span class="sd">            metadata specific to the model type.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">NotImplemented</span>
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Eliza Diggins.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+profiles.temperature.AM06TemperatureProfile.from\_dict
+======================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: AM06TemperatureProfile.from_dict

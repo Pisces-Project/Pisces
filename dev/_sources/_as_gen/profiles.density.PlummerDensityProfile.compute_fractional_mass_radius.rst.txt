@@ -1,0 +1,6 @@
+profiles.density.PlummerDensityProfile.compute\_fractional\_mass\_radius
+========================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: PlummerDensityProfile.compute_fractional_mass_radius

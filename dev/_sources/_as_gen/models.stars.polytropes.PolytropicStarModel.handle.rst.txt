@@ -1,0 +1,6 @@
+models.stars.polytropes.PolytropicStarModel.handle
+==================================================
+
+.. currentmodule:: models.stars.polytropes
+
+.. autoproperty:: PolytropicStarModel.handle

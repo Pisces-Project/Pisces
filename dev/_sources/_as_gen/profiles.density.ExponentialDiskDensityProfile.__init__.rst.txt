@@ -1,0 +1,6 @@
+profiles.density.ExponentialDiskDensityProfile.\_\_init\_\_
+===========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: ExponentialDiskDensityProfile.__init__

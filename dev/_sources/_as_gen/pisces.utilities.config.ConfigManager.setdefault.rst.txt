@@ -1,0 +1,6 @@
+pisces.utilities.config.ConfigManager.setdefault
+================================================
+
+.. currentmodule:: pisces.utilities.config
+
+.. automethod:: ConfigManager.setdefault

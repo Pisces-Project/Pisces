@@ -1,0 +1,6 @@
+profiles.density.HernquistDensityProfile.get\_parameters\_latex
+===============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: HernquistDensityProfile.get_parameters_latex

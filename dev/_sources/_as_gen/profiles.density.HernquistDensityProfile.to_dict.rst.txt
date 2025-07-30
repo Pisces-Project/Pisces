@@ -1,0 +1,6 @@
+profiles.density.HernquistDensityProfile.to\_dict
+=================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: HernquistDensityProfile.to_dict

@@ -1,0 +1,6 @@
+profiles.density.PlummerDensityProfile.derived\_profile\_classes
+================================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: PlummerDensityProfile.derived_profile_classes

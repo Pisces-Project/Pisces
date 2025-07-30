@@ -1,0 +1,6 @@
+profiles.density.AM06DensityProfile.variable\_symbols
+=====================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: AM06DensityProfile.variable_symbols

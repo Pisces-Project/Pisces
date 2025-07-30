@@ -1,0 +1,6 @@
+models.stars.polytropes.PolytropicStarModel.compute\_parameters\_from\_mass\_and\_radius
+========================================================================================
+
+.. currentmodule:: models.stars.polytropes
+
+.. automethod:: PolytropicStarModel.compute_parameters_from_mass_and_radius

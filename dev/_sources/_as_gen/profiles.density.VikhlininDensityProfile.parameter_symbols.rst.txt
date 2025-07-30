@@ -1,0 +1,6 @@
+profiles.density.VikhlininDensityProfile.parameter\_symbols
+===========================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: VikhlininDensityProfile.parameter_symbols

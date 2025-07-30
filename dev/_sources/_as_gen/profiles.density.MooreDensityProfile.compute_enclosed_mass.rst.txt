@@ -1,0 +1,6 @@
+profiles.density.MooreDensityProfile.compute\_enclosed\_mass
+============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: MooreDensityProfile.compute_enclosed_mass

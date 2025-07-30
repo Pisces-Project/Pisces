@@ -1,0 +1,50 @@
+SersicProfile
+==============================
+
+.. currentmodule:: profiles.density
+
+.. autoclass:: profiles.density.SersicProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~SersicProfile.__init__
+      ~SersicProfile.from_dict
+      ~SersicProfile.from_hdf5
+      ~SersicProfile.from_json
+      ~SersicProfile.from_yaml
+      ~SersicProfile.get_derived_profile
+      ~SersicProfile.get_expression_latex
+      ~SersicProfile.get_output_units
+      ~SersicProfile.get_parameters_latex
+      ~SersicProfile.lambdify_expression
+      ~SersicProfile.list_derived_profiles
+      ~SersicProfile.substitute_expression
+      ~SersicProfile.to_dict
+      ~SersicProfile.to_hdf5
+      ~SersicProfile.to_json
+      ~SersicProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~SersicProfile.derived_profile_classes
+      ~SersicProfile.parameter_symbols
+      ~SersicProfile.parameters
+      ~SersicProfile.variable_symbols
+      ~SersicProfile.variables
+   
+   

@@ -1,0 +1,6 @@
+profiles.density.PlummerDensityProfile.compute\_escape\_velocity
+================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: PlummerDensityProfile.compute_escape_velocity
