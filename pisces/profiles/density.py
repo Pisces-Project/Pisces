@@ -10,9 +10,9 @@ from typing import TYPE_CHECKING, Optional, Union
 import numpy as np
 import sympy as sp
 import unyt
-from math_utils.integration import integrate_mass
 from scipy.integrate import quad, quad_vec
 
+from pisces.math_utils.integration import integrate_mass
 from pisces.profiles.base import (
     BaseCylindricalDiskProfile,
     BaseProfile,
