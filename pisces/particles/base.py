@@ -1,4 +1,8 @@
-"""Base class for particle datasets in Pisces."""
+"""Core classes for particle data support in Pisces.
+
+This module defines the base class for particle datasets, providing a standard interface
+for reading, writing, and interacting with particle datasets in the Pisces framework.
+"""
 
 from datetime import datetime
 from pathlib import Path
@@ -7,157 +11,176 @@ import h5py
 import numpy as np
 import unyt
 
+from pisces.utilities.io_tools import HDF5Serializer
+
 
 class ParticleDataset:
     """Base class for particle datasets in Pisces.
 
-    This class uses the standard HDF5 format from Gadget-2 to store particle data. Each
-    particle type has its own group in the HDF5 file, and each group contains datasets for
-    each of the fields. These datasets may each have an attribute specifying the units of the
-    field.
+    This class provides the standard interface for reading, writing, and interacting with particle datasets
+    in the Pisces framework. It parallels the standard HDF5 formats used in codes like AREPO, GADGET, etc.
+    but includes some additional flexibility and features.
 
-    The :class:`ParticleDataset` class provides a common interface for reading and writing particle data,
-    including lazy loading of data, accessing particle properties, and iterating over particles.
-
-    File Format
-    -----------
-
-    Particle datasets in Pisces are stored in **HDF5 format**, where each particle type
-    (e.g., ``"dark_matter"``, ``"baryons"``) is stored in its own HDF5 group. Each group contains
-    fields (datasets) describing per-particle quantities. All fields must have a leading shape
-    of ``(N_particles, ...)``, where ``N_particles`` is the number of particles in the group.
-
-    The file structure is as follows:
-
-    - **HDF5 Group**: Each particle type is stored in its own group. The group contains metadata
-      specifying the number of particles and other attributes.
-    - **HDF5 Datasets**: Each group contains datasets for each field, such as particle mass, position, etc.
-      Each dataset may contain metadata attributes, such as units.
-
-    Standard Field Names
-    ''''''''''''''''''''''''''''''
-
-    In general, there are no restrictions on the names of particle fields in a :class:`ParticleDataset`; However,
-    Pisces follows a standard convention for naming common fields to ensure compatibility across the ecosystem. Misnamed
-    fields may lead to errors in analysis or data processing, as Pisces utilities expect specific field names.
-
-    The fields for which Pisces has standard names are contained in the following table.
-
-    +---------------------+------------------+------------------------------------------------------------+
-    | **Field Name**      | **Shape**        | **Description**                                            |
-    +=====================+==================+============================================================+
-    | ``particle_mass``   | (N_particles,)   | Mass of each particle                                      |
-    +---------------------+------------------+------------------------------------------------------------+
-    | ``particle_position``| (N_particles, 3)| 3D position vector of each particle                        |
-    +---------------------+------------------+------------------------------------------------------------+
-    | ``particle_velocity``| (N_particles, 3)| 3D velocity vector of each particle                        |
-    +---------------------+------------------+------------------------------------------------------------+
-    | ``particle_id``     | (N_particles,)   | Unique identifier for each particle                        |
-    +---------------------+------------------+------------------------------------------------------------+
-
-    In most other instances, any Pisces utility which requires a specific field will allow the user to
-    specify / overwrite the default expected field name. This allows for flexibility in naming conventions
-    while still providing a standard set of fields for common use cases.
-
-    Group Metadata
-    ''''''''''''''''''''''''''''''
-
-    Each particle group may include the following attribute:
-
-    - ``NUMBER_OF_PARTICLES`` : `int`
-        The total number of particles in the group.
-
-    Additional metadata attributes may also be present and are accessible via
-    :attr:`ParticleDataset.group_metadata`. These are optional and not required
-    by the base class.
-
-    Field Metadata
-    ''''''''''''''''''''''''''''''
-
-    Each dataset (field) within a particle group may include the following attribute:
-
-    - ``UNITS`` : `str`
-        A string specifying the physical units of the field. This must be a valid
-        `unyt` unit string (e.g., ``"Msun"``, ``"kpc"``, ``"km/s"``).
-
-    Custom field-level metadata may also be stored and accessed via standard HDF5
-    attributes.
-
-    Global Metadata
-    ''''''''''''''''''''''''''''''
-
-    At the root level of the HDF5 file, the following attribute is supported:
-
-    - ``CREATION_DATE`` : `str`
-        The UTC date and time when the dataset was created, formatted as an
-        ISO 8601 string (e.g., ``"2025-07-23T16:45:00Z"``).
-
-    Additional global metadata may be included and is available via
-    :attr:`ParticleDataset.metadata`. These attributes are optional and can be used
-    to store cosmological parameters, simulation provenance, or software versioning
-    information.
-
-
+    Details regarding the expected structure of the dataset and how to work with particle
+    datasets can be found at :ref:`particles_overview`.
     """
 
+    metadata_serializer: HDF5Serializer = HDF5Serializer
+    """~utilities.io_tools.HDF5Serializer: The HDF5 serializer used for reading and writing metadata.
+
+    This serializer class is responsible for converting metadata types into
+    formats which are compatible with HDF5 attributes. By default, this is the
+    :py:class:`~pisces.utilities.io_tools.HDF5Serializer` class, which handles
+    serialization of common Python types (e.g., dict, list, str) into HDF5 attributes
+    along with unyt arrays, quantities, and units.
+
+    Developers may extend or replace this serializer to support custom types
+    if there is need.
+    """
+
+    # -------------------------------------- #
+    # Class Level Flags / Attributes         #
+    # -------------------------------------- #
+    # These flags and attributes can be modified to
+    # alter the behavior of the dataset class in its
+    # subclasses.
+    __REQUIRED_GLOBAL_METADATA__: list[str] = ["CLASS_NAME", "GEN_TIME"]
+    """list of str: The required global metadata attributes for this dataset.
+
+    If these are not all present in the global metadata on load, then
+    the dataset will raise a :py:class:`IOError` during validation.
+    """
+    __REQUIRED_GROUP_METADATA__: list[str] = ["NUMBER_OF_PARTICLES"]
+    """list of str: The required group metadata attributes for each particle group.
+
+    If these are not all present in the group metadata, then
+    the dataset will raise a :py:class:`ValueError` during validation.
+    """
+
+    # -------------------------------------- #
+    # Initialization and Validation Methods  #
+    # -------------------------------------- #
+    # These methods are responsible for initializing the dataset.
     def __validate__(self):
-        """Validate that the HDF5 file conforms to the standard format for particle datasets.
+        """Validate that this dataset meets a minimum set of format requirements.
 
-        This method checks the structure of the HDF5 file, ensuring that it contains
-        the expected groups, datasets, and metadata attributes.
+        The following steps are performed to check the dataset structure:
 
-        It can be overridden in subclasses to implement custom validation logic.
+        - Check the **global metadata**:
+          We look through all of the __REQUIRED_GLOBAL_METADATA__ attributes
+          to ensure that they are all present in the global metadata.
+        - Check the **group metadata**:
+          For each of the particle groups which DOESN'T have the
+          ``NOT_PARTICLE_GROUP`` attribute, we check that the __REQUIRED_GROUP_METADATA__
+          attributes are present in the group metadata.
+        - Check the **number of particles**:
+            For each dataset in each particle group, we check that the number of particles
+            matches the ``NUMBER_OF_PARTICLES`` attribute in the group metadata.
 
-        Raises
-        ------
-        ValueError
-            If required metadata is missing or inconsistencies are found in the dataset.
-
-        Notes
-        -----
-        At the level of the base class, this method checks for the following:
-
-        - The presence of the global metadata attribute ``CREATION_DATE``.
-        - Each particle group must have the attribute ``NUMBER_OF_PARTICLES``.
-        - Each dataset in a particle group must have a leading dimension that matches
-          the number of particles specified in the group's metadata.
-
+        This method can be extended in subclasses to implement additional validation logic
+        or constraints specific to the dataset type. It is called automatically during
+        initialization to ensure that the dataset is in a valid state before any operations
+        are performed.
         """
-        # Validate global metadata
-        if "CREATION_DATE" not in self.global_metadata:
-            raise ValueError("Missing required global metadata attribute: 'CREATION_DATE'")
+        # CHECKING GLOBAL METADATA:
+        # Ensure that all required global metadata attributes are present
+        # and that the CLASS_NAME flag is set to the correct class name.
+        _glob_metadata = self.get_global_metadata()
 
-        # Validate each group
-        for group_name in self.particle_groups:
-            metadata = self.group_metadata[group_name]
-            if "NUMBER_OF_PARTICLES" not in metadata:
-                raise ValueError(f"Missing 'NUMBER_OF_PARTICLES' in group '{group_name}'")
+        # Ensure required metadata is present.
+        if any(required_key not in _glob_metadata for required_key in self.__REQUIRED_GLOBAL_METADATA__):
+            missing_keys = [key for key in self.__REQUIRED_GLOBAL_METADATA__ if key not in _glob_metadata]
+            raise OSError(f"Missing required global metadata keys: {', '.join(missing_keys)}")
 
-            num = metadata["NUMBER_OF_PARTICLES"]
-            group = self.handle[group_name]
+        # Check that this is the correct loading class.
+        _expected_class_name = _glob_metadata.get("CLASS_NAME")
+        if _expected_class_name != self.__class__.__name__:
+            raise OSError(
+                f"Expected global metadata CLASS_NAME to be '{self.__class__.__name__}', "
+                f"but found '{_expected_class_name}'. This file may not be a valid "
+                f"{self.__class__.__name__} dataset."
+            )
 
-            for field_name, dataset in group.items():
-                if not hasattr(dataset, "shape") or dataset.shape[0] != num:
-                    raise ValueError(f"Field '{field_name}' in group '{group_name}' must have leading dimension {num}")
+        # CHECKING PARTICLE GROUPS METADATA:
+        # Cycle through all particle groups and validate their metadata.
+        for group_name in self.__handle__.keys():
+            _group_handle = self.__handle__[group_name]
+
+            # Check if the group actually has the `NOT_PARTICLE_GROUP` attribute. If
+            # so, we just skip it straight up.
+            if "NOT_PARTICLE_GROUP" in _group_handle.attrs:
+                continue
+
+            # Otherwise, we need to validate the metadata.
+            _group_metadata = self.get_group_metadata(group_name)
+
+            # Ensure that all required group metadata attributes are present.
+            if any(required_key not in _group_metadata for required_key in self.__REQUIRED_GROUP_METADATA__):
+                missing_keys = [key for key in self.__REQUIRED_GROUP_METADATA__ if key not in _group_metadata]
+                raise ValueError(f"Group '{group_name}' is missing required metadata keys: {', '.join(missing_keys)}")
+
+            # Finally, check that the number of particles in each
+            # dataset matches the number of particles specified in the metadata.
+            num_particles = _group_metadata.get("NUMBER_OF_PARTICLES")
+
+            for dataset_name in _group_handle.keys():
+                dataset_handle = _group_handle[dataset_name]
+
+                # Check that the dataset has the correct number of particles.
+                if dataset_handle.shape[0] != num_particles:
+                    raise ValueError(
+                        f"Dataset '{dataset_name}' in group '{group_name}' has {dataset_handle.shape[0]} "
+                        f"particles, but 'NUMBER_OF_PARTICLES' metadata indicates {num_particles}."
+                    )
 
     def __init__(self, path: str | Path, mode="r+"):
-        """Initialize the ParticleDataset with the given path to the HDF5 file.
+        """Initialize a :class:`ParticleDataset` from a file on disk.
+
+        This constructor opens the specified HDF5 file and validates
+        the global metadata to ensure that it conforms to the expected
+        format / structure.
 
         Parameters
         ----------
-        path : Union[str, Path]
-            The path to the HDF5 file containing the particle data. This can be a string or a Path object.
+        path : str or ~pathlib.Path
+            The path to the HDF5 file containing the particle data.
+            This can be a string or a :class:`pathlib.Path` object.
+            If the path does not exist, a `FileNotFoundError` is raised.
         mode: str, optional
             The mode in which to open the HDF5 file. Defaults to "r+" (read/write mode).
 
+            The available modes are:
+
+            - "r": Read-only mode. The file must exist.
+            - "r+": Read/write mode. The file must exist.
+            - "w": Write mode. Creates a new file or truncates an existing file.
+            - "w-": Write mode, but fails if the file already exists.
+            - "x": Exclusive creation mode. Fails if the file already exists.
+
+        Notes
+        -----
+        At this level, initialization consists of only the following 4 steps:
+
+        1. Set the path to the HDF5 file and check that it exists.
+        2. Open the HDF5 file in the specified mode and create the handle
+           reference to the file.
+        3. Load the global metadata from the file using the serializer.
+        4. Validate the dataset structure by calling the ``.__validate__`` method.
+
+        Subclasses may extend this behavior to include custom behavior beyond this.
+        Additionally, the ``.__post_init__`` method is called after initialization,
+        allowing for further customization or setup that is specific to the subclass.
         """
         # Set the path and open the handle to the HDF5 file.
         self.__path__ = Path(path)
         if not self.__path__.exists():
             raise FileNotFoundError(f"Particle dataset file not found: {self.__path__}")
 
-        # Open the HDF5 file in the specified mode.
         self.__handle__ = h5py.File(self.__path__, mode=mode)
+
+        # Load the global metadata from disk via
+        # the serializer.
+        self.__global_metadata__ = self.get_global_metadata()
 
         # Check that the file is a valid particle dataset. This defers
         # to the __validate__ method to ensure that the file structure
@@ -169,128 +192,19 @@ class ParticleDataset:
         self.__post_init__()
 
     def __post_init__(self):
+        """Post-initialization hook for the :class:`ParticleDataset` class.
+
+        This method is called after the dataset has been initialized and validated.
+        It can be overridden in subclasses to perform additional setup or
+        configuration that is specific to the subclass implementation.
+        """
         pass
 
     # ------------------------------------ #
     # Properties                           #
     # ------------------------------------ #
-    @property
-    def global_metadata(self) -> dict:
-        """Global metadata attributes at the root level of the HDF5 file.
 
-        This includes attributes such as creation time, cosmological parameters,
-        and dataset-wide configuration flags. Attributes marked here are
-        accessible via :attr:`ParticleDataset.metadata`.
-
-        Returns
-        -------
-        dict
-            A dictionary of all global HDF5 attributes.
-
-        """
-        return dict(self.__handle__.attrs)
-
-    @property
-    def particle_groups(self) -> list[str]:
-        """Names of all particle groups present in the dataset.
-
-        This excludes any HDF5 groups that are marked with the attribute
-        ``NOT_PARTICLE_GROUP``.
-
-        Returns
-        -------
-        list of str
-            The names of valid particle groups.
-
-        """
-        groups = []
-        for name, group in self.__handle__.items():
-            if isinstance(group, h5py.Group) and "NOT_PARTICLE_GROUP" not in group.attrs:
-                groups.append(name)
-        return groups
-
-    @property
-    def group_metadata(self) -> dict[str, dict]:
-        """Metadata attributes for each particle group.
-
-        This includes attributes such as the number of particles in each group.
-        Each group is represented as a dictionary with the group name as the key.
-
-        Returns
-        -------
-        dict
-            A dictionary mapping group names to their metadata attributes.
-
-        """
-        metadata = {}
-        for group_name in self.particle_groups:
-            group = self.__handle__[group_name]
-            metadata[group_name] = dict(group.attrs)
-        return metadata
-
-    @property
-    def num_particles(self) -> dict[str, int]:
-        """Number of particles in each particle group.
-
-        This property returns a dictionary mapping each particle group name to the
-        number of particles it contains, as specified by the ``NUMBER_OF_PARTICLES``
-        attribute in each group's metadata.
-
-        All groups must define this attribute; otherwise, a ValueError is raised.
-
-        Returns
-        -------
-        dict
-            A dictionary mapping group names to the number of particles in each group.
-
-        Raises
-        ------
-        ValueError
-            If any group is missing the ``NUMBER_OF_PARTICLES`` attribute.
-
-        """
-        counts = {}
-        for group_name, metadata in self.group_metadata.items():
-            if "NUMBER_OF_PARTICLES" not in metadata:
-                raise ValueError(f"Group '{group_name}' is missing required 'NUMBER_OF_PARTICLES' attribute.")
-            counts[group_name] = metadata["NUMBER_OF_PARTICLES"]
-        return counts
-
-    @property
-    def total_particles(self) -> int:
-        """Total number of particles across all particle groups.
-
-        This property sums the number of particles in each group as specified by
-        the ``NUMBER_OF_PARTICLES`` attribute in each group's metadata.
-
-        Returns
-        -------
-        int
-            The total number of particles across all groups.
-
-        """
-        return sum(self.num_particles.values())
-
-    @property
-    def fields(self) -> list[str]:
-        """List of all fields (datasets) available in the dataset, in dot notation.
-
-        This property returns a list of all field names across all particle groups,
-        using the format ``group_name.field_name``. This allows direct access via
-        indexing, e.g., ``ds["baryons.particle_velocity"]``.
-
-        Returns
-        -------
-        list of str
-            A sorted list of all field names in dot notation.
-
-        """
-        field_names = []
-        for group_name in self.particle_groups:
-            group = self.__handle__[group_name]
-            field_names.extend(f"{group_name}.{field}" for field in group.keys())
-        return sorted(field_names)
-
+    # --- Basic Attributes --- #
     @property
     def path(self) -> str | Path:
         """The path to the HDF5 file containing the particle dataset.
@@ -323,19 +237,104 @@ class ParticleDataset:
         return self.__handle__
 
     @property
-    def creation_date(self) -> datetime:
-        """The creation date of the particle dataset.
+    def global_metadata(self) -> dict:
+        """Global metadata attributes at the root level of the HDF5 file.
 
-        This property retrieves the creation date from the global metadata attribute
-        ``CREATION_DATE``. The date is returned as a `datetime` object.
+        This includes attributes such as creation time, cosmological parameters,
+        and dataset-wide configuration flags. Attributes marked here are
+        accessible via :attr:`ParticleDataset.metadata`.
 
         Returns
         -------
-        datetime
-            The creation date of the dataset.
+        dict
+            A dictionary of all global HDF5 attributes.
 
         """
-        return self.global_metadata.get("CREATION_DATE")
+        # We return a copy to prevent weird editing attempts.
+        return self.__global_metadata__.copy()
+
+    @property
+    def particle_groups(self) -> list[str]:
+        """Names of all particle groups present in the dataset.
+
+        This excludes any HDF5 groups that are marked with the attribute
+        ``NOT_PARTICLE_GROUP``.
+
+        Returns
+        -------
+        list of str
+            The names of valid particle groups.
+
+        """
+        groups = []
+        for name, group in self.__handle__.items():
+            if isinstance(group, h5py.Group) and "NOT_PARTICLE_GROUP" not in group.attrs:
+                groups.append(name)
+        return groups
+
+    @property
+    def fields(self) -> list[str]:
+        """List of all fields (datasets) available in the dataset, in dot notation.
+
+        This property returns a list of all field names across all particle groups,
+        using the format ``group_name.field_name``. This allows direct access via
+        indexing, e.g., ``ds["baryons.particle_velocity"]``.
+
+        Returns
+        -------
+        list of str
+            A sorted list of all field names in dot notation.
+
+        """
+        field_names = []
+        for group_name in self.particle_groups:
+            group = self.__handle__[group_name]
+            field_names.extend(f"{group_name}.{field}" for field in group.keys())
+        return sorted(field_names)
+
+    @property
+    def num_particles(self) -> dict[str, int]:
+        """Number of particles in each particle group.
+
+        This property returns a dictionary mapping each particle group name to the
+        number of particles it contains, as specified by the ``NUMBER_OF_PARTICLES``
+        attribute in each group's metadata.
+
+        All groups must define this attribute; otherwise, a ValueError is raised.
+
+        Returns
+        -------
+        dict
+            A dictionary mapping group names to the number of particles in each group.
+
+        Raises
+        ------
+        ValueError
+            If any group is missing the ``NUMBER_OF_PARTICLES`` attribute.
+
+        """
+        counts = {}
+        for group_name in self.particle_groups:
+            metadata = self.get_group_metadata(group_name)
+            if "NUMBER_OF_PARTICLES" not in metadata:
+                raise ValueError(f"Group '{group_name}' is missing required 'NUMBER_OF_PARTICLES' attribute.")
+            counts[group_name] = metadata["NUMBER_OF_PARTICLES"]
+        return counts
+
+    @property
+    def total_particles(self) -> int:
+        """Total number of particles across all particle groups.
+
+        This property sums the number of particles in each group as specified by
+        the ``NUMBER_OF_PARTICLES`` attribute in each group's metadata.
+
+        Returns
+        -------
+        int
+            The total number of particles across all groups.
+
+        """
+        return sum(self.num_particles.values())
 
     # ------------------------------------ #
     # Dunder Methods                       #
@@ -434,6 +433,246 @@ class ParticleDataset:
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.__del__()
+
+    def __len__(self) -> int:
+        """Return the number of particle fields in the dataset."""
+        return len(self.fields)
+
+    def __iter__(self):
+        """Iterate over all particle fields in dot notation."""
+        return iter(self.fields)
+
+    def __dir__(self):
+        """Return a list of all attributes and methods of the ParticleDataset."""
+        return list(super().__dir__()) + self.fields
+
+    # ------------------------------------ #
+    # Metadata Management Methods          #
+    # ------------------------------------ #
+    def get_global_metadata(self) -> dict:
+        """Get the global metadata attributes of the dataset.
+
+        This method retrieves all global attributes at the root level of the HDF5 file
+        and returns them as a dictionary. It is used to access metadata such as creation date,
+        cosmological parameters, and dataset-wide configuration flags.
+
+        Returns
+        -------
+        dict
+            A dictionary containing all global metadata attributes.
+
+        """
+        return self.metadata_serializer.deserialize_dict(dict(self.__handle__.attrs))
+
+    def get_group_metadata(self, group_name: str) -> dict:
+        """Get the metadata attributes for a specific particle group.
+
+        This method retrieves all attributes associated with a given particle group
+        and returns them as a dictionary. It is used to access metadata such as the
+        number of particles in the group and any additional attributes defined by the user.
+
+        Parameters
+        ----------
+        group_name : str
+            The name of the particle group whose metadata is to be retrieved.
+
+        Returns
+        -------
+        dict
+            A dictionary containing all metadata attributes for the specified group.
+
+        Raises
+        ------
+        KeyError
+            If the specified group does not exist in the dataset.
+
+        """
+        if group_name not in self.particle_groups:
+            raise KeyError(f"Particle group '{group_name}' does not exist in the dataset.")
+        return self.metadata_serializer.deserialize_dict(dict(self.__handle__[group_name].attrs))
+
+    def get_field_metadata(self, group_name: str, field_name: str) -> dict:
+        """Get the metadata attributes for a specific field in a particle group.
+
+        This method retrieves all attributes associated with a given field in a particle group
+        and returns them as a dictionary. It is used to access metadata such as units, data type,
+        and any additional attributes defined by the user.
+
+        Parameters
+        ----------
+        group_name : str
+            The name of the particle group containing the field.
+        field_name : str
+            The name of the field whose metadata is to be retrieved.
+
+        Returns
+        -------
+        dict
+            A dictionary containing all metadata attributes for the specified field.
+
+        Raises
+        ------
+        KeyError
+            If the specified group or field does not exist in the dataset.
+
+        """
+        dataset_handle = self.get_particle_field_handle(group_name, field_name)
+        return self.metadata_serializer.deserialize_dict(dict(dataset_handle.attrs))
+
+    def reload_global_metadata(self):
+        """Reload the global metadata from the HDF5 file.
+
+        This method refreshes the global metadata attributes by re-reading them from the
+        HDF5 file. It is useful if the metadata has been modified externally or if you want
+        to ensure you have the latest version of the metadata.
+
+        """
+        self.__global_metadata__ = self.get_global_metadata()
+
+    def update_global_metadata(self, metadata: dict):
+        """Update the global metadata attributes of the dataset.
+
+        This method allows you to modify or add global metadata attributes at the root level
+        of the HDF5 file. It updates the attributes in memory and writes them back to the file.
+
+        Parameters
+        ----------
+        metadata : dict
+            A dictionary containing the metadata attributes to update or add.
+
+        """
+        # Serialize the metadata dictionary
+        serialized_meta = self.metadata_serializer.serialize_dict(metadata)
+
+        # Now write.
+        for key, value in serialized_meta.items():
+            self.__handle__.attrs[key] = value
+
+        # Reload global metadata.
+        self.reload_global_metadata()
+
+    def update_group_metadata(self, group_name: str, metadata: dict):
+        """Update the metadata attributes for a specific particle group.
+
+        This method allows you to modify or add metadata attributes for a given particle group.
+        It updates the attributes in memory and writes them back to the HDF5 file.
+
+        Parameters
+        ----------
+        group_name : str
+            The name of the particle group whose metadata is to be updated.
+        metadata : dict
+            A dictionary containing the metadata attributes to update or add.
+
+        Raises
+        ------
+        KeyError
+            If the specified group does not exist in the dataset.
+
+        """
+        group_handle = self.get_particle_group_handle(group_name)
+
+        # Serialize the metadata dictionary
+        serialized_meta = self.metadata_serializer.serialize_dict(metadata)
+
+        # Now write.
+        for key, value in serialized_meta.items():
+            group_handle.attrs[key] = value
+
+    def update_field_metadata(self, group_name: str, field_name: str, metadata: dict):
+        """Update the metadata attributes for a specific field in a particle group.
+
+        This method allows you to modify or add metadata attributes for a given field in a particle group.
+        It updates the attributes in memory and writes them back to the HDF5 file.
+
+        Parameters
+        ----------
+        group_name : str
+            The name of the particle group containing the field.
+        field_name : str
+            The name of the field whose metadata is to be updated.
+        metadata : dict
+            A dictionary containing the metadata attributes to update or add.
+
+        Raises
+        ------
+        KeyError
+            If the specified group or field does not exist in the dataset.
+
+        """
+        dataset_handle = self.get_particle_field_handle(group_name, field_name)
+
+        # Serialize the metadata dictionary
+        serialized_meta = self.metadata_serializer.serialize_dict(metadata)
+
+        # Now write.
+        for key, value in serialized_meta.items():
+            dataset_handle.attrs[key] = value
+
+    def delete_global_metadata_keys(self, *keys: str):
+        """
+        Delete one or more metadata keys from the global metadata.
+
+        Parameters
+        ----------
+        *keys : str
+            The names of the metadata keys to delete from the global metadata.
+
+        Notes
+        -----
+        This method will not permit you to remove a required global metadata key.
+        """
+        for key in keys:
+            if key in self.__REQUIRED_GLOBAL_METADATA__:
+                raise ValueError("Cannot delete required global metadata key: " + key)
+
+            if key in self.__handle__.attrs:
+                del self.__handle__.attrs[key]
+        self.reload_global_metadata()
+
+    def delete_group_metadata_keys(self, group_name: str, *keys: str):
+        """Delete one or more metadata keys from a specific particle group.
+
+        Parameters
+        ----------
+        group_name : str
+            The name of the particle group from which to delete metadata keys.
+        *keys : str
+            The names of the metadata keys to delete from the global metadata.
+
+        Notes
+        -----
+        This method will not permit you to remove a required global metadata key.
+        """
+        group_handle = self.get_particle_group_handle(group_name)
+        for key in keys:
+            if key in self.__REQUIRED_GROUP_METADATA__:
+                raise ValueError("Cannot delete required group metadata key: " + key)
+
+            if key in group_handle.attrs:
+                del group_handle.attrs[key]
+
+    def delete_field_metadata_keys(self, group_name: str, field_name: str, *keys: str):
+        """Delete one or more metadata keys from a specific field in a particle group.
+
+        Parameters
+        ----------
+        group_name : str
+            The name of the particle group containing the field.
+        field_name : str
+            The name of the field from which to delete metadata keys.
+
+        Notes
+        -----
+        You may not remove ``"UNITS"`` from the field metadata, as this is required.
+        """
+        field_handle = self.get_particle_field_handle(group_name, field_name)
+        for key in keys:
+            if key == "UNITS":
+                raise ValueError("Cannot delete required field metadata key: 'UNITS'")
+
+            if key in field_handle.attrs:
+                del field_handle.attrs[key]
 
     # ------------------------------------ #
     # Data Access Methods                  #
@@ -1310,8 +1549,8 @@ class ParticleDataset:
         # --- Create HDF5 file ---
         with h5py.File(path, "w") as f:
             # Add required global metadata
-            f.attrs["CREATION_DATE"] = datetime.utcnow().isoformat()
-
+            f.attrs["GEN_TIME"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            f.attrs["CLASS_NAME"] = cls.__name__
             if fields:
                 group_registry: dict[str, int] = {}
 
