@@ -1,0 +1,6 @@
+profiles.base.BaseCylindricalDiskProfile.to\_dict
+=================================================
+
+.. currentmodule:: profiles.base
+
+.. automethod:: BaseCylindricalDiskProfile.to_dict

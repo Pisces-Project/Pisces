@@ -1,0 +1,6 @@
+profiles.density.DoublePowerLawDensityProfile.compute\_einstein\_radius
+=======================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DoublePowerLawDensityProfile.compute_einstein_radius

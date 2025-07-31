@@ -1,0 +1,6 @@
+profiles.density.EinastoDensityProfile.compute\_einstein\_radius
+================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: EinastoDensityProfile.compute_einstein_radius

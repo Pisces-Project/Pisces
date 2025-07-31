@@ -1,0 +1,6 @@
+profiles.base.BaseProfile.to\_hdf5
+==================================
+
+.. currentmodule:: profiles.base
+
+.. automethod:: BaseProfile.to_hdf5

@@ -1,0 +1,6 @@
+profiles.density.DehnenDensityProfile.substitute\_expression
+============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DehnenDensityProfile.substitute_expression

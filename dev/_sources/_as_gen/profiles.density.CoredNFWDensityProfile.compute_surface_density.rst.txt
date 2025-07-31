@@ -1,0 +1,6 @@
+profiles.density.CoredNFWDensityProfile.compute\_surface\_density
+=================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoredNFWDensityProfile.compute_surface_density

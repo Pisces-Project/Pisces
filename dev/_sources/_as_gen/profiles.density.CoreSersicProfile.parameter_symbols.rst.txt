@@ -1,0 +1,6 @@
+profiles.density.CoreSersicProfile.parameter\_symbols
+=====================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: CoreSersicProfile.parameter_symbols

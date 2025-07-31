@@ -1,0 +1,6 @@
+profiles.temperature.IsothermalTemperatureProfile.lambdify\_expression
+======================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: IsothermalTemperatureProfile.lambdify_expression

@@ -1,0 +1,6 @@
+profiles.temperature.BaseSphericalTemperatureProfile.lambdify\_expression
+=========================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: BaseSphericalTemperatureProfile.lambdify_expression

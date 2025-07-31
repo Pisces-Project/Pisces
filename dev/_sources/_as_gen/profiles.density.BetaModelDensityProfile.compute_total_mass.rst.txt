@@ -1,0 +1,6 @@
+profiles.density.BetaModelDensityProfile.compute\_total\_mass
+=============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BetaModelDensityProfile.compute_total_mass

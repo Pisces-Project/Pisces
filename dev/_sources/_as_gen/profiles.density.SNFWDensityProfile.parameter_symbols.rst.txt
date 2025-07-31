@@ -1,0 +1,6 @@
+profiles.density.SNFWDensityProfile.parameter\_symbols
+======================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: SNFWDensityProfile.parameter_symbols

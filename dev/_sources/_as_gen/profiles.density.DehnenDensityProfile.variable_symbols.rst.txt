@@ -1,0 +1,6 @@
+profiles.density.DehnenDensityProfile.variable\_symbols
+=======================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: DehnenDensityProfile.variable_symbols

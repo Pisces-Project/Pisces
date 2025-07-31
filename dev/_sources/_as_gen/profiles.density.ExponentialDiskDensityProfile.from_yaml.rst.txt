@@ -1,0 +1,6 @@
+profiles.density.ExponentialDiskDensityProfile.from\_yaml
+=========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: ExponentialDiskDensityProfile.from_yaml

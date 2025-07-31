@@ -1,0 +1,6 @@
+profiles.density.MooreDensityProfile.\_\_init\_\_
+=================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: MooreDensityProfile.__init__

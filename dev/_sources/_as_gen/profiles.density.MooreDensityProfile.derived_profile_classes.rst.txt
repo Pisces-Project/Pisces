@@ -1,0 +1,6 @@
+profiles.density.MooreDensityProfile.derived\_profile\_classes
+==============================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: MooreDensityProfile.derived_profile_classes

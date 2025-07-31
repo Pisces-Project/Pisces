@@ -1,0 +1,6 @@
+profiles.base.BaseCylindricalDiskProfile.\_\_init\_\_
+=====================================================
+
+.. currentmodule:: profiles.base
+
+.. automethod:: BaseCylindricalDiskProfile.__init__

@@ -1,0 +1,6 @@
+profiles.temperature.CoolingFlowTemperatureProfile.variable\_symbols
+====================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoproperty:: CoolingFlowTemperatureProfile.variable_symbols

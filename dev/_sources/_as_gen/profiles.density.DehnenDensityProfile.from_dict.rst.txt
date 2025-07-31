@@ -1,0 +1,6 @@
+profiles.density.DehnenDensityProfile.from\_dict
+================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DehnenDensityProfile.from_dict

@@ -1,0 +1,6 @@
+profiles.density.GaussianRingProfile.get\_expression\_latex
+===========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: GaussianRingProfile.get_expression_latex
