@@ -1,6 +1,0 @@
-profiles.density.KingDensityProfile.compute\_lensing\_convergence
-=================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: KingDensityProfile.compute_lensing_convergence

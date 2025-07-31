@@ -1,6 +1,0 @@
-pisces.particles.base.ParticleDataset.creation\_date
-====================================================
-
-.. currentmodule:: pisces.particles.base
-
-.. autoproperty:: ParticleDataset.creation_date

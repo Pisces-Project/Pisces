@@ -1,6 +1,0 @@
-profiles.density.SingularIsothermalDensityProfile.get\_expression\_latex
-========================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: SingularIsothermalDensityProfile.get_expression_latex

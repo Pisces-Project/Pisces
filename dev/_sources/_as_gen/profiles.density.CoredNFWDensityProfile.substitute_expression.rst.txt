@@ -1,6 +1,0 @@
-profiles.density.CoredNFWDensityProfile.substitute\_expression
-==============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredNFWDensityProfile.substitute_expression

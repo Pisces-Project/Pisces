@@ -1,6 +1,0 @@
-profiles.density.EinastoDensityProfile.compute\_escape\_velocity
-================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: EinastoDensityProfile.compute_escape_velocity

@@ -1,6 +1,0 @@
-profiles.temperature.VikhlininTemperatureProfile.from\_dict
-===========================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: VikhlininTemperatureProfile.from_dict

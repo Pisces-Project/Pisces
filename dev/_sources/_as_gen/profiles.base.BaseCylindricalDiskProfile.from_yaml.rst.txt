@@ -1,6 +1,0 @@
-profiles.base.BaseCylindricalDiskProfile.from\_yaml
-===================================================
-
-.. currentmodule:: profiles.base
-
-.. automethod:: BaseCylindricalDiskProfile.from_yaml

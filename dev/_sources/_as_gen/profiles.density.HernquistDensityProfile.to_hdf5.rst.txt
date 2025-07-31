@@ -1,6 +1,0 @@
-profiles.density.HernquistDensityProfile.to\_hdf5
-=================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: HernquistDensityProfile.to_hdf5

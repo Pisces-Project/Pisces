@@ -1,6 +1,0 @@
-profiles.density.CoredPowerLawDensityProfile.from\_json
-=======================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredPowerLawDensityProfile.from_json

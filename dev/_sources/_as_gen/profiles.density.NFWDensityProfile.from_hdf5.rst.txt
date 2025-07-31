@@ -1,6 +1,0 @@
-profiles.density.NFWDensityProfile.from\_hdf5
-=============================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: NFWDensityProfile.from_hdf5

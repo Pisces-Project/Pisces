@@ -1,6 +1,0 @@
-pisces.math\_utils.integration.integrate\_toinf
-===============================================
-
-.. currentmodule:: pisces.math_utils.integration
-
-.. autofunction:: integrate_toinf

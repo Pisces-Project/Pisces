@@ -1,6 +1,0 @@
-profiles.density.TNFWDensityProfile.get\_output\_units
-======================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: TNFWDensityProfile.get_output_units

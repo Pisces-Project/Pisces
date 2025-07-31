@@ -1,6 +1,0 @@
-models.stars.polytropes.PolytropicStarModel.from\_components
-============================================================
-
-.. currentmodule:: models.stars.polytropes
-
-.. automethod:: PolytropicStarModel.from_components

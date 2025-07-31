@@ -1,6 +1,0 @@
-profiles.density.AM06DensityProfile.compute\_surface\_density
-=============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: AM06DensityProfile.compute_surface_density
