@@ -137,7 +137,7 @@ def _lambdify_scalar(bound_expr: sp.Basic, axes: list[sp.Symbol]) -> Callable:
     # Determine the ops count so that we can determine if we are interested
     # in trying to check for .is_constant or if that will be too taxing.
     __ops_count__ = sp.count_ops(bound_expr, visual=False)
-    __will_check_flag__ = __ops_count__ <= pisces_config["sympy.skip_constant_checks"]
+    __will_check_flag__ = __ops_count__ <= pisces_config["system.sympy.skip_constant_checks"]
 
     if __will_check_flag__:
         # Handle constant expressions
