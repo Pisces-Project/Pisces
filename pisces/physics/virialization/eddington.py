@@ -308,7 +308,7 @@ def sample_eddington_velocities(
         df_spline.get_knots(),
         df_spline.get_coeffs(),
         df_spline._eval_args[2],  # spline degree
-        show_progress=~pisces_config["appearance.disable_progress_bars"],
+        show_progress=~pisces_config["system.appearance.disable_progress_bars"],
         **kwargs,
     )
 

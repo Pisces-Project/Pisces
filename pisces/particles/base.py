@@ -1549,8 +1549,13 @@ class ParticleDataset:
         # --- Create HDF5 file ---
         with h5py.File(path, "w") as f:
             # Add required global metadata
-            f.attrs["GEN_TIME"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            f.attrs["CLASS_NAME"] = cls.__name__
+            initial_metadata = {
+                "GEN_TIME": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "CLASS_NAME": cls.__name__,
+            }
+            for k, v in cls.metadata_serializer.serialize_dict(initial_metadata).items():
+                f.attrs[k] = v
+
             if fields:
                 group_registry: dict[str, int] = {}
 

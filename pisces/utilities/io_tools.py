@@ -249,7 +249,6 @@ class HDF5Serializer:
             # There is no matching deserializer for the tag, so
             # we need to raise an error.
             raise ValueError(f"Unrecognized serialization tag: {tag}")
-
         return parsed  # base types: int, float, list, dict, etc.
 
     @classmethod

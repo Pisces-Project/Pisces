@@ -582,7 +582,7 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             progress_bar = tqdm(
                 total=7,
                 desc="Preparing metadata...",
-                disable=pisces_config["appearance.disable_progress_bars"],
+                disable=pisces_config["system.appearance.disable_progress_bars"],
                 leave=False,
             )
 
@@ -780,7 +780,7 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             progress_bar = tqdm(
                 total=8,
                 desc="Prepare metadata, profiles, and fields...",
-                disable=pisces_config["appearance.disable_progress_bars"],
+                disable=pisces_config["system.appearance.disable_progress_bars"],
                 leave=False,
             )
 
@@ -939,7 +939,7 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             progress_bar = tqdm(
                 total=9,
                 desc="Prepare metadata, profiles, and fields...",
-                disable=pisces_config["appearance.disable_progress_bars"],
+                disable=pisces_config["system.appearance.disable_progress_bars"],
                 leave=False,
             )
 
@@ -1441,7 +1441,7 @@ class MagnetizedSphericalGalaxyClusterModel(SphericalGalaxyClusterModel):
             progress_bar = tqdm(
                 total=8,
                 desc="Preparing metadata...",
-                disable=pisces_config["appearance.disable_progress_bars"],
+                disable=pisces_config["system.appearance.disable_progress_bars"],
                 leave=False,
             )
 
@@ -1684,7 +1684,7 @@ class MagnetizedSphericalGalaxyClusterModel(SphericalGalaxyClusterModel):
             progress_bar = tqdm(
                 total=8,
                 desc="Prepare metadata, profiles, and fields...",
-                disable=pisces_config["appearance.disable_progress_bars"],
+                disable=pisces_config["system.appearance.disable_progress_bars"],
                 leave=False,
             )
 
@@ -1864,7 +1864,7 @@ class MagnetizedSphericalGalaxyClusterModel(SphericalGalaxyClusterModel):
             progress_bar = tqdm(
                 total=9,
                 desc="Prepare metadata, profiles, and fields...",
-                disable=pisces_config["appearance.disable_progress_bars"],
+                disable=pisces_config["system.appearance.disable_progress_bars"],
                 leave=False,
             )
 

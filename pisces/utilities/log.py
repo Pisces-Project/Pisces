@@ -59,11 +59,11 @@ class LogDescriptor:
         if not logger.handlers:
             # Create and configure the logger if not already set up
             handler = logging.StreamHandler()
-            handler.setFormatter(logging.Formatter(pisces_config[f"logging.{self.mode}.format"]))
+            handler.setFormatter(logging.Formatter(pisces_config[f"system.logging.{self.mode}.format"]))
             logger.addHandler(handler)
-            logger.setLevel(pisces_config[f"logging.{self.mode}.level"])
+            logger.setLevel(pisces_config[f"system.logging.{self.mode}.level"])
             logger.propagate = False
-            logger.disabled = not pisces_config[f"logging.{self.mode}.enabled"]
+            logger.disabled = not pisces_config[f"system.logging.{self.mode}.enabled"]
 
         return logger
 
@@ -73,7 +73,7 @@ class LogDescriptor:
 # ======================== #
 pisces_logger = logging.getLogger("Pisces")
 pisces_logger.setLevel(
-    getattr(logging, pisces_config["logging.main.level"])
+    getattr(logging, pisces_config["system.logging.main.level"])
 )  # Allow DEBUG, handlers filter final output
 pisces_logger.propagate = False  # Avoid duplicate logs to root logger
 
@@ -81,6 +81,6 @@ pisces_logger.propagate = False  # Avoid duplicate logs to root logger
 if not pisces_logger.hasHandlers():
     # Console handler with minimal formatting
     console_handler = logging.StreamHandler()
-    console_fmt = pisces_config["logging.main.format"]
+    console_fmt = pisces_config["system.logging.main.format"]
     console_handler.setFormatter(logging.Formatter(console_fmt))
     pisces_logger.addHandler(console_handler)

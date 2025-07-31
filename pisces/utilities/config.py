@@ -2,8 +2,8 @@
 
 This module provides a hierarchical, YAML-backed configuration manager for
 Pisces. Configurations can be accessed and updated via dot-separated keys
-(e.g., ``pisces_config['appearance.progress_bars'] = False``) and changes are
-persisted to disk if autosave is enabled.
+(e.g., ``pisces_config['system.appearance.disable_progress_bars'] = False``) and
+changes are persisted to disk if autosave is enabled.
 
 Configuration files are located using the following precedence:
 

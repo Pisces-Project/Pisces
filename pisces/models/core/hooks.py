@@ -36,7 +36,11 @@ For more details on creating or customizing hooks, see the docstring for `BaseHo
 """
 
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING
+from pathlib import Path
+from typing import TYPE_CHECKING, Self, Union
+
+import numpy as np
+import unyt
 
 if TYPE_CHECKING:
     from pisces.particles.base import ParticleDataset
@@ -513,7 +517,9 @@ class ParticleGenerationHook(BaseHook, ABC):
     # This section of the hook should be used to
     # encapsulate the logic for generating the particle dataset.
     @abstractmethod
-    def generate_particles(self, *args, **kwargs) -> "ParticleDataset":
+    def generate_particles(
+        self, filename: Union[str, Path], num_particles: dict[str, int], **kwargs
+    ) -> "ParticleDataset":
         """Convert this model into a particle-based representation.
 
         This method creates a synthetic particle dataset that captures the physical
@@ -533,12 +539,20 @@ class ParticleGenerationHook(BaseHook, ABC):
 
         Parameters
         ----------
-        *args : tuple
-            Optional positional arguments passed to the model’s particle generator.
-            These depend on the specific implementation (e.g., number of particles,
-            coordinate frame, sampling mode).
+        filename: str or ~pathlib.Path
+            The path to save the generated particle dataset. This can be a string
+            representing a file path or a `Path` object. The dataset will be saved
+            in a format compatible with Pisces particle datasets (e.g., HDF5, FITS).
+        num_particles : dict of str, int
+            A dictionary specifying the number of particles to generate for each
+            component or type in the model. The keys are component names (e.g., "gas",
+            "dark_matter", "stars") and the values are the number of particles to
+            generate for that component.
 
-        **kwargs : dict
+            Depending on the model and the hook implementation, this may only
+            permit certain particle types / names and possible limits on the number
+            of particles permitted.
+        **kwargs:
             Optional keyword arguments that control sampling resolution, included
             components, or output structure. Supported options vary by model.
 
@@ -548,6 +562,90 @@ class ParticleGenerationHook(BaseHook, ABC):
             A particle dataset containing the generated realization of this model.
             Includes physical fields (e.g., positions, velocities, mass) and
             metadata specific to the model type.
-
         """
         return NotImplemented
+
+
+class SphericalParticleGenerationHook(ParticleGenerationHook, ABC):
+    """Template hook for sampling particles from spherically symmetric models.
+
+    This hook provides built-in methods for performing the following 3 operations:
+
+    1. Sampling the radial positions of particles from a cumulative distribution function (CDF) defined by the model.
+       These are then converted into 3D Cartesian coordinates.
+    2. Interpolating model fields onto the particles based on their radial positions.
+    3. Generating velocities for collisionless components (dark matter and stars) using Eddington inversion.
+
+    Each of these steps is encapsulated into a tool method in the namespace of this
+    template hook.
+    """
+
+    __SphericalParticleGenerationHook_HOOK_ENABLED__ = True
+    __SphericalParticleGenerationHook_IS_TEMPLATE__ = True
+
+    # ----------------------------------- #
+    # Tool Methods / Sub-methods          #
+    # ----------------------------------- #
+    def _SphericalParticleGenerationHook_sample_particle_radii(
+        self: Self,
+        radius_field: str,
+        cdf_field: str,
+        num_particles: int,
+    ) -> tuple[unyt.unyt_array, unyt.unyt_array]:
+        # Import necessary functions.
+        from pisces.math_utils.sampling import sample_from_cdf
+        from pisces.utilities.rng import __RNG__
+
+        # Fetch the cdf x and y fields based on the fields
+        # provided in the call.
+        if radius_field not in self.fields:
+            raise ValueError(f"Radius field '{radius_field}' not found in model fields.")
+        if cdf_field not in self.fields:
+            raise ValueError(f"CDF field '{cdf_field}' not found in model fields.")
+
+        cdf_x = self.fields[radius_field].d
+        cdf_y = self.fields[cdf_field].d
+
+        # Sample the radii from the CDF using inverse transform sampling.
+        particle_radii = sample_from_cdf(cdf_x, cdf_y, num_particles)
+        particle_radii = unyt.unyt_array(particle_radii, self.fields["radii"].units)
+
+        # Create a random direction on the sphere to
+        # distribute the particles uniformly.
+        phi = __RNG__.uniform(0, 2 * np.pi, num_particles)
+        theta = np.arccos(__RNG__.uniform(-1, 1, num_particles))
+
+        # Convert spherical coordinates to Cartesian (x, y, z).
+        particle_positions = np.stack(
+            [
+                particle_radii * np.sin(theta) * np.cos(phi),
+                particle_radii * np.sin(theta) * np.sin(phi),
+                particle_radii * np.cos(theta),
+            ],
+            axis=-1,
+        )
+
+        return particle_radii, unyt.unyt_array(particle_positions, self.fields["radii"].units)
+
+    def _SphericalParticleGenerationHook_interpolate_particle_field(
+        self: Self,
+        particle_dataset: "ParticleDataset",
+        radius_field: str,
+        particle_type: str,
+        particle_field_name: str,
+        model_field_name: str,
+    ):
+        # Extract radial grid and model values.
+        model_radii = self.fields[radius_field].d
+        model_radii_units = self.fields[radius_field].units
+        model_values = self.fields[model_field_name].d
+        model_units = self.fields[model_field_name].units
+
+        # Interpolate field onto particle radii.
+        particle_positions = particle_dataset[f"{particle_type}.particle_position"].to_value(model_radii_units)
+        particle_radii = np.sqrt(np.sum(particle_positions**2, axis=-1))
+        interpolated = np.interp(particle_radii, model_radii, model_values)
+        interpolated_with_units = unyt.unyt_array(interpolated, model_units)
+
+        # Add interpolated values to the dataset.
+        particle_dataset.add_particle_field(particle_type, particle_field_name, interpolated_with_units)

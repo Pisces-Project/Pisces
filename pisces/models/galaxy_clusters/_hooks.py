@@ -8,11 +8,10 @@ import unyt
 from tqdm.auto import tqdm
 from tqdm.contrib.logging import logging_redirect_tqdm
 
-from pisces.math_utils.sampling import sample_from_cdf
-from pisces.models.core.hooks import ParticleGenerationHook
+from pisces.models.core.hooks import SphericalParticleGenerationHook
 from pisces.particles.base import ParticleDataset
 from pisces.physics.virialization.eddington import sample_eddington_velocities
-from pisces.utilities import __RNG__, pisces_config
+from pisces.utilities import pisces_config
 
 # ========================================= #
 # Particle Generation Hooks                 #
@@ -27,7 +26,7 @@ from pisces.utilities import __RNG__, pisces_config
 # performed for collisionless species using Eddington inversion.
 
 
-class SGCParticleGenerationHook(ParticleGenerationHook):
+class SGCParticleGenerationHook(SphericalParticleGenerationHook):
     """Particle generation hook for spherical galaxy cluster models.
 
     .. important::
@@ -129,95 +128,6 @@ class SGCParticleGenerationHook(ParticleGenerationHook):
     # ----------------------------------- #
     # This section of the hook should be used to
     # encapsulate the logic for generating the particle dataset.
-    def _SGCParticleGenerationHook_sample_particle_radii(
-        self: Self,
-        particle_type: str,
-        num_particles: int,
-    ) -> tuple[unyt.unyt_array, unyt.unyt_array]:
-        """Sample radial positions and convert to 3D coordinates for a given particle type.
-
-        Parameters
-        ----------
-        particle_type : str
-            The species of particle to sample (e.g., 'gas', 'stars', 'dark_matter').
-        num_particles : int
-            Number of particles to generate.
-
-        Returns
-        -------
-        Tuple[unyt_array, unyt_array]
-            A tuple (radii, positions) where:
-            - radii is a 1D unyt_array of radial distances.
-            - positions is a (N, 3) unyt_array of 3D Cartesian coordinates.
-
-        """
-        # Validate the particle type to ensure that it is one of the
-        # permitted particle types for this hook.
-        if particle_type not in self._SGCParticleGenerationHook_PTYPES:
-            raise ValueError(
-                f"Invalid particle type: {particle_type}. Must be one of {self._SGCParticleGenerationHook_PTYPES}."
-            )
-
-        # Extract the CDF and its support. We use the
-        # radial mass function as a proxy for the CDF up to normalization.
-        cdf_x = self.fields["radii"].d
-        cdf_y = self.fields[self._SGCParticleGenerationHook_CDF_FIELDS[particle_type]].d
-
-        # Sample the radii from the CDF using inverse transform sampling.
-        particle_radii = sample_from_cdf(cdf_x, cdf_y, num_particles)
-        particle_radii = unyt.unyt_array(particle_radii, self.fields["radii"].units)
-
-        # Create a random direction on the sphere to
-        # distribute the particles uniformly.
-        phi = __RNG__.uniform(0, 2 * np.pi, num_particles)
-        theta = np.arccos(__RNG__.uniform(-1, 1, num_particles))
-
-        # Convert spherical coordinates to Cartesian (x, y, z).
-        particle_positions = np.stack(
-            [
-                particle_radii * np.sin(theta) * np.cos(phi),
-                particle_radii * np.sin(theta) * np.sin(phi),
-                particle_radii * np.cos(theta),
-            ],
-            axis=-1,
-        )
-
-        return particle_radii, unyt.unyt_array(particle_positions, self.fields["radii"].units)
-
-    def _SGCParticleGenerationHook_interpolate_particle_field(
-        self: Self,
-        particle_dataset: "ParticleDataset",
-        particle_type: str,
-        particle_field_name: str,
-    ):
-        """Interpolate a model field onto the particles of a given type and store it in the dataset.
-
-        Parameters
-        ----------
-        particle_dataset : ParticleDataset
-            The particle dataset being written to.
-        particle_type : str
-            The species of particles (e.g., 'gas', 'dark_matter').
-        particle_field_name : str
-            The name of the field to assign to the particles.
-
-        """
-        # Look up the corresponding field in the model.
-        model_field_name = self._SGCParticleGenerationHook_INTERPOLATED_FIELDS[particle_type][particle_field_name]
-
-        # Extract radial grid and model values.
-        model_radii = self.fields["radii"].d
-        model_values = self.fields[model_field_name].d
-        model_units = self.fields[model_field_name].units
-
-        # Interpolate field onto particle radii.
-        particle_radii = particle_dataset[f"{particle_type}.radius"].d
-        interpolated = np.interp(particle_radii, model_radii, model_values)
-        interpolated_with_units = unyt.unyt_array(interpolated, model_units)
-
-        # Add interpolated values to the dataset.
-        particle_dataset.add_particle_field(particle_type, particle_field_name, interpolated_with_units)
-
     def _SGCParticleGenerationHook_generate_velocities(
         self: Self,
         particle_dataset: "ParticleDataset",
@@ -318,9 +228,10 @@ class SGCParticleGenerationHook(ParticleGenerationHook):
         # The first step in the particle generation process is to generate
         # the particle positions and the radii. This is done via inverse
         # transform sampling and is encapsulated in the `_SGCParticleGenerationHook_sample_particle_radii` method.
-        radii, positions = self._SGCParticleGenerationHook_sample_particle_radii(
-            particle_type=particle_type,
-            num_particles=num_particles,
+        radii, positions = self._SphericalParticleGenerationHook_sample_particle_radii(
+            "radii",
+            self._SGCParticleGenerationHook_CDF_FIELDS[particle_type],
+            num_particles,
         )
         particle_dataset.add_particle_field(particle_type, "radius", radii)
         particle_dataset.add_particle_field(particle_type, "particle_position", positions)
@@ -339,17 +250,15 @@ class SGCParticleGenerationHook(ParticleGenerationHook):
         # The next step is to interpolate any relevant fields onto the particle dataset.
         # To do this, we use a linear interpolator.
         interpolated_fields = self._SGCParticleGenerationHook_INTERPOLATED_FIELDS[particle_type]
-        for interpolated_particle_field in tqdm(
-            interpolated_fields.keys(),
+        for interpolated_particle_field, interpolated_model_field in tqdm(
+            interpolated_fields.items(),
             desc=f"Interpolating {particle_type} fields",
-            disable=pisces_config["appearance.disable_progress_bars"],
+            disable=pisces_config["system.appearance.disable_progress_bars"],
             unit="fields",
             leave=False,
         ):
-            self._SGCParticleGenerationHook_interpolate_particle_field(
-                particle_dataset,
-                particle_type,
-                interpolated_particle_field,
+            self._SphericalParticleGenerationHook_interpolate_particle_field(
+                particle_dataset, "radii", particle_type, interpolated_particle_field, interpolated_model_field
             )
 
         # --- Generate Velocities --- #
@@ -357,7 +266,7 @@ class SGCParticleGenerationHook(ParticleGenerationHook):
 
     def generate_particles(
         self: Self,
-        path: str | Path,
+        filename: str | Path,
         num_particles: dict[str, int],
         overwrite: bool = False,
     ) -> "ParticleDataset":
@@ -373,7 +282,7 @@ class SGCParticleGenerationHook(ParticleGenerationHook):
 
         Parameters
         ----------
-        path : str or ~pathlib.Path
+        filename : str or ~pathlib.Path
             Filesystem path where the output particle dataset should be saved.
             If the path already exists, it will be overwritten if `overwrite=True`.
         num_particles : dict of str, int
@@ -448,7 +357,7 @@ class SGCParticleGenerationHook(ParticleGenerationHook):
         # which we will be writing the particle data. This will get passed
         # through to the various sub-methods to allow for logically clear
         # separation of concerns.
-        particle_dataset = ParticleDataset.build_particle_dataset(path, overwrite=overwrite)
+        particle_dataset = ParticleDataset.build_particle_dataset(filename, overwrite=overwrite)
 
         # For each of the particle types being generated, we'll follow
         # the sample basic process: create the particle group, sample positions, then
@@ -459,7 +368,7 @@ class SGCParticleGenerationHook(ParticleGenerationHook):
             for particle_type, particle_count in tqdm(
                 num_particles.items(),
                 desc="Generating particles",
-                disable=pisces_config["appearance.disable_progress_bars"],
+                disable=pisces_config["system.appearance.disable_progress_bars"],
                 unit="species",
             ):
                 # Generate the particle species.

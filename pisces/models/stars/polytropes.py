@@ -24,8 +24,10 @@ from pisces.math_utils.integration import (
 from pisces.models.core.base import BaseModel
 from pisces.utilities import pisces_config
 
+from ._hooks import PolytropicParticleGenerationHook
 
-class PolytropicStarModel(BaseModel):
+
+class PolytropicStarModel(BaseModel, PolytropicParticleGenerationHook):
     r"""Spherical polytropic stellar structure model.
 
     This model represents a self-gravitating, spherically symmetric star in hydrostatic equilibrium,
@@ -335,7 +337,7 @@ class PolytropicStarModel(BaseModel):
             progress_bar = tqdm(
                 total=7,
                 desc="Preparing metadata...",
-                disable=pisces_config["appearance.disable_progress_bars"],
+                disable=pisces_config["system.appearance.disable_progress_bars"],
                 leave=False,
             )
 
@@ -659,3 +661,18 @@ class PolytropicStarModel(BaseModel):
 
         # Return the values
         return rho_c, T_c
+
+
+if __name__ == "__main__":
+    # Example usage of the PolytropicStarModel class
+    model = PolytropicStarModel.from_density_and_temperature(
+        filename="polytropic_star_model.h5",
+        core_density=unyt.unyt_quantity(1e3, "kg/m**3"),
+        core_temperature=unyt.unyt_quantity(1e6, "K"),
+        polytropic_index=1.0,
+        rmin=unyt.unyt_quantity(1, "km"),
+        rmax=unyt.unyt_quantity(100_000, "km"),
+        num_points=1000,
+        overwrite=True,
+    )
+    print(model)
