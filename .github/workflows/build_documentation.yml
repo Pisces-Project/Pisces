@@ -60,7 +60,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install .[docs]
+          pip install -e .[docs]
 
       # Actually build the documentation. We use the `-j auto` flag to
       # allow Sphinx to use all available CPU cores for faster builds.
