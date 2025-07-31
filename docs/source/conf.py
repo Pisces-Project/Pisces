@@ -80,12 +80,6 @@ intersphinx_mapping = {
 napoleon_use_param = True
 napoleon_preprocess_types = True
 
-# Configure autodoc mock imports to ensure that we don't need to
-# actually compile C level tools.
-autodoc_mock_imports = [
-    "pisces.physics.virialization._eddington_sampling",
-]
-
 
 # Configure the sphinx galleries. These are contained in the
 # /examples gallery.
