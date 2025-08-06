@@ -1,0 +1,6 @@
+profiles.base.BaseProfile.lambdify\_expression
+==============================================
+
+.. currentmodule:: profiles.base
+
+.. automethod:: BaseProfile.lambdify_expression

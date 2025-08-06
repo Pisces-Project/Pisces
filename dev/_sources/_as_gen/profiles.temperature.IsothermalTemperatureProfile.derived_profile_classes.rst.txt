@@ -1,0 +1,6 @@
+profiles.temperature.IsothermalTemperatureProfile.derived\_profile\_classes
+===========================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoproperty:: IsothermalTemperatureProfile.derived_profile_classes

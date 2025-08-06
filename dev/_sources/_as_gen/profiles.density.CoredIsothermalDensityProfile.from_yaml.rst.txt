@@ -1,0 +1,6 @@
+profiles.density.CoredIsothermalDensityProfile.from\_yaml
+=========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoredIsothermalDensityProfile.from_yaml

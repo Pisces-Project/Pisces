@@ -1,0 +1,6 @@
+profiles.density.BaseSphericalDensityProfile.compute\_escape\_velocity
+======================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseSphericalDensityProfile.compute_escape_velocity

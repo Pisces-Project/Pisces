@@ -1,0 +1,6 @@
+profiles.density.KingDensityProfile.compute\_escape\_velocity
+=============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: KingDensityProfile.compute_escape_velocity

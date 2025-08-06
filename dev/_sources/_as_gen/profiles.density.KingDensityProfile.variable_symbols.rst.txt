@@ -1,0 +1,6 @@
+profiles.density.KingDensityProfile.variable\_symbols
+=====================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: KingDensityProfile.variable_symbols

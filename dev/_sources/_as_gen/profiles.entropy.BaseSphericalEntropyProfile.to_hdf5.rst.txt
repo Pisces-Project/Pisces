@@ -1,0 +1,6 @@
+profiles.entropy.BaseSphericalEntropyProfile.to\_hdf5
+=====================================================
+
+.. currentmodule:: profiles.entropy
+
+.. automethod:: BaseSphericalEntropyProfile.to_hdf5

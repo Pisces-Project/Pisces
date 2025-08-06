@@ -1,0 +1,6 @@
+profiles.density.NFWDensityProfile.compute\_lensing\_convergence
+================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: NFWDensityProfile.compute_lensing_convergence

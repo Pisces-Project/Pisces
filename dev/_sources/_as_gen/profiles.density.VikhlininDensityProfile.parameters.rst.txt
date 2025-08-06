@@ -1,0 +1,6 @@
+profiles.density.VikhlininDensityProfile.parameters
+===================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: VikhlininDensityProfile.parameters

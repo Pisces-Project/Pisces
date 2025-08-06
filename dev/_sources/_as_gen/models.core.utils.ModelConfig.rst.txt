@@ -1,0 +1,23 @@
+ModelConfig
+=============================
+
+.. currentmodule:: models.core.utils
+
+.. autoclass:: models.core.utils.ModelConfig
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~ModelConfig.__init__
+   
+   
+
+   
+   
+   

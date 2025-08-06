@@ -1,0 +1,6 @@
+profiles.density.BurkertDensityProfile.compute\_surface\_density
+================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BurkertDensityProfile.compute_surface_density

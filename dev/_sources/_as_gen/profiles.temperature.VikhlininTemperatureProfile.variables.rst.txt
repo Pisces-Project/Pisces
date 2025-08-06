@@ -1,0 +1,6 @@
+profiles.temperature.VikhlininTemperatureProfile.variables
+==========================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoproperty:: VikhlininTemperatureProfile.variables

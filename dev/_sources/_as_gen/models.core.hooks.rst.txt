@@ -1,0 +1,36 @@
+models.core.hooks
+=================
+
+.. automodule:: models.core.hooks
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class.rst
+      :recursive:
+   
+      BaseHook
+      ParticleGenerationHook
+      SphericalParticleGenerationHook
+   
+   
+
+   
+   
+   

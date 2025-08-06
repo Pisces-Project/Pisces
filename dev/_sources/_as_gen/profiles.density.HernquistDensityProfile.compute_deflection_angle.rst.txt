@@ -1,0 +1,6 @@
+profiles.density.HernquistDensityProfile.compute\_deflection\_angle
+===================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: HernquistDensityProfile.compute_deflection_angle

@@ -1,0 +1,6 @@
+profiles.density.SersicProfile.substitute\_expression
+=====================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SersicProfile.substitute_expression

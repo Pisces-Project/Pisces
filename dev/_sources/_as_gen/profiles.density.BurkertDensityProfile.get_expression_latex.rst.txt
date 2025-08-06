@@ -1,0 +1,6 @@
+profiles.density.BurkertDensityProfile.get\_expression\_latex
+=============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BurkertDensityProfile.get_expression_latex

@@ -1,0 +1,6 @@
+models.stars.polytropes.PolytropicStarModel.from\_density\_and\_temperature
+===========================================================================
+
+.. currentmodule:: models.stars.polytropes
+
+.. automethod:: PolytropicStarModel.from_density_and_temperature

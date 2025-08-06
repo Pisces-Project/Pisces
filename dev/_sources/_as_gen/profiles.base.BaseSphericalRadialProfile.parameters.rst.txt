@@ -1,0 +1,6 @@
+profiles.base.BaseSphericalRadialProfile.parameters
+===================================================
+
+.. currentmodule:: profiles.base
+
+.. autoproperty:: BaseSphericalRadialProfile.parameters

@@ -1,0 +1,6 @@
+profiles.density.BaseDiskDensityProfile.to\_json
+================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseDiskDensityProfile.to_json

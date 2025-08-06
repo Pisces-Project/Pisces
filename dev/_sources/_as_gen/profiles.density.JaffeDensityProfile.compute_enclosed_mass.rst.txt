@@ -1,0 +1,6 @@
+profiles.density.JaffeDensityProfile.compute\_enclosed\_mass
+============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: JaffeDensityProfile.compute_enclosed_mass

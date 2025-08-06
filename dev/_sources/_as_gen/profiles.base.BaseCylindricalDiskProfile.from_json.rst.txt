@@ -1,0 +1,6 @@
+profiles.base.BaseCylindricalDiskProfile.from\_json
+===================================================
+
+.. currentmodule:: profiles.base
+
+.. automethod:: BaseCylindricalDiskProfile.from_json

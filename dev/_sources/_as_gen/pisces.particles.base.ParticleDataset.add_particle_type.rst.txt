@@ -1,0 +1,6 @@
+pisces.particles.base.ParticleDataset.add\_particle\_type
+=========================================================
+
+.. currentmodule:: pisces.particles.base
+
+.. automethod:: ParticleDataset.add_particle_type

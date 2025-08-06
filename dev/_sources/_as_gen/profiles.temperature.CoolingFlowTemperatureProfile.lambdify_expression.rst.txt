@@ -1,0 +1,6 @@
+profiles.temperature.CoolingFlowTemperatureProfile.lambdify\_expression
+=======================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: CoolingFlowTemperatureProfile.lambdify_expression

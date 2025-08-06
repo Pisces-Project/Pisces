@@ -1,0 +1,6 @@
+profiles.base.derived\_profile
+==============================
+
+.. currentmodule:: profiles.base
+
+.. autofunction:: derived_profile
