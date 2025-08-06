@@ -1,6 +1,0 @@
-profiles.density.GaussianRingProfile.parameter\_symbols
-=======================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: GaussianRingProfile.parameter_symbols

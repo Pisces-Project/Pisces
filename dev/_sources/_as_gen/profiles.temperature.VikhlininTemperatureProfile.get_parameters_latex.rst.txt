@@ -1,6 +1,0 @@
-profiles.temperature.VikhlininTemperatureProfile.get\_parameters\_latex
-=======================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: VikhlininTemperatureProfile.get_parameters_latex

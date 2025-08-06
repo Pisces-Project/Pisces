@@ -1,6 +1,0 @@
-profiles.density.EinastoDensityProfile.get\_output\_units
-=========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: EinastoDensityProfile.get_output_units

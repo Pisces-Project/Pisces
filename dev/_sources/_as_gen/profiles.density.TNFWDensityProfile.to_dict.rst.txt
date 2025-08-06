@@ -1,6 +1,0 @@
-profiles.density.TNFWDensityProfile.to\_dict
-============================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: TNFWDensityProfile.to_dict

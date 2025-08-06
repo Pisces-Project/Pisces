@@ -1,6 +1,0 @@
-profiles.density.BurkertDensityProfile.compute\_total\_mass
-===========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BurkertDensityProfile.compute_total_mass

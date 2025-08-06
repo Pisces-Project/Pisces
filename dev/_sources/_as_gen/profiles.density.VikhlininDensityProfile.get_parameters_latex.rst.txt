@@ -1,6 +1,0 @@
-profiles.density.VikhlininDensityProfile.get\_parameters\_latex
-===============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: VikhlininDensityProfile.get_parameters_latex

@@ -1,6 +1,0 @@
-profiles.entropy.BaseSphericalEntropyProfile.get\_output\_units
-===============================================================
-
-.. currentmodule:: profiles.entropy
-
-.. automethod:: BaseSphericalEntropyProfile.get_output_units

@@ -1,6 +1,0 @@
-profiles.density.CoreSersicProfile.from\_yaml
-=============================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoreSersicProfile.from_yaml

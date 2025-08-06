@@ -1,6 +1,0 @@
-profiles.density.BaseSphericalDensityProfile.compute\_cosmological\_overdensity\_profile
-========================================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BaseSphericalDensityProfile.compute_cosmological_overdensity_profile

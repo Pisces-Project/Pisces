@@ -1,6 +1,0 @@
-profiles.temperature.AM06TemperatureProfile.lambdify\_expression
-================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: AM06TemperatureProfile.lambdify_expression

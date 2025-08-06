@@ -1,6 +1,0 @@
-profiles.temperature.DoubleBetaTemperatureProfile.get\_output\_units
-====================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: DoubleBetaTemperatureProfile.get_output_units

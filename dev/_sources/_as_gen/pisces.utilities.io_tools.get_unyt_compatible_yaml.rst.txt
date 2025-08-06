@@ -1,6 +1,0 @@
-pisces.utilities.io\_tools.get\_unyt\_compatible\_yaml
-======================================================
-
-.. currentmodule:: pisces.utilities.io_tools
-
-.. autofunction:: get_unyt_compatible_yaml

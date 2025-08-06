@@ -1,6 +1,0 @@
-pisces.particles.base.ParticleDataset.delete\_field\_metadata\_keys
-===================================================================
-
-.. currentmodule:: pisces.particles.base
-
-.. automethod:: ParticleDataset.delete_field_metadata_keys

@@ -1,6 +1,0 @@
-profiles.density.GeneralizedNFWDensityProfile.substitute\_expression
-====================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: GeneralizedNFWDensityProfile.substitute_expression
