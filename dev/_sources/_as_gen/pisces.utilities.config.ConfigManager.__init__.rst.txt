@@ -1,0 +1,6 @@
+pisces.utilities.config.ConfigManager.\_\_init\_\_
+==================================================
+
+.. currentmodule:: pisces.utilities.config
+
+.. automethod:: ConfigManager.__init__

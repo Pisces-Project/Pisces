@@ -1,0 +1,6 @@
+profiles.density.SNFWDensityProfile.get\_parameters\_latex
+==========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SNFWDensityProfile.get_parameters_latex

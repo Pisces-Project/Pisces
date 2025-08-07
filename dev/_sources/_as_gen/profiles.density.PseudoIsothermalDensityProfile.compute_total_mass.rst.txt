@@ -1,0 +1,6 @@
+profiles.density.PseudoIsothermalDensityProfile.compute\_total\_mass
+====================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: PseudoIsothermalDensityProfile.compute_total_mass

@@ -1,0 +1,6 @@
+profiles.temperature.DoubleBetaTemperatureProfile.substitute\_expression
+========================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: DoubleBetaTemperatureProfile.substitute_expression

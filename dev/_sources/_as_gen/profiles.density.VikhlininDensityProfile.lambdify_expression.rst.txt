@@ -1,0 +1,6 @@
+profiles.density.VikhlininDensityProfile.lambdify\_expression
+=============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: VikhlininDensityProfile.lambdify_expression

@@ -1,0 +1,33 @@
+ConfigManager
+=====================================
+
+.. currentmodule:: pisces.utilities.config
+
+.. autoclass:: pisces.utilities.config.ConfigManager
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~ConfigManager.__init__
+      ~ConfigManager.clear
+      ~ConfigManager.get
+      ~ConfigManager.items
+      ~ConfigManager.keys
+      ~ConfigManager.pop
+      ~ConfigManager.popitem
+      ~ConfigManager.setdefault
+      ~ConfigManager.to_dict
+      ~ConfigManager.update
+      ~ConfigManager.values
+   
+   
+
+   
+   
+   

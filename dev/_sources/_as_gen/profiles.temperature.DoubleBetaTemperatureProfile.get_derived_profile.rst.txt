@@ -1,0 +1,6 @@
+profiles.temperature.DoubleBetaTemperatureProfile.get\_derived\_profile
+=======================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: DoubleBetaTemperatureProfile.get_derived_profile

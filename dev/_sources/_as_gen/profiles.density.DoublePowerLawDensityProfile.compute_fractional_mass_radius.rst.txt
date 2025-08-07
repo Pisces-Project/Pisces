@@ -1,0 +1,6 @@
+profiles.density.DoublePowerLawDensityProfile.compute\_fractional\_mass\_radius
+===============================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DoublePowerLawDensityProfile.compute_fractional_mass_radius

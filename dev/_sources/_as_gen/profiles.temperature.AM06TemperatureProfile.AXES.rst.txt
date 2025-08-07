@@ -1,0 +1,6 @@
+profiles.temperature.AM06TemperatureProfile.AXES
+================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoattribute:: AM06TemperatureProfile.AXES

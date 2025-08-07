@@ -1,0 +1,6 @@
+profiles.density.ExponentialDiskDensityProfile.list\_derived\_profiles
+======================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: ExponentialDiskDensityProfile.list_derived_profiles

@@ -1,0 +1,6 @@
+profiles.density.VikhlininDensityProfile.to\_yaml
+=================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: VikhlininDensityProfile.to_yaml

@@ -1,0 +1,6 @@
+profiles.density.PseudoIsothermalDensityProfile.substitute\_expression
+======================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: PseudoIsothermalDensityProfile.substitute_expression

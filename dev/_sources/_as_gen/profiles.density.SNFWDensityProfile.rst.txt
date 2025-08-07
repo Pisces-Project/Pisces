@@ -1,0 +1,61 @@
+SNFWDensityProfile
+===================================
+
+.. currentmodule:: profiles.density
+
+.. autoclass:: profiles.density.SNFWDensityProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~SNFWDensityProfile.__init__
+      ~SNFWDensityProfile.compute_circular_velocity
+      ~SNFWDensityProfile.compute_cosmological_overdensity_profile
+      ~SNFWDensityProfile.compute_cosmological_overdensity_radius
+      ~SNFWDensityProfile.compute_deflection_angle
+      ~SNFWDensityProfile.compute_einstein_radius
+      ~SNFWDensityProfile.compute_enclosed_mass
+      ~SNFWDensityProfile.compute_escape_velocity
+      ~SNFWDensityProfile.compute_fractional_mass_radius
+      ~SNFWDensityProfile.compute_lensing_convergence
+      ~SNFWDensityProfile.compute_surface_density
+      ~SNFWDensityProfile.compute_total_mass
+      ~SNFWDensityProfile.from_dict
+      ~SNFWDensityProfile.from_hdf5
+      ~SNFWDensityProfile.from_json
+      ~SNFWDensityProfile.from_yaml
+      ~SNFWDensityProfile.get_derived_profile
+      ~SNFWDensityProfile.get_expression_latex
+      ~SNFWDensityProfile.get_output_units
+      ~SNFWDensityProfile.get_parameters_latex
+      ~SNFWDensityProfile.lambdify_expression
+      ~SNFWDensityProfile.list_derived_profiles
+      ~SNFWDensityProfile.substitute_expression
+      ~SNFWDensityProfile.to_dict
+      ~SNFWDensityProfile.to_hdf5
+      ~SNFWDensityProfile.to_json
+      ~SNFWDensityProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~SNFWDensityProfile.derived_profile_classes
+      ~SNFWDensityProfile.parameter_symbols
+      ~SNFWDensityProfile.parameters
+      ~SNFWDensityProfile.variable_symbols
+      ~SNFWDensityProfile.variables
+   
+   

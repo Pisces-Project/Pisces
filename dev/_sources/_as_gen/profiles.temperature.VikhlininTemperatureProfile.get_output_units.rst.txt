@@ -1,0 +1,6 @@
+profiles.temperature.VikhlininTemperatureProfile.get\_output\_units
+===================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: VikhlininTemperatureProfile.get_output_units

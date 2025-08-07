@@ -1,0 +1,24 @@
+ParticleGenerationHook
+========================================
+
+.. currentmodule:: models.core.hooks
+
+.. autoclass:: models.core.hooks.ParticleGenerationHook
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~ParticleGenerationHook.__init__
+      ~ParticleGenerationHook.generate_particles
+   
+   
+
+   
+   
+   

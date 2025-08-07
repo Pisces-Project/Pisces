@@ -1,0 +1,6 @@
+profiles.temperature.BetaModelTemperatureProfile.from\_dict
+===========================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: BetaModelTemperatureProfile.from_dict

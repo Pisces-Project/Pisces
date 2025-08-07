@@ -1,0 +1,6 @@
+models.stars.polytropes.PolytropicStarModel.get\_hook\_class
+============================================================
+
+.. currentmodule:: models.stars.polytropes
+
+.. automethod:: PolytropicStarModel.get_hook_class

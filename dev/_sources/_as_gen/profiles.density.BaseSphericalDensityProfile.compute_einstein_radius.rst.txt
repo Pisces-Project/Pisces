@@ -1,0 +1,6 @@
+profiles.density.BaseSphericalDensityProfile.compute\_einstein\_radius
+======================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseSphericalDensityProfile.compute_einstein_radius

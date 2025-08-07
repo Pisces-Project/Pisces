@@ -1,0 +1,6 @@
+models.galaxy\_clusters.spherical.SphericalGalaxyClusterModel.dark\_matter\_df
+==============================================================================
+
+.. currentmodule:: models.galaxy_clusters.spherical
+
+.. autoproperty:: SphericalGalaxyClusterModel.dark_matter_df
