@@ -1,0 +1,6 @@
+profiles.density.FlaredDiskDensityProfile.parameters
+====================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: FlaredDiskDensityProfile.parameters

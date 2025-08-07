@@ -1,0 +1,6 @@
+profiles.density.DehnenDensityProfile.to\_yaml
+==============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DehnenDensityProfile.to_yaml

@@ -1,0 +1,6 @@
+profiles.temperature.BetaModelTemperatureProfile.from\_json
+===========================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: BetaModelTemperatureProfile.from_json

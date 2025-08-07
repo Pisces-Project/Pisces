@@ -1,0 +1,6 @@
+profiles.density.HernquistDensityProfile.to\_yaml
+=================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: HernquistDensityProfile.to_yaml

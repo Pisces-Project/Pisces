@@ -1,0 +1,6 @@
+profiles.density.GeneralizedNFWDensityProfile.derived\_profile\_classes
+=======================================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: GeneralizedNFWDensityProfile.derived_profile_classes

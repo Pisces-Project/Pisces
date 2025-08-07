@@ -1,0 +1,6 @@
+profiles.density.JaffeDensityProfile.get\_expression\_latex
+===========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: JaffeDensityProfile.get_expression_latex

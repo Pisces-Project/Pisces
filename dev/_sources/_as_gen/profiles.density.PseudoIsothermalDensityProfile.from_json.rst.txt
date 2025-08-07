@@ -1,0 +1,6 @@
+profiles.density.PseudoIsothermalDensityProfile.from\_json
+==========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: PseudoIsothermalDensityProfile.from_json

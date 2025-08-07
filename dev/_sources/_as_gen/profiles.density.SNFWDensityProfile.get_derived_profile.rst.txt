@@ -1,0 +1,6 @@
+profiles.density.SNFWDensityProfile.get\_derived\_profile
+=========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SNFWDensityProfile.get_derived_profile

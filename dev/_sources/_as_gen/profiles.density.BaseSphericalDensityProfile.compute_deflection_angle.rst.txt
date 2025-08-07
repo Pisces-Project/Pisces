@@ -1,0 +1,6 @@
+profiles.density.BaseSphericalDensityProfile.compute\_deflection\_angle
+=======================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseSphericalDensityProfile.compute_deflection_angle

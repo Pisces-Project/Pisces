@@ -1,0 +1,6 @@
+pisces.particles.base.ParticleDataset.copy
+==========================================
+
+.. currentmodule:: pisces.particles.base
+
+.. automethod:: ParticleDataset.copy

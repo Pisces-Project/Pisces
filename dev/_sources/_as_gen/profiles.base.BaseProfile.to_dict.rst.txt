@@ -1,0 +1,6 @@
+profiles.base.BaseProfile.to\_dict
+==================================
+
+.. currentmodule:: profiles.base
+
+.. automethod:: BaseProfile.to_dict

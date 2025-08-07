@@ -1,0 +1,6 @@
+profiles.density.ExponentialDiskDensityProfile.lambdify\_expression
+===================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: ExponentialDiskDensityProfile.lambdify_expression

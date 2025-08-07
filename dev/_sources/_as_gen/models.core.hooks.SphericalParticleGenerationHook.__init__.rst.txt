@@ -1,0 +1,6 @@
+models.core.hooks.SphericalParticleGenerationHook.\_\_init\_\_
+==============================================================
+
+.. currentmodule:: models.core.hooks
+
+.. automethod:: SphericalParticleGenerationHook.__init__

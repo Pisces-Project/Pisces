@@ -1,0 +1,6 @@
+profiles.density.EinastoDensityProfile.from\_json
+=================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: EinastoDensityProfile.from_json

@@ -1,0 +1,52 @@
+BetaModelTemperatureProfile
+================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoclass:: profiles.temperature.BetaModelTemperatureProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~BetaModelTemperatureProfile.__init__
+      ~BetaModelTemperatureProfile.from_dict
+      ~BetaModelTemperatureProfile.from_hdf5
+      ~BetaModelTemperatureProfile.from_json
+      ~BetaModelTemperatureProfile.from_yaml
+      ~BetaModelTemperatureProfile.get_derived_profile
+      ~BetaModelTemperatureProfile.get_expression_latex
+      ~BetaModelTemperatureProfile.get_output_units
+      ~BetaModelTemperatureProfile.get_parameters_latex
+      ~BetaModelTemperatureProfile.lambdify_expression
+      ~BetaModelTemperatureProfile.list_derived_profiles
+      ~BetaModelTemperatureProfile.substitute_expression
+      ~BetaModelTemperatureProfile.to_dict
+      ~BetaModelTemperatureProfile.to_hdf5
+      ~BetaModelTemperatureProfile.to_json
+      ~BetaModelTemperatureProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~BetaModelTemperatureProfile.AXES
+      ~BetaModelTemperatureProfile.DEFAULT_PARAMETERS
+      ~BetaModelTemperatureProfile.derived_profile_classes
+      ~BetaModelTemperatureProfile.parameter_symbols
+      ~BetaModelTemperatureProfile.parameters
+      ~BetaModelTemperatureProfile.variable_symbols
+      ~BetaModelTemperatureProfile.variables
+   
+   

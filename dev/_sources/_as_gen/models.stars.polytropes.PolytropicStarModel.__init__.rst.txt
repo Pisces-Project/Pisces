@@ -1,0 +1,6 @@
+models.stars.polytropes.PolytropicStarModel.\_\_init\_\_
+========================================================
+
+.. currentmodule:: models.stars.polytropes
+
+.. automethod:: PolytropicStarModel.__init__

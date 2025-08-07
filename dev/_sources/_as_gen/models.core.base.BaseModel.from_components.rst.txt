@@ -1,0 +1,6 @@
+models.core.base.BaseModel.from\_components
+===========================================
+
+.. currentmodule:: models.core.base
+
+.. automethod:: BaseModel.from_components

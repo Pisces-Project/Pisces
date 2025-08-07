@@ -1,0 +1,6 @@
+profiles.entropy.BaseSphericalEntropyProfile.lambdify\_expression
+=================================================================
+
+.. currentmodule:: profiles.entropy
+
+.. automethod:: BaseSphericalEntropyProfile.lambdify_expression

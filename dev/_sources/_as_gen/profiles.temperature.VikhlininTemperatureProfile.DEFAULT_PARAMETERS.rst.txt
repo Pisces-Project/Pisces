@@ -1,0 +1,6 @@
+profiles.temperature.VikhlininTemperatureProfile.DEFAULT\_PARAMETERS
+====================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoattribute:: VikhlininTemperatureProfile.DEFAULT_PARAMETERS

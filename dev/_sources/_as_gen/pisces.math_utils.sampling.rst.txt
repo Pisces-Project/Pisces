@@ -1,0 +1,34 @@
+pisces.math_utils.sampling
+==========================
+
+.. automodule:: pisces.math_utils.sampling
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+
+   
+      sample_from_cdf
+      sample_from_pdf
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   

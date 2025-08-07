@@ -1,0 +1,6 @@
+models.stars.polytropes.PolytropicStarModel.path
+================================================
+
+.. currentmodule:: models.stars.polytropes
+
+.. autoproperty:: PolytropicStarModel.path

@@ -1,0 +1,6 @@
+pisces.particles.base.ParticleDataset.remove\_particle\_field
+=============================================================
+
+.. currentmodule:: pisces.particles.base
+
+.. automethod:: ParticleDataset.remove_particle_field
