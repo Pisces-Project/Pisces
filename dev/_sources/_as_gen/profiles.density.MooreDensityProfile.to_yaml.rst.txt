@@ -1,6 +1,0 @@
-profiles.density.MooreDensityProfile.to\_yaml
-=============================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: MooreDensityProfile.to_yaml

@@ -1,6 +1,0 @@
-profiles.density.MooreDensityProfile.compute\_circular\_velocity
-================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: MooreDensityProfile.compute_circular_velocity

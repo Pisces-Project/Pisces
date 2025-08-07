@@ -1,6 +1,0 @@
-profiles.density.PlummerDensityProfile.to\_json
-===============================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: PlummerDensityProfile.to_json

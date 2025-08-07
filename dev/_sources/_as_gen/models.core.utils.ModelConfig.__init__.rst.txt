@@ -1,6 +1,0 @@
-models.core.utils.ModelConfig.\_\_init\_\_
-==========================================
-
-.. currentmodule:: models.core.utils
-
-.. automethod:: ModelConfig.__init__

@@ -1,6 +1,0 @@
-profiles.density.KingDensityProfile.parameter\_symbols
-======================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: KingDensityProfile.parameter_symbols

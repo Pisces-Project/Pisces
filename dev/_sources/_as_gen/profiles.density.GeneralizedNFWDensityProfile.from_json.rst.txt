@@ -1,6 +1,0 @@
-profiles.density.GeneralizedNFWDensityProfile.from\_json
-========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: GeneralizedNFWDensityProfile.from_json

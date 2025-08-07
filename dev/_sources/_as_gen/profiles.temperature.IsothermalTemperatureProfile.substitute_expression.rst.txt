@@ -1,6 +1,0 @@
-profiles.temperature.IsothermalTemperatureProfile.substitute\_expression
-========================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: IsothermalTemperatureProfile.substitute_expression

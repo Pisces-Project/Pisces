@@ -1,6 +1,0 @@
-pisces.particles.base.ParticleDataset.get\_field\_metadata
-==========================================================
-
-.. currentmodule:: pisces.particles.base
-
-.. automethod:: ParticleDataset.get_field_metadata

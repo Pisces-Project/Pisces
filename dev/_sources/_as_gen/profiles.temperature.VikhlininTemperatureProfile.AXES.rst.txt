@@ -1,6 +1,0 @@
-profiles.temperature.VikhlininTemperatureProfile.AXES
-=====================================================
-
-.. currentmodule:: profiles.temperature
-
-.. autoattribute:: VikhlininTemperatureProfile.AXES

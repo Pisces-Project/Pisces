@@ -1,6 +1,0 @@
-models.galaxy\_clusters.spherical.MagnetizedSphericalGalaxyClusterModel.get\_active\_hooks
-==========================================================================================
-
-.. currentmodule:: models.galaxy_clusters.spherical
-
-.. automethod:: MagnetizedSphericalGalaxyClusterModel.get_active_hooks

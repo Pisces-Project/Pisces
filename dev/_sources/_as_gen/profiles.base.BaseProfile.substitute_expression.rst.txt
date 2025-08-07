@@ -1,6 +1,0 @@
-profiles.base.BaseProfile.substitute\_expression
-================================================
-
-.. currentmodule:: profiles.base
-
-.. automethod:: BaseProfile.substitute_expression

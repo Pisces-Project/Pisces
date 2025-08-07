@@ -1,6 +1,0 @@
-profiles.base.BaseSphericalRadialProfile.get\_output\_units
-===========================================================
-
-.. currentmodule:: profiles.base
-
-.. automethod:: BaseSphericalRadialProfile.get_output_units

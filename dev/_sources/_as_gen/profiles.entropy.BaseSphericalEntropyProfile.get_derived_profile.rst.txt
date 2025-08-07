@@ -1,6 +1,0 @@
-profiles.entropy.BaseSphericalEntropyProfile.get\_derived\_profile
-==================================================================
-
-.. currentmodule:: profiles.entropy
-
-.. automethod:: BaseSphericalEntropyProfile.get_derived_profile

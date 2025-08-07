@@ -1,6 +1,0 @@
-profiles.density.BaseSphericalDensityProfile.lambdify\_expression
-=================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BaseSphericalDensityProfile.lambdify_expression

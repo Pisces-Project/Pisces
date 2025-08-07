@@ -1,6 +1,0 @@
-profiles.density.JaffeDensityProfile.compute\_escape\_velocity
-==============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: JaffeDensityProfile.compute_escape_velocity

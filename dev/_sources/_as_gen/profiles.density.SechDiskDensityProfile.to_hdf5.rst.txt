@@ -1,6 +1,0 @@
-profiles.density.SechDiskDensityProfile.to\_hdf5
-================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: SechDiskDensityProfile.to_hdf5

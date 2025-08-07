@@ -1,6 +1,0 @@
-profiles.density.KingDensityProfile.to\_hdf5
-============================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: KingDensityProfile.to_hdf5
