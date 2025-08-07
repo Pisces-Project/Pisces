@@ -1,0 +1,6 @@
+geometry.grids.core.GenericGrid.units
+=====================================
+
+.. currentmodule:: geometry.grids.core
+
+.. autoproperty:: GenericGrid.units

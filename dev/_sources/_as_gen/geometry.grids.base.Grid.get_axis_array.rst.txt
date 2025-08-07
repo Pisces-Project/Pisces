@@ -1,0 +1,6 @@
+geometry.grids.base.Grid.get\_axis\_array
+=========================================
+
+.. currentmodule:: geometry.grids.base
+
+.. automethod:: Grid.get_axis_array

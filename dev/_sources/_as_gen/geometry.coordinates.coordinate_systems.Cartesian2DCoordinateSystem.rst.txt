@@ -1,0 +1,43 @@
+Cartesian2DCoordinateSystem
+===================================================================
+
+.. currentmodule:: geometry.coordinates.coordinate_systems
+
+.. autoclass:: geometry.coordinates.coordinate_systems.Cartesian2DCoordinateSystem
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~Cartesian2DCoordinateSystem.__init__
+      ~Cartesian2DCoordinateSystem.convert_coords_from
+      ~Cartesian2DCoordinateSystem.convert_coords_to
+      ~Cartesian2DCoordinateSystem.convert_from_cartesian
+      ~Cartesian2DCoordinateSystem.convert_to_cartesian
+      ~Cartesian2DCoordinateSystem.copy
+      ~Cartesian2DCoordinateSystem.default_parameters
+      ~Cartesian2DCoordinateSystem.from_dict
+      ~Cartesian2DCoordinateSystem.from_json_string
+      ~Cartesian2DCoordinateSystem.to_dict
+      ~Cartesian2DCoordinateSystem.to_json_string
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~Cartesian2DCoordinateSystem.axes
+      ~Cartesian2DCoordinateSystem.ndim
+      ~Cartesian2DCoordinateSystem.parameters
+   
+   

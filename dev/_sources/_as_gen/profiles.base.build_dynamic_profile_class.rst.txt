@@ -1,0 +1,6 @@
+profiles.base.build\_dynamic\_profile\_class
+============================================
+
+.. currentmodule:: profiles.base
+
+.. autofunction:: build_dynamic_profile_class

@@ -1,0 +1,6 @@
+profiles.temperature.BaseSphericalTemperatureProfile.list\_derived\_profiles
+============================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: BaseSphericalTemperatureProfile.list_derived_profiles

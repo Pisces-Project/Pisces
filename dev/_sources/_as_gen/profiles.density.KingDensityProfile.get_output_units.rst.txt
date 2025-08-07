@@ -1,0 +1,6 @@
+profiles.density.KingDensityProfile.get\_output\_units
+======================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: KingDensityProfile.get_output_units

@@ -1,0 +1,6 @@
+geometry.coordinates.utils.is\_coordinate\_system\_instance
+===========================================================
+
+.. currentmodule:: geometry.coordinates.utils
+
+.. autofunction:: is_coordinate_system_instance

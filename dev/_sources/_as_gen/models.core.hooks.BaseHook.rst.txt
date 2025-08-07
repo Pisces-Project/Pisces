@@ -1,0 +1,23 @@
+BaseHook
+==========================
+
+.. currentmodule:: models.core.hooks
+
+.. autoclass:: models.core.hooks.BaseHook
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~BaseHook.__init__
+   
+   
+
+   
+   
+   

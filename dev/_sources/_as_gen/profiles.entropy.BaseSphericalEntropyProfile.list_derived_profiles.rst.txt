@@ -1,0 +1,6 @@
+profiles.entropy.BaseSphericalEntropyProfile.list\_derived\_profiles
+====================================================================
+
+.. currentmodule:: profiles.entropy
+
+.. automethod:: BaseSphericalEntropyProfile.list_derived_profiles

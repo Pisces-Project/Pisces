@@ -1,0 +1,6 @@
+geometry.coordinates.coordinate\_systems.Cartesian1DCoordinateSystem.ndim
+=========================================================================
+
+.. currentmodule:: geometry.coordinates.coordinate_systems
+
+.. autoproperty:: Cartesian1DCoordinateSystem.ndim

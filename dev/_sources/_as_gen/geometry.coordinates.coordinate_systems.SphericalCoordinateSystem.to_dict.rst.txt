@@ -1,0 +1,6 @@
+geometry.coordinates.coordinate\_systems.SphericalCoordinateSystem.to\_dict
+===========================================================================
+
+.. currentmodule:: geometry.coordinates.coordinate_systems
+
+.. automethod:: SphericalCoordinateSystem.to_dict

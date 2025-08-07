@@ -1,0 +1,6 @@
+geometry.grids.base.Grid.ndim
+=============================
+
+.. currentmodule:: geometry.grids.base
+
+.. autoproperty:: Grid.ndim

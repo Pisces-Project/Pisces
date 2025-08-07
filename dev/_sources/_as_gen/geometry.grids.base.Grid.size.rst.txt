@@ -1,0 +1,6 @@
+geometry.grids.base.Grid.size
+=============================
+
+.. currentmodule:: geometry.grids.base
+
+.. autoproperty:: Grid.size

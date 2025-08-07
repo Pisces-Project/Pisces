@@ -1,0 +1,6 @@
+geometry.grids.core.GenericGrid.ndim
+====================================
+
+.. currentmodule:: geometry.grids.core
+
+.. autoproperty:: GenericGrid.ndim

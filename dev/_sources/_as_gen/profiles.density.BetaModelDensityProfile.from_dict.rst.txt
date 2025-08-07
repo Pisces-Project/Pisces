@@ -1,0 +1,6 @@
+profiles.density.BetaModelDensityProfile.from\_dict
+===================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BetaModelDensityProfile.from_dict

@@ -1,0 +1,6 @@
+models.stars.polytropes.PolytropicStarModel.profiles
+====================================================
+
+.. currentmodule:: models.stars.polytropes
+
+.. autoproperty:: PolytropicStarModel.profiles

@@ -1,0 +1,6 @@
+geometry.grids.base.Grid.get\_coordinates\_slice
+================================================
+
+.. currentmodule:: geometry.grids.base
+
+.. automethod:: Grid.get_coordinates_slice

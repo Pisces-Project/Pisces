@@ -1,0 +1,6 @@
+geometry.grids.core.GenericGrid.size
+====================================
+
+.. currentmodule:: geometry.grids.core
+
+.. autoproperty:: GenericGrid.size

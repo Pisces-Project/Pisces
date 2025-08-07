@@ -1,0 +1,6 @@
+profiles.density.SechSquaredDiskDensityProfile.get\_expression\_latex
+=====================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SechSquaredDiskDensityProfile.get_expression_latex

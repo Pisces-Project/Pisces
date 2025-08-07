@@ -1,0 +1,43 @@
+SphericalCoordinateSystem
+=================================================================
+
+.. currentmodule:: geometry.coordinates.coordinate_systems
+
+.. autoclass:: geometry.coordinates.coordinate_systems.SphericalCoordinateSystem
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~SphericalCoordinateSystem.__init__
+      ~SphericalCoordinateSystem.convert_coords_from
+      ~SphericalCoordinateSystem.convert_coords_to
+      ~SphericalCoordinateSystem.convert_from_cartesian
+      ~SphericalCoordinateSystem.convert_to_cartesian
+      ~SphericalCoordinateSystem.copy
+      ~SphericalCoordinateSystem.default_parameters
+      ~SphericalCoordinateSystem.from_dict
+      ~SphericalCoordinateSystem.from_json_string
+      ~SphericalCoordinateSystem.to_dict
+      ~SphericalCoordinateSystem.to_json_string
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~SphericalCoordinateSystem.axes
+      ~SphericalCoordinateSystem.ndim
+      ~SphericalCoordinateSystem.parameters
+   
+   

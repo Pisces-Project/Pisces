@@ -1,0 +1,59 @@
+Grid
+========================
+
+.. currentmodule:: geometry.grids.base
+
+.. autoclass:: geometry.grids.base.Grid
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~Grid.__init__
+      ~Grid.empty_like
+      ~Grid.from_hdf5
+      ~Grid.full_like
+      ~Grid.get_axis_array
+      ~Grid.get_axis_arrays
+      ~Grid.get_axis_coordinate_array
+      ~Grid.get_coordinate_dict
+      ~Grid.get_coordinates_slice
+      ~Grid.get_flat_coordinates
+      ~Grid.get_index_arrays
+      ~Grid.get_index_meshgrid
+      ~Grid.get_meshgrid
+      ~Grid.get_meshgrid_slice
+      ~Grid.ones_like
+      ~Grid.to_hdf5
+      ~Grid.zeros_like
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~Grid.active_axes
+      ~Grid.active_axes_mask
+      ~Grid.bounding_box
+      ~Grid.coordinate_system
+      ~Grid.dimensions
+      ~Grid.fill_values
+      ~Grid.inactive_axes_mask
+      ~Grid.ndim
+      ~Grid.ndim_active
+      ~Grid.ndim_inactive
+      ~Grid.shape
+      ~Grid.size
+      ~Grid.units
+   
+   

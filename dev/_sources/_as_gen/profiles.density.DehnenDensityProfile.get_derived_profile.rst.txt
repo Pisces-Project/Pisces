@@ -1,0 +1,6 @@
+profiles.density.DehnenDensityProfile.get\_derived\_profile
+===========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DehnenDensityProfile.get_derived_profile

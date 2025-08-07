@@ -1,0 +1,6 @@
+geometry.coordinates.coordinate\_systems.Cartesian1DCoordinateSystem.default\_parameters
+========================================================================================
+
+.. currentmodule:: geometry.coordinates.coordinate_systems
+
+.. automethod:: Cartesian1DCoordinateSystem.default_parameters

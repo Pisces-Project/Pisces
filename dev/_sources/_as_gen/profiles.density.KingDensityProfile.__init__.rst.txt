@@ -1,0 +1,6 @@
+profiles.density.KingDensityProfile.\_\_init\_\_
+================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: KingDensityProfile.__init__

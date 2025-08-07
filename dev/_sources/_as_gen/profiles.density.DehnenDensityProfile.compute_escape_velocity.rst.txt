@@ -1,0 +1,6 @@
+profiles.density.DehnenDensityProfile.compute\_escape\_velocity
+===============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DehnenDensityProfile.compute_escape_velocity

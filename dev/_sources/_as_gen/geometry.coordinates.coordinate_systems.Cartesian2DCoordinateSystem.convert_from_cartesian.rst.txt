@@ -1,0 +1,6 @@
+geometry.coordinates.coordinate\_systems.Cartesian2DCoordinateSystem.convert\_from\_cartesian
+=============================================================================================
+
+.. currentmodule:: geometry.coordinates.coordinate_systems
+
+.. automethod:: Cartesian2DCoordinateSystem.convert_from_cartesian

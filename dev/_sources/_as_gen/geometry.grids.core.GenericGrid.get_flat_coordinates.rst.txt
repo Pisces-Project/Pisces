@@ -1,0 +1,6 @@
+geometry.grids.core.GenericGrid.get\_flat\_coordinates
+======================================================
+
+.. currentmodule:: geometry.grids.core
+
+.. automethod:: GenericGrid.get_flat_coordinates

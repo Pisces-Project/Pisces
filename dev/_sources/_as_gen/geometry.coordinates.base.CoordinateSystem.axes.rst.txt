@@ -1,0 +1,6 @@
+geometry.coordinates.base.CoordinateSystem.axes
+===============================================
+
+.. currentmodule:: geometry.coordinates.base
+
+.. autoproperty:: CoordinateSystem.axes

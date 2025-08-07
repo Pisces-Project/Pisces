@@ -1,0 +1,6 @@
+geometry.coordinates.utils.write\_coordinate\_system\_to\_dict
+==============================================================
+
+.. currentmodule:: geometry.coordinates.utils
+
+.. autofunction:: write_coordinate_system_to_dict

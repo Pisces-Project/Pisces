@@ -1,0 +1,6 @@
+geometry.grids.base.Grid.zeros\_like
+====================================
+
+.. currentmodule:: geometry.grids.base
+
+.. automethod:: Grid.zeros_like

@@ -1,0 +1,6 @@
+profiles.density.BurkertDensityProfile.from\_json
+=================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BurkertDensityProfile.from_json

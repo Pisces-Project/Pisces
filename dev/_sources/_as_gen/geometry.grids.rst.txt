@@ -1,0 +1,36 @@
+﻿geometry.grids
+==============
+
+.. automodule:: geometry.grids
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Modules
+
+   .. autosummary::
+      :toctree:
+      :template: module.rst
+      :recursive:
+
+   
+      base
+      core
+      utils
+   
+   
+
+   
+   
+   
+
+   
+   
+   

@@ -1,0 +1,6 @@
+profiles.temperature.VikhlininTemperatureProfile.substitute\_expression
+=======================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: VikhlininTemperatureProfile.substitute_expression

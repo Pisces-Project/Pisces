@@ -1,0 +1,6 @@
+geometry.grids.base.Grid.shape
+==============================
+
+.. currentmodule:: geometry.grids.base
+
+.. autoproperty:: Grid.shape

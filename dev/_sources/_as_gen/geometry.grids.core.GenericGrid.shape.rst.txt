@@ -1,0 +1,6 @@
+geometry.grids.core.GenericGrid.shape
+=====================================
+
+.. currentmodule:: geometry.grids.core
+
+.. autoproperty:: GenericGrid.shape

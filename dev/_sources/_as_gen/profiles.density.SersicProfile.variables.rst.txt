@@ -1,0 +1,6 @@
+profiles.density.SersicProfile.variables
+========================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: SersicProfile.variables

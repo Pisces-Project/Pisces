@@ -1,0 +1,6 @@
+geometry.coordinates.coordinate\_systems.CylindricalCoordinateSystem.to\_json\_string
+=====================================================================================
+
+.. currentmodule:: geometry.coordinates.coordinate_systems
+
+.. automethod:: CylindricalCoordinateSystem.to_json_string

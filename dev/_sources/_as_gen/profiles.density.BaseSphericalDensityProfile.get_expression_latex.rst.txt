@@ -1,0 +1,6 @@
+profiles.density.BaseSphericalDensityProfile.get\_expression\_latex
+===================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseSphericalDensityProfile.get_expression_latex

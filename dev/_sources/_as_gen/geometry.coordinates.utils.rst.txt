@@ -1,0 +1,40 @@
+geometry.coordinates.utils
+==========================
+
+.. automodule:: geometry.coordinates.utils
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+
+   
+      convert_coords_between_systems
+      get_coordinate_system_class
+      is_coordinate_system_instance
+      list_registered_coordinate_systems
+      load_coordinate_dict
+      load_coordinate_string
+      write_coordinate_system_to_dict
+      write_coordinate_system_to_json
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   

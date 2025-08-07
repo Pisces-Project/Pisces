@@ -1,0 +1,6 @@
+geometry.grids.core.GenericGrid.get\_axis\_coordinate\_array
+============================================================
+
+.. currentmodule:: geometry.grids.core
+
+.. automethod:: GenericGrid.get_axis_coordinate_array

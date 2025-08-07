@@ -1,0 +1,6 @@
+geometry.grids.base.Grid.full\_like
+===================================
+
+.. currentmodule:: geometry.grids.base
+
+.. automethod:: Grid.full_like

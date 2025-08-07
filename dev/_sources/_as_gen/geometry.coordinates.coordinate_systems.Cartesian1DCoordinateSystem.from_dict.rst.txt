@@ -1,0 +1,6 @@
+geometry.coordinates.coordinate\_systems.Cartesian1DCoordinateSystem.from\_dict
+===============================================================================
+
+.. currentmodule:: geometry.coordinates.coordinate_systems
+
+.. automethod:: Cartesian1DCoordinateSystem.from_dict

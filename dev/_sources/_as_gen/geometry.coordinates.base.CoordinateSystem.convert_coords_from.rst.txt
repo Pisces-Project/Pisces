@@ -1,0 +1,6 @@
+geometry.coordinates.base.CoordinateSystem.convert\_coords\_from
+================================================================
+
+.. currentmodule:: geometry.coordinates.base
+
+.. automethod:: CoordinateSystem.convert_coords_from

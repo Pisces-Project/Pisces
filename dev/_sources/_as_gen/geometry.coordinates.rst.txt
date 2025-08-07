@@ -1,0 +1,36 @@
+﻿geometry.coordinates
+====================
+
+.. automodule:: geometry.coordinates
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Modules
+
+   .. autosummary::
+      :toctree:
+      :template: module.rst
+      :recursive:
+
+   
+      base
+      coordinate_systems
+      utils
+   
+   
+
+   
+   
+   
+
+   
+   
+   

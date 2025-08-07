@@ -1,0 +1,6 @@
+models.stars.polytropes.PolytropicStarModel.logger
+==================================================
+
+.. currentmodule:: models.stars.polytropes
+
+.. autoattribute:: PolytropicStarModel.logger

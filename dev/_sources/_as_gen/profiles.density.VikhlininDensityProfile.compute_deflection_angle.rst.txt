@@ -1,0 +1,6 @@
+profiles.density.VikhlininDensityProfile.compute\_deflection\_angle
+===================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: VikhlininDensityProfile.compute_deflection_angle

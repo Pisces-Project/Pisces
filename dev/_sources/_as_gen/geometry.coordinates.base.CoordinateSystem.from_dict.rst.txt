@@ -1,0 +1,6 @@
+geometry.coordinates.base.CoordinateSystem.from\_dict
+=====================================================
+
+.. currentmodule:: geometry.coordinates.base
+
+.. automethod:: CoordinateSystem.from_dict

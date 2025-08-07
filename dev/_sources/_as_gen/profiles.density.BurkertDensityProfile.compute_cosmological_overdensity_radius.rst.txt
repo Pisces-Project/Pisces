@@ -1,0 +1,6 @@
+profiles.density.BurkertDensityProfile.compute\_cosmological\_overdensity\_radius
+=================================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BurkertDensityProfile.compute_cosmological_overdensity_radius

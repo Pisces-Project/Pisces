@@ -1,0 +1,6 @@
+models.core.base.BaseModel.profiles
+===================================
+
+.. currentmodule:: models.core.base
+
+.. autoproperty:: BaseModel.profiles

@@ -1,0 +1,6 @@
+geometry.coordinates.coordinate\_systems.Cartesian3DCoordinateSystem.copy
+=========================================================================
+
+.. currentmodule:: geometry.coordinates.coordinate_systems
+
+.. automethod:: Cartesian3DCoordinateSystem.copy

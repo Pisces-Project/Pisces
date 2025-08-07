@@ -1,0 +1,6 @@
+geometry.coordinates.utils.load\_coordinate\_dict
+=================================================
+
+.. currentmodule:: geometry.coordinates.utils
+
+.. autofunction:: load_coordinate_dict

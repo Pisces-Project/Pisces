@@ -1,0 +1,6 @@
+profiles.density.BaseDiskDensityProfile.substitute\_expression
+==============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseDiskDensityProfile.substitute_expression

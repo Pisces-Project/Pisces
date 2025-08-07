@@ -1,0 +1,6 @@
+profiles.base.BaseProfile.parameters
+====================================
+
+.. currentmodule:: profiles.base
+
+.. autoproperty:: BaseProfile.parameters

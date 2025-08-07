@@ -1,0 +1,6 @@
+geometry.coordinates.coordinate\_systems.PolarCoordinatesSystem.default\_parameters
+===================================================================================
+
+.. currentmodule:: geometry.coordinates.coordinate_systems
+
+.. automethod:: PolarCoordinatesSystem.default_parameters

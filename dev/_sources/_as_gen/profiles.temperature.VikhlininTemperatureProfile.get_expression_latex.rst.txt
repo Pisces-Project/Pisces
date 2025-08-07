@@ -1,0 +1,6 @@
+profiles.temperature.VikhlininTemperatureProfile.get\_expression\_latex
+=======================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: VikhlininTemperatureProfile.get_expression_latex

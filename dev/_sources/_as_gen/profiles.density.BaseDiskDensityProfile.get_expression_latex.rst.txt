@@ -1,0 +1,6 @@
+profiles.density.BaseDiskDensityProfile.get\_expression\_latex
+==============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseDiskDensityProfile.get_expression_latex

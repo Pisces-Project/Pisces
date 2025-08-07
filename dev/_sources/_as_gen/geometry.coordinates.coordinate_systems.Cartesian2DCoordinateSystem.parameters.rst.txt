@@ -1,0 +1,6 @@
+geometry.coordinates.coordinate\_systems.Cartesian2DCoordinateSystem.parameters
+===============================================================================
+
+.. currentmodule:: geometry.coordinates.coordinate_systems
+
+.. autoproperty:: Cartesian2DCoordinateSystem.parameters

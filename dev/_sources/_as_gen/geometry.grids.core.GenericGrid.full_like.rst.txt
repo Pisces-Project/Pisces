@@ -1,0 +1,6 @@
+geometry.grids.core.GenericGrid.full\_like
+==========================================
+
+.. currentmodule:: geometry.grids.core
+
+.. automethod:: GenericGrid.full_like

@@ -1,0 +1,6 @@
+geometry.grids.base.Grid.get\_index\_meshgrid
+=============================================
+
+.. currentmodule:: geometry.grids.base
+
+.. automethod:: Grid.get_index_meshgrid

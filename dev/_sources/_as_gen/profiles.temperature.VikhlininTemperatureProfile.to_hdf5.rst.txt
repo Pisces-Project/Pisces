@@ -1,0 +1,6 @@
+profiles.temperature.VikhlininTemperatureProfile.to\_hdf5
+=========================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: VikhlininTemperatureProfile.to_hdf5

@@ -1,0 +1,6 @@
+profiles.temperature.DoubleBetaTemperatureProfile.parameter\_symbols
+====================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoproperty:: DoubleBetaTemperatureProfile.parameter_symbols

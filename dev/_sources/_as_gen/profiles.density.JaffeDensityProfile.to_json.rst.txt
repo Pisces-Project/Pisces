@@ -1,0 +1,6 @@
+profiles.density.JaffeDensityProfile.to\_json
+=============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: JaffeDensityProfile.to_json

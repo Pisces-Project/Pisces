@@ -1,0 +1,6 @@
+geometry.grids.base.Grid.ones\_like
+===================================
+
+.. currentmodule:: geometry.grids.base
+
+.. automethod:: Grid.ones_like

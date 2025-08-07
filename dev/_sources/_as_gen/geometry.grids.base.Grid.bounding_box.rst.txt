@@ -1,0 +1,6 @@
+geometry.grids.base.Grid.bounding\_box
+======================================
+
+.. currentmodule:: geometry.grids.base
+
+.. autoproperty:: Grid.bounding_box

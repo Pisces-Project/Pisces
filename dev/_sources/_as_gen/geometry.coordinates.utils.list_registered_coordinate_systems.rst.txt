@@ -1,0 +1,6 @@
+geometry.coordinates.utils.list\_registered\_coordinate\_systems
+================================================================
+
+.. currentmodule:: geometry.coordinates.utils
+
+.. autofunction:: list_registered_coordinate_systems

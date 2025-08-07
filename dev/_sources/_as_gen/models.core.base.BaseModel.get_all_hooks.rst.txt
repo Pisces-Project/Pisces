@@ -1,0 +1,6 @@
+models.core.base.BaseModel.get\_all\_hooks
+==========================================
+
+.. currentmodule:: models.core.base
+
+.. automethod:: BaseModel.get_all_hooks

@@ -1,0 +1,711 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Particle Datasets: Galaxy Clusters &#8212; Pisces  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/d_particles/plot_galaxy_cluster_particles';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Extensions and Experimental Features" href="../z_extensions/index.html" />
+    <link rel="prev" title="Particle Generation and Sampling" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Pisces  documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../reference/user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../reference/user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../a_models/index.html">Astrophysical Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../a_models/plot_build_gcluster.html">Basic Spherical Galaxy Cluster Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../a_models/plot_build_gcluster_temp_dens.html">Galaxy Cluster Model from Temperature and Gas Density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../a_models/plot_polytropic_star.html">Polytropic Stellar Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../a_models/plot_magnetized_galaxy_clusters.html">Comparing Magnetized Galaxy Clusters</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../b_profiles/index.html">Profiles</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Particle Generation and Sampling</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Particle Datasets: Galaxy Clusters</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../z_extensions/index.html">Extensions and Experimental Features</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Pisces Example Gallery</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Particle Generation and Sampling</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Particle Datasets: Galaxy Clusters</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-d-particles-plot-galaxy-cluster-particles-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="particle-datasets-galaxy-clusters">
+<span id="sphx-glr-auto-examples-d-particles-plot-galaxy-cluster-particles-py"></span><h1>Particle Datasets: Galaxy Clusters<a class="headerlink" href="#particle-datasets-galaxy-clusters" title="Link to this heading">#</a></h1>
+<p>This example demonstrates how to generate particle datasets for a
+galaxy cluster model using Pisces. To do so, we’ll use the built-in
+hook for generating particles, which gives us access to the
+<a class="reference internal" href="../../_as_gen/models.galaxy_clusters.spherical.SphericalGalaxyClusterModel.generate_particles.html#models.galaxy_clusters.spherical.SphericalGalaxyClusterModel.generate_particles" title="models.galaxy_clusters.spherical.SphericalGalaxyClusterModel.generate_particles"><code class="xref py py-meth docutils literal notranslate"><span class="pre">generate_particles()</span></code></a>
+method.</p>
+<section id="setup-imports">
+<h2>Setup &amp; Imports<a class="headerlink" href="#setup-imports" title="Link to this heading">#</a></h2>
+<p>The first thing that needs to happen is importing the
+relevant building blocks. For this, we’ll need the
+<a class="reference internal" href="../../_as_gen/models.galaxy_clusters.spherical.SphericalGalaxyClusterModel.html#models.galaxy_clusters.spherical.SphericalGalaxyClusterModel" title="models.galaxy_clusters.spherical.SphericalGalaxyClusterModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">SphericalGalaxyClusterModel</span></code></a> class
+which will be our model and the <a class="reference internal" href="../../_as_gen/profiles.density.HernquistDensityProfile.html#profiles.density.HernquistDensityProfile" title="profiles.density.HernquistDensityProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">HernquistDensityProfile</span></code></a>, which
+we’ll use to represent the total and gas density profiles of the cluster.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">unyt</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pisces.models.galaxy_clusters</span><span class="w"> </span><span class="kn">import</span> <span class="n">SphericalGalaxyClusterModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pisces.profiles.density</span><span class="w"> </span><span class="kn">import</span> <a href="https://docs.python.org/3/library/abc.html#abc.ABC" title="abc.ABC" class="sphx-glr-backref-module-abc sphx-glr-backref-type-py-class"><span class="n">HernquistDensityProfile</span></a>
+</pre></div>
+</div>
+</section>
+<section id="building-the-model">
+<h2>Building the Model<a class="headerlink" href="#building-the-model" title="Link to this heading">#</a></h2>
+<p>First things first, we need to build the model. In this case, we’ll be using
+basic Hernquist profiles <a class="footnote-reference brackets" href="#footcite-hernquistprofile" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> for both the gas and total density.
+This is nice for simple models because we can fix the total mass easily. We’ll
+create a galaxy cluster with 85% of the total mass in dark matter and 15% in gas.
+The total mass of the cluster will be <span class="math notranslate nohighlight">\(10^{15} \;{\rm M_\odot}\)</span>.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define some parameters for the total density profile.</span>
+<a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">total_mass</span></a> <span class="o">=</span> <a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class"><span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span></a><span class="p">(</span><span class="mf">1e15</span><span class="p">,</span> <span class="s2">&quot;Msun&quot;</span><span class="p">)</span>
+<a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gas_mass</span></a><span class="p">,</span> <a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dm_mass</span></a> <span class="o">=</span> <a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">total_mass</span></a> <span class="o">*</span> <span class="mf">0.15</span><span class="p">,</span> <a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">total_mass</span></a> <span class="o">*</span> <span class="mf">0.85</span>
+
+<a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gas_scale_radius</span></a> <span class="o">=</span> <a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class"><span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span></a><span class="p">(</span><span class="mi">220</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
+<a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dm_scale_radius</span></a> <span class="o">=</span> <a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class"><span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span></a><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
+
+<a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gas_rho_0</span></a> <span class="o">=</span> <a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gas_mass</span></a> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">np</span><span class="o">.</span><span class="n">pi</span></a> <span class="o">*</span> <a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gas_scale_radius</span></a><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+<a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dm_rho_0</span></a> <span class="o">=</span> <a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dm_mass</span></a> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">np</span><span class="o">.</span><span class="n">pi</span></a> <span class="o">*</span> <a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dm_scale_radius</span></a><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Create the density profiles.</span>
+<span class="n">gas_density_profile</span> <span class="o">=</span> <a href="https://docs.python.org/3/library/abc.html#abc.ABC" title="abc.ABC" class="sphx-glr-backref-module-abc sphx-glr-backref-type-py-class"><span class="n">HernquistDensityProfile</span></a><span class="p">(</span>
+    <span class="n">rho_0</span><span class="o">=</span><a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gas_rho_0</span></a><span class="p">,</span>
+    <span class="n">r_s</span><span class="o">=</span><a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gas_scale_radius</span></a><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">total_density_profile</span> <span class="o">=</span> <a href="https://docs.python.org/3/library/abc.html#abc.ABC" title="abc.ABC" class="sphx-glr-backref-module-abc sphx-glr-backref-type-py-class"><span class="n">HernquistDensityProfile</span></a><span class="p">(</span>
+    <span class="n">rho_0</span><span class="o">=</span><a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dm_rho_0</span></a><span class="p">,</span>
+    <span class="n">r_s</span><span class="o">=</span><a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dm_scale_radius</span></a><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Radial range and resolution</span>
+<a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">rmin</span></a> <span class="o">=</span> <a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class"><span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span></a><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
+<a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">rmax</span></a> <span class="o">=</span> <a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class"><span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span></a><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="s2">&quot;Mpc&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create a temporary directory to store the model file and</span>
+<span class="c1"># give the model a filename.</span>
+<a href="https://docs.python.org/3/library/tempfile.html#tempfile.TemporaryDirectory" title="tempfile.TemporaryDirectory" class="sphx-glr-backref-module-tempfile sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tmpdir</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/tempfile.html#tempfile.TemporaryDirectory" title="tempfile.TemporaryDirectory" class="sphx-glr-backref-module-tempfile sphx-glr-backref-type-py-class"><span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span></a><span class="p">()</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">filename</span></a> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tmpdir</span><span class="o">.</span><span class="n">name</span></a><span class="si">}</span><span class="s2">/cluster_temp_dens_model.h5&quot;</span>
+
+<span class="c1"># Now we can move forward with making the model!</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">SphericalGalaxyClusterModel</span><span class="o">.</span><span class="n">from_density_and_total_density</span><span class="p">(</span>
+    <span class="n">gas_density_profile</span><span class="p">,</span>
+    <span class="n">total_density_profile</span><span class="p">,</span>
+    <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">filename</span></a><span class="p">,</span>
+    <span class="n">min_radius</span><span class="o">=</span><a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">rmin</span></a><span class="p">,</span>
+    <span class="n">max_radius</span><span class="o">=</span><a href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_quantity" title="unyt.array.unyt_quantity" class="sphx-glr-backref-module-unyt-array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">rmax</span></a><span class="p">,</span>
+    <span class="n">num_points</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Preparing metadata...:   0%|          | 0/7 [00:00&lt;?, ?it/s]
+Generating grid...:  14%|█▍        | 1/7 [00:00&lt;00:00, 113359.57it/s]
+Building density...:  29%|██▊       | 2/7 [00:00&lt;00:00, 4185.93it/s]
+Computing masses...:  43%|████▎     | 3/7 [00:00&lt;00:00, 3109.19it/s]
+Calculating potential...:  57%|█████▋    | 4/7 [00:00&lt;00:00, 113.64it/s]
+Calculating potential...:  71%|███████▏  | 5/7 [00:00&lt;00:00,  7.75it/s]
+Calculating temperature...:  71%|███████▏  | 5/7 [00:00&lt;00:00,  7.75it/s]
+Calculating temperature...:  86%|████████▌ | 6/7 [00:17&lt;00:03,  3.94s/it]
+Performing additional computations...:  86%|████████▌ | 6/7 [00:17&lt;00:03,  3.94s/it]
+COMPLETE:  86%|████████▌ | 6/7 [00:17&lt;00:03,  3.94s/it]
+</pre></div>
+</div>
+</section>
+<section id="generating-particles">
+<h2>Generating Particles<a class="headerlink" href="#generating-particles" title="Link to this heading">#</a></h2>
+<p>With the model built, we can now generate the particles for the cluster. To
+do this we’ll use the <a class="reference internal" href="../../_as_gen/models.galaxy_clusters.spherical.SphericalGalaxyClusterModel.generate_particles.html#models.galaxy_clusters.spherical.SphericalGalaxyClusterModel.generate_particles" title="models.galaxy_clusters.spherical.SphericalGalaxyClusterModel.generate_particles"><code class="xref py py-meth docutils literal notranslate"><span class="pre">generate_particles()</span></code></a>
+method, which allows us to specify the number of particles for each component.</p>
+<p>Internally, this will serve to sample the particles from our density profiles,
+position them in 3D space, interpolate fields onto them, and then write them to
+the output file. For this example, we’ll generate <span class="math notranslate nohighlight">\(10^5\)</span> particles for the gas component
+and <span class="math notranslate nohighlight">\(10^5\)</span> particles for the dark matter component.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">particles</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate_particles</span><span class="p">(</span>
+    <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">filename</span></a><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tmpdir</span><span class="o">.</span><span class="n">name</span></a><span class="si">}</span><span class="s2">/cluster_particles.h5&quot;</span><span class="p">,</span>
+    <span class="n">num_particles</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;gas&quot;</span><span class="p">:</span> <span class="mi">100_000</span><span class="p">,</span> <span class="s2">&quot;dark_matter&quot;</span><span class="p">:</span> <span class="mi">100_000</span><span class="p">},</span>
+    <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Generating particles:   0%|          | 0/2 [00:00&lt;?, ?species/s]
+
+Generating 100000 gas particles...
+
+Generating particles:   0%|          | 0/2 [00:00&lt;?, ?species/s]
+
+Interpolating gas fields:   0%|          | 0/7 [00:00&lt;?, ?fields/s]
+
+
+Generating particles:  50%|█████     | 1/2 [00:00&lt;00:00,  9.94species/s]
+
+Generating 100000 dark_matter particles...
+
+Generating particles:  50%|█████     | 1/2 [00:00&lt;00:00,  9.94species/s]
+
+Interpolating dark_matter fields:   0%|          | 0/3 [00:00&lt;?, ?fields/s]
+
+
+
+DF for &#39;dark_matter&#39; not found, attempting to compute it...
+
+Generating particles:  50%|█████     | 1/2 [00:00&lt;00:00,  9.94species/s]
+
+Generating particle velocities...:   0%|          | 0/100000 [00:00&lt;?, ?it/s]
+
+Generating particle velocities...:   5%|▌         | 5357/100000 [00:00&lt;00:01, 53568.77it/s]
+
+Generating particle velocities...:  11%|█         | 10714/100000 [00:00&lt;00:01, 53276.11it/s]
+
+Generating particle velocities...:  16%|█▌        | 16156/100000 [00:00&lt;00:01, 53796.02it/s]
+
+Generating particle velocities...:  22%|██▏       | 21598/100000 [00:00&lt;00:01, 54038.18it/s]
+
+Generating particle velocities...:  27%|██▋       | 27002/100000 [00:00&lt;00:01, 53909.97it/s]
+
+Generating particle velocities...:  32%|███▏      | 32431/100000 [00:00&lt;00:01, 54035.92it/s]
+
+Generating particle velocities...:  38%|███▊      | 37857/100000 [00:00&lt;00:01, 54108.32it/s]
+
+Generating particle velocities...:  43%|████▎     | 43281/100000 [00:00&lt;00:01, 54149.18it/s]
+
+Generating particle velocities...:  49%|████▊     | 48696/100000 [00:00&lt;00:00, 54144.57it/s]
+
+Generating particle velocities...:  54%|█████▍    | 54111/100000 [00:01&lt;00:00, 54122.54it/s]
+
+Generating particle velocities...:  60%|█████▉    | 59524/100000 [00:01&lt;00:00, 54113.59it/s]
+
+Generating particle velocities...:  65%|██████▍   | 64949/100000 [00:01&lt;00:00, 54152.88it/s]
+
+Generating particle velocities...:  70%|███████   | 70365/100000 [00:01&lt;00:00, 54121.21it/s]
+
+Generating particle velocities...:  76%|███████▌  | 75778/100000 [00:01&lt;00:00, 53940.21it/s]
+
+Generating particle velocities...:  81%|████████  | 81173/100000 [00:01&lt;00:00, 53750.82it/s]
+
+Generating particle velocities...:  87%|████████▋ | 86549/100000 [00:01&lt;00:00, 53656.18it/s]
+
+Generating particle velocities...:  92%|█████████▏| 91915/100000 [00:01&lt;00:00, 53551.12it/s]
+
+Generating particle velocities...:  97%|█████████▋| 97271/100000 [00:01&lt;00:00, 53475.04it/s]
+
+
+Generating particles: 100%|██████████| 2/2 [00:02&lt;00:00,  1.52s/species]
+Generating particles: 100%|██████████| 2/2 [00:02&lt;00:00,  1.31s/species]
+</pre></div>
+</div>
+<p>Depending on your machine, this may take a few seconds to run as the velocity sampling
+is a somewhat expensive operation. Once the particles are generated, we can do any number
+of things with them, such as visualizing the density field, plotting the temperature profile,
+or even running a simulation with them.</p>
+<p>For this example, we’ll simply visualize the density-weighted gas temperature profile,
+which is similar to what one might see in an X-ray observation of a galaxy cluster. To do this,
+we’ll need to extract the gas temperatures, particle positions, and weights from the dataset. We
+can then use histograms to visualize the temperature distribution.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract the gas temperature, positions, and weights.</span>
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">temperature</span></a> <span class="o">=</span> <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas.kT&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;keV&quot;</span><span class="p">)</span>
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">positions</span></a> <span class="o">=</span> <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas.particle_position&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">density</span></a> <span class="o">=</span> <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas.density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create the bins.</span>
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bins</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.linspace.html#numpy.linspace" title="numpy.linspace" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">601</span><span class="p">)</span>
+
+<span class="c1"># Create the histogram weighted by density * temperature.</span>
+<span class="c1"># Then create the density only histogram. We can then divide</span>
+<span class="c1"># these to get the mass-weighted temperature.</span>
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">hist_temp_dens</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">_</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">_</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.histogram2d.html#numpy.histogram2d" title="numpy.histogram2d" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">histogram2d</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">positions</span></a><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">positions</span></a><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bins</span></a><span class="o">=</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bins</span></a><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">temperature</span></a> <span class="o">*</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">density</span></a><span class="p">)</span>
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">hist_dens</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">_</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">_</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.histogram2d.html#numpy.histogram2d" title="numpy.histogram2d" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">histogram2d</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">positions</span></a><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">positions</span></a><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bins</span></a><span class="o">=</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bins</span></a><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">density</span></a><span class="p">)</span>
+
+<span class="c1"># Calculate the mass-weighted temperature.</span>
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mass_weighted_temp</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.zeros_like.html#numpy.zeros_like" title="numpy.zeros_like" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">hist_temp_dens</span></a><span class="p">)</span>
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mass_weighted_temp</span></a><span class="p">[</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">hist_dens</span></a> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">hist_temp_dens</span></a><span class="p">[</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">hist_dens</span></a> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">hist_dens</span></a><span class="p">[</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">hist_dens</span></a> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Create the plot.</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<a href="https://matplotlib.org/stable/api/collections_api.html#matplotlib.collections.QuadMesh" title="matplotlib.collections.QuadMesh" class="sphx-glr-backref-module-matplotlib-collections sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">c</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.pcolormesh.html#matplotlib.axes.Axes.pcolormesh" title="matplotlib.axes.Axes.pcolormesh" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bins</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bins</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mass_weighted_temp</span><span class="o">.</span><span class="n">T</span></a><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;inferno&quot;</span><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_xlabel.html#matplotlib.axes.Axes.set_xlabel" title="matplotlib.axes.Axes.set_xlabel" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span></a><span class="p">(</span><span class="s2">&quot;X Position (kpc)&quot;</span><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_ylabel.html#matplotlib.axes.Axes.set_ylabel" title="matplotlib.axes.Axes.set_ylabel" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span></a><span class="p">(</span><span class="s2">&quot;Y Position (kpc)&quot;</span><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_title.html#matplotlib.axes.Axes.set_title" title="matplotlib.axes.Axes.set_title" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span></a><span class="p">(</span><span class="s2">&quot;Mass-Weighted Gas Temperature Distribution&quot;</span><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.colorbar.html#matplotlib.figure.Figure.colorbar" title="matplotlib.figure.Figure.colorbar" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-method"><span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span></a><span class="p">(</span><a href="https://matplotlib.org/stable/api/collections_api.html#matplotlib.collections.QuadMesh" title="matplotlib.collections.QuadMesh" class="sphx-glr-backref-module-matplotlib-collections sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">c</span></a><span class="p">,</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a><span class="o">=</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Temperature (keV)&quot;</span><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.tight_layout.html#matplotlib.pyplot.tight_layout" title="matplotlib.pyplot.tight_layout" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span></a><span class="p">()</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_plot_galaxy_cluster_particles_001.png" srcset="../../_images/sphx_glr_plot_galaxy_cluster_particles_001.png" alt="Mass-Weighted Gas Temperature Distribution" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 21.003 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-d-particles-plot-galaxy-cluster-particles-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/6a6db40f567b1b4beadb0f59730e0d61/plot_galaxy_cluster_particles.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_galaxy_cluster_particles.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/e8b91b1be618ff34939a431f6ff85dd1/plot_galaxy_cluster_particles.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_galaxy_cluster_particles.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/814cc0ce5815e177da0677812074f054/plot_galaxy_cluster_particles.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">plot_galaxy_cluster_particles.zip</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Particle Generation and Sampling</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../z_extensions/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Extensions and Experimental Features</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-imports">Setup &amp; Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-model">Building the Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-particles">Generating Particles</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/auto_examples/d_particles/plot_galaxy_cluster_particles.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Eliza Diggins.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+geometry.coordinates.base.CoordinateSystem.to\_json\_string
+===========================================================
+
+.. currentmodule:: geometry.coordinates.base
+
+.. automethod:: CoordinateSystem.to_json_string
