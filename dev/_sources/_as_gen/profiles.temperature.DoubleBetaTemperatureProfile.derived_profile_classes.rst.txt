@@ -1,6 +1,0 @@
-profiles.temperature.DoubleBetaTemperatureProfile.derived\_profile\_classes
-===========================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. autoproperty:: DoubleBetaTemperatureProfile.derived_profile_classes

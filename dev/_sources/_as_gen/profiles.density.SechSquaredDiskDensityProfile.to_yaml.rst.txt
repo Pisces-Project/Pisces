@@ -1,6 +1,0 @@
-profiles.density.SechSquaredDiskDensityProfile.to\_yaml
-=======================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: SechSquaredDiskDensityProfile.to_yaml

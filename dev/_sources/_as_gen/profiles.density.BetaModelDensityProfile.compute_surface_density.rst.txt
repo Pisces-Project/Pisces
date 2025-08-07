@@ -1,6 +1,0 @@
-profiles.density.BetaModelDensityProfile.compute\_surface\_density
-==================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BetaModelDensityProfile.compute_surface_density

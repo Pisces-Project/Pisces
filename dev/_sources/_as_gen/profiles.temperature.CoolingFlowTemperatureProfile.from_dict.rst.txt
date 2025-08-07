@@ -1,6 +1,0 @@
-profiles.temperature.CoolingFlowTemperatureProfile.from\_dict
-=============================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: CoolingFlowTemperatureProfile.from_dict

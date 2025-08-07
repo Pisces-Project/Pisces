@@ -1,6 +1,0 @@
-profiles.density.DoublePowerLawDensityProfile.compute\_escape\_velocity
-=======================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: DoublePowerLawDensityProfile.compute_escape_velocity

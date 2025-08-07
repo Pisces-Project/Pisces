@@ -1,6 +1,0 @@
-profiles.density.HernquistDensityProfile.\_\_init\_\_
-=====================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: HernquistDensityProfile.__init__

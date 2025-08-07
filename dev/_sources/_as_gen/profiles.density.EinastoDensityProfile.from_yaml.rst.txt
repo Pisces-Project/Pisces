@@ -1,6 +1,0 @@
-profiles.density.EinastoDensityProfile.from\_yaml
-=================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: EinastoDensityProfile.from_yaml

@@ -1,6 +1,0 @@
-profiles.density.EinastoDensityProfile.compute\_total\_mass
-===========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: EinastoDensityProfile.compute_total_mass

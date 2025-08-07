@@ -1,6 +1,0 @@
-profiles.density.BaseDiskDensityProfile.to\_hdf5
-================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BaseDiskDensityProfile.to_hdf5

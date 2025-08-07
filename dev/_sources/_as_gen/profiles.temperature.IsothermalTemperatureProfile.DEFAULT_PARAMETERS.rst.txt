@@ -1,6 +1,0 @@
-profiles.temperature.IsothermalTemperatureProfile.DEFAULT\_PARAMETERS
-=====================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. autoattribute:: IsothermalTemperatureProfile.DEFAULT_PARAMETERS

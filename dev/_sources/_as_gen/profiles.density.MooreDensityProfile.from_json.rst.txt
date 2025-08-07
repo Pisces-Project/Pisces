@@ -1,6 +1,0 @@
-profiles.density.MooreDensityProfile.from\_json
-===============================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: MooreDensityProfile.from_json

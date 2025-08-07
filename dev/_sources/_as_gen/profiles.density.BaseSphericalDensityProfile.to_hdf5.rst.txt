@@ -1,6 +1,0 @@
-profiles.density.BaseSphericalDensityProfile.to\_hdf5
-=====================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BaseSphericalDensityProfile.to_hdf5

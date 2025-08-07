@@ -1,6 +1,0 @@
-pisces.utilities.log.LogDescriptor.\_\_init\_\_
-===============================================
-
-.. currentmodule:: pisces.utilities.log
-
-.. automethod:: LogDescriptor.__init__

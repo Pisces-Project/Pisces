@@ -1,6 +1,0 @@
-profiles.density.CoredIsothermalDensityProfile.from\_json
-=========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredIsothermalDensityProfile.from_json

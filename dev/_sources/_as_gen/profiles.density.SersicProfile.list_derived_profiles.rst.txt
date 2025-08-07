@@ -1,6 +1,0 @@
-profiles.density.SersicProfile.list\_derived\_profiles
-======================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: SersicProfile.list_derived_profiles

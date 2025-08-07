@@ -1,6 +1,0 @@
-models.stars.polytropes.PolytropicStarModel.generate\_particles
-===============================================================
-
-.. currentmodule:: models.stars.polytropes
-
-.. automethod:: PolytropicStarModel.generate_particles

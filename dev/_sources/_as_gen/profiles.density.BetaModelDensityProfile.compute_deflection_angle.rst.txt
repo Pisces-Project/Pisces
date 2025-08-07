@@ -1,6 +1,0 @@
-profiles.density.BetaModelDensityProfile.compute\_deflection\_angle
-===================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BetaModelDensityProfile.compute_deflection_angle

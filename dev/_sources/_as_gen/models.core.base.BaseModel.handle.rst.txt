@@ -1,6 +1,0 @@
-models.core.base.BaseModel.handle
-=================================
-
-.. currentmodule:: models.core.base
-
-.. autoproperty:: BaseModel.handle

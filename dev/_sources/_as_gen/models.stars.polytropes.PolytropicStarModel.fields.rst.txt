@@ -1,6 +1,0 @@
-models.stars.polytropes.PolytropicStarModel.fields
-==================================================
-
-.. currentmodule:: models.stars.polytropes
-
-.. autoproperty:: PolytropicStarModel.fields

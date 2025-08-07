@@ -1,6 +1,0 @@
-profiles.temperature.VikhlininTemperatureProfile.\_\_init\_\_
-=============================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: VikhlininTemperatureProfile.__init__

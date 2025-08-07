@@ -1,6 +1,0 @@
-profiles.density.BetaModelDensityProfile.to\_yaml
-=================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BetaModelDensityProfile.to_yaml

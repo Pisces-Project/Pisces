@@ -1,6 +1,0 @@
-profiles.density.DehnenDensityProfile.compute\_enclosed\_mass
-=============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: DehnenDensityProfile.compute_enclosed_mass

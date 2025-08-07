@@ -1,6 +1,0 @@
-profiles.density.PseudoIsothermalDensityProfile.from\_hdf5
-==========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: PseudoIsothermalDensityProfile.from_hdf5

@@ -1,6 +1,0 @@
-profiles.density.SechDiskDensityProfile.variable\_symbols
-=========================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: SechDiskDensityProfile.variable_symbols

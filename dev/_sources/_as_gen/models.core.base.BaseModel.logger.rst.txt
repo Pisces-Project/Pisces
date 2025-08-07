@@ -1,6 +1,0 @@
-models.core.base.BaseModel.logger
-=================================
-
-.. currentmodule:: models.core.base
-
-.. autoattribute:: BaseModel.logger
