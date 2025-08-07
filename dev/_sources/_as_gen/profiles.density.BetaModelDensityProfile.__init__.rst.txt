@@ -1,6 +1,0 @@
-profiles.density.BetaModelDensityProfile.\_\_init\_\_
-=====================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BetaModelDensityProfile.__init__

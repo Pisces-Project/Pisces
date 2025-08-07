@@ -1,6 +1,0 @@
-profiles.density.AM06DensityProfile.compute\_total\_mass
-========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: AM06DensityProfile.compute_total_mass

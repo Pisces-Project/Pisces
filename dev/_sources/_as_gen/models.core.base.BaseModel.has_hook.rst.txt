@@ -1,6 +1,0 @@
-models.core.base.BaseModel.has\_hook
-====================================
-
-.. currentmodule:: models.core.base
-
-.. automethod:: BaseModel.has_hook

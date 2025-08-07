@@ -1,6 +1,0 @@
-profiles.density.DoublePowerLawDensityProfile.\_\_init\_\_
-==========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: DoublePowerLawDensityProfile.__init__

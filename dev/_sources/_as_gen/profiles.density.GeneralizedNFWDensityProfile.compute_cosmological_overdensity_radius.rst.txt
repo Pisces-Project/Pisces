@@ -1,6 +1,0 @@
-profiles.density.GeneralizedNFWDensityProfile.compute\_cosmological\_overdensity\_radius
-========================================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: GeneralizedNFWDensityProfile.compute_cosmological_overdensity_radius

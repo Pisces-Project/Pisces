@@ -1,6 +1,0 @@
-profiles.density.ExponentialDiskDensityProfile.parameter\_symbols
-=================================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: ExponentialDiskDensityProfile.parameter_symbols

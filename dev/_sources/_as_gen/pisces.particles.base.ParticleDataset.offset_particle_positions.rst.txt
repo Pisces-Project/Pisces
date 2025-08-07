@@ -1,6 +1,0 @@
-pisces.particles.base.ParticleDataset.offset\_particle\_positions
-=================================================================
-
-.. currentmodule:: pisces.particles.base
-
-.. automethod:: ParticleDataset.offset_particle_positions

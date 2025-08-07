@@ -1,6 +1,0 @@
-profiles.density.PlummerDensityProfile.parameters
-=================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: PlummerDensityProfile.parameters

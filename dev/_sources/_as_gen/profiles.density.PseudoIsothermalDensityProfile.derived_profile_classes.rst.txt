@@ -1,6 +1,0 @@
-profiles.density.PseudoIsothermalDensityProfile.derived\_profile\_classes
-=========================================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: PseudoIsothermalDensityProfile.derived_profile_classes

@@ -1,6 +1,0 @@
-profiles.density.DoublePowerLawDensityProfile.get\_expression\_latex
-====================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: DoublePowerLawDensityProfile.get_expression_latex
