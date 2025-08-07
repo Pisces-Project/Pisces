@@ -10,3 +10,7 @@ __default_coordinate_registry__ = Registry()
 """
 The default registry for coordinate systems.
 """
+__default_grid_registry__ = Registry()
+"""
+The default registry for grid types.
+"""
