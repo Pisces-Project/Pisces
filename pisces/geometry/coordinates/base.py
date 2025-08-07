@@ -54,6 +54,7 @@ class CoordinateSystem(ABC, metaclass=_CoordinateSystemMeta):
     # This is where the coordinate system defines its
     # default parameters and their values.
     __PARAMETERS__: dict[str, Union[float, int]] = {}
+    __NDIM__: int = 0
 
     # =============================== #
     # INITIALIZATION                  #
@@ -91,6 +92,11 @@ class CoordinateSystem(ABC, metaclass=_CoordinateSystemMeta):
     def parameters(self) -> dict[str, Union[float, int]]:
         """Return a copy of the coordinate system's parameters."""
         return self._parameters.copy()
+
+    @property
+    def ndim(self) -> int:
+        """Return the number of dimensions of this coordinate system."""
+        return self.__class__.__NDIM__
 
     def copy(self) -> "CoordinateSystem":
         """Return a shallow copy of the coordinate system."""

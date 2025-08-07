@@ -29,6 +29,7 @@ class Cartesian1DCoordinateSystem(CoordinateSystem):
 
     __IS_ABSTRACT__ = False
     __PARAMETERS__ = {}
+    __NDIM__ = 1
 
     def convert_to_cartesian(self, x):
         return x
@@ -62,6 +63,7 @@ class Cartesian2DCoordinateSystem(CoordinateSystem):
 
     __IS_ABSTRACT__ = False
     __PARAMETERS__ = {}
+    __NDIM__ = 2
 
     def convert_to_cartesian(self, x, y):
         return x, y
@@ -97,6 +99,7 @@ class Cartesian3DCoordinateSystem(CoordinateSystem):
 
     __IS_ABSTRACT__ = False
     __PARAMETERS__ = {}
+    __NDIM__ = 3
 
     def convert_to_cartesian(self, x, y, z):
         return x, y, z
@@ -139,6 +142,7 @@ class SphericalCoordinateSystem(CoordinateSystem):
 
     __IS_ABSTRACT__ = False
     __PARAMETERS__ = {}
+    __NDIM__ = 3
 
     def convert_to_cartesian(self, r, theta, phi):
         # theta: polar angle (from z-axis), phi: azimuthal angle (from x-axis)
@@ -187,6 +191,7 @@ class CylindricalCoordinateSystem(CoordinateSystem):
 
     __IS_ABSTRACT__ = False
     __PARAMETERS__ = {}
+    __NDIM__ = 3
 
     def convert_to_cartesian(self, r, theta, z):
         x = r * np.cos(theta)
@@ -229,6 +234,7 @@ class PolarCoordinatesSystem(CoordinateSystem):
 
     __IS_ABSTRACT__ = False
     __PARAMETERS__ = {}
+    __NDIM__ = 2
 
     def convert_to_cartesian(self, r, theta):
         x = r * np.cos(theta)
