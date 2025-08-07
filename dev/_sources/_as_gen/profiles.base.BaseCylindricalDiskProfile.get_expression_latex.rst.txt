@@ -1,6 +1,0 @@
-profiles.base.BaseCylindricalDiskProfile.get\_expression\_latex
-===============================================================
-
-.. currentmodule:: profiles.base
-
-.. automethod:: BaseCylindricalDiskProfile.get_expression_latex

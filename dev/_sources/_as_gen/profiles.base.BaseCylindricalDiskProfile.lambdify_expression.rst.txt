@@ -1,6 +1,0 @@
-profiles.base.BaseCylindricalDiskProfile.lambdify\_expression
-=============================================================
-
-.. currentmodule:: profiles.base
-
-.. automethod:: BaseCylindricalDiskProfile.lambdify_expression

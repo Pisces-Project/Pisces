@@ -1,6 +1,0 @@
-pisces.utilities.io\_tools.UnytQuantityHandler.register
-=======================================================
-
-.. currentmodule:: pisces.utilities.io_tools
-
-.. automethod:: UnytQuantityHandler.register

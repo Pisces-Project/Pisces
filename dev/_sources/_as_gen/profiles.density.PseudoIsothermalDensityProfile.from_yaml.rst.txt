@@ -1,6 +1,0 @@
-profiles.density.PseudoIsothermalDensityProfile.from\_yaml
-==========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: PseudoIsothermalDensityProfile.from_yaml

@@ -1,6 +1,0 @@
-profiles.density.GeneralizedNFWDensityProfile.variable\_symbols
-===============================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: GeneralizedNFWDensityProfile.variable_symbols

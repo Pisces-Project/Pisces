@@ -1,6 +1,0 @@
-profiles.density.VikhlininDensityProfile.substitute\_expression
-===============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: VikhlininDensityProfile.substitute_expression

@@ -1,6 +1,0 @@
-models.core.base.BaseModel.path
-===============================
-
-.. currentmodule:: models.core.base
-
-.. autoproperty:: BaseModel.path

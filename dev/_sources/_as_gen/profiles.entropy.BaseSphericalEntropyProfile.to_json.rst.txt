@@ -1,6 +1,0 @@
-profiles.entropy.BaseSphericalEntropyProfile.to\_json
-=====================================================
-
-.. currentmodule:: profiles.entropy
-
-.. automethod:: BaseSphericalEntropyProfile.to_json

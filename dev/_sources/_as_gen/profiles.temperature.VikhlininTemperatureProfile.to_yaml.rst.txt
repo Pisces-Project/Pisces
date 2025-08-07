@@ -1,6 +1,0 @@
-profiles.temperature.VikhlininTemperatureProfile.to\_yaml
-=========================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: VikhlininTemperatureProfile.to_yaml

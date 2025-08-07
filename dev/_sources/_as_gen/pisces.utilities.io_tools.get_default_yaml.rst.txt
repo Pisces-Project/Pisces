@@ -1,6 +1,0 @@
-pisces.utilities.io\_tools.get\_default\_yaml
-=============================================
-
-.. currentmodule:: pisces.utilities.io_tools
-
-.. autofunction:: get_default_yaml

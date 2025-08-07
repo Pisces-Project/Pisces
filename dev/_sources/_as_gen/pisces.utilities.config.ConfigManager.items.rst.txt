@@ -1,6 +1,0 @@
-pisces.utilities.config.ConfigManager.items
-===========================================
-
-.. currentmodule:: pisces.utilities.config
-
-.. automethod:: ConfigManager.items

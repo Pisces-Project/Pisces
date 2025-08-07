@@ -1,6 +1,0 @@
-profiles.density.FlaredDiskDensityProfile.parameter\_symbols
-============================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: FlaredDiskDensityProfile.parameter_symbols
