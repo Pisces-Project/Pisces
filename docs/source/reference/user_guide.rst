@@ -63,6 +63,8 @@ include profiles, scaling relations, random fields, etc.
    :caption: Building Blocks
 
    profiles/overview
+   grids/overview
+   coordinate_systems/overview
 
 Configuration and Setup
 ------------------------

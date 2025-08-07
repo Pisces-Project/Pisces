@@ -20,6 +20,8 @@ entropy, and more. These are often used directly or embedded in larger models.
     :template: module.rst
 
     profiles
+    geometry.coordinates
+    geometry.grids
 
 
 Models
