@@ -1,0 +1,6 @@
+profiles.density.HernquistDensityProfile.compute\_total\_mass
+=============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: HernquistDensityProfile.compute_total_mass

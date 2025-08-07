@@ -1,0 +1,6 @@
+profiles.density.CoredIsothermalDensityProfile.compute\_escape\_velocity
+========================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoredIsothermalDensityProfile.compute_escape_velocity

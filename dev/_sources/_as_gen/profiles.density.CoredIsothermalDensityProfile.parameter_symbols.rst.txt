@@ -1,0 +1,6 @@
+profiles.density.CoredIsothermalDensityProfile.parameter\_symbols
+=================================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: CoredIsothermalDensityProfile.parameter_symbols

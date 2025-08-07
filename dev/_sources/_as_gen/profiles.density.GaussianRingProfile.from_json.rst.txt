@@ -1,0 +1,6 @@
+profiles.density.GaussianRingProfile.from\_json
+===============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: GaussianRingProfile.from_json

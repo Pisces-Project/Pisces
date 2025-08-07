@@ -1,0 +1,6 @@
+profiles.density.BetaModelDensityProfile.lambdify\_expression
+=============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BetaModelDensityProfile.lambdify_expression

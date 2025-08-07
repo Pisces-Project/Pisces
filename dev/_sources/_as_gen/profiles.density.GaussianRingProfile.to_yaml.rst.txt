@@ -1,0 +1,6 @@
+profiles.density.GaussianRingProfile.to\_yaml
+=============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: GaussianRingProfile.to_yaml

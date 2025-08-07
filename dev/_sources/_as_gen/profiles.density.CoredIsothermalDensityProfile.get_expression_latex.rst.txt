@@ -1,0 +1,6 @@
+profiles.density.CoredIsothermalDensityProfile.get\_expression\_latex
+=====================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoredIsothermalDensityProfile.get_expression_latex

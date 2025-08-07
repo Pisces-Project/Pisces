@@ -1,0 +1,6 @@
+profiles.density.BetaModelDensityProfile.list\_derived\_profiles
+================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BetaModelDensityProfile.list_derived_profiles

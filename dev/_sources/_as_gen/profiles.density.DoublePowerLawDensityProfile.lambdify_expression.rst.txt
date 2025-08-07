@@ -1,0 +1,6 @@
+profiles.density.DoublePowerLawDensityProfile.lambdify\_expression
+==================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DoublePowerLawDensityProfile.lambdify_expression

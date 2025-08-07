@@ -1,0 +1,6 @@
+pisces.utilities.io\_tools.UnytArrayHandler.register
+====================================================
+
+.. currentmodule:: pisces.utilities.io_tools
+
+.. automethod:: UnytArrayHandler.register

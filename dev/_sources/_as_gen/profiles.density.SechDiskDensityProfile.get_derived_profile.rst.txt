@@ -1,0 +1,6 @@
+profiles.density.SechDiskDensityProfile.get\_derived\_profile
+=============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SechDiskDensityProfile.get_derived_profile

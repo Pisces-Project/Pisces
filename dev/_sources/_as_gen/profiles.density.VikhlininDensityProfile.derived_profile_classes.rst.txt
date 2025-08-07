@@ -1,0 +1,6 @@
+profiles.density.VikhlininDensityProfile.derived\_profile\_classes
+==================================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: VikhlininDensityProfile.derived_profile_classes

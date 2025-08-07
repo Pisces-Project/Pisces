@@ -1,0 +1,6 @@
+profiles.density.SNFWDensityProfile.compute\_enclosed\_mass
+===========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SNFWDensityProfile.compute_enclosed_mass

@@ -1,0 +1,6 @@
+profiles.density.CoreSersicProfile.get\_parameters\_latex
+=========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoreSersicProfile.get_parameters_latex

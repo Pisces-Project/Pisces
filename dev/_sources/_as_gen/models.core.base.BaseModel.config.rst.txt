@@ -1,0 +1,6 @@
+models.core.base.BaseModel.config
+=================================
+
+.. currentmodule:: models.core.base
+
+.. autoattribute:: BaseModel.config
