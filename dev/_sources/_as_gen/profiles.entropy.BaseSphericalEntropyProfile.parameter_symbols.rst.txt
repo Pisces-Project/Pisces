@@ -1,6 +1,0 @@
-profiles.entropy.BaseSphericalEntropyProfile.parameter\_symbols
-===============================================================
-
-.. currentmodule:: profiles.entropy
-
-.. autoproperty:: BaseSphericalEntropyProfile.parameter_symbols

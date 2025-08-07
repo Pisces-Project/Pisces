@@ -1,6 +1,0 @@
-profiles.density.EinastoDensityProfile.\_\_init\_\_
-===================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: EinastoDensityProfile.__init__

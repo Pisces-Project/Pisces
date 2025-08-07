@@ -1,6 +1,0 @@
-profiles.density.JaffeDensityProfile.compute\_deflection\_angle
-===============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: JaffeDensityProfile.compute_deflection_angle

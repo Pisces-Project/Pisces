@@ -1,6 +1,0 @@
-profiles.density.CoredIsothermalDensityProfile.from\_dict
-=========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredIsothermalDensityProfile.from_dict

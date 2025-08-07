@@ -1,6 +1,0 @@
-profiles.density.HernquistDensityProfile.from\_json
-===================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: HernquistDensityProfile.from_json

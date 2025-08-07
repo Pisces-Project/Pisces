@@ -1,6 +1,0 @@
-profiles.density.BaseSphericalDensityProfile.from\_yaml
-=======================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BaseSphericalDensityProfile.from_yaml

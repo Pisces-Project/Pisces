@@ -1,6 +1,0 @@
-profiles.density.JaffeDensityProfile.compute\_einstein\_radius
-==============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: JaffeDensityProfile.compute_einstein_radius

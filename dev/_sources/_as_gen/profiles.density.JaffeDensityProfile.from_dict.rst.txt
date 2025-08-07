@@ -1,6 +1,0 @@
-profiles.density.JaffeDensityProfile.from\_dict
-===============================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: JaffeDensityProfile.from_dict

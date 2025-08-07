@@ -1,6 +1,0 @@
-profiles.density.TNFWDensityProfile.variable\_symbols
-=====================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: TNFWDensityProfile.variable_symbols

@@ -1,6 +1,0 @@
-profiles.density.CoredIsothermalDensityProfile.variables
-========================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: CoredIsothermalDensityProfile.variables

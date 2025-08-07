@@ -1,6 +1,0 @@
-profiles.temperature.DoubleBetaTemperatureProfile.DEFAULT\_PARAMETERS
-=====================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. autoattribute:: DoubleBetaTemperatureProfile.DEFAULT_PARAMETERS

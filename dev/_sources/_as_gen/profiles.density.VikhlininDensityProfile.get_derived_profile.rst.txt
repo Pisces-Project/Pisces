@@ -1,6 +1,0 @@
-profiles.density.VikhlininDensityProfile.get\_derived\_profile
-==============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: VikhlininDensityProfile.get_derived_profile

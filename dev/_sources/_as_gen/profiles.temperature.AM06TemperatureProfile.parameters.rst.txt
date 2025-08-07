@@ -1,6 +1,0 @@
-profiles.temperature.AM06TemperatureProfile.parameters
-======================================================
-
-.. currentmodule:: profiles.temperature
-
-.. autoproperty:: AM06TemperatureProfile.parameters

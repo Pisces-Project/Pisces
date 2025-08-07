@@ -1,6 +1,0 @@
-profiles.density.PlummerDensityProfile.get\_parameters\_latex
-=============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: PlummerDensityProfile.get_parameters_latex

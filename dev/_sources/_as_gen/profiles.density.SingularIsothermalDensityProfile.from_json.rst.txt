@@ -1,6 +1,0 @@
-profiles.density.SingularIsothermalDensityProfile.from\_json
-============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: SingularIsothermalDensityProfile.from_json

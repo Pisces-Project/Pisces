@@ -1,6 +1,0 @@
-profiles.entropy.BaseSphericalEntropyProfile.variables
-======================================================
-
-.. currentmodule:: profiles.entropy
-
-.. autoproperty:: BaseSphericalEntropyProfile.variables
