@@ -54,7 +54,25 @@ class CoordinateSystem(ABC, metaclass=_CoordinateSystemMeta):
     # This is where the coordinate system defines its
     # default parameters and their values.
     __PARAMETERS__: dict[str, Union[float, int]] = {}
+    """dict of str, float or int: The default values for the coordinate system parameters.
+
+    Each coordinate system can define its own parameters here. If a coordinate system
+    has parameters, they may be provided during calls to the ``__init__`` method. If no parameters are
+    provided, the defaults defined here will be used.
+    """
     __NDIM__: int = 0
+    """int: The number of dimensions of this coordinate system.
+
+    This should be rigorously defined to be the number of cartesian coordinates
+    which are used to map into this coordinate system. We expect the conversion methods
+    defined below to take this many arguments.
+    """
+    __AXES__: list[str] = []
+    """list of str: The names of the axes in this coordinate system.
+
+    These are used primarily for users to be able to address axes
+    efficiently.
+    """
 
     # =============================== #
     # INITIALIZATION                  #
@@ -97,6 +115,11 @@ class CoordinateSystem(ABC, metaclass=_CoordinateSystemMeta):
     def ndim(self) -> int:
         """Return the number of dimensions of this coordinate system."""
         return self.__class__.__NDIM__
+
+    @property
+    def axes(self) -> list[str]:
+        """Return the names of the axes in this coordinate system."""
+        return self.__class__.__AXES__.copy()
 
     def copy(self) -> "CoordinateSystem":
         """Return a shallow copy of the coordinate system."""
