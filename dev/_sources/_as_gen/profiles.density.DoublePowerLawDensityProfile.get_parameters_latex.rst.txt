@@ -1,0 +1,6 @@
+profiles.density.DoublePowerLawDensityProfile.get\_parameters\_latex
+====================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DoublePowerLawDensityProfile.get_parameters_latex

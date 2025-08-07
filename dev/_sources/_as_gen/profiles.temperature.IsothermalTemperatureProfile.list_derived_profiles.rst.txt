@@ -1,0 +1,6 @@
+profiles.temperature.IsothermalTemperatureProfile.list\_derived\_profiles
+=========================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: IsothermalTemperatureProfile.list_derived_profiles

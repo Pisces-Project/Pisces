@@ -1,0 +1,6 @@
+profiles.density.CoredPowerLawDensityProfile.compute\_circular\_velocity
+========================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoredPowerLawDensityProfile.compute_circular_velocity

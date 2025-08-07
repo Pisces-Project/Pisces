@@ -1,0 +1,6 @@
+profiles.density.ExponentialDiskDensityProfile.get\_output\_units
+=================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: ExponentialDiskDensityProfile.get_output_units

@@ -1,0 +1,6 @@
+profiles.density.KingDensityProfile.substitute\_expression
+==========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: KingDensityProfile.substitute_expression

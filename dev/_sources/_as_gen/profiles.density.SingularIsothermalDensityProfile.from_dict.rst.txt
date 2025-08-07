@@ -1,0 +1,6 @@
+profiles.density.SingularIsothermalDensityProfile.from\_dict
+============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SingularIsothermalDensityProfile.from_dict

@@ -1,0 +1,6 @@
+profiles.temperature.DoubleBetaTemperatureProfile.AXES
+======================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoattribute:: DoubleBetaTemperatureProfile.AXES

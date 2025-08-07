@@ -1,0 +1,6 @@
+profiles.density.PlummerDensityProfile.compute\_einstein\_radius
+================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: PlummerDensityProfile.compute_einstein_radius

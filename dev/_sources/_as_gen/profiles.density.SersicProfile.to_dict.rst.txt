@@ -1,0 +1,6 @@
+profiles.density.SersicProfile.to\_dict
+=======================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SersicProfile.to_dict

@@ -1,0 +1,61 @@
+MooreDensityProfile
+====================================
+
+.. currentmodule:: profiles.density
+
+.. autoclass:: profiles.density.MooreDensityProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~MooreDensityProfile.__init__
+      ~MooreDensityProfile.compute_circular_velocity
+      ~MooreDensityProfile.compute_cosmological_overdensity_profile
+      ~MooreDensityProfile.compute_cosmological_overdensity_radius
+      ~MooreDensityProfile.compute_deflection_angle
+      ~MooreDensityProfile.compute_einstein_radius
+      ~MooreDensityProfile.compute_enclosed_mass
+      ~MooreDensityProfile.compute_escape_velocity
+      ~MooreDensityProfile.compute_fractional_mass_radius
+      ~MooreDensityProfile.compute_lensing_convergence
+      ~MooreDensityProfile.compute_surface_density
+      ~MooreDensityProfile.compute_total_mass
+      ~MooreDensityProfile.from_dict
+      ~MooreDensityProfile.from_hdf5
+      ~MooreDensityProfile.from_json
+      ~MooreDensityProfile.from_yaml
+      ~MooreDensityProfile.get_derived_profile
+      ~MooreDensityProfile.get_expression_latex
+      ~MooreDensityProfile.get_output_units
+      ~MooreDensityProfile.get_parameters_latex
+      ~MooreDensityProfile.lambdify_expression
+      ~MooreDensityProfile.list_derived_profiles
+      ~MooreDensityProfile.substitute_expression
+      ~MooreDensityProfile.to_dict
+      ~MooreDensityProfile.to_hdf5
+      ~MooreDensityProfile.to_json
+      ~MooreDensityProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~MooreDensityProfile.derived_profile_classes
+      ~MooreDensityProfile.parameter_symbols
+      ~MooreDensityProfile.parameters
+      ~MooreDensityProfile.variable_symbols
+      ~MooreDensityProfile.variables
+   
+   

@@ -1,0 +1,6 @@
+profiles.density.DehnenDensityProfile.compute\_total\_mass
+==========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DehnenDensityProfile.compute_total_mass

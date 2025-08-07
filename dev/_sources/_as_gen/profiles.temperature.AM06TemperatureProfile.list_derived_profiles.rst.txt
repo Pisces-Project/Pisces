@@ -1,0 +1,6 @@
+profiles.temperature.AM06TemperatureProfile.list\_derived\_profiles
+===================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: AM06TemperatureProfile.list_derived_profiles

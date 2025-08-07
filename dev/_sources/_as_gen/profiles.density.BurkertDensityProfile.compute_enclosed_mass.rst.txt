@@ -1,0 +1,6 @@
+profiles.density.BurkertDensityProfile.compute\_enclosed\_mass
+==============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BurkertDensityProfile.compute_enclosed_mass

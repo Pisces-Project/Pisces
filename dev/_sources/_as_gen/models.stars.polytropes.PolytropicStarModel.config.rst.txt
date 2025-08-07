@@ -1,0 +1,6 @@
+models.stars.polytropes.PolytropicStarModel.config
+==================================================
+
+.. currentmodule:: models.stars.polytropes
+
+.. autoattribute:: PolytropicStarModel.config

@@ -1,0 +1,6 @@
+profiles.density.SingularIsothermalDensityProfile.get\_parameters\_latex
+========================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SingularIsothermalDensityProfile.get_parameters_latex

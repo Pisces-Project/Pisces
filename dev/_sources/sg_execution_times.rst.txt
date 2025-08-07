@@ -1,0 +1,49 @@
+
+:orphan:
+
+.. _sphx_glr_sg_execution_times:
+
+
+Computation times
+=================
+**02:02.456** total execution time for 5 files **from all galleries**:
+
+.. container::
+
+  .. raw:: html
+
+    <style scoped>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" class="init">
+    $(document).ready( function () {
+        $('table.sg-datatable').DataTable({order: [[1, 'desc']]});
+    } );
+    </script>
+
+  .. list-table::
+   :header-rows: 1
+   :class: table table-striped sg-datatable
+
+   * - Example
+     - Time
+     - Mem (MB)
+   * - :ref:`sphx_glr_auto_examples_a_models_plot_magnetized_galaxy_clusters.py` (``galleries/examples/a_models/plot_magnetized_galaxy_clusters.py``)
+     - 01:23.661
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_d_particles_plot_galaxy_cluster_particles.py` (``galleries/examples/d_particles/plot_galaxy_cluster_particles.py``)
+     - 00:20.925
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_a_models_plot_build_gcluster.py` (``galleries/examples/a_models/plot_build_gcluster.py``)
+     - 00:08.994
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_a_models_plot_polytropic_star.py` (``galleries/examples/a_models/plot_polytropic_star.py``)
+     - 00:06.504
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_a_models_plot_build_gcluster_temp_dens.py` (``galleries/examples/a_models/plot_build_gcluster_temp_dens.py``)
+     - 00:02.373
+     - 0.0

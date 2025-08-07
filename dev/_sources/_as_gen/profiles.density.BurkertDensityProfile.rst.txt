@@ -1,0 +1,61 @@
+BurkertDensityProfile
+======================================
+
+.. currentmodule:: profiles.density
+
+.. autoclass:: profiles.density.BurkertDensityProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~BurkertDensityProfile.__init__
+      ~BurkertDensityProfile.compute_circular_velocity
+      ~BurkertDensityProfile.compute_cosmological_overdensity_profile
+      ~BurkertDensityProfile.compute_cosmological_overdensity_radius
+      ~BurkertDensityProfile.compute_deflection_angle
+      ~BurkertDensityProfile.compute_einstein_radius
+      ~BurkertDensityProfile.compute_enclosed_mass
+      ~BurkertDensityProfile.compute_escape_velocity
+      ~BurkertDensityProfile.compute_fractional_mass_radius
+      ~BurkertDensityProfile.compute_lensing_convergence
+      ~BurkertDensityProfile.compute_surface_density
+      ~BurkertDensityProfile.compute_total_mass
+      ~BurkertDensityProfile.from_dict
+      ~BurkertDensityProfile.from_hdf5
+      ~BurkertDensityProfile.from_json
+      ~BurkertDensityProfile.from_yaml
+      ~BurkertDensityProfile.get_derived_profile
+      ~BurkertDensityProfile.get_expression_latex
+      ~BurkertDensityProfile.get_output_units
+      ~BurkertDensityProfile.get_parameters_latex
+      ~BurkertDensityProfile.lambdify_expression
+      ~BurkertDensityProfile.list_derived_profiles
+      ~BurkertDensityProfile.substitute_expression
+      ~BurkertDensityProfile.to_dict
+      ~BurkertDensityProfile.to_hdf5
+      ~BurkertDensityProfile.to_json
+      ~BurkertDensityProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~BurkertDensityProfile.derived_profile_classes
+      ~BurkertDensityProfile.parameter_symbols
+      ~BurkertDensityProfile.parameters
+      ~BurkertDensityProfile.variable_symbols
+      ~BurkertDensityProfile.variables
+   
+   

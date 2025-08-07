@@ -1,0 +1,6 @@
+models.core.hooks.ParticleGenerationHook.generate\_particles
+============================================================
+
+.. currentmodule:: models.core.hooks
+
+.. automethod:: ParticleGenerationHook.generate_particles
