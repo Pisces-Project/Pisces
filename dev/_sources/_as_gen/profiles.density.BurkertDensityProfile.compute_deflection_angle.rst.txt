@@ -1,0 +1,6 @@
+profiles.density.BurkertDensityProfile.compute\_deflection\_angle
+=================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BurkertDensityProfile.compute_deflection_angle

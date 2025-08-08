@@ -1,0 +1,6 @@
+pisces.models.galaxy\_clusters.spherical.MagnetizedSphericalGalaxyClusterModel.stellar\_df
+==========================================================================================
+
+.. currentmodule:: pisces.models.galaxy_clusters.spherical
+
+.. autoproperty:: MagnetizedSphericalGalaxyClusterModel.stellar_df

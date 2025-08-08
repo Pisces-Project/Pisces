@@ -1,0 +1,6 @@
+profiles.density.BurkertDensityProfile.compute\_circular\_velocity
+==================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BurkertDensityProfile.compute_circular_velocity

@@ -1,0 +1,6 @@
+profiles.temperature.BetaModelTemperatureProfile.parameters
+===========================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoproperty:: BetaModelTemperatureProfile.parameters

@@ -1,0 +1,6 @@
+profiles.density.ExponentialDiskDensityProfile.to\_dict
+=======================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: ExponentialDiskDensityProfile.to_dict

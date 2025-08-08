@@ -1,0 +1,6 @@
+profiles.density.VikhlininDensityProfile.compute\_total\_mass
+=============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: VikhlininDensityProfile.compute_total_mass

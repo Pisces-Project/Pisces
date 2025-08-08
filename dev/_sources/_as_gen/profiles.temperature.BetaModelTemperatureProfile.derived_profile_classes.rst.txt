@@ -1,0 +1,6 @@
+profiles.temperature.BetaModelTemperatureProfile.derived\_profile\_classes
+==========================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoproperty:: BetaModelTemperatureProfile.derived_profile_classes

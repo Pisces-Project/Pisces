@@ -1,0 +1,6 @@
+profiles.density.SingularIsothermalDensityProfile.list\_derived\_profiles
+=========================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SingularIsothermalDensityProfile.list_derived_profiles

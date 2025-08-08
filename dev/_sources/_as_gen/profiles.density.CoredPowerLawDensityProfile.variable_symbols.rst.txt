@@ -1,0 +1,6 @@
+profiles.density.CoredPowerLawDensityProfile.variable\_symbols
+==============================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: CoredPowerLawDensityProfile.variable_symbols

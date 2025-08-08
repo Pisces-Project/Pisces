@@ -1,0 +1,6 @@
+profiles.density.SechSquaredDiskDensityProfile.to\_dict
+=======================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SechSquaredDiskDensityProfile.to_dict

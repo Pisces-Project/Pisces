@@ -1,0 +1,6 @@
+pisces.particles.base.ParticleDataset.apply\_linear\_transformation
+===================================================================
+
+.. currentmodule:: pisces.particles.base
+
+.. automethod:: ParticleDataset.apply_linear_transformation

@@ -1,0 +1,6 @@
+pisces.geometry.grids.core.GenericGrid.get\_axis\_array
+=======================================================
+
+.. currentmodule:: pisces.geometry.grids.core
+
+.. automethod:: GenericGrid.get_axis_array

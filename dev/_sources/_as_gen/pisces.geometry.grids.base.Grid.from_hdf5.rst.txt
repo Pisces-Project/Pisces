@@ -1,0 +1,6 @@
+pisces.geometry.grids.base.Grid.from\_hdf5
+==========================================
+
+.. currentmodule:: pisces.geometry.grids.base
+
+.. automethod:: Grid.from_hdf5

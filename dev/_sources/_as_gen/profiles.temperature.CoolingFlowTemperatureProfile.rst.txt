@@ -1,0 +1,52 @@
+CoolingFlowTemperatureProfile
+==================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoclass:: profiles.temperature.CoolingFlowTemperatureProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~CoolingFlowTemperatureProfile.__init__
+      ~CoolingFlowTemperatureProfile.from_dict
+      ~CoolingFlowTemperatureProfile.from_hdf5
+      ~CoolingFlowTemperatureProfile.from_json
+      ~CoolingFlowTemperatureProfile.from_yaml
+      ~CoolingFlowTemperatureProfile.get_derived_profile
+      ~CoolingFlowTemperatureProfile.get_expression_latex
+      ~CoolingFlowTemperatureProfile.get_output_units
+      ~CoolingFlowTemperatureProfile.get_parameters_latex
+      ~CoolingFlowTemperatureProfile.lambdify_expression
+      ~CoolingFlowTemperatureProfile.list_derived_profiles
+      ~CoolingFlowTemperatureProfile.substitute_expression
+      ~CoolingFlowTemperatureProfile.to_dict
+      ~CoolingFlowTemperatureProfile.to_hdf5
+      ~CoolingFlowTemperatureProfile.to_json
+      ~CoolingFlowTemperatureProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~CoolingFlowTemperatureProfile.AXES
+      ~CoolingFlowTemperatureProfile.DEFAULT_PARAMETERS
+      ~CoolingFlowTemperatureProfile.derived_profile_classes
+      ~CoolingFlowTemperatureProfile.parameter_symbols
+      ~CoolingFlowTemperatureProfile.parameters
+      ~CoolingFlowTemperatureProfile.variable_symbols
+      ~CoolingFlowTemperatureProfile.variables
+   
+   

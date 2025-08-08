@@ -1,0 +1,6 @@
+profiles.base.BaseCylindricalDiskProfile.list\_derived\_profiles
+================================================================
+
+.. currentmodule:: profiles.base
+
+.. automethod:: BaseCylindricalDiskProfile.list_derived_profiles

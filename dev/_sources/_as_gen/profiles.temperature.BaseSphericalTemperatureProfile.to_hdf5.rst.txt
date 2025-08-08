@@ -1,0 +1,6 @@
+profiles.temperature.BaseSphericalTemperatureProfile.to\_hdf5
+=============================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: BaseSphericalTemperatureProfile.to_hdf5

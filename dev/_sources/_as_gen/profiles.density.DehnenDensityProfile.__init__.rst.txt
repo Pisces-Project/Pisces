@@ -1,0 +1,6 @@
+profiles.density.DehnenDensityProfile.\_\_init\_\_
+==================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DehnenDensityProfile.__init__

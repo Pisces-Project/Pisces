@@ -1,0 +1,6 @@
+profiles.density.PlummerDensityProfile.compute\_circular\_velocity
+==================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: PlummerDensityProfile.compute_circular_velocity

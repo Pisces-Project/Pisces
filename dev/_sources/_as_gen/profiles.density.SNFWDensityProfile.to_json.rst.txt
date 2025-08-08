@@ -1,0 +1,6 @@
+profiles.density.SNFWDensityProfile.to\_json
+============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SNFWDensityProfile.to_json

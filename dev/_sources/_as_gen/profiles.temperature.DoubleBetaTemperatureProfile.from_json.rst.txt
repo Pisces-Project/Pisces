@@ -1,0 +1,6 @@
+profiles.temperature.DoubleBetaTemperatureProfile.from\_json
+============================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: DoubleBetaTemperatureProfile.from_json

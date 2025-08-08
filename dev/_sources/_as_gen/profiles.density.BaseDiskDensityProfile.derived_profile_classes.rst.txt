@@ -1,0 +1,6 @@
+profiles.density.BaseDiskDensityProfile.derived\_profile\_classes
+=================================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: BaseDiskDensityProfile.derived_profile_classes

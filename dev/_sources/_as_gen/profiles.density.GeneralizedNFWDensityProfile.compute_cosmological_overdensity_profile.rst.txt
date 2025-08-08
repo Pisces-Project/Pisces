@@ -1,0 +1,6 @@
+profiles.density.GeneralizedNFWDensityProfile.compute\_cosmological\_overdensity\_profile
+=========================================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: GeneralizedNFWDensityProfile.compute_cosmological_overdensity_profile

@@ -1,0 +1,6 @@
+profiles.density.BetaModelDensityProfile.compute\_enclosed\_mass
+================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BetaModelDensityProfile.compute_enclosed_mass

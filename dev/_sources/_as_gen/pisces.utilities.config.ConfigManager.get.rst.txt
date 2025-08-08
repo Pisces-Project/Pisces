@@ -1,0 +1,6 @@
+pisces.utilities.config.ConfigManager.get
+=========================================
+
+.. currentmodule:: pisces.utilities.config
+
+.. automethod:: ConfigManager.get

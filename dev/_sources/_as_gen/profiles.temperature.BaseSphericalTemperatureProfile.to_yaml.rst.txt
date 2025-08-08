@@ -1,0 +1,6 @@
+profiles.temperature.BaseSphericalTemperatureProfile.to\_yaml
+=============================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: BaseSphericalTemperatureProfile.to_yaml
