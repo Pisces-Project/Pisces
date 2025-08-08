@@ -61,7 +61,6 @@ class BaseModel(_HookTools, ABC):
 
     Access Patterns
     ---------------
-    TODO: ensure correct with grid structure.
     This class supports dictionary-like access and assignment:
 
     .. code-block:: python
@@ -75,7 +74,6 @@ class BaseModel(_HookTools, ABC):
 
     Subclassing Guidelines
     ----------------------
-    TODO: ensure correct with grid structure.
     To implement a new model type:
 
     1. Subclass `BaseModel` and define the appropriate sampling or analysis methods.
