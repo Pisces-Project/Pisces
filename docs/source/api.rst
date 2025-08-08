@@ -15,14 +15,23 @@ These modules define the lower-level components of Pisces, including radial prof
 entropy, and more. These are often used directly or embedded in larger models.
 
 .. autosummary::
+    :caption: Profiles
     :toctree: _as_gen
     :recursive:
     :template: module.rst
 
     profiles
-    geometry.coordinates
-    geometry.grids
 
+.. currentmodule:: pisces.geometry
+
+.. autosummary::
+    :caption: Geometry
+    :toctree: _as_gen
+    :recursive:
+    :template: module.rst
+
+    grids
+    coordinates
 
 Models
 ------
@@ -30,6 +39,8 @@ Models
 Pisces provides model generators for various astrophysical systems. These are higher-level tools built using
 the component profiles and utilities defined in the codebase. Model generators typically produce structured
 HDF5 datasets with precomputed physical fields.
+
+.. currentmodule:: pisces
 
 .. autosummary::
     :toctree: _as_gen

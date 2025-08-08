@@ -7,6 +7,6 @@ element of the Pisces library, providing essential functionality for spatial rep
 and manipulation.
 """
 
-__all__ = ["coordinates"]
+__all__ = ["coordinates", "grids"]
 
-from . import coordinates
+from . import coordinates, grids
