@@ -43,7 +43,7 @@ class _GridMeta(ABCMeta):
         return cls_object
 
 
-class Grid(ABC):
+class Grid(ABC, metaclass=_GridMeta):
     """
     Base class for all grids in Pisces.
 
@@ -557,9 +557,16 @@ class Grid(ABC):
             1D array of coordinate values for the selected slice along the axis.
         """
         if isinstance(axis, str):
-            axis = self.__axes__.index(axis)
-        out = self._convert_slice_to_coordinates(axis, slc)
-        return out * self.units[axis]
+            ax_string = axis
+            ax_index = self.__axes__.index(axis)
+        elif isinstance(axis, int):
+            ax_string = self.__axes__[axis]
+            ax_index = axis
+        else:
+            raise ValueError(f"Invalid axis {axis}")
+
+        out = self._convert_slice_to_coordinates(ax_index, slc)
+        return out * self.units[ax_string]
 
     def get_axis_array(self, axis: Union[int, str]) -> unyt.unyt_array:
         """

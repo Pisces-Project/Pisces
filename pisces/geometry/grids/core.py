@@ -33,6 +33,8 @@ class GenericGrid(Grid):
     of grid cells in physical space.
     """
 
+    __IS_ABSTRACT__ = False
+
     # ============================== #
     # INITIALIZATION                 #
     # ============================== #
