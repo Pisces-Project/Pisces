@@ -1,6 +1,0 @@
-profiles.density.DehnenDensityProfile.derived\_profile\_classes
-===============================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: DehnenDensityProfile.derived_profile_classes

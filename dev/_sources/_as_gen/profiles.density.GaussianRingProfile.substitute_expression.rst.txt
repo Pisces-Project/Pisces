@@ -1,6 +1,0 @@
-profiles.density.GaussianRingProfile.substitute\_expression
-===========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: GaussianRingProfile.substitute_expression

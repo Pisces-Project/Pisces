@@ -1,6 +1,0 @@
-geometry.grids.base.Grid.\_\_init\_\_
-=====================================
-
-.. currentmodule:: geometry.grids.base
-
-.. automethod:: Grid.__init__

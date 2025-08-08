@@ -1,6 +1,0 @@
-models.core.base.BaseModel.\_\_init\_\_
-=======================================
-
-.. currentmodule:: models.core.base
-
-.. automethod:: BaseModel.__init__

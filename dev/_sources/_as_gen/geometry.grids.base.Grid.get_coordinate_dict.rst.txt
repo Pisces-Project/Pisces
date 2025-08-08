@@ -1,6 +1,0 @@
-geometry.grids.base.Grid.get\_coordinate\_dict
-==============================================
-
-.. currentmodule:: geometry.grids.base
-
-.. automethod:: Grid.get_coordinate_dict

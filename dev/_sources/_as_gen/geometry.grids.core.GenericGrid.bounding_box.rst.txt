@@ -1,6 +1,0 @@
-geometry.grids.core.GenericGrid.bounding\_box
-=============================================
-
-.. currentmodule:: geometry.grids.core
-
-.. autoproperty:: GenericGrid.bounding_box

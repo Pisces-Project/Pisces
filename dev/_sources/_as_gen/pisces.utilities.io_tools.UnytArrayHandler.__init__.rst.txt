@@ -1,6 +1,0 @@
-pisces.utilities.io\_tools.UnytArrayHandler.\_\_init\_\_
-========================================================
-
-.. currentmodule:: pisces.utilities.io_tools
-
-.. automethod:: UnytArrayHandler.__init__

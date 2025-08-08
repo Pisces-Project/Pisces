@@ -1,6 +1,0 @@
-geometry.coordinates.coordinate\_systems.SphericalCoordinateSystem.convert\_coords\_to
-======================================================================================
-
-.. currentmodule:: geometry.coordinates.coordinate_systems
-
-.. automethod:: SphericalCoordinateSystem.convert_coords_to

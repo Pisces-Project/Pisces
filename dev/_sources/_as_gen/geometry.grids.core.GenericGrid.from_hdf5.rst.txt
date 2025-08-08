@@ -1,6 +1,0 @@
-geometry.grids.core.GenericGrid.from\_hdf5
-==========================================
-
-.. currentmodule:: geometry.grids.core
-
-.. automethod:: GenericGrid.from_hdf5

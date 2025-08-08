@@ -1,6 +1,0 @@
-profiles.density.AM06DensityProfile.substitute\_expression
-==========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: AM06DensityProfile.substitute_expression

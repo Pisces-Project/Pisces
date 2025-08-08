@@ -1,6 +1,0 @@
-profiles.density.BetaModelDensityProfile.compute\_circular\_velocity
-====================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BetaModelDensityProfile.compute_circular_velocity

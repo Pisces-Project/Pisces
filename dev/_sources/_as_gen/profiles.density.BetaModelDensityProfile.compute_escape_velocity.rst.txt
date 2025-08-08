@@ -1,6 +1,0 @@
-profiles.density.BetaModelDensityProfile.compute\_escape\_velocity
-==================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BetaModelDensityProfile.compute_escape_velocity

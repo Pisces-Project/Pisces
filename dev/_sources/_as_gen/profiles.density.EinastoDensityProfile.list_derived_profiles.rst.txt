@@ -1,6 +1,0 @@
-profiles.density.EinastoDensityProfile.list\_derived\_profiles
-==============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: EinastoDensityProfile.list_derived_profiles

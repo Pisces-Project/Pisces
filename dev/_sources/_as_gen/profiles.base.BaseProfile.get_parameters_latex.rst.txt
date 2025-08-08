@@ -1,6 +1,0 @@
-profiles.base.BaseProfile.get\_parameters\_latex
-================================================
-
-.. currentmodule:: profiles.base
-
-.. automethod:: BaseProfile.get_parameters_latex

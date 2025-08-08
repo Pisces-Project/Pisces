@@ -1,6 +1,0 @@
-geometry.coordinates.base.CoordinateSystem.default\_parameters
-==============================================================
-
-.. currentmodule:: geometry.coordinates.base
-
-.. automethod:: CoordinateSystem.default_parameters

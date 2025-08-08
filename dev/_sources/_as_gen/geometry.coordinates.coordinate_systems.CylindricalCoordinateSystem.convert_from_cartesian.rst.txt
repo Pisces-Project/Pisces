@@ -1,6 +1,0 @@
-geometry.coordinates.coordinate\_systems.CylindricalCoordinateSystem.convert\_from\_cartesian
-=============================================================================================
-
-.. currentmodule:: geometry.coordinates.coordinate_systems
-
-.. automethod:: CylindricalCoordinateSystem.convert_from_cartesian

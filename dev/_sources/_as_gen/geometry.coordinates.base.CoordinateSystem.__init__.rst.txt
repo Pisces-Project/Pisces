@@ -1,6 +1,0 @@
-geometry.coordinates.base.CoordinateSystem.\_\_init\_\_
-=======================================================
-
-.. currentmodule:: geometry.coordinates.base
-
-.. automethod:: CoordinateSystem.__init__

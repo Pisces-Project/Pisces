@@ -1,6 +1,0 @@
-geometry.grids.base.Grid.inactive\_axes\_mask
-=============================================
-
-.. currentmodule:: geometry.grids.base
-
-.. autoproperty:: Grid.inactive_axes_mask

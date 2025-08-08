@@ -1,6 +1,0 @@
-profiles.density.PseudoIsothermalDensityProfile.compute\_enclosed\_mass
-=======================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: PseudoIsothermalDensityProfile.compute_enclosed_mass

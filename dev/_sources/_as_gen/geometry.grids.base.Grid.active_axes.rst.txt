@@ -1,6 +1,0 @@
-geometry.grids.base.Grid.active\_axes
-=====================================
-
-.. currentmodule:: geometry.grids.base
-
-.. autoproperty:: Grid.active_axes

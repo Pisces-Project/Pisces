@@ -1,6 +1,0 @@
-geometry.coordinates.coordinate\_systems.CylindricalCoordinateSystem.parameters
-===============================================================================
-
-.. currentmodule:: geometry.coordinates.coordinate_systems
-
-.. autoproperty:: CylindricalCoordinateSystem.parameters

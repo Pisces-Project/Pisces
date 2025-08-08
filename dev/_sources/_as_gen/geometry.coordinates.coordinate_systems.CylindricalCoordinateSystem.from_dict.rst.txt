@@ -1,6 +1,0 @@
-geometry.coordinates.coordinate\_systems.CylindricalCoordinateSystem.from\_dict
-===============================================================================
-
-.. currentmodule:: geometry.coordinates.coordinate_systems
-
-.. automethod:: CylindricalCoordinateSystem.from_dict

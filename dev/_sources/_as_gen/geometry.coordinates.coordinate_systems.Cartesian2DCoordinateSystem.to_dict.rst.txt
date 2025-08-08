@@ -1,6 +1,0 @@
-geometry.coordinates.coordinate\_systems.Cartesian2DCoordinateSystem.to\_dict
-=============================================================================
-
-.. currentmodule:: geometry.coordinates.coordinate_systems
-
-.. automethod:: Cartesian2DCoordinateSystem.to_dict

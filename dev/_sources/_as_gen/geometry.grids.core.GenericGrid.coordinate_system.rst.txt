@@ -1,6 +1,0 @@
-geometry.grids.core.GenericGrid.coordinate\_system
-==================================================
-
-.. currentmodule:: geometry.grids.core
-
-.. autoproperty:: GenericGrid.coordinate_system

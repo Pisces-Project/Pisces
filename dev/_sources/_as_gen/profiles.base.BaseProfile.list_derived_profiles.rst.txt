@@ -1,6 +1,0 @@
-profiles.base.BaseProfile.list\_derived\_profiles
-=================================================
-
-.. currentmodule:: profiles.base
-
-.. automethod:: BaseProfile.list_derived_profiles

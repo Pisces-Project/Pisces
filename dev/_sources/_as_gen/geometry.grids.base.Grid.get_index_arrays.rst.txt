@@ -1,6 +1,0 @@
-geometry.grids.base.Grid.get\_index\_arrays
-===========================================
-
-.. currentmodule:: geometry.grids.base
-
-.. automethod:: Grid.get_index_arrays

@@ -1,6 +1,0 @@
-geometry.coordinates.base.CoordinateSystem.from\_json\_string
-=============================================================
-
-.. currentmodule:: geometry.coordinates.base
-
-.. automethod:: CoordinateSystem.from_json_string

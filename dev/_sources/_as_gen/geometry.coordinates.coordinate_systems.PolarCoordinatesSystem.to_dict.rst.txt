@@ -1,6 +1,0 @@
-geometry.coordinates.coordinate\_systems.PolarCoordinatesSystem.to\_dict
-========================================================================
-
-.. currentmodule:: geometry.coordinates.coordinate_systems
-
-.. automethod:: PolarCoordinatesSystem.to_dict

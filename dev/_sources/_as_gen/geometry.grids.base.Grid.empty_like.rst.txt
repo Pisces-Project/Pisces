@@ -1,6 +1,0 @@
-geometry.grids.base.Grid.empty\_like
-====================================
-
-.. currentmodule:: geometry.grids.base
-
-.. automethod:: Grid.empty_like

@@ -1,6 +1,0 @@
-geometry.coordinates.coordinate\_systems.PolarCoordinatesSystem.parameters
-==========================================================================
-
-.. currentmodule:: geometry.coordinates.coordinate_systems
-
-.. autoproperty:: PolarCoordinatesSystem.parameters

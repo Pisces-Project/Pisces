@@ -1,6 +1,0 @@
-geometry.coordinates.coordinate\_systems.PolarCoordinatesSystem.copy
-====================================================================
-
-.. currentmodule:: geometry.coordinates.coordinate_systems
-
-.. automethod:: PolarCoordinatesSystem.copy

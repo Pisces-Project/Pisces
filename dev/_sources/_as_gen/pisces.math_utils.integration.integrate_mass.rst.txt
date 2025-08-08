@@ -1,6 +1,0 @@
-pisces.math\_utils.integration.integrate\_mass
-==============================================
-
-.. currentmodule:: pisces.math_utils.integration
-
-.. autofunction:: integrate_mass

@@ -1,6 +1,0 @@
-geometry.grids.base.Grid.units
-==============================
-
-.. currentmodule:: geometry.grids.base
-
-.. autoproperty:: Grid.units

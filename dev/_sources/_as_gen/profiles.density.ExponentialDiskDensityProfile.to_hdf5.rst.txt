@@ -1,6 +1,0 @@
-profiles.density.ExponentialDiskDensityProfile.to\_hdf5
-=======================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: ExponentialDiskDensityProfile.to_hdf5

@@ -1,6 +1,0 @@
-profiles.density.SechSquaredDiskDensityProfile.lambdify\_expression
-===================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: SechSquaredDiskDensityProfile.lambdify_expression

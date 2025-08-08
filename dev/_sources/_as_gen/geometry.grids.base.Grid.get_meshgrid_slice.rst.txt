@@ -1,6 +1,0 @@
-geometry.grids.base.Grid.get\_meshgrid\_slice
-=============================================
-
-.. currentmodule:: geometry.grids.base
-
-.. automethod:: Grid.get_meshgrid_slice

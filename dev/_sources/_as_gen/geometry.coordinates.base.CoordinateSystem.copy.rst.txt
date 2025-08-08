@@ -1,6 +1,0 @@
-geometry.coordinates.base.CoordinateSystem.copy
-===============================================
-
-.. currentmodule:: geometry.coordinates.base
-
-.. automethod:: CoordinateSystem.copy

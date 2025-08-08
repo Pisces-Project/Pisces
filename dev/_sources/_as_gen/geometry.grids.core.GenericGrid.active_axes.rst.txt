@@ -1,6 +1,0 @@
-geometry.grids.core.GenericGrid.active\_axes
-============================================
-
-.. currentmodule:: geometry.grids.core
-
-.. autoproperty:: GenericGrid.active_axes

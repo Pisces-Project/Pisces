@@ -1,6 +1,0 @@
-pisces.utilities.config.ConfigManager.popitem
-=============================================
-
-.. currentmodule:: pisces.utilities.config
-
-.. automethod:: ConfigManager.popitem

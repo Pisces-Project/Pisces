@@ -1,6 +1,0 @@
-geometry.coordinates.coordinate\_systems.SphericalCoordinateSystem.convert\_to\_cartesian
-=========================================================================================
-
-.. currentmodule:: geometry.coordinates.coordinate_systems
-
-.. automethod:: SphericalCoordinateSystem.convert_to_cartesian

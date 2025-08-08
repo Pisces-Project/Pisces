@@ -1,6 +1,0 @@
-geometry.grids.core.GenericGrid.fill\_values
-============================================
-
-.. currentmodule:: geometry.grids.core
-
-.. autoproperty:: GenericGrid.fill_values

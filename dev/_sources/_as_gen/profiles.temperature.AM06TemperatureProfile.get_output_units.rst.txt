@@ -1,6 +1,0 @@
-profiles.temperature.AM06TemperatureProfile.get\_output\_units
-==============================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: AM06TemperatureProfile.get_output_units

@@ -1,6 +1,0 @@
-profiles.density.SingularIsothermalDensityProfile.\_\_init\_\_
-==============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: SingularIsothermalDensityProfile.__init__

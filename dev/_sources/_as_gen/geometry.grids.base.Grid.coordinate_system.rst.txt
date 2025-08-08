@@ -1,6 +1,0 @@
-geometry.grids.base.Grid.coordinate\_system
-===========================================
-
-.. currentmodule:: geometry.grids.base
-
-.. autoproperty:: Grid.coordinate_system

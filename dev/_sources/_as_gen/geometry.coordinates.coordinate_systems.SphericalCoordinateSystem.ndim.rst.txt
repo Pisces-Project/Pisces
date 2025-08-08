@@ -1,6 +1,0 @@
-geometry.coordinates.coordinate\_systems.SphericalCoordinateSystem.ndim
-=======================================================================
-
-.. currentmodule:: geometry.coordinates.coordinate_systems
-
-.. autoproperty:: SphericalCoordinateSystem.ndim

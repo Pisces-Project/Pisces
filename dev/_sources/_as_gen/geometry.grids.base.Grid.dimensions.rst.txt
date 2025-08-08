@@ -1,6 +1,0 @@
-geometry.grids.base.Grid.dimensions
-===================================
-
-.. currentmodule:: geometry.grids.base
-
-.. autoproperty:: Grid.dimensions

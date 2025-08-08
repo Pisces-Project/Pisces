@@ -1,6 +1,0 @@
-profiles.base.BaseProfile.get\_output\_units
-============================================
-
-.. currentmodule:: profiles.base
-
-.. automethod:: BaseProfile.get_output_units

@@ -1,6 +1,0 @@
-geometry.grids.base.Grid.ndim\_inactive
-=======================================
-
-.. currentmodule:: geometry.grids.base
-
-.. autoproperty:: Grid.ndim_inactive

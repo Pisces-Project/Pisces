@@ -1,6 +1,0 @@
-geometry.grids.base.Grid.from\_hdf5
-===================================
-
-.. currentmodule:: geometry.grids.base
-
-.. automethod:: Grid.from_hdf5

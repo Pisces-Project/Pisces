@@ -1,6 +1,0 @@
-geometry.coordinates.coordinate\_systems.CylindricalCoordinateSystem.axes
-=========================================================================
-
-.. currentmodule:: geometry.coordinates.coordinate_systems
-
-.. autoproperty:: CylindricalCoordinateSystem.axes

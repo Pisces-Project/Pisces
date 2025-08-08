@@ -1,6 +1,0 @@
-geometry.coordinates.coordinate\_systems.Cartesian1DCoordinateSystem.from\_json\_string
-=======================================================================================
-
-.. currentmodule:: geometry.coordinates.coordinate_systems
-
-.. automethod:: Cartesian1DCoordinateSystem.from_json_string
