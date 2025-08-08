@@ -104,7 +104,7 @@ labels = {
     "total_mass": r"Enclosed Mass [$\mathrm{M_\odot}$]",
 }
 
-radii = model["radii"].to("kpc").value
+radii = model.grid["r"].to("kpc").value
 
 fig, axes = plt.subplots(2, 2, figsize=(10, 7))
 axes = axes.flatten()

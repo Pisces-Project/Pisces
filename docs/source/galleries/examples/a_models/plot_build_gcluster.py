@@ -83,7 +83,7 @@ labels = {
 units = ["keV", "keV*cm**2", "erg/cm**3"]
 
 fig, axes = plt.subplots(1, 3, figsize=(12, 4), sharex=True)
-radii = model["radii"].to("kpc").value
+radii = model.grid["r"].to("kpc").value
 
 for ax, field, unit in zip(axes, fields, units):
     ax.plot(radii, model[field].to_value(unit), lw=2)

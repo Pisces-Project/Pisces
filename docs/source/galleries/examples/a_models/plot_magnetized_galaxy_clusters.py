@@ -131,7 +131,7 @@ for ax, field, units in zip(axes, fields_to_plot, field_units):
     for beta_id, model in models.items():
         beta = beta_set[beta_id]
 
-        ax.plot(model["radii"].d, model[field].to_value(units), lw=2, color=colors[beta_id])
+        ax.plot(model.grid["r"].d, model[field].to_value(units), lw=2, color=colors[beta_id])
 
     ax.set_xscale("log")
     ax.set_yscale("log")

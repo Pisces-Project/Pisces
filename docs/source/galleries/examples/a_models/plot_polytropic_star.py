@@ -69,10 +69,10 @@ for model, n in zip(models, n_index):
     color = cmap(norm(n))
 
     # Add the plots.
-    axs[0, 0].plot(model["radii"].to("Rsun").value, model["density"].to("g/cm**3").value, color=color)
-    axs[0, 1].plot(model["radii"].to("Rsun").value, model["temperature"].to("K").value, color=color)
-    axs[1, 0].plot(model["radii"].to("Rsun").value, model["mass"].to("Msun").value, color=color)
-    axs[1, 1].plot(model["radii"].to("Rsun").value, model["gravitational_field"].to("cm/s**2").value, color=color)
+    axs[0, 0].plot(model.grid["r"].to("Rsun").value, model["density"].to("g/cm**3").value, color=color)
+    axs[0, 1].plot(model.grid["r"].to("Rsun").value, model["temperature"].to("K").value, color=color)
+    axs[1, 0].plot(model.grid["r"].to("Rsun").value, model["mass"].to("Msun").value, color=color)
+    axs[1, 1].plot(model.grid["r"].to("Rsun").value, model["gravitational_field"].to("cm/s**2").value, color=color)
 
 # Scales
 for ax in axs.ravel():
