@@ -16,6 +16,8 @@ from tqdm.contrib.logging import logging_redirect_tqdm
 from unyt import Unit, unyt_array, unyt_quantity
 from unyt.physical_constants import G, kb, mp
 
+from pisces.geometry.coordinates import SphericalCoordinateSystem
+from pisces.geometry.grids.core import GenericGrid
 from pisces.math_utils.integration import (
     compute_lame_emden_solution,
     integrate,
@@ -142,7 +144,7 @@ class PolytropicStarModel(BaseModel, PolytropicParticleGenerationHook):
         max_radius: unyt_quantity,
         num_points: int,
         spacing: str = "log",
-    ) -> unyt_array:
+    ) -> "GenericGrid":
         """Construct a radial grid between `min_radius` and `max_radius`.
 
         Parameters
@@ -158,7 +160,7 @@ class PolytropicStarModel(BaseModel, PolytropicParticleGenerationHook):
 
         Returns
         -------
-        unyt_array
+        GenericGrid
             Array of radial values with units attached.
 
         Raises
@@ -171,11 +173,18 @@ class PolytropicStarModel(BaseModel, PolytropicParticleGenerationHook):
             raise ValueError("min_radius must be less than max_radius.")
 
         if spacing == "log":
-            grid = np.geomspace(min_radius.to_value("km"), max_radius.to_value("km"), num=num_points) * Unit("km")
+            grid = np.geomspace(min_radius.to_value("km"), max_radius.to_value("km"), num=num_points + 1) * Unit("km")
         elif spacing == "linear":
-            grid = np.linspace(min_radius.to_value("km"), max_radius.to_value("km"), num=num_points) * Unit("km")
+            grid = np.linspace(min_radius.to_value("km"), max_radius.to_value("km"), num=num_points + 1) * Unit("km")
         else:
             raise ValueError(f"Unsupported spacing type '{spacing}'. Use 'log' or 'linear'.")
+
+        # Build the actual grid object in spherical coordinates using a
+        # single (radial) axis.
+        cs = SphericalCoordinateSystem()
+        grid = GenericGrid(
+            cs, grid, axes=["r"], units={"r": "km", "theta": "", "phi": ""}, fill_values={"theta": 0.0, "phi": 0.0}
+        )
 
         cls.logger.debug(
             "Constructed %s-spaced radial grid from %.2e to %.2e (%d points)",
@@ -356,9 +365,8 @@ class PolytropicStarModel(BaseModel, PolytropicParticleGenerationHook):
             progress_bar.update(1)
             progress_bar.set_description("Generating grid...")
 
-            radii = cls._construct_radial_grid(rmin, rmax, num_points, spacing=kwargs.pop("spacing", "log"))
-            fields["radii"] = radii
-
+            grid = cls._construct_radial_grid(rmin, rmax, num_points, spacing=kwargs.pop("spacing", "log"))
+            radii: unyt.unyt_array = grid["r"]
             # --- Compute Constants --- #
             # (STEP 3)
             # Now we compute the polytropic constants K and alpha. These are
@@ -382,7 +390,7 @@ class PolytropicStarModel(BaseModel, PolytropicParticleGenerationHook):
             # Setup the xi array for the evaluation. We also need to
             # minimum xi flag because of the numerical issues when solving
             # the equation at very small radii.
-            _xi = (fields["radii"] / _alpha).to_value("dimensionless")
+            _xi = (radii / _alpha).to_value("dimensionless")
             _xi_min = 1e-6
 
             # Compute the solution to the Lane-Emden equation.
@@ -428,7 +436,7 @@ class PolytropicStarModel(BaseModel, PolytropicParticleGenerationHook):
 
             # We start with the total mass. This requires interpolating the density
             # and integrating as far as the cutoff radius. Past that, we'll require constant values.
-            _x, _y = fields["radii"].to_value("km"), fields["density"].to_value("kg/km**3")
+            _x, _y = radii, fields["density"].to_value("kg/km**3")
             _xmax = _cutoff_radius.to_value("km")
 
             _density_interpolator = InterpolatedUnivariateSpline(_x[_x <= _xmax], _y[_x <= _xmax])
@@ -444,21 +452,21 @@ class PolytropicStarModel(BaseModel, PolytropicParticleGenerationHook):
             metadata["total_mass"] = fields["mass"].max().to("Msun")
 
             # With the mass and the density available, we can now compute the gravitational potential.
-            fields["potential"] = unyt_array(np.zeros_like(fields["radii"]), "km**2/s**2")
+            fields["potential"] = unyt_array(np.zeros_like(radii), "km**2/s**2")
             fields["potential"][_x <= _xmax] = cls._compute_potential(
-                radii=fields["radii"][_x <= _xmax],
+                radii=radii[_x <= _xmax],
                 total_density_field=fields["density"][_x <= _xmax],
                 total_mass_field=fields["mass"][_x <= _xmax],
             )
-            fields["potential"][_x > _xmax] = -G * fields["mass"].max() / fields["radii"][_x > _xmax]
+            fields["potential"][_x > _xmax] = -G * fields["mass"].max() / radii[_x > _xmax]
 
             # We also compute the gravitational field, which is the negative gradient of the potential.
             # we use a spline interpolation.
             _pot_interp = InterpolatedUnivariateSpline(
-                fields["radii"].to_value("km"),
+                radii.to_value("km"),
                 fields["potential"].to_value("km**2/s**2"),
             )
-            fields["gravitational_field"] = _pot_interp(fields["radii"].to_value("km"), 1) * Unit("km/s**2")
+            fields["gravitational_field"] = _pot_interp(radii.to_value("km"), 1) * Unit("km/s**2")
 
             # End the progress bar.
             progress_bar.update(1)
@@ -466,7 +474,7 @@ class PolytropicStarModel(BaseModel, PolytropicParticleGenerationHook):
             progress_bar.close()
 
         # Return the model as a new instance of the class.
-        return cls.from_components(filename, fields, profiles, metadata, overwrite=overwrite)
+        return cls.from_components(filename, grid, fields, profiles, metadata, overwrite=overwrite)
 
     @classmethod
     def from_mass_and_radius(

@@ -22,6 +22,8 @@ from tqdm.contrib.logging import logging_redirect_tqdm
 from unyt import Unit, unyt_array, unyt_quantity
 from unyt.physical_constants import G, mp
 
+from pisces.geometry.coordinates import SphericalCoordinateSystem
+from pisces.geometry.grids.core import GenericGrid
 from pisces.math_utils import integrate
 from pisces.models.core.base import BaseModel
 from pisces.models.galaxy_clusters._hooks import SGCParticleGenerationHook
@@ -220,6 +222,7 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             handle.create_group("FIELDS")
             handle.create_group("PROFILES")
             handle.create_group("DISTRIBUTION_FUNCTIONS")
+            handle.create_group("GRID")
 
             # Add the class name as an attribute on the file.
             handle.attrs["__model_class__"] = cls.__name__
@@ -235,7 +238,7 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
         max_radius: unyt_quantity,
         num_points: int,
         spacing: str = "log",
-    ) -> unyt_array:
+    ) -> GenericGrid:
         """Construct a radial grid between `min_radius` and `max_radius`.
 
         Parameters
@@ -269,6 +272,15 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             grid = np.linspace(min_radius.to_value("kpc"), max_radius.to_value("kpc"), num=num_points) * Unit("kpc")
         else:
             raise ValueError(f"Unsupported spacing type '{spacing}'. Use 'log' or 'linear'.")
+
+        cs = SphericalCoordinateSystem()
+        grid = GenericGrid(
+            cs,
+            grid,
+            axes=["r"],
+            units={"r": "kpc", "theta": "", "phi": ""},
+            fill_values={"theta": 0.0, "phi": 0.0},
+        )
 
         cls.logger.debug(
             "Constructed %s-spaced radial grid from %.2e to %.2e (%d points)",
@@ -471,7 +483,7 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
         else:
             fields["stellar_mass"] = unyt_array(np.zeros_like(radii), units="Msun")
 
-        fields["total_mass"] = fields["radii"] ** 2 * fields["gravitational_field"] / G
+        fields["total_mass"] = radii**2 * fields["gravitational_field"] / G
         fields["dark_matter_mass"] = fields["total_mass"] - fields["gas_mass"] - fields["stellar_mass"]
 
         # --- Densities & Potential --- #
@@ -606,8 +618,8 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             progress_bar.update(1)
             progress_bar.set_description("Generating grid...")
 
-            radii = cls._construct_radial_grid(min_radius, max_radius, num_points, spacing=kwargs.pop("spacing", "log"))
-            fields["radii"] = radii
+            grid = cls._construct_radial_grid(min_radius, max_radius, num_points, spacing=kwargs.pop("spacing", "log"))
+            radii = grid["r"]
 
             # --- Create Density Fields --- #
             # (STEP 3)
@@ -651,7 +663,7 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             progress_bar.update(1)
             progress_bar.set_description("Calculating potential...")
 
-            fields["gravitational_field"] = G * fields["total_mass"] / (fields["radii"] ** 2)
+            fields["gravitational_field"] = G * fields["total_mass"] / (grid["r"] ** 2)
             fields["gravitational_potential"] = cls._compute_potential(
                 radii, fields["total_density"], fields["total_mass"]
             )
@@ -701,7 +713,7 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             progress_bar.update(1)
             progress_bar.close()
 
-        return cls.from_components(filename, fields, profiles, metadata, overwrite=overwrite)
+        return cls.from_components(filename, grid, fields, profiles, metadata, overwrite=overwrite)
 
     @classmethod
     def from_temperature_and_density(
@@ -804,8 +816,8 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             progress_bar.update(1)
             progress_bar.set_description("Creating grid...")
 
-            radii = cls._construct_radial_grid(min_radius, max_radius, num_points, spacing=kwargs.pop("spacing", "log"))
-            fields["radii"] = radii
+            grid = cls._construct_radial_grid(min_radius, max_radius, num_points, spacing=kwargs.pop("spacing", "log"))
+            radii = grid["r"]
 
             # --- Step 3: Evaluate profiles --- #
             # This section evaluates the gas density and temperature profiles
@@ -861,6 +873,7 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
 
         return cls.from_components(
             filename,
+            grid,
             fields,
             profiles,
             metadata=metadata,
@@ -961,8 +974,8 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             progress_bar.update(1)
             progress_bar.set_description("Creating grid...")
 
-            radii = cls._construct_radial_grid(min_radius, max_radius, num_points, spacing=kwargs.pop("spacing", "log"))
-            fields["radii"] = radii
+            grid = cls._construct_radial_grid(min_radius, max_radius, num_points, spacing=kwargs.pop("spacing", "log"))
+            radii = grid["r"]
 
             # --- Construct Radial Fields --- #
             # (STEP 3)
@@ -1022,6 +1035,7 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
 
         return cls.from_components(
             filename,
+            grid,
             fields,
             profiles,
             metadata=metadata,
@@ -1322,7 +1336,7 @@ class MagnetizedSphericalGalaxyClusterModel(SphericalGalaxyClusterModel):
         else:
             fields["stellar_mass"] = unyt_array(np.zeros_like(radii), units="Msun")
 
-        fields["total_mass"] = fields["radii"] ** 2 * fields["gravitational_field"] / G
+        fields["total_mass"] = radii**2 * fields["gravitational_field"] / G
         fields["dark_matter_mass"] = fields["total_mass"] - fields["gas_mass"] - fields["stellar_mass"]
 
         # --- Densities & Potential --- #
@@ -1467,8 +1481,8 @@ class MagnetizedSphericalGalaxyClusterModel(SphericalGalaxyClusterModel):
             progress_bar.update(1)
             progress_bar.set_description("Generating grid...")
 
-            radii = cls._construct_radial_grid(min_radius, max_radius, num_points, spacing=kwargs.pop("spacing", "log"))
-            fields["radii"] = radii
+            grid = cls._construct_radial_grid(min_radius, max_radius, num_points, spacing=kwargs.pop("spacing", "log"))
+            radii = grid["r"]
 
             # --- Create Density Fields --- #
             # (STEP 3)
@@ -1534,7 +1548,7 @@ class MagnetizedSphericalGalaxyClusterModel(SphericalGalaxyClusterModel):
             progress_bar.update(1)
             progress_bar.set_description("Calculating potential...")
 
-            fields["gravitational_field"] = G * fields["total_mass"] / (fields["radii"] ** 2)
+            fields["gravitational_field"] = G * fields["total_mass"] / (grid["r"] ** 2)
             fields["gravitational_potential"] = cls._compute_potential(
                 radii, fields["total_density"], fields["total_mass"]
             )
@@ -1597,7 +1611,7 @@ class MagnetizedSphericalGalaxyClusterModel(SphericalGalaxyClusterModel):
             progress_bar.close()
 
         # Return.
-        return cls.from_components(filename, fields, profiles, metadata, overwrite=overwrite)
+        return cls.from_components(filename, grid, fields, profiles, metadata, overwrite=overwrite)
 
     @classmethod
     def from_temperature_and_density(
@@ -1706,8 +1720,8 @@ class MagnetizedSphericalGalaxyClusterModel(SphericalGalaxyClusterModel):
             progress_bar.update(1)
             progress_bar.set_description("Creating grid...")
 
-            radii = cls._construct_radial_grid(min_radius, max_radius, num_points, spacing=kwargs.pop("spacing", "log"))
-            fields["radii"] = radii
+            grid = cls._construct_radial_grid(min_radius, max_radius, num_points, spacing=kwargs.pop("spacing", "log"))
+            radii = grid["r"]
 
             # --- Step 3: Evaluate profiles --- #
             # This section evaluates the gas density and temperature profiles
@@ -1778,6 +1792,7 @@ class MagnetizedSphericalGalaxyClusterModel(SphericalGalaxyClusterModel):
 
         return cls.from_components(
             filename,
+            grid,
             fields,
             profiles,
             metadata=metadata,
@@ -1885,8 +1900,8 @@ class MagnetizedSphericalGalaxyClusterModel(SphericalGalaxyClusterModel):
 
             # --- Step 2: Construct radial grid --- #
             # This section constructs a radial grid for the model.
-            radii = cls._construct_radial_grid(min_radius, max_radius, num_points, spacing=kwargs.pop("spacing", "log"))
-            fields["radii"] = radii
+            grid = cls._construct_radial_grid(min_radius, max_radius, num_points, spacing=kwargs.pop("spacing", "log"))
+            radii = grid["r"]
             progress_bar.update(1)
             progress_bar.set_description("Building profile fields...")
 
@@ -1966,6 +1981,7 @@ class MagnetizedSphericalGalaxyClusterModel(SphericalGalaxyClusterModel):
 
         return cls.from_components(
             filename,
+            grid,
             fields,
             profiles,
             metadata=metadata,
