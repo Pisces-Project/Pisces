@@ -87,6 +87,59 @@ class Grid(ABC):
         """
         self.__coordinate_system__: CoordinateSystem = coordinate_system
 
+    def _configure_units(self, units: Optional[dict[str, Union[str, unyt.Unit]]]):
+        """
+        Configure the units of the grid.
+
+        This method sets the ``__units__`` attribute, a dictionary mapping each
+        axis name to its corresponding unit.
+
+        All axes, including both active and filled axes, must have a unit.
+        If a unit is missing, it is filled with the dimensionless unit (i.e., "").
+
+        Parameters
+        ----------
+        units : dict of str -> (str or unyt.Unit)
+            A dictionary mapping axis names to unit strings or Unit objects.
+
+        Raises
+        ------
+        ValueError
+            If any axis in `units` is not in the coordinate system.
+        TypeError
+            If a unit is not a string or a `unyt.Unit` object.
+        """
+        # Ensure that we have a units dictionary to work with,
+        # even if the user passed through a `None` instance.
+        units = units if units is not None else {}
+
+        # Extract the axis names from the coordinate system. This
+        # is run after the coordinate system has been configured.
+        # Then generate the dictionary that will contain our final
+        # units.
+        axis_names = self.__coordinate_system__.axes
+        unit_dict: dict[str, unyt.Unit] = {}
+
+        # For each of the axes in the coordinate system, we sweep
+        # through the dictionary and extract / process the provided
+        # units.
+        for axis in axis_names:
+            # Fetch the user provided unit or declare it dimensionless.
+            value = units.get(axis, "")
+
+            # Coerce to a unit object.
+            if isinstance(value, str):
+                try:
+                    unit_dict[axis] = unyt.Unit(value)
+                except Exception as e:
+                    raise ValueError(f"Invalid unit string for axis '{axis}': {value}") from e
+            elif isinstance(value, unyt.Unit):
+                unit_dict[axis] = value
+            else:
+                raise TypeError(f"Unit for axis '{axis}' must be a string or unyt.Unit, got {type(value)}.")
+
+        self.__units__ = unit_dict
+
     def _configure_axes_and_fills(self, axes: Union[str, tuple[str, ...]], fill_values: dict[str, Any] = None):
         """
         Configure the axes and fill values of the grid using axis labels.
@@ -99,8 +152,7 @@ class Grid(ABC):
         __axes__ : tuple of str
             Names of the axes included in the grid. These must be valid
             axis labels from the coordinate system in question.
-
-        __fill_values__ : dict of str, Any
+        __fill_values__ : dict of str, ~unyt.array.unyt_quantity
             Fill values for the axes excluded from the grid.
 
 
@@ -112,8 +164,7 @@ class Grid(ABC):
             - A tuple of axis names (e.g., ("r", "z")).
             - The string 'all' to include all axes from the coordinate system.
 
-        fill_values : dict[str, Any], optional
-
+        fill_values : dict, optional
             A dictionary mapping excluded axis names to constant fill values.
 
         Raises
@@ -127,7 +178,8 @@ class Grid(ABC):
         # system so that we can validate the input.
         all_axes = self.__coordinate_system__.axes
 
-        # Normalize input axes.
+        # Normalize input axes. We need to look for either
+        # a list / tuple of strings for the axes or we need to get 'all'.
         if isinstance(axes, str):
             if axes.lower() == "all":
                 axes_tuple = tuple(all_axes)
@@ -167,51 +219,19 @@ class Grid(ABC):
                 messages.append(f"Unexpected fill values for axes not being filled: {sorted(extra)}.")
             raise ValueError(" ".join(messages))
 
-        # Set the __fill_values__ attribute.
-        self.__fill_values__: dict[str, Any] = fill_values.copy()
+        # Set the __fill_values__ attribute. To do this, we'll cycle through
+        # and either assign units or convert units.
+        self.__fill_values__ = {}
 
-    def _configure_units(self, units: Optional[dict[str, Union[str, unyt.Unit]]]):
-        """
-        Configure the units of the grid.
-
-        This method sets the ``__units__`` attribute, a dictionary mapping each
-        axis name to its corresponding unit.
-
-        All axes, including both active and filled axes, must have a unit.
-        If a unit is missing, it is filled with the dimensionless unit (i.e., "").
-
-        Parameters
-        ----------
-        units : dict of str -> (str or unyt.Unit)
-            A dictionary mapping axis names to unit strings or Unit objects.
-
-        Raises
-        ------
-        ValueError
-            If any axis in `units` is not in the coordinate system.
-        TypeError
-            If a unit is not a string or a `unyt.Unit` object.
-        """
-        from unyt import Unit
-
-        units = units if units is not None else {}
-
-        axis_names = self.__coordinate_system__.axes
-        unit_dict: dict[str, unyt.Unit] = {}
-
-        for axis in axis_names:
-            value = units.get(axis, "")
-            if isinstance(value, str):
-                try:
-                    unit_dict[axis] = Unit(value)
-                except Exception as e:
-                    raise ValueError(f"Invalid unit string for axis '{axis}': {value}") from e
-            elif isinstance(value, Unit):
-                unit_dict[axis] = value
+        for fv_key, fv_value in fill_values.items():
+            if hasattr(fv_value, "units"):
+                # This fill value has units so we want to
+                # coerce them to the correct units.
+                self.__fill_values__[fv_key] = fv_value.to(self.__units__[fv_key])
             else:
-                raise TypeError(f"Unit for axis '{axis}' must be a string or unyt.Unit, got {type(value)}.")
-
-        self.__units__ = unit_dict
+                # This fill value has no units so we want to
+                # coerce it to a unyt quantity with the correct units.
+                self.__fill_values__[fv_key] = fv_value * self.__units__[fv_key]
 
     @abstractmethod
     def _configure_grid_attributes(self, *args, **kwargs):
@@ -266,6 +286,11 @@ class Grid(ABC):
         # set the __coordinate_system__ attribute.
         self._configure_coordinate_system(coordinate_system)
 
+        # With the coordinate system in place, we can instantiate
+        # the units for each of the axes and ensure that units are
+        # provided for all of them.
+        self._configure_units(units)
+
         # With the coordinate system configured, we can now handle
         # the axes and the fill values.
         self._configure_axes_and_fills(
@@ -290,10 +315,6 @@ class Grid(ABC):
         # we can proceed to configure the fill values so that we
         # don't retain any units.
         self._configure_units(units)
-
-        for axis in self.__fill_values__:
-            if hasattr(self.__fill_values__[axis], "units"):
-                self.__fill_values__[axis] = self.__fill_values__[axis].to_value(self.__units__[axis])
 
         # --- GRID-SPECIFIC INITIALIZATION --- #
         # At this stage, we start performing configuration that
@@ -325,6 +346,13 @@ class Grid(ABC):
         # we can pass on to the other cases more easily.
         if key is Ellipsis:
             return self.get_meshgrid(indexing="ij")
+
+        # Allow users to fetch a string of the coordinate array.
+        if isinstance(key, str):
+            if key in self.__coordinate_system__.axes:
+                return self.get_axis_array(key)
+            else:
+                raise KeyError(f"Axis '{key}' not found in coordinate system axes {self.__coordinate_system__.axes}.")
 
         # Handle the case where the key is a masking array. This might either
         # be an array of indices or it might be a boolean mask. Either way,
@@ -383,7 +411,9 @@ class Grid(ABC):
             yield tuple(coord)
 
     def __array__(self, dtype=None):
-        array = np.stack(self.get_meshgrid(), axis=-1)
+        # Return a stacked array of coordinates. This (because of the
+        # stacking) will strip units off.
+        array = np.stack(tuple(c.d for c in self.get_meshgrid()), axis=-1)
         return array.astype(dtype) if dtype is not None else array
 
     # ============================== #
@@ -492,7 +522,7 @@ class Grid(ABC):
     # We need to be able to take a grid cell's indices and determine the
     # coordinate of the cell.
     @abstractmethod
-    def _convert_slice_to_coordinates(self, axis: int, slc: slice) -> np.ndarray:
+    def _convert_slice_to_coordinates(self, axis: int, slc: slice) -> unyt.unyt_array:
         """
         Convert a slice along a given axis into coordinate values.
 
@@ -505,12 +535,12 @@ class Grid(ABC):
 
         Returns
         -------
-        np.ndarray
+        ~unyt.array.unyt_array
             1D array of coordinates corresponding to the given slice.
         """
         raise NotImplementedError
 
-    def get_axis_coordinate_array(self, axis: Union[int, str], slc: slice, units: bool = False) -> np.ndarray:
+    def get_axis_coordinate_array(self, axis: Union[int, str], slc: slice) -> unyt.unyt_array:
         """
         Return the coordinate values along a single axis for a given slice.
 
@@ -520,27 +550,18 @@ class Grid(ABC):
             The index or name of the axis to extract coordinates for.
         slc : slice
             A slice object specifying the indices along the axis to extract.
-        units: bool
-            If ``True``, then the result will carry the values specified in the
-            units of the grid (:attr:`units`). If ``False`` (default), the result
-            will be a plain numpy array without units.
 
         Returns
         -------
-        np.ndarray
+        unyt.array.unyt_array
             1D array of coordinate values for the selected slice along the axis.
         """
         if isinstance(axis, str):
             axis = self.__axes__.index(axis)
-
         out = self._convert_slice_to_coordinates(axis, slc)
+        return out * self.units[axis]
 
-        if units:
-            return out * self.units[axis]
-        else:
-            return out
-
-    def get_axis_array(self, axis: Union[int, str], units: bool = False) -> np.ndarray:
+    def get_axis_array(self, axis: Union[int, str]) -> unyt.unyt_array:
         """
         Return the full coordinate array for a single axis.
 
@@ -548,21 +569,15 @@ class Grid(ABC):
         ----------
         axis : int or str
             The index or name of the axis.
-        units: bool
-            If ``True``, then the result will carry the values specified in the
-            units of the grid (:attr:`units`). If ``False`` (default), the result
-            will be a plain numpy array without units.
 
         Returns
         -------
-        np.ndarray
+        ~unyt.array.unyt_array
             1D array of coordinate values for the entire axis.
         """
-        return self.get_axis_coordinate_array(axis, slice(None), units=units)
+        return self.get_axis_coordinate_array(axis, slice(None))
 
-    def get_axis_arrays(
-        self, axes: Optional[Sequence[Union[int, str]]] = None, units: bool = False
-    ) -> tuple[np.ndarray, ...]:
+    def get_axis_arrays(self, axes: Optional[Sequence[Union[int, str]]] = None) -> tuple[unyt.unyt_array, ...]:
         """
         Return 1D coordinate arrays for one or more axes.
 
@@ -571,22 +586,20 @@ class Grid(ABC):
         axes : sequence of str or int, optional
             The axes for which to retrieve coordinate arrays. If not provided,
             all active axes are used.
-        units: bool
-            If ``True``, then the result will carry the values specified in the
-            units of the grid (:attr:`units`). If ``False`` (default), the result
-            will be a plain numpy array without units.
 
         Returns
         -------
-        tuple of np.ndarray
+        tuple of unyt.unyt_array
             Tuple of 1D arrays, one for each axis specified.
         """
         axes = axes if axes is not None else self.__axes__
-        return tuple(self.get_axis_array(ax, units=units) for ax in axes)
+        return tuple(self.get_axis_array(ax) for ax in axes)
 
     def get_coordinates_slice(
-        self, *slcs: slice, axes: Optional[Sequence[str]] = None, units: bool = False
-    ) -> tuple[np.ndarray, ...]:
+        self,
+        *slcs: slice,
+        axes: Optional[Sequence[str]] = None,
+    ) -> tuple[unyt.unyt_array, ...]:
         """
         Return coordinate values for a sliced region of the grid.
 
@@ -598,14 +611,10 @@ class Grid(ABC):
         axes : sequence of str, optional
             The axes along which the slices apply. If not provided, all active axes
             are assumed.
-        units: bool
-            If ``True``, then the result will carry the values specified in the
-            units of the grid (:attr:`units`). If ``False`` (default), the result
-            will be a plain numpy array without units.
 
         Returns
         -------
-        tuple of np.ndarray
+        tuple of ~unyt.array.unyt_array
             Coordinate arrays (1D) for each axis in the full coordinate system.
             Axes not included in `axes` are filled with the constant fill values.
         """
@@ -617,22 +626,19 @@ class Grid(ABC):
         for ax_name in self.__coordinate_system__.__AXES__:
             if ax_name in axes:
                 idx = axes.index(ax_name)
-                coords.append(self.get_axis_coordinate_array(ax_name, slcs[idx], units=units))
+                coords.append(self.get_axis_coordinate_array(ax_name, slcs[idx]))
             else:
-                v = self.__fill_values__[ax_name]
-
-                if units:
-                    v = v * self.units[ax_name]
-                else:
-                    pass
-
+                v = self.__fill_values__[ax_name] * self.units[ax_name]
                 coords.append(v)
 
         return tuple(coords)
 
     def get_meshgrid_slice(
-        self, *slcs: slice, axes: Optional[Sequence[str]] = None, indexing: str = "ij"
-    ) -> tuple[np.ndarray, ...]:
+        self,
+        *slcs: slice,
+        axes: Optional[Sequence[str]] = None,
+        indexing: str = "ij",
+    ) -> tuple[unyt.unyt_array, ...]:
         """
         Return a meshgrid of coordinates for a sliced region of the grid.
 
@@ -649,14 +655,20 @@ class Grid(ABC):
 
         Returns
         -------
-        tuple of np.ndarray
+        tuple of ~unyt.array.unyt_array
             A tuple of N-dimensional arrays forming the meshgrid of coordinates,
             one array for each axis in the full coordinate system.
         """
         coords_1d = self.get_coordinates_slice(*slcs, axes=axes)
-        return np.meshgrid(*coords_1d, indexing=indexing)
 
-    def get_meshgrid(self, axes: Optional[Sequence[str]] = None, indexing: str = "ij") -> tuple[np.ndarray, ...]:
+        coords_1d_units, coords_1d_arrays = ([c.units for c in coords_1d], [c.d for c in coords_1d])
+
+        return tuple(
+            mgrid * units
+            for mgrid, units in zip(np.meshgrid(*coords_1d_arrays, indexing=indexing), coords_1d_units, strict=False)
+        )
+
+    def get_meshgrid(self, axes: Optional[Sequence[str]] = None, indexing: str = "ij") -> tuple[unyt.unyt_array, ...]:
         """
         Return the full meshgrid of coordinates for the specified axes.
 
@@ -670,7 +682,7 @@ class Grid(ABC):
 
         Returns
         -------
-        tuple of np.ndarray
+        tuple of ~unyt.array.unyt_array
             A tuple of N-dimensional arrays forming the full coordinate meshgrid.
         """
         axes = axes if axes is not None else self.__axes__
@@ -717,10 +729,10 @@ class Grid(ABC):
             the coordinate system. Each row represents the coordinates of one point.
         """
         coords = self.get_meshgrid(indexing="ij")
-        flat = [c.ravel() for c in coords]
+        flat = [c.d.ravel() for c in coords]
         return np.stack(flat, axis=-1)  # shape (N_points, N_dims)
 
-    def get_coordinate_dict(self, meshgrid: bool = False) -> dict[str, np.ndarray]:
+    def get_coordinate_dict(self, meshgrid: bool = False) -> dict[str, unyt.unyt_array]:
         """
         Return coordinate arrays in dictionary form with axis names as keys.
 
@@ -731,7 +743,7 @@ class Grid(ABC):
 
         Returns
         -------
-        dict of str -> np.ndarray
+        dict of str -> unyt.array.unyt_array
             A dictionary mapping axis names to either 1D or meshgrid arrays
             of coordinates, depending on the value of `meshgrid`.
         """
