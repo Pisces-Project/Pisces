@@ -15,6 +15,7 @@ import h5py
 import numpy as np
 from unyt import unyt_array
 
+from pisces.geometry.grids.utils import load_grid_from_hdf5_group
 from pisces.profiles.base import BaseProfile
 from pisces.utilities.io_tools import HDF5Serializer
 from pisces.utilities.log import LogDescriptor
@@ -24,6 +25,10 @@ from .utils import ModelConfig
 
 if TYPE_CHECKING:
     from logging import Logger
+
+    from pisces._generic import Registry
+    from pisces.geometry.coordinates.base import CoordinateSystem
+    from pisces.geometry.grids.base import Grid
 
 
 class BaseModel(_HookTools, ABC):
@@ -47,6 +52,7 @@ class BaseModel(_HookTools, ABC):
         /
         ├── FIELDS/        # Physical field arrays (e.g., density, temperature)
         ├── PROFILES/      # Serialized analytic profile definitions
+        ├── GRID/          # The spatial grid for the model.
         └── attrs/         # Model metadata and identity tags
 
     Each subclass is expected to match this layout and may define additional groups
@@ -55,6 +61,7 @@ class BaseModel(_HookTools, ABC):
 
     Access Patterns
     ---------------
+    TODO: ensure correct with grid structure.
     This class supports dictionary-like access and assignment:
 
     .. code-block:: python
@@ -68,6 +75,7 @@ class BaseModel(_HookTools, ABC):
 
     Subclassing Guidelines
     ----------------------
+    TODO: ensure correct with grid structure.
     To implement a new model type:
 
     1. Subclass `BaseModel` and define the appropriate sampling or analysis methods.
@@ -164,8 +172,8 @@ class BaseModel(_HookTools, ABC):
           as a string parsable by `unyt.Unit`. If no units are found, the field is treated
           as unitless.
 
-        Field arrays should be broadcastable to the model's spatial grid and are typically
-        1D, 2D, or 3D arrays depending on model resolution and dimensionality.
+        Field arrays **must** have a shape exactly matching the model's spatial grid shape,
+        unless explicitly documented as a scalar field or a reduced representation.
 
         Developer Guidance
         ------------------
@@ -175,17 +183,23 @@ class BaseModel(_HookTools, ABC):
         - For each dataset:
             * Extract the raw data using slicing (`[...]`).
             * Check for a `units` attribute and apply it using `unyt_array(...)`.
+            * Validate the array shape against `self.__grid__.shape`.
         - Store each field under its corresponding name in a `dict`.
 
-        Logging
-        -------
-        A debug log message will be emitted for each field successfully loaded.
-        If the `/FIELDS` group is missing entirely, a warning is issued.
+        Shape Validation
+        ----------------
+        This method enforces that all field arrays have shapes matching the model grid.
+        If a mismatch is detected, a `ValueError` is raised to prevent inconsistent data loads.
 
         Returns
         -------
-        dict of str, unyt_array
+        dict of str, unyt_array or ndarray
             A dictionary containing all loaded field arrays, indexed by field name.
+
+        Raises
+        ------
+        ValueError
+            If a field's shape does not match the grid shape.
 
         Examples
         --------
@@ -196,8 +210,6 @@ class BaseModel(_HookTools, ABC):
                 ├── temperature   [shape: (128,), units: "keV"]
                 └── pressure      [shape: (128,), units: "dyne/cm**2"]
 
-        This would result in:
-
         .. code-block:: python
 
             {
@@ -207,22 +219,63 @@ class BaseModel(_HookTools, ABC):
             }
 
         """
-        # Create the buffer into which we'll dump the data.
+        # Generate a fields dictionary to hold the fields that we load. This
+        # is what will be returned at the end of the method.
         fields = {}
 
-        # Now identify the FIELDS group and start rolling.
-        if "FIELDS" in self.__handle__:
-            for field_name, field_data in self.__handle__["FIELDS"].items():
-                # fetch units.
-                units = field_data.attrs.get("units", None)
-
-                if units is None:
-                    fields[field_name] = np.array(field_data[...])
-                else:
-                    fields[field_name] = unyt_array(field_data[...], units)
-                self.logger.debug("Loaded field: '%s'. Units=%s", field_name, str(units))
-        else:
+        # Check that the FIELDS group exists. If it does not, we log a warning
+        # and return an empty dictionary.
+        if "FIELDS" not in self.__handle__:
             self.logger.warning("No `FIELDS` group found in model file '%s'.", self.__path__)
+            return fields
+
+        # Require that the grid is already loaded for shape checking. This is
+        # somewhat redundant, but subclasses might screw up the ordering.
+        if not hasattr(self, "__grid__"):
+            raise RuntimeError(
+                "Grid must be loaded before reading fields to perform shape validation.\n"
+                "This error likely indicates that this subclass is loading the fields before the grid..."
+            )
+        expected_shape = self.__grid__.shape
+
+        for field_name, field_data in self.__handle__["FIELDS"].items():
+            # Perform the check on the shape. We require that the
+            # leading shape of the dataset matches the grid shape, but
+            # the trailing shape can be anything (e.g., for vector fields).
+            field_shape = field_data.shape
+            field_ndim = field_data.ndim
+
+            if len(field_shape) < len(expected_shape):
+                raise ValueError(f"Field `{field_name}` has dimension {field_ndim}, but grid has larger dimension.")
+            if field_shape[: len(expected_shape)] != expected_shape:
+                raise ValueError(
+                    f"Field '{field_name}' has leading shape {field_shape[: len(expected_shape)]}, "
+                    f"expected {expected_shape} to match grid."
+                )
+
+            # The shape check has passed. Now we can just load the data.
+            units = field_data.attrs.get("units", None)
+
+            # Convert to unyt_array if units are present
+            if units is None:
+                arr = np.array(field_data[...])
+            else:
+                arr = unyt_array(field_data[...], units)
+
+            # Validate shape
+            if arr.shape != expected_shape:
+                self.logger.error(
+                    "Field '%s' has shape %s but expected grid shape %s.",
+                    field_name,
+                    arr.shape,
+                    expected_shape,
+                )
+                raise ValueError(
+                    f"Field '{field_name}' has shape {arr.shape}, expected {expected_shape} to match grid."
+                )
+
+            fields[field_name] = arr
+            self.logger.debug("Loaded field: '%s'. Units=%s", field_name, str(units))
 
         return fields
 
@@ -374,6 +427,54 @@ class BaseModel(_HookTools, ABC):
 
         return profiles
 
+    def __read_grid__(self, registry: "Registry" = None) -> "Grid":
+        """Load the spatial grid from the `/GRID` group of the Pisces model file.
+
+        This method reads the spatial grid stored in the model's HDF5 file and
+        reconstructs it using :func:`pisces.geometry.grids.utils.load_grid_from_hdf5_group`.
+
+        Pisces Format Standard
+        ----------------------
+        The model's spatial grid is stored under the `/GRID` group in the HDF5 file.
+        This group contains the serialized representation of a :class:`~pisces.geometry.grids.base.Grid`
+        object.
+
+        The :func:`~pisces.geometry.grids.utils.load_grid_from_hdf5_group` function
+        handles the deserialization and instantiation of the appropriate grid subclass.
+
+        Parameters
+        ----------
+        registry : Registry, optional
+            Optional class registry used to look up the correct grid subclass when
+            deserializing. If ``None``, the default Pisces registry will be used.
+
+        Returns
+        -------
+        Grid
+            A fully instantiated :class:`~pisces.geometry.grids.base.Grid` object.
+
+        Raises
+        ------
+        ValueError
+            If the `/GRID` group is missing from the model file.
+        RuntimeError
+            If an error occurs during grid deserialization.
+        """
+        # Ensure that the grid is present in the HDF5 file. If it
+        # is not, then we cannot proceed.
+        if "GRID" not in self.__handle__:
+            raise ValueError(f"No `GRID` group found in model file '{self.__path__}'.")
+
+        # Attempt to load the grid and raise an error if we fail.
+        try:
+            grid = load_grid_from_hdf5_group(self.__handle__["GRID"], registry=registry)
+            self.logger.debug("Loaded grid from model file '%s'.", self.__path__)
+        except Exception as exp:
+            raise RuntimeError(f"Failed to load model grid due to an error: {exp}") from exp
+
+        # Pass it back to become an attribute.
+        return grid
+
     def __init__(self, filepath: str | Path, *args, **kwargs):
         """Load a Pisces model from an existing HDF5 file.
 
@@ -382,6 +483,7 @@ class BaseModel(_HookTools, ABC):
 
         - Metadata (from root attributes)
         - Analytical profiles (from ``/PROFILES``)
+        - The spatial grid (from ``/GRID``)
         - Physical field data (from ``/FIELDS``)
 
         Subclasses may extend loading behavior by overriding :meth:`__post_init__` or
@@ -426,6 +528,7 @@ class BaseModel(_HookTools, ABC):
         # these methods to customize the loading process.
         self.__metadata__: dict[str, Any] = self.__read_metadata__()
         self.__profiles__: dict[str, BaseProfile] = self.__read_profiles__()
+        self.__grid__: Grid = self.__read_grid__(registry=kwargs.pop("registry", None))
         self.__fields__: dict[str, unyt_array] = self.__read_fields__()
 
         # Allow subclass extensions
@@ -433,12 +536,13 @@ class BaseModel(_HookTools, ABC):
 
         # Log model load
         self.logger.info(
-            "Loaded model from '%s' [%s]: %d fields, %d profiles, %d metadata entries.",
+            "Loaded model from '%s' [%s]: %d fields, %d profiles, %d metadata entries, grid shape=%s.",
             str(self.__path__),
             self.__class__.__name__,
             len(self.__fields__),
             len(self.__profiles__),
             len(self.__metadata__),
+            self.__grid__.shape,
         )
 
     def __post_init__(self, *args, **kwargs):
@@ -505,6 +609,7 @@ class BaseModel(_HookTools, ABC):
         with h5py.File(filepath, mode="w") as handle:
             handle.create_group("FIELDS")
             handle.create_group("PROFILES")
+            handle.create_group("GRID")
 
             # Add the class name as an attribute on the file.
             handle.attrs["__model_class__"] = cls.__name__
@@ -517,25 +622,69 @@ class BaseModel(_HookTools, ABC):
     def from_components(
         cls,
         filepath: str | Path,
+        grid: "Grid",
         fields: dict[str, unyt_array | np.ndarray],
         profiles: dict[str, "BaseProfile"],
         metadata: dict[str, Any],
         overwrite: bool = False,
     ) -> "BaseModel":
-        """Create a Pisces model from in-memory fields, profiles, and metadata.
+        """Create and save a Pisces model from in-memory components.
+
+        This method assembles a fully specified model from its constituent parts—
+        spatial grid, physical fields, analytic profiles, and metadata—and writes
+        it to disk in Pisces HDF5 format. The resulting file can be loaded
+        directly using the class constructor.
+
+        The output file will follow the standard Pisces model layout:
+
+        .. code-block:: text
+
+            /
+            ├── FIELDS/        # Physical field arrays (e.g., density, temperature)
+            ├── PROFILES/      # Serialized analytic profile definitions
+            ├── GRID/          # Serialized spatial grid object
+            └── attrs/         # Model metadata and identity tags
 
         Parameters
         ----------
         filepath : str or Path
-            Path to the output HDF5 model file.
-        fields : dict of str to array
-            Dictionary of model field names to arrays (with or without units).
-        profiles : dict of str to BaseProfile
-            Dictionary of profile names to profile objects.
+            Path to the output HDF5 model file. If the file already exists and
+            ``overwrite`` is False, a :class:`FileExistsError` will be raised.
+
+        grid : ~pisces.geometry.grids.base.Grid
+            The spatial grid defining the model's geometry. This object must be a
+            subclass of :class:`~pisces.geometry.grids.base.Grid` and will be
+            serialized to the ``/GRID`` group via its
+            :meth:`~pisces.geometry.grids.base.Grid._save_grid_to_hdf5_group` method.
+
+        fields : dict of str, (unyt_array or numpy.ndarray)
+            Dictionary mapping field names to their corresponding arrays.
+
+            - **Keys**: Field names (e.g., ``"density"`` or ``"temperature"``)
+            - **Values**: Either a :class:`unyt.unyt_array` with units or a plain
+              :class:`numpy.ndarray` for unitless data.
+
+            Each array's leading shape must exactly match ``grid.shape``; additional
+            trailing dimensions (e.g., for vector/tensor components) are allowed.
+
+        profiles : dict of str -> BaseProfile
+            Dictionary mapping profile names to fully instantiated analytic profile
+            objects. Each profile must implement
+            :meth:`~pisces.profiles.base.BaseProfile.to_hdf5` for serialization.
+
         metadata : dict
-            Metadata dictionary to store in the file.
+            Dictionary of model metadata to store as root-level attributes in the
+            HDF5 file. This can include descriptive information, provenance tags,
+            and other auxiliary data. The following keys are generally recommended:
+
+            - ``"description"``: Short summary of the model
+            - ``"source"``: Origin or generating process
+            - ``"date_created"``: Will be set automatically if not provided
+            - ``"__model_class__"``: Will be set automatically to match ``cls.__name__``
+
         overwrite : bool, optional
-            Whether to overwrite the file if it already exists (default: False).
+            Whether to overwrite an existing file at ``filepath``. Defaults to
+            ``False``. If set to ``True``, any existing file will be replaced.
 
         Returns
         -------
@@ -543,23 +692,50 @@ class BaseModel(_HookTools, ABC):
             An instance of the model loaded from the saved file.
 
         """
+        # Construct a model skeleton at the required filepath so
+        # that the file exists and has the right structure.
         filepath = cls._construct_model_file_skeleton(filepath, overwrite=overwrite)
 
-        # -------------------------------------------------- #
-        # Add required metadata fields                       #
-        # -------------------------------------------------- #
+        # Insert the relevant required metadata into the metadata dictionary.
+        # From there, we just serialize the metadata dictionary and write it to
+        # disk.
         metadata["date_created"] = datetime.datetime.now().isoformat()
         metadata["__model_class__"] = cls.__name__
         metadata = cls.metadata_serializer.serialize_dict(metadata)
 
+        # Save the grid to disk using the .to_hdf5 method. This is
+        # abstracted down to the grid to allow saving consistently.
+        try:
+            grid.to_hdf5(filepath, group="GRID", overwrite=True)
+        except Exception as exp:
+            raise RuntimeError(f"Failed to save grid to model file due to an error: {exp}") from exp
+
+        # Now write all of the relevant data to disk vis-a-vis the HDF5 file.
         with h5py.File(filepath, "r+") as f:
             # Store metadata in root attributes
             for key, val in metadata.items():
                 f.attrs[key] = val
 
-            # Write fields
+            # Write fields and verify shapes.
             field_group = f["FIELDS"]
             for name, arr in fields.items():
+                # Start by verifying that the array shape matches the grid shape.
+                expected_shape = grid.shape
+                expected_ndim = len(expected_shape)
+                arr_shape = arr.shape
+                arr_ndim = arr.ndim
+
+                if arr_ndim < expected_ndim:
+                    raise ValueError(
+                        f"Field '{name}' has dimension {arr_ndim}, but grid has larger dimension {expected_ndim}."
+                    )
+                if arr_shape[:expected_ndim] != expected_shape:
+                    raise ValueError(
+                        f"Field '{name}' has leading shape {arr_shape[:expected_ndim]}, "
+                        f"expected {expected_shape} to match grid."
+                    )
+
+                # The consistency checks have passed. Now we can write the data.
                 data = arr.to_base().value if hasattr(arr, "to_base") else np.asarray(arr)
                 dset = field_group.create_dataset(name, data=data)
                 if hasattr(arr, "units"):
@@ -594,10 +770,8 @@ class BaseModel(_HookTools, ABC):
         """Allow for dictionary-like access to the model's fields."""
         if item in self.__fields__:
             return self.__fields__[item]
-        elif item in self.__profiles__:
-            return self.__profiles__[item]
-        elif item in self.__metadata__:
-            return self.__metadata__[item]
+        if item in self.__grid__.active_axes:
+            return self.__grid__.get_axis_array(axis=item, units=True)
         else:
             raise KeyError(f"Item '{item}' not found in model.")
 
@@ -605,16 +779,14 @@ class BaseModel(_HookTools, ABC):
         """Allow for dictionary-like setting of the model's fields."""
         if key in self.__fields__:
             self.__fields__[key] = value
-        elif key in self.__profiles__:
-            self.__profiles__[key] = value
-        elif key in self.__metadata__:
-            self.__metadata__[key] = value
+        if key in self.__grid__.active_axes:
+            raise KeyError(f"Cannot set grid axis '{key}' directly. Modify the grid object instead.")
         else:
             raise KeyError(f"Item '{key}' not found in model.")
 
     def __contains__(self, key):
         """Check if a key exists in the fields, profiles, or metadata."""
-        return key in self.__fields__ or key in self.__profiles__ or key in self.__metadata__
+        return key in self.__fields__
 
     def __len__(self):
         """Return the number of physical fields in the model."""
@@ -651,3 +823,18 @@ class BaseModel(_HookTools, ABC):
     def fields(self) -> dict[str, unyt_array | np.ndarray]:
         """Model field buffers."""
         return self.__fields__
+
+    @property
+    def grid(self) -> "Grid":
+        """The spatial grid of the model."""
+        return self.__grid__
+
+    @property
+    def coordinate_system(self) -> "CoordinateSystem":
+        """The coordinate system of the model's grid."""
+        return self.__grid__.coordinate_system
+
+    @property
+    def active_grid_axes(self) -> list[str]:
+        """List of active axes in the model's grid."""
+        return self.__grid__.active_axes
