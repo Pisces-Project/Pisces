@@ -136,246 +136,168 @@ independent of how the grid was constructed.
 Accessing Grid Coordinates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Once a grid has been constructed, Pisces provides a rich set of tools for accessing and manipulating
-coordinate information. This includes methods for slicing along a single axis, generating meshgrids,
-retrieving coordinate values for specific regions or the full grid, and mapping from indices to physical locations.
+Once constructed, a grid provides a complete, unit-aware description of its
+spatial layout. Pisces offers a consistent set of tools for retrieving this
+coordinate information in whatever form your workflow requires.
 
-Grids are indexable using standard NumPy-style indexing, and expose a variety of convenience methods
-for common coordinate operations.
+You can:
+
+- Slice along a **single axis** to obtain 1D coordinate arrays.
+- Generate **full meshgrids** of coordinates for the entire domain or for a subregion.
+- Retrieve coordinates for **specific regions** or **individual points**.
+- Map directly from **grid indices** to **physical locations**.
+- Flatten the entire grid into a list of coordinate vectors for vectorized operations.
+
+Grids are fully indexable using standard NumPy-style syntax, and also expose
+a family of convenience methods for common coordinate operations. Most coordinate
+outputs are returned as :class:`unyt.unyt_array` objects carrying the appropriate
+physical unit for each axis. The only exceptions are methods that must return a
+single stacked array spanning multiple axes (e.g., :meth:`get_flat_coordinates`
+or the :meth:`__array__` protocol), which return magnitudes only for unit
+consistency; in these cases you can consult :attr:`~geometry.grids.base.Grid.units`
+to recover per-axis units.
 
 Indexing into Grids
 ````````````````````````````````````````
 
 Pisces grids support intuitive indexing using square brackets, similar to NumPy arrays.
-This allows you to extract physical coordinates associated with one or more grid points
-directly from the grid object.
+This allows you to extract **physical coordinates** associated with one or more grid
+points directly from the grid object.
+
+All coordinate-returning index operations preserve **per-axis physical units**
+(using :class:`unyt.unyt_array`) wherever possible. The only exceptions are cases
+where results must be stacked into a single 2-D array containing heterogeneous
+units (e.g., flattened coordinate lists), or the :meth:`__array__` protocol
+(which always returns magnitudes for NumPy compatibility).
 
 Several indexing patterns are supported:
 
 .. code-block:: python
 
-    grid[3, 5]             # Returns the coordinate tuple at index (3, 5)
-    grid[:, 5]             # Returns a meshgrid slice at all x-values for fixed y=5
-    grid[...]              # Returns the full meshgrid (equivalent to grid.get_meshgrid())
-    grid[mask]             # Boolean mask of shape == grid.shape → returns matching coordinates
-    grid[index_array]      # Index array → returns coordinates from stacked meshgrid
+    grid[3, 5]             # Single point (tuple of unyt_quantities)
+    grid[:, 5]             # Meshgrid slice at all x-values for fixed y=5 (tuple of unyt_arrays)
+    grid[...]              # Full meshgrid (tuple of unyt_arrays), same as grid.get_meshgrid()
+    grid[mask]             # Boolean mask → magnitudes, shape (N, ndim), see note
+    grid[index_array]      # Integer index array → magnitudes, shape (..., ndim), see note
 
-The type and shape of the result depend on the structure of the index:
+The type and shape of the result depend on the index structure:
 
-- **Ellipsis (`...`)** returns the full meshgrid as a tuple of N-dimensional arrays, one per axis:
-
-  .. code-block:: python
-
-      grid[...]  # → (xg, yg, zg) each of shape grid.shape
-
-- **Tuple of integers** returns a single point's coordinates as a tuple:
+- **Ellipsis (``...``)** returns the full meshgrid as a tuple of N-D
+  :class:`unyt.unyt_array` objects, one per axis:
 
   .. code-block:: python
 
-      grid[3, 4]  # → (x, y)
+      xg, yg, zg = grid[...]  # each with shape == grid.shape, each carrying its axis unit
 
-- **Tuple containing slices** returns a meshgrid over the selected region:
-
-  .. code-block:: python
-
-      grid[:, 4]  # → meshgrid at all x for y = 4
-
-- **Boolean mask** must match ``grid.shape`` exactly. Returns an array with one coordinate vector per `True` entry:
+- **Tuple of integers** returns a tuple of scalar
+  :class:`unyt.unyt_quantity` values:
 
   .. code-block:: python
 
-      mask = np.random.rand(*grid.shape) > 0.5
-      coords = grid[mask]  # → shape (N, ndim)
+      grid[3, 4]  # → (x : kpc, y : kpc)
 
-- **Integer index arrays** are applied to the stacked meshgrid of shape ``grid.shape + (ndim,)``:
+- **Tuple containing slices** returns a tuple of
+  :class:`unyt.unyt_array` meshgrids for the selected region:
 
   .. code-block:: python
 
-      idx = np.array([[0, 0], [2, 3]])
-      coords = grid[idx]  # → shape (2, ndim)
+      xg, yg = grid[:, 4]  # xg, yg each carry axis units
+
+- **Boolean mask** must match ``grid.shape`` exactly. Returns a
+  **NumPy array of magnitudes** with shape ``(N, ndim)``, where each column
+  corresponds to an axis. Per-axis units are available from
+  :attr:`~geometry.grids.base.Grid.units`.
+
+- **Integer index arrays** are applied to the stacked meshgrid
+  (shape ``grid.shape + (ndim,)``). Returns a **NumPy array of magnitudes**
+  with shape determined by the index array. Per-axis units are available
+  from :attr:`~geometry.grids.base.Grid.units`.
 
 .. note::
 
-   All indexing operations return **physical coordinates**, including filled axes.
-   These are not indices or data values—they represent spatial positions in the coordinate system.
-
-In addition to indexing, there are also a number of different access patterns which are mediated through
-methods of the grid class.
+   Indexing that returns a tuple of coordinate arrays or scalars will always
+   include physical units. Indexing that must return a single N×D array
+   (mask or integer array) returns **magnitudes only** for unit consistency,
+   since heterogeneous units cannot be represented in a single array.
 
 Single Axis Coordinates
 ````````````````````````````````````````
 
-Grids expose several methods for retrieving **1D coordinate arrays** along individual axes.
-These are useful when working with profiles, line cuts, or when building meshgrids manually.
+Grids provide dedicated methods for retrieving **1D coordinate arrays**
+along individual axes. These methods always return results as
+:class:`unyt.unyt_array` objects carrying the appropriate physical unit
+for the axis in question:
 
-- :meth:`~geometry.grids.base.Grid.get_axis_coordinate_array`
-  Returns coordinate values along a **single axis** for a specified index range (slice).
+- :meth:`~geometry.grids.base.Grid.get_axis_coordinate_array` —
+  Return a 1D coordinate array for a **specified slice** along a single axis.
+  Useful for extracting a subset of coordinates without building a full meshgrid.
 
-- :meth:`~geometry.grids.base.Grid.get_axis_array`
-  Returns the **full 1D coordinate array** for a single axis.
+- :meth:`~geometry.grids.base.Grid.get_axis_array` —
+  Return the **full 1D coordinate array** for a single axis, covering the
+  entire extent of that axis in the grid.
 
-- :meth:`~geometry.grids.base.Grid.get_axis_arrays`
-  Returns a tuple of **1D coordinate arrays** for multiple axes.
-
-.. hint::
-
-    If you pass ``units=True`` to any of these methods, the returned arrays will carry physical units
-    as :class:`unyt.unyt_array` objects. This is useful for computations where unit consistency is important.
-
-    .. code-block:: python
-
-        grid.get_axis_array("x", units=True)
-        # → returns a unyt array like [1.0 kpc, 2.0 kpc, ..., 10.0 kpc]
+- :meth:`~geometry.grids.base.Grid.get_axis_arrays` —
+  Return a **tuple** of full 1D coordinate arrays for one or more axes.
+  If no axes are specified, all active axes are included.
 
 Sliced Region Coordinates
 ````````````````````````````````````````
 
-To retrieve coordinate values for a **sliced region** of the grid, use the method:
+:meth:`~geometry.grids.base.Grid.get_coordinates_slice`
+Return a **tuple of 1D** :class:`unyt.unyt_array` coordinate arrays for a
+user-specified sliced region of the grid.
 
-- :meth:`~geometry.grids.base.Grid.get_coordinates_slice`
-
-This method returns a **tuple of 1D coordinate arrays**, one for each axis in the grid's coordinate system.
-
-Each array corresponds to either:
-
-- The **sliced range** for an active axis (i.e., one that varies across the grid),
-- Or the **fixed value** for a filled (inactive) axis.
+- Each active axis varies along the slice and returns a coordinate array
+  in its own physical units.
+- Each filled (inactive) axis returns its constant value as a length-1
+  :class:`unyt.unyt_array` with the correct unit.
 
 Coordinate Meshgrids
 ````````````````````````````````````````
 
-Pisces provides two methods for generating meshgrids of physical coordinates:
+:meth:`~geometry.grids.base.Grid.get_meshgrid` and
+:meth:`~geometry.grids.base.Grid.get_meshgrid_slice`
+Return a **tuple of multidimensional** :class:`unyt.unyt_array` objects,
+one per axis, each carrying its corresponding physical unit.
 
-- :meth:`~geometry.grids.base.Grid.get_meshgrid`
-- :meth:`~geometry.grids.base.Grid.get_meshgrid_slice`
-
-Each method returns a tuple of multidimensional NumPy arrays—one per axis in the coordinate system.
-These arrays contain the physical coordinates of every point in the grid or subregion, and can be used
-to evaluate functions, define fields, or create visualizations.
-
-To generate a meshgrid over the entire domain:
-
-.. code-block:: python
-
-    from pisces.geometry.coordinates import Cartesian2DCoordinateSystem
-    from pisces.geometry.grids.core import GenericGrid
-    import numpy as np
-
-    csys = Cartesian2DCoordinateSystem()
-    x = np.linspace(0, 10, 5)
-    y = np.linspace(0, 20, 3)
-
-    grid = GenericGrid(
-        coordinate_system=csys,
-        x, y,
-        axes=["x", "y"],
-        units={"x": "km", "y": "km"}
-    )
-
-    xg, yg = grid.get_meshgrid()
-
-    print(xg.shape)  # (5, 3)
-    print(yg.shape)  # (5, 3)
-
-The default indexing convention is ``"ij"`` (matrix-style indexing). You can also specify ``indexing="xy"`` if needed.
-
-To generate a meshgrid over just a portion of the grid, use :meth:`~geometry.grids.base.Grid.get_meshgrid_slice`:
-
-.. code-block:: python
-
-    xg, yg = grid.get_meshgrid_slice(slice(1, 4), slice(0, 2))
-
-    print(xg.shape)  # (3, 2)
-    print(yg.shape)  # (3, 2)
-
-This returns only the coordinates within the specified slices along each axis.
-
-If the grid was constructed with one or more *filled* axes (i.e., constant-valued dimensions),
-those axes will still be represented in the output of ``get_meshgrid`` or ``get_meshgrid_slice``.
-The coordinate array for a filled axis will be a constant array, broadcast to the full shape.
-
-For example, if using a cylindrical grid with ``r`` and ``z`` as active axes and ``theta`` fixed:
-
-.. code-block:: python
-
-    rg, thetag, zg = grid.get_meshgrid()
-    # thetag is a constant array filled with the fixed value
+- Active axes vary across the meshgrid according to the grid shape or
+  specified slices.
+- Filled axes appear as constant arrays, broadcast to match the output shape.
 
 Index Meshgrids
 ````````````````````````````````````````
 
-If you're interested in working with **grid indices** rather than physical coordinates, Pisces provides two
-convenient methods:
-
-- :meth:`~geometry.grids.base.Grid.get_index_arrays`
-- :meth:`~geometry.grids.base.Grid.get_index_meshgrid`
-
-These return arrays of integer indices that correspond to the grid’s structure.
-
-To retrieve 1D index arrays for each axis:
-
-.. code-block:: python
-
-    i, j = grid.get_index_arrays()
-
-To retrieve a full meshgrid of index values (with the same shape as the grid):
-
-.. code-block:: python
-
-    i, j = grid.get_index_meshgrid()
-
-This is particularly useful for evaluating functions or assigning values based on location in the grid.
-
-You can also specify the indexing convention (``"ij"`` or ``"xy"``) just like with coordinate meshgrids.
+:meth:`~geometry.grids.base.Grid.get_index_arrays` and
+:meth:`~geometry.grids.base.Grid.get_index_meshgrid`
+Return **integer index arrays** (no units) describing the grid’s logical
+structure rather than its physical coordinates.
 
 Flattened Coordinates
 ````````````````````````````````````````
 
-To access the full grid as a **flattened list of coordinates**, use:
+:meth:`~geometry.grids.base.Grid.get_flat_coordinates`
+Return a **NumPy array of magnitudes** with shape ``(N_points, ndim)``:
 
-- :meth:`~geometry.grids.base.Grid.get_flat_coordinates`
+- ``N_points`` is the total number of points in the grid.
+- ``ndim`` is the total number of axes in the coordinate system.
 
-This method returns a 2D NumPy array of shape ``(N_points, ndim)``, where:
-
-- ``N_points`` is the total number of grid points (i.e., ``np.prod(grid.shape)``),
-- ``ndim`` is the number of dimensions in the coordinate system.
-
-Each row in the result corresponds to a point in the grid:
-
-.. code-block:: python
-
-    flat = grid.get_flat_coordinates()
-    print(flat.shape)  # (N_points, ndim)
-
-    print(flat[0])     # (x0, y0, z0)
-
-This is ideal for vectorized computations, function evaluations, or exporting coordinates to other systems.
+Each column corresponds to one axis in the coordinate system. Because
+heterogeneous units cannot be stored in a single numeric array, the
+result contains magnitudes only; per-axis units are available from
+:attr:`~geometry.grids.base.Grid.units`.
 
 Coordinate Dictionaries
 ````````````````````````````````````````
 
-To access coordinates in a **dictionary form**, mapping axis names to coordinate arrays, use:
+:meth:`~geometry.grids.base.Grid.get_coordinate_dict`
+Return a dictionary mapping each axis name to a coordinate array with
+units preserved.
 
-- :meth:`~geometry.grids.base.Grid.get_coordinate_dict`
+- If ``meshgrid=False`` (default), each value is a 1D
+  :class:`unyt.unyt_array` covering that axis.
+- If ``meshgrid=True``, each value is an N-D :class:`unyt.unyt_array`
+  matching the shape of the full coordinate meshgrid.
 
-This is helpful when working with plotting libraries or modeling frameworks that expect named axes.
-
-Example usage:
-
-.. code-block:: python
-
-    coords = grid.get_coordinate_dict()
-    print(coords["x"])  # 1D array or meshgrid for the x-axis
-
-By default, this returns 1D arrays for each axis. To get full meshgrid arrays:
-
-.. code-block:: python
-
-    mesh_coords = grid.get_coordinate_dict(meshgrid=True)
-    print(mesh_coords["x"].shape)  # e.g., (Nx, Ny, ...)
-
-These dictionaries ensure that the axis labels remain attached to their corresponding arrays, which improves
-clarity when working with multi-dimensional data.
 
 Generating Field Arrays
 ^^^^^^^^^^^^^^^^^^^^^^^^
