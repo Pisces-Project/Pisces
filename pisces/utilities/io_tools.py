@@ -6,9 +6,10 @@ frequently in various parts of the project.
 
 import json
 from abc import ABC, abstractmethod
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from typing import TYPE_CHECKING, Any, Union
 
+import numpy as np
 import unyt
 
 if TYPE_CHECKING:
@@ -149,140 +150,144 @@ class HDF5Serializer:
     }
 
     @classmethod
-    def serialize_data(cls, data: Any) -> str:
+    def _to_jsonable(cls, obj: Any, _path="root"):
+        """Recursively convert `obj` into a JSON-serializable Python structure.
+
+        Notes
+        -----
+        - This returns only JSON-native container/scalar
+          types: dict, list, str, int, float, bool, None.
+        - Custom types registered in `__REGISTRY__` are encoded
+          as dicts with a `"tag"` plus payload.
+        - Strings are treated as primitives (never iterated like sequences).
+        - Actual JSON encoding (quoting/escaping) is done by `json.dumps` elsewhere.
         """
-        Serialize a Python object into a JSON string suitable for storing as an HDF5 attribute.
-
-        This method first checks if the input object matches any of the types
-        registered in the class's `__REGISTRY__`. If a match is found, the
-        corresponding custom serializer is used to convert the object into a
-        JSON-serializable dictionary, and a `"tag"` field is added to identify
-        the object's type for deserialization.
-
-        If no custom serializer is found, the method attempts to serialize the
-        object directly using the default `json.dumps()` behavior. If this fails,
-        an error is raised, indicating that the data requires a custom serializer.
-
-        Parameters
-        ----------
-        data : Any
-            The Python object to serialize.
-
-        Returns
-        -------
-        str
-            A JSON string representing the serialized object.
-
-        Raises
-        ------
-        ValueError
-            If the object cannot be serialized to JSON.
-        """
-        # Search for a match to the data type to see
-        # if we have a custom serializer for it.
+        # Start by processing matches to custom (registered) serialization types.
+        # If the object is an instance of any registered type, serialize it and inject a "tag".
         for _type, (tag, serializer, _) in cls.__REGISTRY__.items():
-            if isinstance(data, _type):
-                # We found a serializer for this type. We just
-                # dump from the serializer and return it.
-                return json.dumps({"tag": tag, **serializer(data)})
+            if isinstance(obj, _type):
+                payload = serializer(obj)
+                if not isinstance(payload, dict):
+                    raise ValueError(f"{_path}: custom serializer for {type(obj)} must return a dict")
+                # Merge the payload with a required "tag" to identify the type on load
+                return {"tag": tag, **payload}
 
-        # We didn't find a custom serializer, so we now
-        # need to just load the data from json. If this fails,
-        # its because we failed to catch data that needed to be
-        # serialized, so we raise an error.
+        # These are directly JSON-serializable and don't need any transformation.
+        if obj is None or isinstance(obj, (bool, int, float, str)):
+            return obj
+
+        # Convert numpy scalars to Python scalars, and numpy ndarrays to nested lists.
+        if isinstance(obj, np.generic):
+            return obj.item()
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+
+        # Now start handling instances where recursive checking becomes necessary.
+        # HDF5 attribute keys must be strings, so enforce that here.
+        if isinstance(obj, dict):
+            out = {}
+            for key, value in obj.items():
+                if not isinstance(key, str):
+                    raise TypeError(f"{_path}: HDF5 attribute keys must be strings; got key type {type(key)}")
+                # Recurse into each value; add a breadcrumb path for helpful error messages
+                out[key] = cls._to_jsonable(value, _path=f"{_path}.{key}")
+            return out
+
+        # Convert any non-string, non-bytes sequence to a plain JSON list.
+        if isinstance(obj, Sequence) and not isinstance(obj, (str, bytes, bytearray)):
+            return [cls._to_jsonable(v, _path=f"{_path}[{i}]") for i, v in enumerate(obj)]
+
+        # Store small binary blobs as base64-encoded strings with a distinct tag for round-tripping.
+        if isinstance(obj, (bytes, bytearray)):
+            import base64
+
+            b64 = base64.b64encode(bytes(obj)).decode("ascii")
+            return {"tag": "bytes_b64", "value": b64}
+
+        # Anything else can't be represented in JSON without a custom serializer.
+        raise ValueError(f"{_path}: cannot serialize object of unsupported type {type(obj)}")
+
+    @classmethod
+    def _from_jsonable(cls, obj, _path="root"):
+        """Recursively reconstruct Python objects from JSON-serializable structures.
+
+        Mirrors `_to_jsonable`:
+        - Dicts with a `"tag"` key are dispatched to a registered deserializer,
+          or handled specially (e.g., `"bytes_b64"`).
+        - Plain dicts/lists are recursively walked.
+        - Primitives (None/bool/int/float/str) pass through unchanged.
+        """
+        # ---- 1) Tagged custom objects ------------------------------------------------------------
+        # Objects serialized by registry serializers include a "tag" key.
+        if isinstance(obj, dict) and "tag" in obj:
+            tag = obj["tag"]
+
+            # Try custom deserializers from the registry first
+            for _type, (reg_tag, _, deserializer) in cls.__REGISTRY__.items():  # noqa: PERF102
+                if tag == reg_tag:
+                    # Pass the full dict to the registered deserializer
+                    return deserializer(obj)
+
+            # Built-in special tag for base64-encoded bytes
+            if tag == "bytes_b64":
+                import base64
+
+                try:
+                    return base64.b64decode(obj["value"])
+                except Exception as exp:
+                    raise ValueError(f"{_path}: failed to decode base64 bytes") from exp
+
+            # Unknown tag
+            raise ValueError(f"{_path}: unrecognized serialization tag '{tag}'")
+
+        # ---- 2) Plain mapping → dict (recurse over values) --------------------------------------
+        # Keys are expected to be strings (enforced on the serialize path).
+        if isinstance(obj, dict):
+            out = {}
+            for k, v in obj.items():
+                # We do not enforce key type here; serialize path already did.
+                out[k] = cls._from_jsonable(v, _path=f"{_path}.{k}")
+            return out
+
+        # ---- 3) JSON list → Python list (recurse) ------------------------------------------------
+        if isinstance(obj, list):
+            return [cls._from_jsonable(v, _path=f"{_path}[]") for v in obj]
+
+        # ---- 4) Primitives (None/bool/int/float/str) --------------------------------------------
+        # These are already JSON-native; return as-is.
+        return obj
+
+    # -------- public API (updated) --------
+    @classmethod
+    def serialize_data(cls, data: Any) -> str:
+        """Recursively serialize `data` to a JSON string for HDF5 attributes."""
         try:
-            return json.dumps(data)
+            jsonable = cls._to_jsonable(data)
+            return json.dumps(jsonable)
         except Exception as exp:
-            raise ValueError(f"Failed to serialize data to JSON: {exp}") from exp
+            raise ValueError(f"Failed to serialize data (type={type(data)}): {exp}") from exp
 
     @classmethod
     def deserialize_data(cls, data: str) -> Any:
-        """
-        Deserialize a JSON string into a Python object, using registered custom deserializers if necessary.
-
-        This method expects a JSON-encoded string, which may either represent
-        a basic JSON-compatible type (e.g., int, float, str, list, dict) or a
-        custom-serialized object with an embedded `"tag"` field. If a `"tag"` is
-        present, it is used to identify and invoke a registered deserializer for
-        the corresponding object type.
-
-        If no `"tag"` is present, the method assumes the data represents a
-        standard JSON type and returns the parsed object directly.
-
-        Parameters
-        ----------
-        data : str
-            A JSON-encoded string representing the serialized object.
-
-        Returns
-        -------
-        Any
-            The deserialized Python object.
-
-        Raises
-        ------
-        ValueError
-            If the input is not valid JSON, or if a tag is provided but
-            no matching deserializer is found in the registry.
-        """
-        # Begin by deserializing the JSON string for the data.
-        # Everything should be a JSON string, so we can use
-        # the json.loads() method to parse it. We'll still
-        # need to deserialize after that.
+        """Recursively deserialize a JSON string produced by `serialize_data`."""
         try:
             parsed = json.loads(data)
         except Exception as exp:
             raise ValueError(f"Failed to parse JSON string: {exp}") from exp
-
-        # With the loaded json string, we need to check for a
-        # tag and figure out if we have a custom deserializer
-        # for the tag.
-        if isinstance(parsed, dict) and "tag" in parsed:
-            tag = parsed["tag"]
-
-            for _type, (reg_tag, _, deserializer) in cls.__REGISTRY__.items():  # noqa: PERF102
-                if tag == reg_tag:
-                    # We have a matching tag, so we can
-                    # deserialize the data using the registered deserializer.
-                    return deserializer(parsed)
-
-            # There is no matching deserializer for the tag, so
-            # we need to raise an error.
-            raise ValueError(f"Unrecognized serialization tag: {tag}")
-        return parsed  # base types: int, float, list, dict, etc.
+        return cls._from_jsonable(parsed)
 
     @classmethod
     def serialize_dict(cls, data: dict) -> dict:
-        """
-        Serialize a dictionary, converting any unyt objects to JSON-compatible formats.
-
-        Parameters
-        ----------
-        data : dict
-            The dictionary to serialize.
-
-        Returns
-        -------
-        dict
-            A new dictionary with unyt objects serialized.
-        """
+        """Recursively serialize a dict’s values (keys must be strings)."""
+        if not isinstance(data, dict):
+            raise TypeError("serialize_dict expects a dict")
         return {k: cls.serialize_data(v) for k, v in data.items()}
 
     @classmethod
     def deserialize_dict(cls, data: dict) -> dict:
-        """
-        Deserialize a dictionary, converting JSON-compatible formats back to unyt objects.
-
-        Parameters
-        ----------
-        data : dict
-            The dictionary to deserialize.
-
-        Returns
-        -------
-        dict
-            A new dictionary with unyt objects deserialized.
-        """
+        """Recursively deserialize a dict produced by `serialize_dict`."""
+        if not isinstance(data, dict):
+            raise TypeError("deserialize_dict expects a dict")
         return {k: cls.deserialize_data(v) for k, v in data.items()}
 
 
