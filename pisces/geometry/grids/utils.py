@@ -1,5 +1,6 @@
 """Utilities for working with grids in Pisces."""
 
+import json
 from pathlib import Path
 from typing import TYPE_CHECKING, Union
 
@@ -12,7 +13,7 @@ if TYPE_CHECKING:
     from pisces.geometry.grids.core import Grid
 
 
-def load_grid_from_hdf5_group(group: h5py.Group, registry: Registry = None) -> "Grid":
+def load_grid_from_hdf5_group(group: h5py.Group, registry: "Registry" = None) -> "Grid":
     """
     Load a grid instance from an HDF5 group using the provided registry.
 
@@ -36,7 +37,7 @@ def load_grid_from_hdf5_group(group: h5py.Group, registry: Registry = None) -> "
     """
     registry = registry or __default_grid_registry__
 
-    class_name = group.attrs.get("CLASS_NAME")
+    class_name = json.loads(group.attrs.get("CLASS_NAME"))
     if class_name is None:
         raise ValueError("Missing 'CLASS_NAME' attribute in HDF5 group.")
 
@@ -47,7 +48,7 @@ def load_grid_from_hdf5_group(group: h5py.Group, registry: Registry = None) -> "
     return cls._load_grid_from_hdf5_group(group)
 
 
-def load_grid(filename: Union[str, Path], group_path: str, registry: Registry = None):
+def load_grid(filename: Union[str, Path], group_path: str, registry: "Registry" = None):
     """
     Load a grid instance from an HDF5 file.
 
