@@ -588,7 +588,6 @@ class SphericalParticleGenerationHook(ParticleGenerationHook, ABC):
     # ----------------------------------- #
     def _SphericalParticleGenerationHook_sample_particle_radii(
         self: Self,
-        radius_field: str,
         cdf_field: str,
         num_particles: int,
     ) -> tuple[unyt.unyt_array, unyt.unyt_array]:
@@ -598,17 +597,16 @@ class SphericalParticleGenerationHook(ParticleGenerationHook, ABC):
 
         # Fetch the cdf x and y fields based on the fields
         # provided in the call.
-        if radius_field not in self.fields:
-            raise ValueError(f"Radius field '{radius_field}' not found in model fields.")
+
         if cdf_field not in self.fields:
             raise ValueError(f"CDF field '{cdf_field}' not found in model fields.")
 
-        cdf_x = self.fields[radius_field].d
+        cdf_x = self.grid["r"].d
         cdf_y = self.fields[cdf_field].d
 
         # Sample the radii from the CDF using inverse transform sampling.
         particle_radii = sample_from_cdf(cdf_x, cdf_y, num_particles)
-        particle_radii = unyt.unyt_array(particle_radii, self.fields["radii"].units)
+        particle_radii = unyt.unyt_array(particle_radii, self.grid["r"].units)
 
         # Create a random direction on the sphere to
         # distribute the particles uniformly.
@@ -625,7 +623,7 @@ class SphericalParticleGenerationHook(ParticleGenerationHook, ABC):
             axis=-1,
         )
 
-        return particle_radii, unyt.unyt_array(particle_positions, self.fields["radii"].units)
+        return particle_radii, unyt.unyt_array(particle_positions, self.grid["r"].units)
 
     def _SphericalParticleGenerationHook_interpolate_particle_field(
         self: Self,
@@ -636,8 +634,8 @@ class SphericalParticleGenerationHook(ParticleGenerationHook, ABC):
         model_field_name: str,
     ):
         # Extract radial grid and model values.
-        model_radii = self.fields[radius_field].d
-        model_radii_units = self.fields[radius_field].units
+        model_radii = self.grid["r"].d
+        model_radii_units = self.grid["r"].units
         model_values = self.fields[model_field_name].d
         model_units = self.fields[model_field_name].units
 

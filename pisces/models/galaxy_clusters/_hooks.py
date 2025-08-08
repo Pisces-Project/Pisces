@@ -229,7 +229,6 @@ class SGCParticleGenerationHook(SphericalParticleGenerationHook):
         # the particle positions and the radii. This is done via inverse
         # transform sampling and is encapsulated in the `_SGCParticleGenerationHook_sample_particle_radii` method.
         radii, positions = self._SphericalParticleGenerationHook_sample_particle_radii(
-            "radii",
             self._SGCParticleGenerationHook_CDF_FIELDS[particle_type],
             num_particles,
         )
