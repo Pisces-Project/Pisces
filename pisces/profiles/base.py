@@ -8,7 +8,7 @@ use when adding new profiles to the package.
 from abc import ABC, abstractmethod
 from collections.abc import Callable
 from functools import wraps
-from typing import Any, Literal
+from typing import TYPE_CHECKING, Any, Literal
 
 import sympy as sp
 import unyt
@@ -18,6 +18,9 @@ from pisces._registries import __default_profile_registry__
 from pisces.utilities.symbols import lambdify_expression
 
 from ._exceptions import ProfileClassSetupError
+
+if TYPE_CHECKING:
+    from pisces._generic import Registry
 
 # ============================= #
 # Core Structures               #
@@ -290,28 +293,7 @@ class BaseProfile(ABC, metaclass=_ProfileMeta):
     - Concrete subclasses **must** set ``__IS_ABSTRACT__ = False`` to enable full setup.
     - Failure to do so results in bypassing all symbolic infrastructure.
     """
-
-    __REGISTER__: bool = True
-    """
-    bool : Controls automatic registration of the profile.
-
-    If ``True``, the profile class is added to the global
-    ``__default_profile_registry__`` during class construction,
-    allowing it to be retrieved dynamically by name.
-
-    If ``False``, the profile class is fully constructed and functional
-    but omitted from the registry. This is useful for:
-
-    - Internal helper classes
-    - Dynamically generated derived profiles
-    - Experimental or private implementations
-
-    Notes
-    -----
-    - Abstract classes are never registered, regardless of this flag.
-    - To prevent registry pollution, most temporary or internal profiles
-      should explicitly set ``__REGISTER__ = False``.
-    """
+    __DEFAULT_REGISTRY__: "Registry" = __default_profile_registry__
 
     __SETUP_AT__: Literal["init", "import"] = "init"
     """

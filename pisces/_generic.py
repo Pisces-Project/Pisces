@@ -111,7 +111,7 @@ class RegistryMeta(ABCMeta):
     @staticmethod
     def __register_class__(cls_object: _T) -> _T:
         # If the class is not abstract, register it to the default registry
-        if not cls_object.__IS_ABSTRACT__:
+        if (not cls_object.__IS_ABSTRACT__) and (cls_object.__name__ not in cls_object.__DEFAULT_REGISTRY__):
             try:
                 cls_object.__DEFAULT_REGISTRY__.register(cls_object.__name__, cls_object)
             except Exception as exp:
