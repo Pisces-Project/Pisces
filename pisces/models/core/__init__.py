@@ -5,8 +5,8 @@ astrophysical models within the Pisces framework. It includes base classes for m
 as well as utilities for model management and interaction.
 """
 
-__all__ = ["BaseHook", "_HookTools", "ParticleGenerationHook", "ModelConfig", "BaseModel"]
+__all__ = ["BaseHook", "_HookTools", "ParticleGenerationHook", "ModelConfig", "BaseModel", "load_model"]
 
 from .base import BaseModel
 from .hooks import BaseHook, ParticleGenerationHook, _HookTools
-from .utils import ModelConfig
+from .utils import ModelConfig, load_model

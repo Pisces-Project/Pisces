@@ -5,7 +5,7 @@ profiles are constructed and includes skeletons for developers to
 use when adding new profiles to the package.
 """
 
-from abc import ABC, ABCMeta, abstractmethod
+from abc import ABC, abstractmethod
 from collections.abc import Callable
 from functools import wraps
 from typing import Any, Literal
@@ -13,6 +13,7 @@ from typing import Any, Literal
 import sympy as sp
 import unyt
 
+from pisces._generic import RegistryMeta
 from pisces._registries import __default_profile_registry__
 from pisces.utilities.symbols import lambdify_expression
 
@@ -101,7 +102,7 @@ def derived_profile(name: str | None = None) -> classmethod:
     return decorator
 
 
-class _ProfileMeta(ABCMeta):
+class _ProfileMeta(RegistryMeta):
     def __new__(mcs, name, bases, namespace, **kwargs):
         """Generate a new ProfileMeta class.
 
@@ -129,8 +130,7 @@ class _ProfileMeta(ABCMeta):
 
         # -- Setup the Class -- #
         # We now setup the class and register it.
-        if cls_object.__REGISTER__ and not __default_profile_registry__.has(cls_object.__name__):
-            __default_profile_registry__.register(cls_object.__name__, cls_object)
+        mcs.__register_class__(cls_object)
 
         if cls_object.__SETUP_AT__ == "import":
             cls_object.__cls_setup__()

@@ -6,8 +6,9 @@ its own class with some standard conventions on storage and behavior. Models are
 organized by type.
 """
 
-__all__ = ["galaxy_clusters", "stars", "galaxies"]
+__all__ = ["galaxy_clusters", "stars", "galaxies", "load_model"]
 
 # Import the top level modules for each of the different
 # model types.
 from . import galaxies, galaxy_clusters, stars
+from .core.utils import load_model

@@ -14,3 +14,7 @@ __default_grid_registry__ = Registry()
 """
 The default registry for grid types.
 """
+__default_model_registry__ = Registry()
+"""
+The default registry for models.
+"""

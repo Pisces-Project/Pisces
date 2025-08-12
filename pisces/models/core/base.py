@@ -15,6 +15,8 @@ import h5py
 import numpy as np
 from unyt import unyt_array
 
+from pisces._generic import RegistryMeta
+from pisces._registries import __default_model_registry__
 from pisces.geometry.grids.utils import load_grid_from_hdf5_group
 from pisces.profiles.base import BaseProfile
 from pisces.utilities.io_tools import HDF5Serializer
@@ -31,7 +33,7 @@ if TYPE_CHECKING:
     from pisces.geometry.grids.base import Grid
 
 
-class BaseModel(_HookTools, ABC):
+class BaseModel(_HookTools, ABC, metaclass=RegistryMeta):
     """Abstract base class for Pisces-compatible physical models.
 
     The :class:`BaseModel` defines the foundational logic and storage conventions for
@@ -82,6 +84,15 @@ class BaseModel(_HookTools, ABC):
     4. Register the model in your configuration under `[models.MyModelClass]`.
     """
 
+    # ----------------------- #
+    # Class Flags             #
+    # ----------------------- #
+    __IS_ABSTRACT__: bool = True
+    __DEFAULT_REGISTRY__: "Registry" = __default_model_registry__
+
+    # ------------------------ #
+    # Class Variables          #
+    # ------------------------ #
     logger: "Logger" = LogDescriptor(mode="models")
     """
     Logger interface for this model.

@@ -1,37 +1,17 @@
 """Base classes for configuring coordinate systems in Pisces."""
 
 import json
-from abc import ABC, ABCMeta, abstractmethod
+from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any, Union
 
+from pisces._generic import RegistryMeta
 from pisces._registries import __default_coordinate_registry__
 
 if TYPE_CHECKING:
     from pisces._generic import Registry
 
 
-class _CoordinateSystemMeta(ABCMeta):
-    """
-    Metaclass for all coordinate systems.
-
-    Automatically registers non-abstract coordinate system classes into the default registry.
-    """
-
-    def __new__(mcs, name, bases, namespace, **kwargs):
-        # Create the class object using the base metaclass
-        cls_object: type[CoordinateSystem] = super().__new__(mcs, name, bases, namespace, **kwargs)
-
-        # If the class is not abstract, register it to the default registry
-        if not cls_object.__IS_ABSTRACT__:
-            try:
-                cls_object.__DEFAULT_REGISTRY__.register(cls_object.__name__, cls_object)
-            except Exception as exp:
-                raise TypeError(f"Failed to register coordinate system {cls_object.__name__}: {exp}") from exp
-
-        return cls_object
-
-
-class CoordinateSystem(ABC, metaclass=_CoordinateSystemMeta):
+class CoordinateSystem(ABC, metaclass=RegistryMeta):
     """
     Base class for all Pisces coordinate systems.
 
