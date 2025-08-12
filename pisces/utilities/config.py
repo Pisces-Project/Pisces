@@ -45,6 +45,9 @@ class ConfigManager(MutableMapping):
 
     """
 
+    __YAML__ = unyt_yaml
+    """ The YAML manager."""
+
     def __init__(self, path: str | Path, autosave: bool = True):
         self._path = Path(path).expanduser().resolve()
         self._autosave = autosave
@@ -55,12 +58,12 @@ class ConfigManager(MutableMapping):
         if not self._path.exists():
             return {}
         with open(self._path) as f:
-            return unyt_yaml.load(f) or {}
+            return self.__YAML__.load(f) or {}
 
     def _save(self) -> None:
         """Save configuration data to the YAML file."""
         with open(self._path, "w") as f:
-            unyt_yaml.dump(self._data, f)
+            self.__YAML__.dump(self._data, f)
 
     def _traverse(self, key: str, create_missing: bool = False):
         """Navigate nested dictionaries using dot-separated keys.

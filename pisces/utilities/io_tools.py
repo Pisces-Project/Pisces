@@ -7,10 +7,12 @@ frequently in various parts of the project.
 import json
 from abc import ABC, abstractmethod
 from collections.abc import Callable, Sequence
+from pathlib import Path
 from typing import TYPE_CHECKING, Any, Union
 
 import numpy as np
 import unyt
+from ruamel.yaml.comments import CommentedMap
 
 if TYPE_CHECKING:
     from ruamel.yaml import YAML
@@ -322,7 +324,8 @@ class _YAMLHandler(ABC):
 
         @staticmethod
         def from_yaml(loader, node):
-            data = loader.construct_mapping(node, deep=True)
+            data = CommentedMap()
+            loader.construct_mapping(node, maptyp=data,  deep=True)
             return MyType(data["x"], data["y"])
 
     yaml = YAML()
@@ -384,7 +387,7 @@ class _YAMLHandler(ABC):
         """
         if cls.__tag__ is None or cls.__type__ is None:
             raise ValueError(f"{cls.__name__} must define both __tag__ and __type__.")
-        yaml.representer.add_representer(cls.__type__, cls.to_yaml)
+        yaml.representer.add_multi_representer(cls.__type__, cls.to_yaml)
         yaml.constructor.add_constructor(cls.__tag__, cls.from_yaml)
 
 
@@ -402,7 +405,8 @@ class UnytArrayHandler(_YAMLHandler):
 
     @staticmethod
     def from_yaml(loader, node):
-        data = loader.construct_mapping(node, deep=True)
+        data = CommentedMap()
+        loader.construct_mapping(node, maptyp=data, deep=True)
         return unyt.unyt_array(data["value"], data["units"])
 
 
@@ -420,7 +424,8 @@ class UnytQuantityHandler(_YAMLHandler):
 
     @staticmethod
     def from_yaml(loader, node):
-        data = loader.construct_mapping(node, deep=True)
+        data = CommentedMap()
+        loader.construct_mapping(node, maptyp=data, deep=True)
         return unyt.unyt_quantity(data["value"], data["units"])
 
 
@@ -440,6 +445,64 @@ class UnytUnitHandler(_YAMLHandler):
         return unyt.Unit(value)
 
 
+class NumpyArrayHandler(_YAMLHandler):
+    """NumPy array handler for YAML serialization/deserialization."""
+
+    __tag__ = "!ndarray"
+    __type__ = np.ndarray
+
+    @staticmethod
+    def to_yaml(representer, obj: np.ndarray):
+        # We store both dtype and shape to ensure safe reconstruction
+        return representer.represent_mapping(
+            NumpyArrayHandler.__tag__, {"dtype": str(obj.dtype), "shape": obj.shape, "data": obj.tolist()}
+        )
+
+    @staticmethod
+    def from_yaml(loader, node):
+        data = CommentedMap()
+        loader.construct_mapping(node, maptyp=data, deep=True)
+
+        # Validate required fields
+        if not all(k in data for k in ("dtype", "shape", "data")):
+            raise ValueError(f"Invalid ndarray YAML mapping: {data}")
+
+        arr = np.array(data["data"], dtype=np.dtype(data["dtype"]))
+
+        # Optionally enforce shape
+        if tuple(arr.shape) != tuple(data["shape"]):
+            try:
+                arr = arr.reshape(data["shape"])
+            except Exception as e:
+                raise ValueError(f"Shape mismatch when reconstructing ndarray: {e}") from e
+
+        return arr
+
+
+class PathHandler(_YAMLHandler):
+    """Path handler for YAML serialization/deserialization."""
+
+    __tag__ = "!path"
+    __type__ = Path
+
+    @staticmethod
+    def to_yaml(representer, obj: Path):
+        data = {"absolute": obj.is_absolute(), "parts": list(obj.parts)}
+        if obj.drive:
+            data["drive"] = obj.drive
+        return representer.represent_mapping(PathHandler.__tag__, data)
+
+    @staticmethod
+    def from_yaml(loader, node):
+        data = CommentedMap()
+        loader.construct_mapping(node, maptyp=data, deep=True)
+        parts = data.get("parts", [])
+        path = Path(*parts)
+        if data.get("absolute", False) and not path.is_absolute():
+            path = path.resolve()
+        return path
+
+
 def get_unyt_compatible_yaml() -> "YAML":
     """
     Get a YAML instance configured for unyt compatibility.
@@ -455,9 +518,12 @@ def get_unyt_compatible_yaml() -> "YAML":
     from ruamel.yaml import YAML
 
     yaml = YAML(typ="rt")
+
     UnytArrayHandler.register(yaml)
     UnytQuantityHandler.register(yaml)
     UnytUnitHandler.register(yaml)
+    PathHandler.register(yaml)
+    NumpyArrayHandler.register(yaml)
 
     return yaml
 
