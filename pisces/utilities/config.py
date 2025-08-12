@@ -199,6 +199,12 @@ class ConfigManager(MutableMapping):
         """Return the full configuration data as a dictionary."""
         return self._data
 
+    def update(self, E=None, **F) -> None:
+        """Update the configuration with another dictionary."""
+        self._data.update(E=E, **F)
+        if self._autosave:
+            self._save()
+
 
 # Cache to avoid reloading
 __PCONFIG__ = None
