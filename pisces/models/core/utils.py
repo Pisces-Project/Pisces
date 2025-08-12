@@ -130,7 +130,8 @@ def load_model(
             raise ValueError("Missing '__model_class__' attribute in HDF5 file.") from e
 
     # Load the model class from the registry.
-    reg = registry or __default_model_registry__
+    reg = registry if registry is not None else __default_model_registry__
+
     try:
         model_cls = reg[model_class_name]
     except KeyError as e:

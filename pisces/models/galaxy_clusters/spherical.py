@@ -183,6 +183,8 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
 
     """
 
+    __IS_ABSTRACT__ = False
+
     # ========================================= #
     # Model Generator Methods                   #
     # ========================================= #

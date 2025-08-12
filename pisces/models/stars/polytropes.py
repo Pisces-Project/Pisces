@@ -131,6 +131,8 @@ class PolytropicStarModel(BaseModel, PolytropicParticleGenerationHook):
 
     """
 
+    __IS_ABSTRACT__ = False
+
     # ========================================= #
     # Model Generator Methods                   #
     # ========================================= #
