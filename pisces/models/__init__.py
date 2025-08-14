@@ -6,9 +6,24 @@ its own class with some standard conventions on storage and behavior. Models are
 organized by type.
 """
 
-__all__ = ["galaxy_clusters", "stars", "galaxies", "load_model"]
+__all__ = [
+    "galaxy_clusters",
+    "stars",
+    "galaxies",
+    "load_model",
+    "inspect_model_metadata",
+    "inspect_model_grid",
+    "inspect_model_fields",
+    "inspect_model_coordinate_system",
+]
 
 # Import the top level modules for each of the different
 # model types.
 from . import galaxies, galaxy_clusters, stars
-from .core.utils import load_model
+from .core.utils import (
+    inspect_model_coordinate_system,
+    inspect_model_fields,
+    inspect_model_grid,
+    inspect_model_metadata,
+    load_model,
+)
