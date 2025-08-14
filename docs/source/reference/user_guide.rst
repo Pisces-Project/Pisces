@@ -92,3 +92,15 @@ expand its functionality with minimal effort.
    :caption: Extension Datatypes
 
    particles/overview
+
+Hydrodynamics and Simulation Integration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Pisces includes utilities for integrating with hydrodynamic simulation codes and frameworks.
+These tools facilitate the use of Pisces models as initial conditions or analytic backgrounds
+for simulations.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Hydrodynamics and Simulation Integration
+
+   extensions/simulation/initial_conditions_overview

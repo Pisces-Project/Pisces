@@ -137,8 +137,8 @@ path to the HDF5 file:
     accidental modifications.
 
 Once the dataset is loaded, all of the data will be accessible through the dataset object. You can see the available
-fields using the :attr:`~pisces.base.ParticleDataset.fields` attribute, and the particle types using
-:attr:`~pisces.base.ParticleDataset.particle_types`.
+fields using the :attr:`~pisces.particles.base.ParticleDataset.fields` attribute, and the particle types using
+:attr:`~pisces.particles.base.ParticleDataset.particle_types`.
 
 Accessing Particle Data
 ^^^^^^^^^^^^^^^^^^^^^^^^

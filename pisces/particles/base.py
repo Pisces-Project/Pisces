@@ -388,7 +388,7 @@ class ParticleDataset:
 
         Returns
         -------
-        unyt.unyt_array
+        unyt.array.unyt_array
             The data for the specified field, converted to a unyt array.
 
         Raises
@@ -740,7 +740,7 @@ class ParticleDataset:
 
         Returns
         -------
-        unyt.unyt_array
+        unyt.array.unyt_array
             The data for the specified field, converted to a unyt array.
 
         Raises
@@ -1266,7 +1266,7 @@ class ParticleDataset:
 
         Parameters
         ----------
-        offset : unyt.unyt_array
+        offset : unyt.array.unyt_array
             A vector specifying the offset to apply. Must have units compatible
             with the ``particle_position`` field(s). The `offset` may be any 1D array; however,
             it must match the shape of the particle positions. Thus, if the particles are in 3D space,
@@ -1319,7 +1319,7 @@ class ParticleDataset:
 
         Parameters
         ----------
-        offset : unyt.unyt_array
+        offset : unyt.array.unyt_array
             A vector specifying the velocity offset to apply. Must have units compatible
             with the ``particle_velocity`` field(s). The `offset` may be any 1D array; however,
             it must match the shape of the particle velocities. Thus, if the particles are in 3D space,
@@ -1511,7 +1511,7 @@ class ParticleDataset:
         ----------
         path : str or pathlib.Path
             The target path for the new HDF5 file.
-        fields : dict of {str: unyt.unyt_array}, optional
+        fields : dict of {str: unyt.array.unyt_array}, optional
             A dictionary mapping dot-notation field names to unyt arrays.
             If None or empty, a valid file with metadata but no particle data is created.
         overwrite : bool, optional

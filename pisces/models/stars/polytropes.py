@@ -585,10 +585,10 @@ class PolytropicStarModel(BaseModel, PolytropicParticleGenerationHook):
 
         Parameters
         ----------
-        mass : ~unyt.unyt_quantity
+        mass : ~unyt.array.unyt_quantity
             Total stellar mass (e.g., in solar masses). This must be consistent with units of mass.
             If no unit is provided, it defaults to solar masses (Msun).
-        radius : ~unyt.unyt_quantity
+        radius : ~unyt.array.unyt_quantity
             Total stellar radius (e.g., in solar radii). This must have dimensions of length.
             If no unit is provided, it defaults to solar radii (Rsun).
         polytropic_index : float, default: 1.0
@@ -604,9 +604,9 @@ class PolytropicStarModel(BaseModel, PolytropicParticleGenerationHook):
 
         Returns
         -------
-        rho_c : ~unyt.unyt_quantity
+        rho_c : ~unyt.array.unyt_quantity
             Central mass density of the star.
-        T_c : ~unyt.unyt_quantity
+        T_c : ~unyt.array.unyt_quantity
             Central temperature of the star.
 
         Raises

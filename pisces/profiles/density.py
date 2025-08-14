@@ -644,7 +644,7 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
                 r_s=10 * unyt.kpc,
             )
 
-            R = unyt.unyt_array([1, 10, 100], "kpc")
+            R = unyt.array.unyt_array([1, 10, 100], "kpc")
             delta = profile.compute_cosmological_overdensity_profile(
                 z=0.5, R=R, cosmology=Planck18
             )
@@ -843,7 +843,7 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
 
         Returns
         -------
-        v_c : ~unyt.array.unyt_quantity or ~unyt.unyt_array
+        v_c : ~unyt.array.unyt_quantity or ~unyt.array.unyt_array
             Circular velocity at each input radius, with appropriate units.
 
         Example
@@ -913,7 +913,7 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
 
         Returns
         -------
-        v_esc : ~unyt.array.unyt_quantity or ~unyt.unyt_array
+        v_esc : ~unyt.array.unyt_quantity or ~unyt.array.unyt_array
             Escape velocity at each input radius, with appropriate units.
 
         Example
@@ -1033,7 +1033,7 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
             )
 
             profile = NFWDensityProfile(rho_0=0.03, r_s=15)
-            R = unyt.unyt_array([1, 5, 10], "kpc")
+            R = unyt.array.unyt_array([1, 5, 10], "kpc")
 
             alpha_arcsec = profile.compute_deflection_angle(
                 R,
@@ -1250,7 +1250,7 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
             )
 
             profile = NFWDensityProfile(rho_0=0.04, r_s=20)
-            R = unyt.unyt_array([0.5, 1, 2, 5], "kpc")
+            R = unyt.array.unyt_array([0.5, 1, 2, 5], "kpc")
 
             kappa = profile.compute_lensing_convergence(
                 R,

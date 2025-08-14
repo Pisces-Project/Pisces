@@ -576,7 +576,7 @@ class Grid(ABC, metaclass=RegistryMeta):
 
         Returns
         -------
-        tuple of unyt.unyt_array
+        tuple of unyt.array.unyt_array
             Tuple of 1D arrays, one for each axis specified.
         """
         axes = axes if axes is not None else self.__axes__

@@ -31,103 +31,16 @@ if TYPE_CHECKING:
 
 class InitialConditions:
     """
-    Representation and management of a set of astrophysical initial conditions.
+    Central base class for configuring simulation initial conditions.
 
-    The ``InitialConditions`` class provides a high-level interface for working with
-    collections of models and their associated particle datasets in the *Pisces*
-    framework. Each instance corresponds to a single initial conditions (IC)
-    directory on disk, which contains:
+    This class provides the backbone of simulation initial conditions (ICs) in Pisces.
+    It effectively provides a wrapper by which to place multiple models into a cartesian
+    space with various orientations, velocities, etc. The initial conditions can then
+    be processed by the simulation frontends to generate input files for various
+    astrophysical simulation codes.
 
-      * An ``IC_CONFIG.yaml`` file describing metadata and model configurations
-      * One or more model files (HDF5)
-      * Optional particle dataset files associated with individual models
-
-    **Key Features**
-    ----------------
-    - Load and validate existing initial condition directories
-    - Inspect metadata, grid structure, coordinate systems, and available fields
-      without fully loading large datasets into memory
-    - Add, remove, rename, or update individual models within the IC set
-    - Attach or remove particle datasets for each model
-    - Compute system-level properties (e.g., total mass, center-of-mass position/velocity)
-      from stored metadata
-    - Integrate point-mass equivalents of models forward in time using an optional
-      symplectic integrator (via the `rebound` package)
-
-    **Directory Structure**
-    -----------------------
-    An initial conditions directory typically has the following layout:
-
-    .. code-block::
-
-        MyICs/
-        ├── IC_CONFIG.yaml            # Configuration and metadata
-        ├── ModelA.hdf5               # Model HDF5 file
-        ├── ModelA_p.hdf5              # Optional particle dataset for ModelA
-        ├── ModelB.hdf5
-        └── ModelB_p.hdf5
-
-    **Usage Example**
-    -----------------
-    .. code-block:: python
-
-        from pisces.models.core.initial_conditions import (
-            InitialConditions,
-        )
-
-        # Create a new IC set from two models and particle files
-        ic = InitialConditions.create_ics(
-            "MyICs",
-            (
-                "ModelA",
-                "path/to/modelA.h5",
-                [0, 0, 0],
-                [0, 0, 0],
-            ),
-            (
-                "ModelB",
-                "path/to/modelB.h5",
-                [10, 0, 0],
-                [0, -100, 0],
-            ),
-            particle_files={
-                "ModelA": "path/to/modelA_particles.h5",
-                "ModelB": "path/to/modelB_particles.h5",
-            },
-            overwrite=True,
-        )
-
-        # List models and their particles
-        print(ic.list_models())  # ['ModelA', 'ModelB']
-        print(
-            ic.list_models_with_particles()
-        )  # ['ModelA', 'ModelB']
-
-        # Inspect model metadata without loading full data
-        meta = ic.get_model_metadata("ModelA")
-
-        # Compute center-of-mass position
-        com_pos = ic.compute_center_of_mass()
-
-        # Shift all models into COM frame
-        ic.shift_to_COM_frame()
-
-        # Integrate point-mass equivalent orbits (requires `rebound`)
-        sim = ic.integrate_point_mass_orbits(
-            t_end=100 * unyt.Myr
-        )
-
-    Notes
-    -----
-    This class is designed for efficiency when working with large simulation
-    datasets. Many inspection methods open the underlying HDF5 files in
-    read-only mode and only access metadata or shape information, avoiding
-    loading large arrays unless explicitly requested.
-
-    Subclasses can extend or override validation logic (see
-    :meth:`_validate_configuration` and :meth:`_validate_model`) to impose
-    additional constraints or to support custom file formats.
-
+    For more detailed information about using and interacting with initial conditions,
+    read :ref:`initial_conditions_overview`.
     """
 
     # ============================== #
@@ -153,9 +66,9 @@ class InitialConditions:
 
     Subclasses may override this attribute to:
 
-      - Use a different serialization backend
-      - Provide custom YAML formatting options
-      - Support additional non-standard Python types
+    - Use a different serialization backend
+    - Provide custom YAML formatting options
+    - Support additional non-standard Python types
     """
 
     logger: "Logger" = LogDescriptor(mode="ics")
@@ -168,8 +81,8 @@ class InitialConditions:
 
     Subclasses may override this attribute to:
 
-      - Use a different logging category or name
-      - Redirect output to a custom logging handler
+    - Use a different logging category or name
+    - Redirect output to a custom logging handler
 
     Settings for the logger may be adjusted in the pisces configuration
     file under the ``ics`` section of ``logging``.
@@ -308,14 +221,14 @@ class InitialConditions:
 
         This base initializer is responsible for:
 
-          1. Normalizing and storing the target directory path.
-          2. Verifying that the directory exists and is a valid directory on disk.
-          3. Locating and loading the ``IC_CONFIG.yaml`` file associated with the
-             initial condition set.
-          4. Initializing the internal :class:`~.ConfigManager` for accessing and
-             modifying configuration data.
-          5. Running the default configuration validation via
-             :meth:`_validate_configuration`.
+        1. Normalizing and storing the target directory path.
+        2. Verifying that the directory exists and is a valid directory on disk.
+        3. Locating and loading the ``IC_CONFIG.yaml`` file associated with the
+         initial condition set.
+        4. Initializing the internal :class:`~pisces.utilities.config.ConfigManager` for accessing and
+         modifying configuration data.
+        5. Running the default configuration validation via
+         ``_validate_configuration``.
 
         Parameters
         ----------
@@ -337,9 +250,9 @@ class InitialConditions:
         - Subclasses overriding ``__init__`` should call
           ``super().__init__(directory)`` to ensure the configuration is loaded
           and validated before performing subclass-specific setup.
-        - The loaded configuration is stored in :attr:`__config__`, a
-          :class:`~.ConfigManager` instance, and the absolute directory path
-          is available as :attr:`__directory__`.
+        - The loaded configuration is stored in :attr:`config`, a
+          :class:`~pisces.utilities.config.ConfigManager` instance, and the absolute directory path
+          is available as :attr:`directory`.
         """
         # Normalize to a Path object for consistent behavior
         # this ensures that we can use all of the relevant Path methods.
@@ -380,7 +293,7 @@ class InitialConditions:
 
         Returns
         -------
-        Path
+        ~pathlib.Path
             The directory path as a `Path` object.
         """
         return self.__directory__
@@ -392,7 +305,7 @@ class InitialConditions:
 
         Returns
         -------
-        ConfigManager
+        ~pisces.utilities.config.ConfigManager
             The configuration manager instance containing the initial conditions data.
         """
         return self.__config__
@@ -417,7 +330,7 @@ class InitialConditions:
         Returns
         -------
         dict
-            A dictionary mapping model names to their position vectors as `unyt.unyt_array`.
+            A dictionary mapping model names to their position vectors as `unyt.array.unyt_array`.
         """
         return {name: unyt.unyt_array(info["position"], units="m") for name, info in self.models.items()}
 
@@ -429,7 +342,7 @@ class InitialConditions:
         Returns
         -------
         dict
-            A dictionary mapping model names to their velocity vectors as `unyt.unyt_array`.
+            A dictionary mapping model names to their velocity vectors as `unyt.array.unyt_array`.
         """
         return {name: unyt.unyt_array(info["velocity"], units="km/s") for name, info in self.models.items()}
 
@@ -559,7 +472,7 @@ class InitialConditions:
 
         Returns
         -------
-        BaseModel
+        ~pisces.models.core.base.BaseModel
             An instance of the loaded model.
 
         Raises
@@ -636,14 +549,14 @@ class InitialConditions:
             Unique name/identifier for the model within the initial conditions set.
             If the provided name is not unique, then ``overwrite`` will determine if
             an error is raised or if the existing model is replaced.
-        model : str, Path, or BaseModel
+        model : str, ~pathlib.Path or ~pisces.models.core.base.BaseModel
             The model to add, specified as either:
 
-              - **Path-like (str or Path)** – Path to the model file on disk. The file
-                will be copied or moved into the initial conditions directory according
-                to ``file_processing_mode``.
-              - **BaseModel instance** – An already loaded model object. Its source file
-                path will be obtained from the model's metadata.
+            - **Path-like (str or Path)**: Path to the model file on disk. The file
+              will be copied or moved into the initial conditions directory according
+              to ``file_processing_mode``.
+            - **BaseModel instance**: An already loaded model object. Its source file
+              path will be obtained from the model's metadata.
 
             In both cases, the model file must exist and be accessible before calling
             this method.
@@ -657,25 +570,24 @@ class InitialConditions:
 
             Where:
 
-              - ``position`` : sequence of length ``ndim`` or unyt array with shape (ndim,)
-              - ``velocity`` : sequence of length ``ndim`` or unyt array with shape (ndim,)
-              - ``orientation`` : optional; sequence or array defining orientation
-              - ``spin`` : optional; scalar float
+            - ``position`` : sequence of length ``ndim`` or unyt array with shape (ndim,)
+            - ``velocity`` : sequence of length ``ndim`` or unyt array with shape (ndim,)
+            - ``orientation`` : optional; sequence or array defining orientation
+            - ``spin`` : optional; scalar float
 
         file_processing_mode : {"copy", "move"}, default="copy"
             Determines how the provided model file is placed into the initial
             conditions directory:
 
-              * ``"copy"`` – The source file is copied into the IC directory,
-                preserving the original file in its current location.
-              * ``"move"`` – The source file is moved into the IC directory,
-                removing it from its original location.
+            - ``"copy"``: The source file is copied into the IC directory,
+              preserving the original file in its current location.
+            - ``"move"``: The source file is moved into the IC directory,
+              removing it from its original location.
 
         overwrite : bool, optional
             If ``True``, an existing model entry with the same ``name`` will be
             replaced, and any associated files will be deleted or overwritten as
-            needed.
-            If ``False`` (default), attempting to add a model with a duplicate
+            needed. If ``False`` (default), attempting to add a model with a duplicate
             name will raise a :class:`ValueError`.
         """
         # Ensure that the model name does not already exist.
@@ -737,10 +649,10 @@ class InitialConditions:
         parameters : dict
             Key-value pairs of parameters to update. Supported keys include:
 
-              - ``position`` : unyt array or sequence of length ``ndim``
-              - ``velocity`` : unyt array or sequence of length ``ndim``
-              - ``orientation`` : sequence or array defining orientation vector
-              - ``spin`` : scalar float
+            - ``position`` : unyt array or sequence of length ``ndim``
+            - ``velocity`` : unyt array or sequence of length ``ndim``
+            - ``orientation`` : sequence or array defining orientation vector
+            - ``spin`` : scalar float
 
         Raises
         ------
@@ -1032,7 +944,7 @@ class InitialConditions:
 
         Returns
         -------
-        Path or None
+        ~pathlib.Path or None
             The path to the particle dataset file if it exists, otherwise `None`.
 
         Raises
@@ -1070,11 +982,11 @@ class InitialConditions:
             The name/identifier of the model whose particles to load.
         kwargs :
             Additional keyword arguments to pass to the
-            :class:`~pisces.particles.ParticleDataset` constructor.
+            :class:`~pisces.particles.base.ParticleDataset` constructor.
 
         Returns
         -------
-        ParticleDataset
+        ~pisces.particles.base.ParticleDataset
             An instance of the loaded particle dataset.
 
         Raises
@@ -1228,7 +1140,7 @@ class InitialConditions:
         """Inspect the number of particles in each species group for a stored model.
 
         This is a wrapper around
-        :func:`~pisces.particles.utilities.inspect_particle_count`.
+        :func:`~pisces.particles.utils.inspect_particle_count`.
 
         Parameters
         ----------
@@ -1238,7 +1150,7 @@ class InitialConditions:
 
         Returns
         -------
-        dict[str, int]
+        dict of str, int
             Mapping of particle species names to the number of particles in each.
 
         Raises
@@ -1266,7 +1178,7 @@ class InitialConditions:
         """List the particle species present in the stored particle dataset for a given model.
 
         This is a wrapper around
-        :func:`~pisces.particles.utilities.inspect_species`.
+        :func:`~pisces.particles.utils.inspect_species`.
 
         Parameters
         ----------
@@ -1276,7 +1188,7 @@ class InitialConditions:
 
         Returns
         -------
-        list[str]
+        list of str
             A list of particle species names (HDF5 group names) present in the
             particle file.
 
@@ -1303,7 +1215,7 @@ class InitialConditions:
         Inspect the available fields for each particle species in a model.
 
         This is a wrapper around
-        :func:`~pisces.particles.utilities.inspect_fields`.
+        :func:`~pisces.particles.utils.inspect_fields`.
 
         Parameters
         ----------
@@ -1313,7 +1225,7 @@ class InitialConditions:
 
         Returns
         -------
-        dict[str, list[tuple[str, tuple[int, ...]]]]
+        dict
             Mapping of particle species names to lists of
             ``(field_name, element_shape)`` tuples.
 
@@ -1427,13 +1339,13 @@ class InitialConditions:
             in :attr:`models` are used. Otherwise, provide an explicit list of model
             names. If a single model name is provided as a string, it will be treated
             as a list of one model.
-        masses : dict of str, ~unyt.unyt_quantity, optional
+        masses : dict of str, ~unyt.array.unyt_quantity, optional
             Optional mapping from model name to its total mass. If provided for a
             given model, this value overrides the ``total_mass`` from metadata.
 
         Returns
         -------
-        unyt.unyt_array
+        unyt.array.unyt_array
             The COM position vector with shape ``(ndim,)`` and units of length.
 
         Raises
@@ -1510,16 +1422,16 @@ class InitialConditions:
         ----------
         models : str or list of str, optional
             Models to include in the computation. Defaults to ``"all"`` for all models.
-        masses : dict of str, ~unyt.unyt_quantity, optional
+        masses : dict of str, ~unyt.array.unyt_quantity, optional
             Optional mapping from model name to its total mass, used for COM
             calculation. Overrides ``total_mass`` in metadata if provided.
-        com_position : ~unyt.unyt_array, optional
+        com_position : ~unyt.array.unyt_array, optional
             Precomputed COM position vector. If not given, it will be computed using
             :meth:`compute_center_of_mass` with the same ``models`` and ``masses``.
 
         Returns
         -------
-        dict[str, ~unyt.unyt_array]
+        dict of str, ~unyt.array.unyt_array
             Mapping of model names to their position vectors in the COM frame.
 
         Raises
@@ -1582,13 +1494,13 @@ class InitialConditions:
             Which models to include in the COM velocity calculation. If ``"all"``,
             all models in :attr:`models` are used. If a single model name is given,
             it will be treated as a list of one.
-        masses : dict of str, ~unyt.unyt_quantity, optional
+        masses : dict of str, ~unyt.array.unyt_quantity, optional
             Optional mapping from model name to its total mass. Overrides
             ``total_mass`` in metadata if provided.
 
         Returns
         -------
-        ~unyt.unyt_array
+        ~unyt.array.unyt_array
             The COM velocity vector with shape ``(ndim,)`` and units of velocity.
 
         Raises
@@ -1656,16 +1568,16 @@ class InitialConditions:
         ----------
         models : str or list of str, optional
             Models to include in the computation. Defaults to ``"all"`` for all models.
-        masses : dict of str, ~unyt.unyt_quantity, optional
+        masses : dict of str, ~unyt.array.unyt_quantity, optional
             Optional mapping from model name to its total mass, used for COM
             calculation. Overrides ``total_mass`` in metadata if provided.
-        com_velocity : ~unyt.unyt_array, optional
+        com_velocity : ~unyt.array.unyt_array, optional
             Precomputed COM velocity vector. If not given, it will be computed using
             :meth:`compute_center_of_mass_velocity` with the same ``models`` and ``masses``.
 
         Returns
         -------
-        dict[str, ~unyt.unyt_array]
+        dict of str, ~unyt.array.unyt_array
             Mapping of model names to their velocity vectors in the COM frame.
 
         Raises
@@ -1719,7 +1631,7 @@ class InitialConditions:
             Models to include in the COM calculation and shifting. If ``"all"``
             (default), all models are included. If a single model name is given,
             it will be treated as a list of one.
-        masses : dict of str, ~unyt.unyt_quantity, optional
+        masses : dict of str, ~unyt.array.unyt_quantity, optional
             Optional mapping from model name to its total mass. Overrides
             ``total_mass`` in metadata if provided.
 
@@ -1786,13 +1698,13 @@ class InitialConditions:
             If ``"all"`` (default), all models in :attr:`models` are used.
             If a single model name is provided as a string, it will be treated as a
             list containing that model.
-        masses : dict of str, ~unyt.unyt_quantity, optional
+        masses : dict of str, ~unyt.array.unyt_quantity, optional
             Optional mapping from model name to its total mass. If provided for a given
             model, this value overrides the ``total_mass`` from metadata.
 
         Returns
         -------
-        ~unyt.unyt_quantity
+        ~unyt.array.unyt_quantity
             The total mass of the specified models, with units of mass.
 
         Raises
@@ -1859,13 +1771,13 @@ class InitialConditions:
         models : str or list of str, default="all"
             Models to include as point masses. If ``"all"``, uses all models.
             If a single string is given, it is treated as a list of one.
-        masses : dict of str, ~unyt.unyt_quantity, optional
+        masses : dict of str, ~unyt.array.unyt_quantity, optional
             Mapping from model name to its total mass. If provided for a given model,
             overrides the ``total_mass`` value from that model's metadata.
             All masses must be scalar `unyt_quantity` with units convertible to ``Msun``.
-        t_end : ~unyt.unyt_quantity
+        t_end : ~unyt.array.unyt_quantity
             Total integration time **from the current epoch**. Must have time units.
-        dt : ~unyt.unyt_quantity, optional
+        dt : ~unyt.array.unyt_quantity, optional
             Time step for the integrator. If not provided, defaults to ``t_end / 1000``.
             Must have time units.
         integrator : str, default="whfast"
@@ -2177,7 +2089,7 @@ class InitialConditions:
 
         Parameters
         ----------
-        directory : Path
+        directory : ~pathlib.Path
             The directory where ICs are being created.
         kwargs : dict
             Additional keyword arguments (e.g., ndim) that may be used.
@@ -2213,10 +2125,10 @@ class InitialConditions:
 
           1. Create (or overwrite) the target IC directory on disk.
           2. Process and validate the provided models via
-             :meth:`_process_models`, copying or moving model files into the IC
+             ``_process_models``, copying or moving model files into the IC
              directory.
           3. Optionally process particle dataset files via
-             :meth:`_process_particle_files` if ``particle_files`` is provided.
+             ``_process_particle_files`` if ``particle_files`` is provided.
           4. Generate the ``IC_CONFIG.yaml`` file containing metadata and model
              configuration.
 
@@ -2238,12 +2150,12 @@ class InitialConditions:
 
               - ``name`` : str
                 Unique name/identifier for the model.
-              - ``model`` : str, Path, or BaseModel
+              - ``model`` : str, ~pathlib.Path or ~pisces.models.core.base.BaseModel
                 Path to a model file on disk **or** an already loaded
-                :class:`~pisces.models.BaseModel` instance.
-              - ``position`` : sequence or ~unyt.unyt_array
+                :class:`~pisces.models.core.base.BaseModel` instance.
+              - ``position`` : sequence or ~unyt.array.unyt_array
                 Position vector of length ``ndim`` with length units (default: meters).
-              - ``velocity`` : sequence or ~unyt.unyt_array
+              - ``velocity`` : sequence or ~unyt.array.unyt_array
                 Velocity vector of length ``ndim`` with velocity units (default: km/s).
               - ``orientation`` : optional, sequence or array
                 Orientation vector (shape: ``(ndim,)``) or rotation matrix
@@ -2252,12 +2164,12 @@ class InitialConditions:
                 Scalar spin value (unitless). Defaults to ``0.0``.
 
         particle_files : dict of {str: (str or Path)}, optional
-            Mapping from model name → path to a particle dataset file.
+            Mapping from model name to path to a particle dataset file.
             Only processed if provided. Files will be copied or moved into the
             IC directory with the naming scheme ``<model_name>_p.hdf5``.
         **kwargs :
-            Additional keyword arguments forwarded to :meth:`_process_models` and
-            :meth:`_process_particle_files`. Common options include:
+            Additional keyword arguments forwarded to ``_process_models`` and
+            ``_process_particle_files``. Common options include:
 
               - ``file_processing_mode`` : {"copy", "move"}
                 Whether to copy (default) or move files into the IC directory.
@@ -2279,10 +2191,6 @@ class InitialConditions:
         ValueError
             If model definitions are invalid or missing required parameters.
 
-        See Also
-        --------
-        :meth:`_process_models` : Validates and stages models for IC creation.
-        :meth:`_process_particle_files` : Handles particle dataset file integration.
         """
         # --- DIRECTORY SETUP --- #
         # Process the provided directory. We check that it is a valid directory

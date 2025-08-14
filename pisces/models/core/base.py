@@ -670,7 +670,7 @@ class BaseModel(_HookTools, ABC, metaclass=RegistryMeta):
             Dictionary mapping field names to their corresponding arrays.
 
             - **Keys**: Field names (e.g., ``"density"`` or ``"temperature"``)
-            - **Values**: Either a :class:`unyt.unyt_array` with units or a plain
+            - **Values**: Either a :class:`unyt.array.unyt_array` with units or a plain
               :class:`numpy.ndarray` for unitless data.
 
             Each array's leading shape must exactly match ``grid.shape``; additional

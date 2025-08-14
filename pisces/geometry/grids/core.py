@@ -105,7 +105,7 @@ class GenericGrid(Grid):
             The coordinate system in which the grid is defined. This coordinate
             system will determine the labels for the coordinate axes and the dimension
             of the grid.
-        edges: numpy.ndarray or unyt.unyt_array
+        edges: numpy.ndarray or unyt.array.unyt_array
             1D arrays representing the edges of each grid cell along each axis. There must
             be as many edge arrays as there are active axes (see `axes` parameter) in the grid.
             For each axis, center each cell will be positioned between the adjacent edge.

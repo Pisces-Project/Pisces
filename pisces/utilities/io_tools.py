@@ -61,7 +61,7 @@ class HDF5Serializer:
 
         Parameters
         ----------
-        o : unyt.unyt_array or unyt.unyt_quantity
+        o : unyt.array.unyt_array or unyt.array.unyt_quantity
             The unyt object to serialize.
 
         Returns
@@ -127,7 +127,7 @@ class HDF5Serializer:
 
         Returns
         -------
-        unyt.unyt_array or unyt.unyt_quantity
+        unyt.array.unyt_array or unyt.array.unyt_quantity
             A unyt object.
         """
         if "units" not in o:

@@ -39,12 +39,12 @@ white dwarfs, and even planetary interiors. In Pisces, we provide high-resolutio
 solutions and support for outputting physical profiles such as temperature, density, pressure,
 and gravitational potential.
 
-These models are contained in the :mod:`models.stars.polytropes` module.
+These models are contained in the :mod:`~pisces.models.stars.polytropes` module.
 
 Model Background
 ^^^^^^^^^^^^^^^^
 
-In the base model (:class:`models.stars.polytropes.PolytropicStarModel`), we assume a spherically symmetric
+In the base model (:class:`~pisces.models.stars.polytropes.PolytropicStarModel`), we assume a spherically symmetric
 star in hydrostatic equilibrium with a polytropic equation of state to describe the pressure-density relationship.
 The gas is assumed to be an ideal gas which is non-relativistic and non-rotating. From these assumptions, the
 structure of the star may be derived from hydrostatic equilibrium and the polytropic equation of state.
@@ -119,8 +119,8 @@ Using Polytropic Models
 
 There are a variety of ways to build a PolytropicStarModel in Pisces, depending on the available information:
 
-- **Central conditions**, using :meth:`~models.stars.polytropes.PolytropicStarModel.from_density_and_temperature`, or
-- **Global properties**, using :meth:`~models.stars.polytropes.PolytropicStarModel.from_mass_and_radius`.
+- **Central conditions**, using :meth:`~pisces.models.stars.polytropes.PolytropicStarModel.from_density_and_temperature`, or
+- **Global properties**, using :meth:`~pisces.models.stars.polytropes.PolytropicStarModel.from_mass_and_radius`.
 
 It is typically easiest to use the global properties method, as it requires only the mass and radius of the star, which
 are more commonly known than the central density and temperature. Additionally, the choice of the polytropic index

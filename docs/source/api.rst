@@ -57,7 +57,7 @@ Models for spherically symmetric galaxy clusters in hydrostatic equilibrium. The
 clusters from analytic density, temperature, or entropy profiles and compute derived quantities such as total
 mass, gravitational potential, and sound speed.
 
-.. currentmodule:: models.galaxy_clusters.spherical
+.. currentmodule:: pisces.models.galaxy_clusters.spherical
 
 .. autosummary::
     :nosignatures:
@@ -71,7 +71,7 @@ Stellar Models
 
 Stellar model generators (e.g., for polytropes, ZAMS stars, or neutron stars) will be included here.
 
-.. currentmodule:: models.stars.polytropes
+.. currentmodule:: pisces.models.stars.polytropes
 
 .. autosummary::
     :nosignatures:
@@ -108,6 +108,22 @@ to 3rd-party libraries / software.
     :template: module.rst
 
     particles
+
+Simulation Extensions
+''''''''''''''''''''''''''''''''
+The **Simulation Extensions** modules provide high-level tools for preparing and manipulating
+initial conditions for astrophysical simulations. These extensions build on Pisces’ core
+modeling capabilities to produce simulation-ready datasets. Initial conditions objects can be coupled
+with the frontends available for different simulation codes to easily generate input files for
+various astrophysical simulation software.
+
+.. autosummary::
+    :toctree: _as_gen
+    :recursive:
+    :template: module.rst
+    :nosignatures:
+
+    pisces.extensions.simulation
 
 Mathematics & Physics
 --------------------------

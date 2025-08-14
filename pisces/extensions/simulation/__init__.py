@@ -1,9 +1,10 @@
 """
-Extension classes and infrastructure for astrophysics simulations.
+Extension classes and utilities for astrophysical simulations.
 
-This module provides structures for setting up astrophysical
-in a number of different simulation codes.
-
+This module defines infrastructure for creating and managing *initial conditions*
+(ICs) for use with a variety of astrophysical simulation codes.
+It provides a core class (:class:`~pisces.extensions.simulation.core.initial_conditions.InitialConditions`)
+that can load, manipulate, and export IC datasets in formats compatible with popular simulation frameworks.
 """
 
 __all__ = ["InitialConditions"]
