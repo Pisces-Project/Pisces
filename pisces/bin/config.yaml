@@ -32,7 +32,13 @@ system:
       level: INFO
       enabled: true
       format: '[%(name)s]-%(levelname)s: %(message)s'
-
+    # The IC logger settings are the default behavior settings
+    # for the loggers attached to initial conditions. They can be
+    # overridden in the initial conditions code or by the user.
+    ics:
+      level: DEBUG
+      enabled: true
+      format: '[%(name)s]-%(levelname)s: %(message)s'
   # APPEARANCE
   # ----------
   # These settings control the appearance of Pisces in the console.
