@@ -83,6 +83,10 @@ test = [
   "pytest-cov",
   "hypothesis"
 ]
+extensions = [
+  "yt",
+  "rebound"
+]
 
 # ================================== #
 # Tools                              #
