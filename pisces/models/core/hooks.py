@@ -269,6 +269,7 @@ class _HookTools:
             for hook_class in cls.__mro__
             if issubclass(hook_class, BaseHook)
             and (hook_class is not BaseHook)
+            and (hook_class is not cls)
             and (getattr(hook_class, f"__{hook_class.__name__}_IS_TEMPLATE__", False) is False)
         ]
 
@@ -628,7 +629,6 @@ class SphericalParticleGenerationHook(ParticleGenerationHook, ABC):
     def _SphericalParticleGenerationHook_interpolate_particle_field(
         self: Self,
         particle_dataset: "ParticleDataset",
-        radius_field: str,
         particle_type: str,
         particle_field_name: str,
         model_field_name: str,
