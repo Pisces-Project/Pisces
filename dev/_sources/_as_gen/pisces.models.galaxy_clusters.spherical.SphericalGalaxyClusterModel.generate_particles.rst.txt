@@ -1,0 +1,6 @@
+pisces.models.galaxy\_clusters.spherical.SphericalGalaxyClusterModel.generate\_particles
+========================================================================================
+
+.. currentmodule:: pisces.models.galaxy_clusters.spherical
+
+.. automethod:: SphericalGalaxyClusterModel.generate_particles

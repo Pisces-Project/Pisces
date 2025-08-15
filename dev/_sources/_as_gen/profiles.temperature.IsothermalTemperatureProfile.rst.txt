@@ -1,0 +1,52 @@
+IsothermalTemperatureProfile
+=================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoclass:: profiles.temperature.IsothermalTemperatureProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~IsothermalTemperatureProfile.__init__
+      ~IsothermalTemperatureProfile.from_dict
+      ~IsothermalTemperatureProfile.from_hdf5
+      ~IsothermalTemperatureProfile.from_json
+      ~IsothermalTemperatureProfile.from_yaml
+      ~IsothermalTemperatureProfile.get_derived_profile
+      ~IsothermalTemperatureProfile.get_expression_latex
+      ~IsothermalTemperatureProfile.get_output_units
+      ~IsothermalTemperatureProfile.get_parameters_latex
+      ~IsothermalTemperatureProfile.lambdify_expression
+      ~IsothermalTemperatureProfile.list_derived_profiles
+      ~IsothermalTemperatureProfile.substitute_expression
+      ~IsothermalTemperatureProfile.to_dict
+      ~IsothermalTemperatureProfile.to_hdf5
+      ~IsothermalTemperatureProfile.to_json
+      ~IsothermalTemperatureProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~IsothermalTemperatureProfile.AXES
+      ~IsothermalTemperatureProfile.DEFAULT_PARAMETERS
+      ~IsothermalTemperatureProfile.derived_profile_classes
+      ~IsothermalTemperatureProfile.parameter_symbols
+      ~IsothermalTemperatureProfile.parameters
+      ~IsothermalTemperatureProfile.variable_symbols
+      ~IsothermalTemperatureProfile.variables
+   
+   

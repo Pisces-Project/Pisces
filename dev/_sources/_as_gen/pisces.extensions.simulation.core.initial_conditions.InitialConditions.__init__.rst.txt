@@ -1,0 +1,6 @@
+pisces.extensions.simulation.core.initial\_conditions.InitialConditions.\_\_init\_\_
+====================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
+
+.. automethod:: InitialConditions.__init__

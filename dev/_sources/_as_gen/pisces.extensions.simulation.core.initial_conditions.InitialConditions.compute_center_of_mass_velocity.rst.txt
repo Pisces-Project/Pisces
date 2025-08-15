@@ -1,0 +1,6 @@
+pisces.extensions.simulation.core.initial\_conditions.InitialConditions.compute\_center\_of\_mass\_velocity
+===========================================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
+
+.. automethod:: InitialConditions.compute_center_of_mass_velocity

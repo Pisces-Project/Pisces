@@ -1,0 +1,6 @@
+profiles.base.BaseSphericalRadialProfile.list\_derived\_profiles
+================================================================
+
+.. currentmodule:: profiles.base
+
+.. automethod:: BaseSphericalRadialProfile.list_derived_profiles

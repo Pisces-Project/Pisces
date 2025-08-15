@@ -1,0 +1,6 @@
+profiles.temperature.VikhlininTemperatureProfile.variable\_symbols
+==================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoproperty:: VikhlininTemperatureProfile.variable_symbols

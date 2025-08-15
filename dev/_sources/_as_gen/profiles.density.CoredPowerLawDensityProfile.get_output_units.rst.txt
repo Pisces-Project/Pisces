@@ -1,0 +1,6 @@
+profiles.density.CoredPowerLawDensityProfile.get\_output\_units
+===============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoredPowerLawDensityProfile.get_output_units

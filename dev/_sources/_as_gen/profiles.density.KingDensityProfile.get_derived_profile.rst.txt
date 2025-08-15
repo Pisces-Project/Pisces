@@ -1,0 +1,6 @@
+profiles.density.KingDensityProfile.get\_derived\_profile
+=========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: KingDensityProfile.get_derived_profile

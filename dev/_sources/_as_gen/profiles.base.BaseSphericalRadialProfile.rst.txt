@@ -1,0 +1,50 @@
+BaseSphericalRadialProfile
+========================================
+
+.. currentmodule:: profiles.base
+
+.. autoclass:: profiles.base.BaseSphericalRadialProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~BaseSphericalRadialProfile.__init__
+      ~BaseSphericalRadialProfile.from_dict
+      ~BaseSphericalRadialProfile.from_hdf5
+      ~BaseSphericalRadialProfile.from_json
+      ~BaseSphericalRadialProfile.from_yaml
+      ~BaseSphericalRadialProfile.get_derived_profile
+      ~BaseSphericalRadialProfile.get_expression_latex
+      ~BaseSphericalRadialProfile.get_output_units
+      ~BaseSphericalRadialProfile.get_parameters_latex
+      ~BaseSphericalRadialProfile.lambdify_expression
+      ~BaseSphericalRadialProfile.list_derived_profiles
+      ~BaseSphericalRadialProfile.substitute_expression
+      ~BaseSphericalRadialProfile.to_dict
+      ~BaseSphericalRadialProfile.to_hdf5
+      ~BaseSphericalRadialProfile.to_json
+      ~BaseSphericalRadialProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~BaseSphericalRadialProfile.derived_profile_classes
+      ~BaseSphericalRadialProfile.parameter_symbols
+      ~BaseSphericalRadialProfile.parameters
+      ~BaseSphericalRadialProfile.variable_symbols
+      ~BaseSphericalRadialProfile.variables
+   
+   

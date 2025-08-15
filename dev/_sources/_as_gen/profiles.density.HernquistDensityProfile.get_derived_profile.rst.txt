@@ -1,0 +1,6 @@
+profiles.density.HernquistDensityProfile.get\_derived\_profile
+==============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: HernquistDensityProfile.get_derived_profile

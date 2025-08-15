@@ -1,0 +1,6 @@
+profiles.density.DoublePowerLawDensityProfile.from\_hdf5
+========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DoublePowerLawDensityProfile.from_hdf5

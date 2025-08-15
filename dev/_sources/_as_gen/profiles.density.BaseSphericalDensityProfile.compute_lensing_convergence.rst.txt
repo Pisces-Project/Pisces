@@ -1,0 +1,6 @@
+profiles.density.BaseSphericalDensityProfile.compute\_lensing\_convergence
+==========================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseSphericalDensityProfile.compute_lensing_convergence

@@ -1,0 +1,6 @@
+profiles.density.HernquistDensityProfile.compute\_fractional\_mass\_radius
+==========================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: HernquistDensityProfile.compute_fractional_mass_radius

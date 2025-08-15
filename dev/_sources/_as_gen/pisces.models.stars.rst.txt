@@ -1,0 +1,34 @@
+pisces.models.stars
+===================
+
+.. automodule:: pisces.models.stars
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Modules
+
+   .. autosummary::
+      :toctree:
+      :template: module.rst
+      :recursive:
+
+   
+      polytropes
+   
+   
+
+   
+   
+   
+
+   
+   
+   

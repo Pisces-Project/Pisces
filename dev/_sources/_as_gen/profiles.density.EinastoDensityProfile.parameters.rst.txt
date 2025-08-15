@@ -1,0 +1,6 @@
+profiles.density.EinastoDensityProfile.parameters
+=================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: EinastoDensityProfile.parameters

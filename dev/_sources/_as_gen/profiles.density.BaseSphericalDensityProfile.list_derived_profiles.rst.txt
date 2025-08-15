@@ -1,0 +1,6 @@
+profiles.density.BaseSphericalDensityProfile.list\_derived\_profiles
+====================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseSphericalDensityProfile.list_derived_profiles

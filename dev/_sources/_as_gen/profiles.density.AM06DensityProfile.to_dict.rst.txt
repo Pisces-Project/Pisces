@@ -1,0 +1,6 @@
+profiles.density.AM06DensityProfile.to\_dict
+============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: AM06DensityProfile.to_dict

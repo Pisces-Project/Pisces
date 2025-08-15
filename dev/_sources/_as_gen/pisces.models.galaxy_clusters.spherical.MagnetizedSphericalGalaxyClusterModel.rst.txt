@@ -1,0 +1,57 @@
+MagnetizedSphericalGalaxyClusterModel
+=============================================================================
+
+.. currentmodule:: pisces.models.galaxy_clusters.spherical
+
+.. autoclass:: pisces.models.galaxy_clusters.spherical.MagnetizedSphericalGalaxyClusterModel
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~MagnetizedSphericalGalaxyClusterModel.__init__
+      ~MagnetizedSphericalGalaxyClusterModel.compute_df
+      ~MagnetizedSphericalGalaxyClusterModel.from_components
+      ~MagnetizedSphericalGalaxyClusterModel.from_density_and_total_density
+      ~MagnetizedSphericalGalaxyClusterModel.from_entropy_and_density
+      ~MagnetizedSphericalGalaxyClusterModel.from_temperature_and_density
+      ~MagnetizedSphericalGalaxyClusterModel.generate_particles
+      ~MagnetizedSphericalGalaxyClusterModel.get_active_hooks
+      ~MagnetizedSphericalGalaxyClusterModel.get_all_hooks
+      ~MagnetizedSphericalGalaxyClusterModel.get_df
+      ~MagnetizedSphericalGalaxyClusterModel.get_hook_class
+      ~MagnetizedSphericalGalaxyClusterModel.get_hook_description
+      ~MagnetizedSphericalGalaxyClusterModel.get_hook_name
+      ~MagnetizedSphericalGalaxyClusterModel.has_hook
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~MagnetizedSphericalGalaxyClusterModel.active_grid_axes
+      ~MagnetizedSphericalGalaxyClusterModel.config
+      ~MagnetizedSphericalGalaxyClusterModel.coordinate_system
+      ~MagnetizedSphericalGalaxyClusterModel.dark_matter_df
+      ~MagnetizedSphericalGalaxyClusterModel.fields
+      ~MagnetizedSphericalGalaxyClusterModel.grid
+      ~MagnetizedSphericalGalaxyClusterModel.handle
+      ~MagnetizedSphericalGalaxyClusterModel.has_dark_matter_df
+      ~MagnetizedSphericalGalaxyClusterModel.has_stellar_df
+      ~MagnetizedSphericalGalaxyClusterModel.logger
+      ~MagnetizedSphericalGalaxyClusterModel.metadata
+      ~MagnetizedSphericalGalaxyClusterModel.path
+      ~MagnetizedSphericalGalaxyClusterModel.profiles
+      ~MagnetizedSphericalGalaxyClusterModel.stellar_df
+   
+   

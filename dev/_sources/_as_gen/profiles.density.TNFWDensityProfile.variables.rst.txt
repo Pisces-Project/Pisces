@@ -1,0 +1,6 @@
+profiles.density.TNFWDensityProfile.variables
+=============================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: TNFWDensityProfile.variables

@@ -1,0 +1,6 @@
+profiles.entropy.BaseSphericalEntropyProfile.to\_dict
+=====================================================
+
+.. currentmodule:: profiles.entropy
+
+.. automethod:: BaseSphericalEntropyProfile.to_dict

@@ -1,0 +1,6 @@
+pisces.models.core.hooks.SphericalParticleGenerationHook.generate\_particles
+============================================================================
+
+.. currentmodule:: pisces.models.core.hooks
+
+.. automethod:: SphericalParticleGenerationHook.generate_particles

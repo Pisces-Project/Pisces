@@ -1,0 +1,6 @@
+profiles.temperature.BetaModelTemperatureProfile.to\_yaml
+=========================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: BetaModelTemperatureProfile.to_yaml

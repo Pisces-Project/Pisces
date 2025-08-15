@@ -1,0 +1,6 @@
+pisces.physics.virialization.eddington.compute\_relative\_energy
+================================================================
+
+.. currentmodule:: pisces.physics.virialization.eddington
+
+.. autofunction:: compute_relative_energy

@@ -1,0 +1,6 @@
+profiles.density.KingDensityProfile.from\_json
+==============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: KingDensityProfile.from_json

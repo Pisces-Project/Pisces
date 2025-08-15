@@ -1,0 +1,6 @@
+profiles.density.SingularIsothermalDensityProfile.from\_hdf5
+============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SingularIsothermalDensityProfile.from_hdf5

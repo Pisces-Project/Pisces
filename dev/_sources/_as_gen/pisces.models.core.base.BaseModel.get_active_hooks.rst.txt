@@ -1,0 +1,6 @@
+pisces.models.core.base.BaseModel.get\_active\_hooks
+====================================================
+
+.. currentmodule:: pisces.models.core.base
+
+.. automethod:: BaseModel.get_active_hooks

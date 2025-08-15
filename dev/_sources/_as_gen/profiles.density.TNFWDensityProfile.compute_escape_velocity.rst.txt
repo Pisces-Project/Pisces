@@ -1,0 +1,6 @@
+profiles.density.TNFWDensityProfile.compute\_escape\_velocity
+=============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: TNFWDensityProfile.compute_escape_velocity

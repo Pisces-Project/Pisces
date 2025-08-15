@@ -1,0 +1,6 @@
+profiles.density.FlaredDiskDensityProfile.lambdify\_expression
+==============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: FlaredDiskDensityProfile.lambdify_expression

@@ -1,0 +1,6 @@
+profiles.density.HernquistDensityProfile.substitute\_expression
+===============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: HernquistDensityProfile.substitute_expression

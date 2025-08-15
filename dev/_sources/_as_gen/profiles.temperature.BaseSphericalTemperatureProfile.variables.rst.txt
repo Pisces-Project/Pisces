@@ -1,0 +1,6 @@
+profiles.temperature.BaseSphericalTemperatureProfile.variables
+==============================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoproperty:: BaseSphericalTemperatureProfile.variables

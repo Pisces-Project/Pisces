@@ -1,0 +1,6 @@
+profiles.density.CoredNFWDensityProfile.get\_output\_units
+==========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoredNFWDensityProfile.get_output_units
