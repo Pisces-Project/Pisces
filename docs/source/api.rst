@@ -11,8 +11,13 @@ building blocks, enabling flexible and reusable modeling pipelines.
 Components & Substructures
 --------------------------
 
-These modules define the lower-level components of Pisces, including radial profiles for density, temperature,
-entropy, and more. These are often used directly or embedded in larger models.
+These modules define the lower-level building blocks of Pisces. They can be used directly for custom modeling
+or as embedded components within higher-level model classes.
+
+Profiles
+^^^^^^^^
+Radial and analytic profiles for density, temperature, entropy, and related quantities. These are the foundation
+for many physical models.
 
 .. autosummary::
     :caption: Profiles
@@ -21,6 +26,11 @@ entropy, and more. These are often used directly or embedded in larger models.
     :template: module.rst
 
     profiles
+
+Geometry
+^^^^^^^^
+Geometry modules define the spatial framework for models, including grid generation and coordinate system
+management.
 
 .. currentmodule:: pisces.geometry
 
