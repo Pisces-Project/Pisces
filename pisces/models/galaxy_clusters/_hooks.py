@@ -257,7 +257,7 @@ class SGCParticleGenerationHook(SphericalParticleGenerationHook):
             leave=False,
         ):
             self._SphericalParticleGenerationHook_interpolate_particle_field(
-                particle_dataset, "radii", particle_type, interpolated_particle_field, interpolated_model_field
+                particle_dataset, particle_type, interpolated_particle_field, interpolated_model_field
             )
 
         # --- Generate Velocities --- #
