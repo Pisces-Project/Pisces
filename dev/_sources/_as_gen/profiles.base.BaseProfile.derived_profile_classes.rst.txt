@@ -1,6 +1,0 @@
-profiles.base.BaseProfile.derived\_profile\_classes
-===================================================
-
-.. currentmodule:: profiles.base
-
-.. autoproperty:: BaseProfile.derived_profile_classes

@@ -1,6 +1,0 @@
-pisces.geometry.grids.base.Grid.active\_axes
-============================================
-
-.. currentmodule:: pisces.geometry.grids.base
-
-.. autoproperty:: Grid.active_axes

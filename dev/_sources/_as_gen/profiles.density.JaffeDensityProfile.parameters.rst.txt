@@ -1,6 +1,0 @@
-profiles.density.JaffeDensityProfile.parameters
-===============================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: JaffeDensityProfile.parameters

@@ -1,6 +1,0 @@
-profiles.temperature.CoolingFlowTemperatureProfile.get\_parameters\_latex
-=========================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: CoolingFlowTemperatureProfile.get_parameters_latex

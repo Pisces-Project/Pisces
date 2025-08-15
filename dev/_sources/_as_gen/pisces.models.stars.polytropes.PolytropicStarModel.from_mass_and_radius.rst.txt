@@ -1,6 +1,0 @@
-pisces.models.stars.polytropes.PolytropicStarModel.from\_mass\_and\_radius
-==========================================================================
-
-.. currentmodule:: pisces.models.stars.polytropes
-
-.. automethod:: PolytropicStarModel.from_mass_and_radius

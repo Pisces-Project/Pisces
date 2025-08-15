@@ -1,6 +1,0 @@
-profiles.density.AM06DensityProfile.list\_derived\_profiles
-===========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: AM06DensityProfile.list_derived_profiles

@@ -1,6 +1,0 @@
-profiles.density.PlummerDensityProfile.\_\_init\_\_
-===================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: PlummerDensityProfile.__init__

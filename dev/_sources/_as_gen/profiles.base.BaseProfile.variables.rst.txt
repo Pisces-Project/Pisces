@@ -1,6 +1,0 @@
-profiles.base.BaseProfile.variables
-===================================
-
-.. currentmodule:: profiles.base
-
-.. autoproperty:: BaseProfile.variables

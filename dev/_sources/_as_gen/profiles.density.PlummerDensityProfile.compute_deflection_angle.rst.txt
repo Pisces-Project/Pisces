@@ -1,6 +1,0 @@
-profiles.density.PlummerDensityProfile.compute\_deflection\_angle
-=================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: PlummerDensityProfile.compute_deflection_angle

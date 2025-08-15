@@ -1,6 +1,0 @@
-profiles.density.GaussianRingProfile.derived\_profile\_classes
-==============================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: GaussianRingProfile.derived_profile_classes

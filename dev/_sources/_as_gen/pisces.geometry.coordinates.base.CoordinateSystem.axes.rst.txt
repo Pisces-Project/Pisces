@@ -1,6 +1,0 @@
-pisces.geometry.coordinates.base.CoordinateSystem.axes
-======================================================
-
-.. currentmodule:: pisces.geometry.coordinates.base
-
-.. autoproperty:: CoordinateSystem.axes

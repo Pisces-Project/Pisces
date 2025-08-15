@@ -1,6 +1,0 @@
-profiles.density.PlummerDensityProfile.from\_hdf5
-=================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: PlummerDensityProfile.from_hdf5

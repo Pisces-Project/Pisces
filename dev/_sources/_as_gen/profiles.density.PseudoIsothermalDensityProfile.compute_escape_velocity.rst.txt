@@ -1,6 +1,0 @@
-profiles.density.PseudoIsothermalDensityProfile.compute\_escape\_velocity
-=========================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: PseudoIsothermalDensityProfile.compute_escape_velocity

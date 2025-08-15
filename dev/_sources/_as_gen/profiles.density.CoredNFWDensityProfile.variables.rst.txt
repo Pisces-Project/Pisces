@@ -1,6 +1,0 @@
-profiles.density.CoredNFWDensityProfile.variables
-=================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: CoredNFWDensityProfile.variables

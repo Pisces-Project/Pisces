@@ -1,6 +1,0 @@
-profiles.temperature.BaseSphericalTemperatureProfile.DEFAULT\_PARAMETERS
-========================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. autoattribute:: BaseSphericalTemperatureProfile.DEFAULT_PARAMETERS

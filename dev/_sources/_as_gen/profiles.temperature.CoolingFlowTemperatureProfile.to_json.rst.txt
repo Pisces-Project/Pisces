@@ -1,6 +1,0 @@
-profiles.temperature.CoolingFlowTemperatureProfile.to\_json
-===========================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: CoolingFlowTemperatureProfile.to_json

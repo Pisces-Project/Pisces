@@ -1,6 +1,0 @@
-profiles.density.BaseDiskDensityProfile.list\_derived\_profiles
-===============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BaseDiskDensityProfile.list_derived_profiles

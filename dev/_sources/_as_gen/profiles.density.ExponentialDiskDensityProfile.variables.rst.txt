@@ -1,6 +1,0 @@
-profiles.density.ExponentialDiskDensityProfile.variables
-========================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: ExponentialDiskDensityProfile.variables

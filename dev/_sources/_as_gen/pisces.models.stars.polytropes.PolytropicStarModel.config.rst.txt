@@ -1,6 +1,0 @@
-pisces.models.stars.polytropes.PolytropicStarModel.config
-=========================================================
-
-.. currentmodule:: pisces.models.stars.polytropes
-
-.. autoattribute:: PolytropicStarModel.config

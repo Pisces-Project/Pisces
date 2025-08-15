@@ -1,6 +1,0 @@
-profiles.density.BaseDiskDensityProfile.parameter\_symbols
-==========================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: BaseDiskDensityProfile.parameter_symbols

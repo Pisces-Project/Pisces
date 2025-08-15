@@ -1,6 +1,0 @@
-profiles.density.DoublePowerLawDensityProfile.parameters
-========================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: DoublePowerLawDensityProfile.parameters

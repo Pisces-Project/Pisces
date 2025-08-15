@@ -1,6 +1,0 @@
-pisces.particles.base.ParticleDataset.particle\_groups
-======================================================
-
-.. currentmodule:: pisces.particles.base
-
-.. autoproperty:: ParticleDataset.particle_groups

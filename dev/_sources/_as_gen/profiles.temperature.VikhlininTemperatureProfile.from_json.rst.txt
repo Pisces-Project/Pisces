@@ -1,6 +1,0 @@
-profiles.temperature.VikhlininTemperatureProfile.from\_json
-===========================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: VikhlininTemperatureProfile.from_json
