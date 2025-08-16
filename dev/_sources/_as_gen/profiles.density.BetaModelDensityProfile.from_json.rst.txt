@@ -1,0 +1,6 @@
+profiles.density.BetaModelDensityProfile.from\_json
+===================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BetaModelDensityProfile.from_json

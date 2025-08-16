@@ -1,0 +1,6 @@
+pisces.models.core.base.BaseModel.\_\_init\_\_
+==============================================
+
+.. currentmodule:: pisces.models.core.base
+
+.. automethod:: BaseModel.__init__

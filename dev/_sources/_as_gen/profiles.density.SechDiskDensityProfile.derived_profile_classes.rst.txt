@@ -1,0 +1,6 @@
+profiles.density.SechDiskDensityProfile.derived\_profile\_classes
+=================================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: SechDiskDensityProfile.derived_profile_classes

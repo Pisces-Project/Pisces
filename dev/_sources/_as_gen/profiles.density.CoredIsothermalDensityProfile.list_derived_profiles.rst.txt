@@ -1,0 +1,6 @@
+profiles.density.CoredIsothermalDensityProfile.list\_derived\_profiles
+======================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoredIsothermalDensityProfile.list_derived_profiles

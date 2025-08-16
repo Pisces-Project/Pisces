@@ -1,0 +1,6 @@
+profiles.density.SersicProfile.to\_hdf5
+=======================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SersicProfile.to_hdf5

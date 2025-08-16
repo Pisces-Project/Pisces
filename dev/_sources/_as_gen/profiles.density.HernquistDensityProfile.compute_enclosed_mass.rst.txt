@@ -1,0 +1,6 @@
+profiles.density.HernquistDensityProfile.compute\_enclosed\_mass
+================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: HernquistDensityProfile.compute_enclosed_mass

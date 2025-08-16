@@ -1,0 +1,6 @@
+pisces.geometry.coordinates.base.CoordinateSystem.convert\_coords\_from
+=======================================================================
+
+.. currentmodule:: pisces.geometry.coordinates.base
+
+.. automethod:: CoordinateSystem.convert_coords_from

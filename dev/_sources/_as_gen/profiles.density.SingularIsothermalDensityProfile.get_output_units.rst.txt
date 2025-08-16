@@ -1,0 +1,6 @@
+profiles.density.SingularIsothermalDensityProfile.get\_output\_units
+====================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SingularIsothermalDensityProfile.get_output_units

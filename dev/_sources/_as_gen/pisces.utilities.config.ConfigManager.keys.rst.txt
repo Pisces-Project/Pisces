@@ -1,0 +1,6 @@
+pisces.utilities.config.ConfigManager.keys
+==========================================
+
+.. currentmodule:: pisces.utilities.config
+
+.. automethod:: ConfigManager.keys

@@ -1,0 +1,6 @@
+profiles.density.DoublePowerLawDensityProfile.get\_derived\_profile
+===================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DoublePowerLawDensityProfile.get_derived_profile

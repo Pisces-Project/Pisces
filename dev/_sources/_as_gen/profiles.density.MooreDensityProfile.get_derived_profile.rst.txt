@@ -1,0 +1,6 @@
+profiles.density.MooreDensityProfile.get\_derived\_profile
+==========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: MooreDensityProfile.get_derived_profile

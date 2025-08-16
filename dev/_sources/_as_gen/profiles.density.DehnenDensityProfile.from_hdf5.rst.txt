@@ -1,0 +1,6 @@
+profiles.density.DehnenDensityProfile.from\_hdf5
+================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DehnenDensityProfile.from_hdf5

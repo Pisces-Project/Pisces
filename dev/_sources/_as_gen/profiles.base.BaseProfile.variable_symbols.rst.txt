@@ -1,0 +1,6 @@
+profiles.base.BaseProfile.variable\_symbols
+===========================================
+
+.. currentmodule:: profiles.base
+
+.. autoproperty:: BaseProfile.variable_symbols

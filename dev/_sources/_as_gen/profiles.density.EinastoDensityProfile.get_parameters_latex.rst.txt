@@ -1,0 +1,6 @@
+profiles.density.EinastoDensityProfile.get\_parameters\_latex
+=============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: EinastoDensityProfile.get_parameters_latex

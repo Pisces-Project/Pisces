@@ -1,0 +1,6 @@
+profiles.base.BaseProfile.get\_derived\_profile
+===============================================
+
+.. currentmodule:: profiles.base
+
+.. automethod:: BaseProfile.get_derived_profile

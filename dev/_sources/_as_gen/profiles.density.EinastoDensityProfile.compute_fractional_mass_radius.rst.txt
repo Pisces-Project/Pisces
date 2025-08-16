@@ -1,0 +1,6 @@
+profiles.density.EinastoDensityProfile.compute\_fractional\_mass\_radius
+========================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: EinastoDensityProfile.compute_fractional_mass_radius

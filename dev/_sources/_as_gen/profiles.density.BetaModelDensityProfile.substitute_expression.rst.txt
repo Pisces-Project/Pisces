@@ -1,0 +1,6 @@
+profiles.density.BetaModelDensityProfile.substitute\_expression
+===============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BetaModelDensityProfile.substitute_expression

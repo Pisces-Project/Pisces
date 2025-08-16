@@ -1,0 +1,6 @@
+profiles.temperature.IsothermalTemperatureProfile.variables
+===========================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoproperty:: IsothermalTemperatureProfile.variables

@@ -1,0 +1,6 @@
+profiles.density.DoublePowerLawDensityProfile.compute\_circular\_velocity
+=========================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DoublePowerLawDensityProfile.compute_circular_velocity
