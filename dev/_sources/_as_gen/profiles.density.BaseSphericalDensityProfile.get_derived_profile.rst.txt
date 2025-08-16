@@ -1,6 +1,0 @@
-profiles.density.BaseSphericalDensityProfile.get\_derived\_profile
-==================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BaseSphericalDensityProfile.get_derived_profile

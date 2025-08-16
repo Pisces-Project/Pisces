@@ -1,6 +1,0 @@
-profiles.density.PseudoIsothermalDensityProfile.lambdify\_expression
-====================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: PseudoIsothermalDensityProfile.lambdify_expression

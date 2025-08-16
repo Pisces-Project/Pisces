@@ -1,6 +1,0 @@
-pisces.extensions.simulation.core.initial\_conditions.InitialConditions.models
-==============================================================================
-
-.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
-
-.. autoproperty:: InitialConditions.models

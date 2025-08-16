@@ -1,6 +1,0 @@
-profiles.density.JaffeDensityProfile.compute\_cosmological\_overdensity\_profile
-================================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: JaffeDensityProfile.compute_cosmological_overdensity_profile

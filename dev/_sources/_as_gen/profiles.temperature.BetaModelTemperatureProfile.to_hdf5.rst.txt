@@ -1,6 +1,0 @@
-profiles.temperature.BetaModelTemperatureProfile.to\_hdf5
-=========================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: BetaModelTemperatureProfile.to_hdf5

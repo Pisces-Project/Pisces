@@ -1,6 +1,0 @@
-profiles.density.MooreDensityProfile.substitute\_expression
-===========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: MooreDensityProfile.substitute_expression

@@ -1,6 +1,0 @@
-profiles.density.FlaredDiskDensityProfile.to\_hdf5
-==================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: FlaredDiskDensityProfile.to_hdf5

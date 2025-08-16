@@ -1,6 +1,0 @@
-pisces.models.galaxy\_clusters.spherical.MagnetizedSphericalGalaxyClusterModel.from\_components
-===============================================================================================
-
-.. currentmodule:: pisces.models.galaxy_clusters.spherical
-
-.. automethod:: MagnetizedSphericalGalaxyClusterModel.from_components

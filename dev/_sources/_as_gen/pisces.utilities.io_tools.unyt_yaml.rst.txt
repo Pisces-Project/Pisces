@@ -1,6 +1,0 @@
-pisces.utilities.io\_tools.unyt\_yaml
-=====================================
-
-.. currentmodule:: pisces.utilities.io_tools
-
-.. autodata:: unyt_yaml

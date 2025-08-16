@@ -1,6 +1,0 @@
-profiles.density.BaseSphericalDensityProfile.variables
-======================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: BaseSphericalDensityProfile.variables

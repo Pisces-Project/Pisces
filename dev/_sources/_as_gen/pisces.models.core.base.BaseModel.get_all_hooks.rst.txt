@@ -1,6 +1,0 @@
-pisces.models.core.base.BaseModel.get\_all\_hooks
-=================================================
-
-.. currentmodule:: pisces.models.core.base
-
-.. automethod:: BaseModel.get_all_hooks

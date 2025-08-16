@@ -1,6 +1,0 @@
-profiles.density.BaseDiskDensityProfile.from\_json
-==================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BaseDiskDensityProfile.from_json

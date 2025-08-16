@@ -1,6 +1,0 @@
-profiles.density.TNFWDensityProfile.substitute\_expression
-==========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: TNFWDensityProfile.substitute_expression

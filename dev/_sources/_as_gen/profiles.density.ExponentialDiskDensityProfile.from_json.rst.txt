@@ -1,6 +1,0 @@
-profiles.density.ExponentialDiskDensityProfile.from\_json
-=========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: ExponentialDiskDensityProfile.from_json

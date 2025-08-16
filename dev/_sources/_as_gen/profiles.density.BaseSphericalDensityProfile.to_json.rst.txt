@@ -1,6 +1,0 @@
-profiles.density.BaseSphericalDensityProfile.to\_json
-=====================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BaseSphericalDensityProfile.to_json

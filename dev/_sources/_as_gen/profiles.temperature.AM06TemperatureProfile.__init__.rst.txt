@@ -1,6 +1,0 @@
-profiles.temperature.AM06TemperatureProfile.\_\_init\_\_
-========================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: AM06TemperatureProfile.__init__

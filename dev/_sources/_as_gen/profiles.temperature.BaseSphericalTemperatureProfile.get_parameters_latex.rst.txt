@@ -1,6 +1,0 @@
-profiles.temperature.BaseSphericalTemperatureProfile.get\_parameters\_latex
-===========================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: BaseSphericalTemperatureProfile.get_parameters_latex

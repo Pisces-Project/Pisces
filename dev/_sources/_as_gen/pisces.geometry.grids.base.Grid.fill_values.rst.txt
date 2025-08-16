@@ -1,6 +1,0 @@
-pisces.geometry.grids.base.Grid.fill\_values
-============================================
-
-.. currentmodule:: pisces.geometry.grids.base
-
-.. autoproperty:: Grid.fill_values
