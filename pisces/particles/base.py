@@ -1527,6 +1527,93 @@ class ParticleDataset:
 
         self.apply_linear_transformation(R, groups=groups, fields=fields)
 
+    def reorient_particles(
+        self,
+        direction_vector: np.ndarray,
+        spin: float,
+        groups: list[str] = None,
+        fields: tuple[str, ...] = ("particle_position", "particle_velocity"),
+    ):
+        """
+        Reorient particles given a direction vector and spin angle.
+
+        This method aligns the +z axis with the specified `direction_vector` and then applies
+        a spin rotation about the new axis. The transformation is applied to the specified
+        vector fields (e.g., ``particle_position``, ``particle_velocity``) in the specified particle groups.
+
+        The transformation uses a two-step process:
+
+        1. **Alignment**: Compute the minimal rotation that aligns the +z axis with the
+              normalized `direction_vector`.
+        2. **Spin**: Apply a rotation by `spin` radians about the new z-axis (aligned with `direction_vector`).
+
+        The final rotation matrix is the composition of the alignment and spin rotations.
+
+        Parameters
+        ----------
+        direction_vector : array_like
+            Target direction to become the new +z axis. Need not be unit, but must be nonzero.
+        spin : float
+            Spin angle (in radians) applied about the new axis after alignment.
+        groups : list of str, optional
+            Particle groups to transform. If None, all groups are used.
+        fields : tuple of str, optional
+            Vector fields to transform. Defaults to ``("particle_position", "particle_velocity")``.
+
+        Returns
+        -------
+        numpy.ndarray
+            The 3x3 rotation matrix applied: ``R = R_spin @ R_align``.
+        """
+        # Validate and normalize the direction vector for
+        # the target axis.
+        direction_vector = np.asarray(direction_vector, dtype=float)
+        if direction_vector.ndim != 1 or direction_vector.shape[0] != 3:
+            raise ValueError("Direction vector must be a 3-element vector.")
+        dv_norm = np.linalg.norm(direction_vector)
+
+        if dv_norm <= 1e-8:
+            raise ValueError("Direction vector must be nonzero.")
+        _dv = direction_vector / dv_norm  # unit target axis
+
+        # Construct the necessary data to construct the
+        # relevant rotation matrices.
+        z_axis = np.array([0.0, 0.0, 1.0])
+        cross = np.cross(z_axis, _dv)
+        sin_phi = np.linalg.norm(cross)  # = sin(tilt)
+        cos_phi = float(np.dot(z_axis, _dv))  # = cos(tilt)
+
+        if sin_phi < 1e-12 and cos_phi > 0.0:
+            # Already aligned
+            R_align = np.eye(3)
+        elif sin_phi < 1e-12 and cos_phi < 0.0:
+            # Exactly opposite: rotate pi about any axis ⟂ z (choose x)
+            Kx = np.array([[0, 0, 0], [0, 0, -1], [0, 1, 0]])  # skew([1,0,0])
+            R_align = np.eye(3) + np.sin(np.pi) * Kx + (1 - np.cos(np.pi)) * (Kx @ Kx)
+        else:
+            # General case: axis = unit(cross), angle = atan2(sin_phi, cos_phi)
+            rot_axis = cross / sin_phi
+            x, y, z = rot_axis
+            K = np.array([[0, -z, y], [z, 0, -x], [-y, x, 0]])
+            # Use sin/cos of angle directly via sin_phi/cos_phi (avoids recomputing trig)
+            R_align = np.eye(3) + sin_phi * K + (1 - cos_phi) * (K @ K)
+
+        # After alignment, the new z-axis is exactly _dv.
+        # Step 2: Spin by `spin` about _dv (which is world-space axis after R_align)
+        x, y, z = _dv
+        Kspin = np.array([[0, -z, y], [z, 0, -x], [-y, x, 0]])
+        s = np.sin(spin)
+        c = np.cos(spin)
+        R_spin = np.eye(3) + s * Kspin + (1 - c) * (Kspin @ Kspin)
+
+        # Compose to "align then spin" (active, column-vector convention)
+        R = R_spin @ R_align
+
+        # Apply to requested particle groups/fields
+        self.apply_linear_transformation(R, groups=groups, fields=fields)
+
+        return R
+
     def cut_particles_to_bbox(
         self,
         bbox: unyt.unyt_array,
