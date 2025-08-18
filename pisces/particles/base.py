@@ -38,6 +38,46 @@ class ParticleDataset:
     if there is need.
     """
 
+    @classmethod
+    def _serialized(cls, obj):
+        """Serialize an object using the dataset's metadata serializer.
+
+        Parameters
+        ----------
+        obj : Any
+            The object to serialize.
+
+        Returns
+        -------
+        Any
+            The serialized representation of the object.
+
+        """
+        if isinstance(obj, dict):
+            return cls.metadata_serializer.serialize_dict(obj)
+        else:
+            return cls.metadata_serializer.serialize_data(obj)
+
+    @classmethod
+    def _deserialized(cls, obj):
+        """Deserialize an object using the dataset's metadata serializer.
+
+        Parameters
+        ----------
+        obj : Any
+            The object to deserialize.
+
+        Returns
+        -------
+        Any
+            The deserialized representation of the object.
+
+        """
+        if isinstance(obj, dict):
+            return cls.metadata_serializer.deserialize_dict(obj)
+        else:
+            return cls.metadata_serializer.deserialize_data(obj)
+
     # -------------------------------------- #
     # Class Level Flags / Attributes         #
     # -------------------------------------- #
@@ -85,6 +125,7 @@ class ParticleDataset:
         # CHECKING GLOBAL METADATA:
         # Ensure that all required global metadata attributes are present
         # and that the CLASS_NAME flag is set to the correct class name.
+        # The global metadata is ALREADY DESERIALIZED.
         _glob_metadata = self.get_global_metadata()
 
         # Ensure required metadata is present.
@@ -750,7 +791,7 @@ class ParticleDataset:
 
         """
         dataset_handle = self.get_particle_field_handle(group_name, field_name)
-        return unyt.unyt_array(dataset_handle[...], units=dataset_handle.attrs.get("UNITS", ""))
+        return unyt.unyt_array(dataset_handle[...], units=self.get_field_units(group_name, field_name))
 
     def get_particle_fields(self, fields: list[str]) -> dict[str, unyt.unyt_array]:
         """Get multiple particle fields as a dictionary of unyt arrays.
@@ -794,7 +835,7 @@ class ParticleDataset:
 
         """
         dataset_handle = self.get_particle_field_handle(group_name, field_name)
-        return unyt.Unit(dataset_handle.attrs.get("UNITS", ""))
+        return unyt.Unit(self._deserialized(dataset_handle.attrs.get("UNITS", "")))
 
     # ------------------------------------ #
     # Modification Methods                 #
@@ -889,7 +930,7 @@ class ParticleDataset:
             raise ValueError(f"Particle group '{name}' already exists.")
 
         group = self.__handle__.create_group(name)
-        group.attrs["NUMBER_OF_PARTICLES"] = num_particles
+        group.attrs["NUMBER_OF_PARTICLES"] = self._serialized(num_particles)
 
         # Merge metadata from both dict and kwargs, prioritizing kwargs
         metadata = metadata or {}
@@ -941,7 +982,7 @@ class ParticleDataset:
         # Ensure that the group exists and that the field name is valid /
         # correctly handle the overwrite behavior.
         group = self.get_particle_group_handle(group_name)
-
+        group_attrs = self.get_group_metadata(group_name)
         if field_name in group.keys():
             # The field already exists. Our behavior depends on the `overwrite` flag.
             if not overwrite:
@@ -951,7 +992,7 @@ class ParticleDataset:
 
         # Determine the number of particles expected and
         # ensure that the data matches this shape.
-        num_particles = group.attrs.get("NUMBER_OF_PARTICLES")
+        num_particles = group_attrs["NUMBER_OF_PARTICLES"]
         data = np.atleast_1d(data)
         if data.shape[0] != num_particles:
             raise ValueError(
@@ -960,7 +1001,7 @@ class ParticleDataset:
 
         # Validation has been completed and we can therefore now
         # proceed with writing the field to the group.
-        unit_string = str(getattr(data, "units", ""))
+        units = getattr(data, "units", "")
 
         if isinstance(data, unyt.unyt_array):
             dset = group.create_dataset(field_name, data=data.d, dtype=data.dtype)
@@ -968,10 +1009,9 @@ class ParticleDataset:
             dset = group.create_dataset(field_name, data=data, dtype=data.dtype)
 
         # Handle the metadata.
-        dset.attrs["UNITS"] = unit_string
+        dset.attrs["UNITS"] = self.metadata_serializer.serialize_data(units)
         if metadata is not None:
-            for key, value in metadata.items():
-                dset.attrs[key] = value
+            dset.attrs.update(self.metadata_serializer.serialize_dict(metadata))
 
     def remove_particle_group(self, group_name: str):
         """Remove a particle group from the dataset.
@@ -1056,13 +1096,14 @@ class ParticleDataset:
         # Ensure access to the group and that the
         # number of new particles is non zero.
         group = self.get_particle_group_handle(group_name)
+        group_attrs = self.get_group_metadata(group_name)
         if not isinstance(num_particles, int) or num_particles <= 0:
             raise ValueError("`num_particles` must be a positive integer.")
 
         # Create the field dictionary and
         # modify the group attribute.
         fields = fields or {}
-        old_particle_count = group.attrs["NUMBER_OF_PARTICLES"]
+        old_particle_count = group_attrs["NUMBER_OF_PARTICLES"]
         new_particle_count = old_particle_count + num_particles
 
         # Make corrections to the fields.
@@ -1096,7 +1137,7 @@ class ParticleDataset:
                     )
 
                 try:
-                    field_data = field_data.to_value(group[field_name].attrs.get("UNITS", ""))
+                    field_data = field_data.to_value(self.get_field_units(group_name, field_name))
                 except Exception as exp:
                     raise TypeError(f"Cannot convert field '{field_name}' data to existing units: {exp}") from exp
 
@@ -1190,7 +1231,8 @@ class ParticleDataset:
 
         """
         group = self.get_particle_group_handle(group_name)
-        n = group.attrs["NUMBER_OF_PARTICLES"]
+        group_attrs = self.get_group_metadata(group_name)
+        n = group_attrs["NUMBER_OF_PARTICLES"]
 
         mask = np.asarray(mask)
         if mask.shape != (n,) or mask.dtype != bool:
@@ -1210,7 +1252,7 @@ class ParticleDataset:
             for key, value in metadata.items():
                 dset.attrs[key] = value
 
-        group.attrs["NUMBER_OF_PARTICLES"] = new_count
+        group.attrs["NUMBER_OF_PARTICLES"] = self.metadata_serializer.serialize_data(new_count)
 
     def rename_field(self, group_name: str, old_name: str, new_name: str):
         """Rename a field within a particle group.
@@ -1576,7 +1618,7 @@ class ParticleDataset:
                     if group_name not in group_registry:
                         group = f.create_group(group_name)
                         group_registry[group_name] = data.shape[0]
-                        group.attrs["NUMBER_OF_PARTICLES"] = data.shape[0]
+                        group.attrs["NUMBER_OF_PARTICLES"] = cls.metadata_serializer.serialize_data(data.shape[0])
                     else:
                         if data.shape[0] != group_registry[group_name]:
                             raise ValueError(
@@ -1586,7 +1628,7 @@ class ParticleDataset:
 
                     # Create dataset and write units
                     dset = f[group_name].create_dataset(field_name, data=data, dtype=data.dtype)
-                    dset.attrs["UNITS"] = str(data.units)
+                    dset.attrs["UNITS"] = cls.metadata_serializer.serialize_data(data.units)
 
         # Return a validated ParticleDataset instance
         return cls(path, *args, **kwargs)
