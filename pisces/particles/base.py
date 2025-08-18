@@ -1618,7 +1618,6 @@ class ParticleDataset:
         self,
         bbox: unyt.unyt_array,
         groups: list[str] = None,
-        particle_position_fields: dict[str, str] = None,
         center: unyt.unyt_array = None,
     ):
         """
@@ -1636,11 +1635,6 @@ class ParticleDataset:
             the maximum corner. Units must be compatible with particle positions.
         groups: list of str, optional
             List of particle group names to apply the cut to. If None, all groups are used.
-        particle_position_fields: dict of str, str, optional
-            A mapping from group names to the corresponding particle position field names.
-            If None, defaults to ``"particle_position"`` for all groups. This can be used in
-            scenarios where the particle dataset doesn't follow standard convention for its
-            position field names.
         center: ~unyt.array.unyt_array, optional
             An optional center point to offset the bounding box. If provided, the bounding
             box is shifted by this center before applying the cut. Units must be compatible
@@ -1648,7 +1642,6 @@ class ParticleDataset:
         """
         # Validate the particle positions field so that
         # we can uniformly access it as a dictionary.
-        particle_position_fields = particle_position_fields if particle_position_fields is not None else {}
         groups = groups if groups is not None else self.particle_groups
 
         # manage center if it needs to be managed.
@@ -1662,14 +1655,11 @@ class ParticleDataset:
             if particle_type not in groups:
                 continue
 
-            # Look up the position field name for this particle type.
-            field_name = particle_position_fields.get(particle_type, "particle_position")
-
             # Extract the position array for this particle type
             # so that we can determine the dimension and eventually
             # obtain the mask.
-            position_field_handle = self.get_particle_field_handle(particle_type, field_name)
-            position_field_units = self.get_field_units(particle_type, field_name)
+            position_field_handle = self.get_particle_field_handle(particle_type, "particle_position")
+            position_field_units = self.get_field_units(particle_type, "particle_position")
             ndim = position_field_handle.shape[-1]
 
             # Check that the number of dimensions is compatible with the
