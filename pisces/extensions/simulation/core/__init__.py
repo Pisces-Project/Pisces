@@ -7,6 +7,7 @@ provides the :class:`~pisces.extensions.simulation.core.initial_conditions.Initi
 creating, loading, and managing initial condition (IC) datasets.
 """
 
-__all__ = ["InitialConditions"]
+__all__ = ["InitialConditions", "SimulationFrontend"]
 
+from .frontends import SimulationFrontend
 from .initial_conditions import InitialConditions

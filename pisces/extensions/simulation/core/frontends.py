@@ -1,94 +1,10 @@
 """
-abstract base classes for **simulation frontends** in Pisces.
+Abstract base classes for simulation frontends in Pisces.
 
 A simulation frontend is the bridge between Pisces' in-house
 :class:`~pisces.extensions.simulation.core.initial_conditions.InitialConditions`
 objects and an external simulation code's native input files and configuration
 requirements.
-
-Overview
---------
-Simulation frontends serve three key purposes:
-
-1. **Configuration management**
-   Each frontend provides a default YAML configuration template
-   (stored in ``frontend_configs``). When attached to an initial
-   conditions object, this template is copied into the working directory,
-   ensuring that the simulation run is reproducible and customizable
-   without altering global defaults.
-
-2. **Validation hooks**
-   Frontends provide multiple hooks to check compatibility and correctness:
-     - :meth:`SimulationFrontend._validate_input_ic` validates that an
-       :class:`~pisces.extensions.simulation.core.initial_conditions.InitialConditions`
-       object is suitable for the target simulation code.
-     - :meth:`SimulationFrontend._validate_runtime_configuration` allows
-       subclasses to enforce runtime constraints, such as required keys,
-       units, or parameter ranges.
-
-3. **Initial condition generation**
-   The main task of a frontend is to translate Pisces IC objects into
-   simulation-native files. This is done via
-   :meth:`SimulationFrontend.generate_initial_conditions`, which first
-   validates the runtime configuration, then calls the subclass-defined
-   :meth:`SimulationFrontend._generate_initial_conditions`.
-
-Extending this Module
----------------------
-To implement a new simulation frontend:
-
-1. Subclass :class:`SimulationFrontend`.
-2. Define the class variable :attr:`__default_configuration_path__` to
-   point to your YAML template in ``frontend_configs``.
-3. Implement :meth:`_generate_initial_conditions` with logic for
-   generating simulation-ready files.
-4. (Optional) Override :meth:`_validate_input_ic` to ensure only compatible
-   ICs are used.
-5. (Optional) Override :meth:`_validate_runtime_configuration` to perform
-   final checks before file generation.
-
-Example
--------
-.. code-block:: python
-
-    from pisces.extensions.simulation.core.frontend import (
-        SimulationFrontend,
-    )
-
-
-    class MySimFrontend(SimulationFrontend):
-        __default_configuration_path__ = (
-            __frontend_bin_path__
-            / "mysim_config.yaml"
-        )
-
-        def _validate_input_ic(self, ic):
-            if "required_field" not in ic.fields:
-                raise ValueError(
-                    "MySim requires 'required_field' in ICs."
-                )
-            return True
-
-        def _generate_initial_conditions(
-            self, *args, **kwargs
-        ):
-            # Custom logic for writing MySim input files
-            ...
-
-
-    # Usage:
-    ic = InitialConditions(...)
-    frontend = MySimFrontend(
-        ic, reset_configuration=True
-    )
-    frontend.generate_initial_conditions()
-
-Notes
------
-- Configuration files are **copied per IC object**, ensuring reproducibility
-  and preventing accidental modification of shared defaults.
-- The :class:`~pisces.utilities.config.ConfigManager` provides an interface
-  for reading/updating YAML configurations programmatically.
 
 """
 
@@ -99,11 +15,6 @@ from pathlib import Path
 from pisces.utilities.config import ConfigManager
 
 from .initial_conditions import InitialConditions
-
-# Create a path reference to the frontend configuration
-# bin directory so that we can seek / load the configuration
-# files.
-__frontend_bin_path__ = Path(__file__).parents[1] / "frontend_configs"
 
 
 class SimulationFrontend(ABC):
@@ -125,6 +36,9 @@ class SimulationFrontend(ABC):
     which is copied into the initial conditions directory when the frontend
     is initialized. This allows the user to modify the configuration
     for each simulation run without affecting the default template.
+
+    For more detailed information on how to implement a custom frontend,
+    see :ref:`frontend_dev`. For the user guide documentation, see :ref:`simulation_frontends`.
     """
 
     # --------------------------------------- #
@@ -140,6 +54,17 @@ class SimulationFrontend(ABC):
     configuration file that defines the expected parameters for
     this frontend. The file should be located in the
     `pisces/extensions/simulation/core/frontend_configs` directory.
+    """
+    __default_configuration_manager_class__: type = ConfigManager
+    """The class used to manage the configuration file for this frontend.
+
+    This should be set in subclasses to specify the type of
+    :class:`~pisces.utilities.config.ConfigManager` or a subclass that
+    will be used to handle the configuration file. By default,
+    it is set to :class:`~pisces.utilities.config.ConfigManager`, but
+    subclasses may override this to use a custom configuration manager
+    that provides additional functionality or validation specific to
+    the simulation code being interfaced with.
     """
 
     # --------------------------------------- #
@@ -192,7 +117,7 @@ class SimulationFrontend(ABC):
             raise TypeError(f"Expected an InitialConditions object, got {type(initial_conditions)}.")
         return True
 
-    def _ensure_config(self, ic_directory: Path, reset: bool = False) -> Path:
+    def _ensure_config(self, ic_directory: Path, reset: bool = False) -> tuple[Path, str]:
         """
         Ensure that a configuration file for this frontend exists.
 
@@ -216,6 +141,11 @@ class SimulationFrontend(ABC):
         -------
         Path
             The full path to the configuration file in the IC directory.
+        str
+            The status of the configuration file. This will be either ``"created"``
+            or ``"existing"`` depending on whether a new file was created or an existing
+            file was found. This is used further down in the initialization process to
+            ensure that the configuration is loaded correctly.
         """
         # --- Paths for configuration management --- #
         # Destination is always inside the IC's working directory, and
@@ -237,15 +167,31 @@ class SimulationFrontend(ABC):
                 # Overwrite the existing configuration with the default.
                 self.logger.debug(f"Resetting configuration file at {config_destination}.")
                 shutil.copy(config_source, config_destination)
+                status = "created"
             else:
                 # Keep the existing configuration file untouched.
                 self.logger.debug(f"Using existing configuration file at {config_destination}.")
+                status = "existing"
         else:
             # No configuration exists — copy in the default template.
             self.logger.debug(f"Copying default configuration file from {config_source} to {config_destination}.")
             shutil.copy(config_source, config_destination)
+            status = "created"
 
-        return config_destination
+        return config_destination, status
+
+    def _setup_config(self):
+        """
+        Perform additional setup after the configuration file is ensured.
+
+        This method is called after the configuration file has been
+        ensured and loaded into the ConfigManager. Subclasses may
+        override this method to perform any additional setup steps
+        that depend on the configuration being present.
+
+        By default, this method does nothing.
+        """
+        return
 
     def __init__(self, initial_conditions: InitialConditions, reset_configuration: bool = False, **kwargs):
         """
@@ -286,29 +232,43 @@ class SimulationFrontend(ABC):
             If the default configuration template for this frontend cannot
             be found.
         """
-        # --- Store and log IC association --- #
+        # --- Setup IC connection --- #
+        # At this stage, we just take the IC that we got passed
+        # and ensure it gets connected to the class.
         self.__initial_conditions__ = initial_conditions
-        initial_conditions.logger.info(f"Connecting {initial_conditions} to {self.__class__.__name__} frontend.")
+        initial_conditions.logger.info(f"[{self.__class__.__name__}] Linking IC: {initial_conditions}...")
 
         # --- Input validation hook --- #
+        # Perform any frontend-specific validation on the
+        # provided initial conditions object.
         if not self._validate_input_ic(initial_conditions):
             raise ValueError(
                 f"Initial conditions {initial_conditions} are not valid for {self.__class__.__name__} frontend."
             )
 
-        # --- Ensure configuration file is present/up to date --- #
-        self.__config_path__ = self._ensure_config(
+        # --- Setup Configuration file --- #
+        # We first pass off to _ensure_config to make sure that
+        # that the configuration file exists in the IC directory. That
+        # also provides a status indicating whether the file was created
+        # or already existed. If it was created, then we need to setup the
+        # configuration from defaults (_setup_config). We also need to update
+        # with the kwargs.
+        self.__config_path__, _load_status = self._ensure_config(
             ic_directory=initial_conditions.__directory__, reset=reset_configuration
         )
+        self.__config__ = self.__class__.__default_configuration_manager_class__(self.__config_path__, autosave=True)
 
-        # --- Load configuration manager --- #
-        self.__config__ = ConfigManager(self.__config_path__)
+        if _load_status == "created":
+            # We need to perform further setup procedures.
+            self._setup_config()
+        else:
+            pass
 
-        # --- Apply configuration overrides --- #
         self.__config__.update(kwargs)
 
         # --- Subclass post-initialization hook --- #
         self.__post_init__()
+        initial_conditions.logger.info(f"[{self.__class__.__name__}] Linking IC: {initial_conditions}... [DONE]")
 
     @abstractmethod
     def __post_init__(self):
@@ -430,7 +390,7 @@ class SimulationFrontend(ABC):
         Includes the frontend class name and the path to its configuration file.
         Useful for logging and user-facing output.
         """
-        return f"<{self.__class__.__name__} | config={self.config_path.name}>"
+        return f"<{self.__class__.__name__} | IC={self.initial_conditions.directory.name}>"
 
     def __repr__(self) -> str:
         """
@@ -557,8 +517,14 @@ class SimulationFrontend(ABC):
             Keyword arguments forwarded to both validation and generation.
 
         """
-        self.logger.info(f"Generating initial conditions files for {self.initial_conditions}.")
+        self.logger.info(f"[{self.__class__.__name__}] Generating ICs - {self.initial_conditions}...")
 
+        # Start with the runtime validation procedure.
         self._validate_runtime_configuration(*args, **kwargs)
+        self.logger.info(f"[{self.__class__.__name__}]\t Validating runtime configuration... [DONE]")
 
-        return self._generate_initial_conditions(*args, **kwargs)
+        # Then generate the initial conditions files.
+        self._generate_initial_conditions(*args, **kwargs)
+        self.logger.info(f"[{self.__class__.__name__}] Generating ICs - {self.initial_conditions}... [DONE]")
+
+        return

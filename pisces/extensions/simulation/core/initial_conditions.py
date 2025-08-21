@@ -415,7 +415,7 @@ class InitialConditions:
 
     def __str__(self) -> str:
         """Human-readable summary of the InitialConditions object."""
-        return f"{self.__class__.__name__}({self.__directory__.absolute()})"
+        return f"{self.__class__.__name__}({self.__directory__.name})"
 
     def __len__(self) -> int:
         """Get the number of models in this initial condition set."""
@@ -1303,8 +1303,8 @@ class InitialConditions:
 
         # Delegate to the model's particle generation method
         # noinspection PyUnresolvedReferences
-        model.generate_particles(self.__directory__ / "f{model_name}_p.hdf5", num_particles, **kwargs)
-
+        _p = model.generate_particles(self.__directory__ / f"{model_name}_p.hdf5", num_particles, **kwargs)
+        self.config[f"models.{model_name}.particles"] = self.__directory__ / f"{model_name}_p.hdf5"
         self.logger.info(f"Generated particles for model '{model_name}' with counts: {num_particles}")
 
     # ============================== #
@@ -2195,6 +2195,9 @@ class InitialConditions:
         # --- DIRECTORY SETUP --- #
         # Process the provided directory. We check that it is a valid directory
         # and that it doesn't contain any existing files that need to be overwritten.
+        #
+        # This is a structural invariant of this class and should NOT be overwritten
+        # by subclasses to ensure that the structure is contiguous.
         cls.logger.info("Creating initial conditions in directory: %s", directory)
         directory = Path(directory)
 

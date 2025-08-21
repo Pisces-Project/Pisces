@@ -1,0 +1,91 @@
+# ================================================================ #
+# Default FRONTEND configuration for Gadget-2 simulations.         #
+# ================================================================ #
+# This configuration file sets up the frontend parameters for running
+# Gadget-2 simulations within the Pisces framework. It includes settings
+# for simulation parameters, output options, and analysis routines.
+
+# -------------------------- #
+# Makefile Options           #
+# -------------------------- #
+# These are compile-time settings which are necessary to
+# ensure self-consistent / valid configurations.
+makefile:
+  longids: true                # See ``LONGIDS`` in Makefile
+
+
+# -------------------------- #
+# Parameter File Options     #
+# -------------------------- #
+# These are runtime configuration settings which are necessary
+# to ensure that the simulation is run in a self-consistent manner.
+parameters:
+
+  # The simulation box size. This should be provided in the
+  # same units as the length units specified below.
+  boxsize: 100.0
+
+  # Unit support. Gadget-2 includes velocity, length, and mass
+  # units. The time unit is derived from L/V.
+  units:
+    length: !unyt_unit "kpc"            # Length unit
+    mass: !unyt_unit "Msun"             # Mass unit
+    velocity: !unyt_unit "km/s"         # Velocity unit
+
+# -------------------------- #
+# Model Parameters (default) #
+# -------------------------- #
+# Below is the default set of model configurations for
+# mapping Pisces particle data properties to Gadget-2 particle types.
+# The convention present here matches the standard convention for Pisces.
+#
+# Once initialized, the frontend will create a unique one of these
+# for each model so that it can have specific settings.
+model_DEFAULT:
+  Type0:
+    name: "gas"
+    fields:
+      Coordinates: "particle_position"
+      Velocities: "particle_velocity"
+      ID: "particle_id"
+      Masses: "particle_mass"
+      InternalEnergy: "particle_internal_energy"
+  Type1:
+    name: "dark_matter"
+    fields:
+      Coordinates: "particle_position"
+      Velocities: "particle_velocity"
+      ID: "particle_id"
+      Masses: "particle_mass"
+  Type2:
+    name: "disk"
+    fields:
+      Coordinates: "particle_position"
+      Velocities: "particle_velocity"
+      ID: "particle_id"
+      Masses: "particle_mass"
+  Type3:
+    name: "bulge"
+    fields:
+      Coordinates: "particle_position"
+      Velocities: "particle_velocity"
+      ID: "particle_id"
+      Masses: "particle_mass"
+  Type4:
+    name: "stars"
+    fields:
+      Coordinates: "particle_position"
+      Velocities: "particle_velocity"
+      ID: "particle_id"
+      Masses: "particle_mass"
+  Type5:
+    name: "boundary"
+    fields:
+      Coordinates: "particle_position"
+      Velocities: "particle_velocity"
+      ID: "particle_id"
+      Masses: "particle_mass"
+
+# Model configurations which are filled dynamically
+# when initialized:
+models:
