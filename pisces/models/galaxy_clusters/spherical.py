@@ -711,6 +711,10 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             fields["entropy"] = fields["temperature"] / fields["electron_density"] ** (2 / 3)
             fields["entropy"].convert_to_units("keV*cm**2")
 
+            # Compute the internal energy / unit mass
+            fields["internal_energy_per_unit_mass"] = fields["temperature"] / (mp * mu * (2 / 3))
+            fields["internal_energy_per_unit_mass"].convert_to_units("km**2/s**2")
+
             progress_bar.set_description("COMPLETE")
             progress_bar.update(1)
             progress_bar.close()
@@ -854,6 +858,7 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             progress_bar.set_description("Performing additional computations...")
 
             gamma = 5 / 3
+            mu = compute_mean_molecular_weight(cls.config["hydrogen_abundance"])
             fields["sound_speed"] = np.sqrt(gamma * fields["pressure"] / fields["gas_density"])
             fields["sound_speed"].convert_to_units("km/s")
 
@@ -868,6 +873,10 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             # Compute the entropy.
             fields["entropy"] = fields["temperature"] / fields["electron_density"] ** (2 / 3)
             fields["entropy"].convert_to_units("keV*cm**2")
+
+            # Compute the internal energy / unit mass
+            fields["internal_energy_per_unit_mass"] = fields["temperature"] / (mp * mu * (2 / 3))
+            fields["internal_energy_per_unit_mass"].convert_to_units("km**2/s**2")
 
             progress_bar.set_description("COMPLETE")
             progress_bar.update(1)
@@ -990,6 +999,7 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
             fields["entropy"] = entropy_profile(radii)
 
             mue = compute_mean_molecular_weight_per_electron(cls.config["hydrogen_abundance"])
+            mu = compute_mean_molecular_weight(cls.config["hydrogen_abundance"])
             fields["electron_density"] = fields["gas_density"] / (mue * mp)
             fields["electron_density"].convert_to_units("1/cm**3")
 
@@ -1030,6 +1040,10 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
 
             # Compute the baryon fraction.
             fields["baryon_fraction"] = (fields["gas_mass"] + fields["stellar_mass"]) / fields["total_mass"]
+
+            # Compute the internal energy / unit mass
+            fields["internal_energy_per_unit_mass"] = fields["temperature"] / (mp * mu * (2 / 3))
+            fields["internal_energy_per_unit_mass"].convert_to_units("km**2/s**2")
 
             progress_bar.set_description("COMPLETE")
             progress_bar.update(1)

@@ -104,6 +104,7 @@ class SGCParticleGenerationHook(SphericalParticleGenerationHook):
             "kT": "temperature",
             "entropy": "entropy",
             "sound_speed": "sound_speed",
+            "particle_internal_energy": "internal_energy_per_unit_mass",
         },
         "dark_matter": {
             "density": "dark_matter_density",
@@ -150,6 +151,10 @@ class SGCParticleGenerationHook(SphericalParticleGenerationHook):
             df_kwargs = {}
 
         if particle_type not in {"dark_matter", "stars"}:
+            # This is a collisional component so we can simply
+            # set the velocities to zero and then go from there.
+            _velocity_field = unyt.Unit("km/s") * np.zeros((particle_dataset.num_particles[particle_type], 3))
+            particle_dataset.add_particle_field(particle_type, "particle_velocity", data=_velocity_field)
             return
 
         df_type = "dark_matter" if particle_type == "dark_matter" else "stellar"
