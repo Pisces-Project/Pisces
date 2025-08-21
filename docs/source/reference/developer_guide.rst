@@ -192,6 +192,8 @@ conventions used in Pisces development.
 
     models/writing_models
     profiles/writing_profiles
+    extensions/simulation/ics/initial_conditions_dev
+    extensions/simulation/frontends/frontends_dev
 
 Linting and Formatting
 -----------------------

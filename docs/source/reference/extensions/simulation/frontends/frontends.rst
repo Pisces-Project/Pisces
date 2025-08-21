@@ -1,8 +1,8 @@
 .. _simulation_frontends:
 
-=========================
-Simulation Frontends
-=========================
+==============================
+Simulation Frontends in Pisces
+==============================
 
 .. currentmodule:: pisces.extensions.simulation
 
