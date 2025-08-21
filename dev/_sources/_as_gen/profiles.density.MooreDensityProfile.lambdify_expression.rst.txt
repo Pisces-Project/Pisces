@@ -1,0 +1,6 @@
+profiles.density.MooreDensityProfile.lambdify\_expression
+=========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: MooreDensityProfile.lambdify_expression

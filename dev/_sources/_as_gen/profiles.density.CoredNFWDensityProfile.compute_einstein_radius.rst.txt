@@ -1,0 +1,6 @@
+profiles.density.CoredNFWDensityProfile.compute\_einstein\_radius
+=================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoredNFWDensityProfile.compute_einstein_radius

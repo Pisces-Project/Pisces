@@ -1,0 +1,6 @@
+pisces.models.core.base.BaseModel.fields
+========================================
+
+.. currentmodule:: pisces.models.core.base
+
+.. autoproperty:: BaseModel.fields

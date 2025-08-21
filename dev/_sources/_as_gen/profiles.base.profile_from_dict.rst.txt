@@ -1,0 +1,6 @@
+profiles.base.profile\_from\_dict
+=================================
+
+.. currentmodule:: profiles.base
+
+.. autofunction:: profile_from_dict

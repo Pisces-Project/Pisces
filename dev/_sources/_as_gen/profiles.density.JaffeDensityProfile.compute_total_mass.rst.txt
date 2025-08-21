@@ -1,0 +1,6 @@
+profiles.density.JaffeDensityProfile.compute\_total\_mass
+=========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: JaffeDensityProfile.compute_total_mass

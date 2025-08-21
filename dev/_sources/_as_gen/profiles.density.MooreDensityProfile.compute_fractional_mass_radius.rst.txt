@@ -1,0 +1,6 @@
+profiles.density.MooreDensityProfile.compute\_fractional\_mass\_radius
+======================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: MooreDensityProfile.compute_fractional_mass_radius

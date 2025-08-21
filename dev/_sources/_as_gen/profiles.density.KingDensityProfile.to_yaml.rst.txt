@@ -1,0 +1,6 @@
+profiles.density.KingDensityProfile.to\_yaml
+============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: KingDensityProfile.to_yaml

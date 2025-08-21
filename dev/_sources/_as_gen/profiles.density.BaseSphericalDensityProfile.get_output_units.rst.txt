@@ -1,0 +1,6 @@
+profiles.density.BaseSphericalDensityProfile.get\_output\_units
+===============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseSphericalDensityProfile.get_output_units

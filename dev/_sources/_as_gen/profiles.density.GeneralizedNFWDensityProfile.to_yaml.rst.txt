@@ -1,0 +1,6 @@
+profiles.density.GeneralizedNFWDensityProfile.to\_yaml
+======================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: GeneralizedNFWDensityProfile.to_yaml

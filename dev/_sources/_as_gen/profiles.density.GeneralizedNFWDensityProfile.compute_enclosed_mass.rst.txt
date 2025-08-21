@@ -1,0 +1,6 @@
+profiles.density.GeneralizedNFWDensityProfile.compute\_enclosed\_mass
+=====================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: GeneralizedNFWDensityProfile.compute_enclosed_mass

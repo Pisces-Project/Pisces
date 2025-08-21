@@ -1,0 +1,6 @@
+profiles.density.MooreDensityProfile.variable\_symbols
+======================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: MooreDensityProfile.variable_symbols

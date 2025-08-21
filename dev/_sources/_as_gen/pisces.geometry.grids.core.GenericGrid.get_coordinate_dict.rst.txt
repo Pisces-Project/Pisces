@@ -1,0 +1,6 @@
+pisces.geometry.grids.core.GenericGrid.get\_coordinate\_dict
+============================================================
+
+.. currentmodule:: pisces.geometry.grids.core
+
+.. automethod:: GenericGrid.get_coordinate_dict

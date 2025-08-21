@@ -1,0 +1,6 @@
+pisces.physics.virialization.eddington.compute\_relative\_potential
+===================================================================
+
+.. currentmodule:: pisces.physics.virialization.eddington
+
+.. autofunction:: compute_relative_potential

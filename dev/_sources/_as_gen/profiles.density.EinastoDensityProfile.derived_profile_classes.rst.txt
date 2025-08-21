@@ -1,0 +1,6 @@
+profiles.density.EinastoDensityProfile.derived\_profile\_classes
+================================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: EinastoDensityProfile.derived_profile_classes

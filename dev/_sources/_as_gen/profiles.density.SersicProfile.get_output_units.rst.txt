@@ -1,0 +1,6 @@
+profiles.density.SersicProfile.get\_output\_units
+=================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SersicProfile.get_output_units

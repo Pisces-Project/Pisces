@@ -1,0 +1,6 @@
+profiles.density.MooreDensityProfile.compute\_deflection\_angle
+===============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: MooreDensityProfile.compute_deflection_angle

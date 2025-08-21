@@ -1,0 +1,6 @@
+profiles.density.PlummerDensityProfile.to\_dict
+===============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: PlummerDensityProfile.to_dict

@@ -1,0 +1,6 @@
+profiles.temperature.IsothermalTemperatureProfile.from\_yaml
+============================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: IsothermalTemperatureProfile.from_yaml

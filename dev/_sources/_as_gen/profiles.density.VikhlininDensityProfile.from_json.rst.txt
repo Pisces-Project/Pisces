@@ -1,0 +1,6 @@
+profiles.density.VikhlininDensityProfile.from\_json
+===================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: VikhlininDensityProfile.from_json

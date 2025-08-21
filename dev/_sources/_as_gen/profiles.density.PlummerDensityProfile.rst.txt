@@ -1,0 +1,61 @@
+PlummerDensityProfile
+======================================
+
+.. currentmodule:: profiles.density
+
+.. autoclass:: profiles.density.PlummerDensityProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~PlummerDensityProfile.__init__
+      ~PlummerDensityProfile.compute_circular_velocity
+      ~PlummerDensityProfile.compute_cosmological_overdensity_profile
+      ~PlummerDensityProfile.compute_cosmological_overdensity_radius
+      ~PlummerDensityProfile.compute_deflection_angle
+      ~PlummerDensityProfile.compute_einstein_radius
+      ~PlummerDensityProfile.compute_enclosed_mass
+      ~PlummerDensityProfile.compute_escape_velocity
+      ~PlummerDensityProfile.compute_fractional_mass_radius
+      ~PlummerDensityProfile.compute_lensing_convergence
+      ~PlummerDensityProfile.compute_surface_density
+      ~PlummerDensityProfile.compute_total_mass
+      ~PlummerDensityProfile.from_dict
+      ~PlummerDensityProfile.from_hdf5
+      ~PlummerDensityProfile.from_json
+      ~PlummerDensityProfile.from_yaml
+      ~PlummerDensityProfile.get_derived_profile
+      ~PlummerDensityProfile.get_expression_latex
+      ~PlummerDensityProfile.get_output_units
+      ~PlummerDensityProfile.get_parameters_latex
+      ~PlummerDensityProfile.lambdify_expression
+      ~PlummerDensityProfile.list_derived_profiles
+      ~PlummerDensityProfile.substitute_expression
+      ~PlummerDensityProfile.to_dict
+      ~PlummerDensityProfile.to_hdf5
+      ~PlummerDensityProfile.to_json
+      ~PlummerDensityProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~PlummerDensityProfile.derived_profile_classes
+      ~PlummerDensityProfile.parameter_symbols
+      ~PlummerDensityProfile.parameters
+      ~PlummerDensityProfile.variable_symbols
+      ~PlummerDensityProfile.variables
+   
+   

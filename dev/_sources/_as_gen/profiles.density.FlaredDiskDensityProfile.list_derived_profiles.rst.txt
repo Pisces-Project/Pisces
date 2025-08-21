@@ -1,0 +1,6 @@
+profiles.density.FlaredDiskDensityProfile.list\_derived\_profiles
+=================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: FlaredDiskDensityProfile.list_derived_profiles

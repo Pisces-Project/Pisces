@@ -1,0 +1,6 @@
+pisces.geometry.grids.core.GenericGrid.active\_axes\_mask
+=========================================================
+
+.. currentmodule:: pisces.geometry.grids.core
+
+.. autoproperty:: GenericGrid.active_axes_mask

@@ -1,0 +1,6 @@
+profiles.density.VikhlininDensityProfile.get\_output\_units
+===========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: VikhlininDensityProfile.get_output_units

@@ -1,0 +1,6 @@
+profiles.density.GaussianRingProfile.\_\_init\_\_
+=================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: GaussianRingProfile.__init__
