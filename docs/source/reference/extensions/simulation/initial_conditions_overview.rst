@@ -5,26 +5,31 @@ Initial Conditions for Simulations
 
 .. currentmodule:: pisces.extensions.simulation.core.initial_conditions
 
-In many astrophysical and cosmological simulations, the **initial conditions** (ICs) define
-the complete state of a system at the start of a simulation — including positions,
-velocities, orientations, physical parameters, and any associated particle or grid data.
-Accurate and well-structured ICs are critical for producing reliable, reproducible results.
+In any astrophysical simulation, the **initial conditions** (ICs) are crucial — they
+set the starting point for everything that happens next. They include the positions,
+velocities, and properties of all objects in your simulation.
 
-The :class:`InitialConditions` system in *Pisces* is designed to:
+In order to facilitate the creation, management, and inspection of initial conditions,
+*Pisces* provides a dedicated module for handling ICs in a structured, efficient way. These
+are housed in the :mod:`~pisces.extensions.simulation.core.initial_conditions` package, which features
+its standard base class :class:`InitialConditions`.
 
-- **Combine multiple models** — You can load several pre-built models (e.g., galaxy clusters,
-  stellar systems, or custom configurations) into a single simulation domain.
-- **Position and orient models** — Control the placement, orientation, and velocity of each
-  model within the simulation volume.
-- **Attach additional data** — Optionally associate particle datasets (e.g., from previous
-  simulations or analytic generators) with individual models.
-- **Generate simulation-ready files** — Output a fully packaged set of HDF5 files and a
-  configuration file (``IC_CONFIG.yaml``) that can be read by downstream simulation codes.
-- **Inspect without loading everything** — Quickly query model metadata, grids, or particle
-  counts directly from disk without loading full data structures into memory.
-- **Perform pre-simulation physics adjustments** — Compute mass-weighted centers of mass,
-  shift all models into a COM frame, or integrate point-mass orbits to evolve the system
-  before simulation.
+The :class:`InitialConditions` class provides a framework for assembling
+and managing initial conditions for simulations, allowing you to:
+
+- **Combine multiple models** — Easily place different pre-built models (like galaxies, star clusters,
+  or custom configurations) into a single simulation domain. This lets you set up complex scenarios,
+  such as galaxy mergers or multi-component systems, without having to build each component from scratch.
+
+- **Converting Models to Additional Data Structures** - Many simulations require either particle versions
+  of the initial conditions or for initial conditions to be deposited into a grid structure. Initial conditions
+  provide a number of methods and structures for managing and creating these additional data
+  structures, such as particle datasets or grid-based representations.
+
+- **Perform pre-simulation physics adjustments** — Before you even start the main simulation, you can use
+  this class to perform important preparatory calculations. For example, you can calculate the center of
+  mass for your system and shift all models to that reference frame, or even evolve the orbits of your objects
+  for a short period to get a more stable starting configuration.
 
 In short, this module allows you to go from a collection of analytic or loaded models to a
 coherent, reproducible IC package that can be fed directly into compatible simulation
@@ -33,12 +38,8 @@ frontends such as those in :mod:`~pisces.extensions.simulation`.
 The Initial Conditions Class
 ----------------------------
 
-The :class:`InitialConditions` class provides
-the core infrastructure for assembling and managing simulation initial conditions.
-It acts as a **container and controller** for a collection of models, handling their
-placement, orientation, and associated metadata.
-
-In practice, an initial conditions object:
+The base class for managing initial conditions is :class:`InitialConditions`, which provides
+all of the various methods and properties touched on above. In practice, an initial conditions object:
 
 - **Combines multiple models** — Each model is stored with its own position,
   velocity, orientation, and optional particle dataset.
@@ -52,14 +53,29 @@ In practice, an initial conditions object:
 This section will introduce the key methods of the :class:`InitialConditions` class
 and show how to use them to build fully packaged, simulation-ready datasets.
 
+.. important::
+
+    The :class:`InitialConditions` class is designed to be subclassed if necessary to provide
+    additional functionality specific to a simulation code or frontend. However, the base class
+    provides all the core functionality needed to create, manage, and inspect initial conditions
+    across a wide range of astrophysical simulations.
+
+    Before setting up your initial conditions, look at the frontend for your simulation code
+    in :mod:`~pisces.extensions.simulation.frontends`. If your frontend requires a specific
+    initial conditions class, you should ensure that you are using that class
+    instead of the base :class:`InitialConditions` class.
+
 Initial Conditions Directory Structure
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When you create a new initial conditions (IC) package, Pisces stores all
-required files in a single directory. This makes the IC set **self-contained**,
-portable, and easy to share between systems or simulation codes.
+When you create a new initial conditions (IC) package using Pisces, the system is designed to be **self-contained**.
+This means all the necessary files are stored within a single, dedicated directory. This approach makes
+your IC set highly portable and easy to share with colleagues or transfer between different
+computing systems and simulation codes without losing any critical information.
 
-The structure is:
+The directory structure follows a consistent and logical layout, ensuring that every component
+of your simulation setup is easy to find. Below is a typical example of what
+a Pisces IC directory looks like:
 
 .. code-block:: text
 
@@ -72,66 +88,60 @@ The structure is:
     ├── extra_config.yaml        # (optional) Additional configuration files
     └── derived_data/            # (optional) Derived analysis products
 
-Key points:
+Central to this structure is the `IC_CONFIG.yaml` file. This is the main configuration
+file that acts as the "master" record for your entire IC set. It contains all the essential metadata,
+such as the overall number of dimensions and the name of the IC class used to create the package.
+Most importantly, it meticulously documents all the models you've included, along with their precise attributes
+like position, velocity, orientation, and spin. This file also keeps track of the file paths for any associated
+particle datasets, ensuring everything remains linked.
 
-- **Model files** are named exactly after their model name in the IC configuration
-  (e.g., ``model1.hdf5`` for a model named ``"model1"``).
-- **Particle files** are stored alongside their parent model, using the pattern
-  ``<model_name>_p.hdf5``.
-- **Configuration file**: ``IC_CONFIG.yaml`` records:
+For each model you create (e.g., ``model1`` and ``model2``), Pisces generates a dedicated HDF5 file
+named exactly after the model's name (e.g., `model1.hdf5`). If your simulation requires a particle
+representation of these models, an optional particle file is stored alongside its parent model,
+following a clear naming convention: the model's name with a `_p.hdf5` suffix (e.g., `model1_p.hdf5`).
 
-  - Overall metadata (e.g., number of dimensions, IC class name)
-  - All models and their attributes (position, velocity, orientation, spin)
-  - File paths to associated particle datasets
+You can also include additional files, such as analysis outputs or extra configuration files,
+within the IC directory. These can be placed directly in the main directory or in subdirectories
+like `derived_data/`. It's important to be mindful that these additional files should not accidentally
+overwrite the core model or particle files unless you intend to replace them.
 
-- **Additional files** (e.g., analysis outputs, extra configs) can also be stored
-  in the IC directory. These should not overwrite core model or particle files
-  unless intentionally replaced.
+This standardized and comprehensive layout guarantees that every IC set is a complete and reliable package.
+When you or another user loads the directory, Pisces can immediately find all the necessary files to inspect,
+modify, or use the ICs for a simulation without needing any external information or dependencies.
 
-This consistent layout ensures that every IC set contains all files necessary
-to be loaded, inspected, or used for simulation without relying on external
-dependencies.
+.. note::
+
+    When the initial conditions you generate are passed off to the frontend for a particular simulation code,
+    the frontend will typically create a number of additional files and directories within the IC directory
+    to handle the specifics of that simulation code. These files are not created by Pisces itself, but rather
+    by the frontend when it processes the ICs. Therefore, the initial conditions directory structure you create
+    with Pisces may be extended by the frontend to include additional simulation-specific files, such as
+    configuration files, output directories, or other necessary components for running the simulation.
 
 Creating an Initial Conditions Object
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The :class:`InitialConditions`
-class provides a **convenience constructor** for creating an initial conditions
-(IC) dataset from one or more models, with optional particle files, in a single step.
-
-You can use the :meth:`InitialConditions.create_ics`
-class method to:
-
-- Create (or overwrite) a target directory for the ICs.
-- Validate and register one or more models.
-- Place (copy or move) model files into the IC directory, renaming them to match
-  their assigned names.
-- Optionally attach particle datasets to models, storing them alongside their
-  corresponding model files.
-- Generate an ``IC_CONFIG.yaml`` file that records the IC metadata, model
-  configurations, and file paths.
-
-As an example, here’s how to create a simple IC set with a single galaxy cluster
-model:
+In order to create an initial conditions object, you typically will start by calling
+the :meth:`InitialConditions.create_ics` class method. For example,
 
 .. code-block:: python
 
-    from pathlib import Path
-    import unyt
     from pisces.extensions.simulation import InitialConditions
-    from pisces.models.galaxy_clusters import SphericalGalaxyClusterModel
 
-    # Create a simple model
-    model = SphericalGalaxyClusterModel.from_dens_and_temp(...)
+    model_1, model_2 = ...  # Load or create your models here
 
-    # Define initial position/velocity for the model
-    pos = unyt.unyt_array([0.0, 0.0, 0.0], "Mpc")
-    vel = unyt.unyt_array([0.0, 0.0, 0.0], "km/s")
+    # Create model parameters
+    # These are the positions and velocities of the models in the simulation volume.
+    m1_pos,m2_pos = (unyt.unyt_array([0.0, 0.0, 0.0], "Mpc"),
+                    unyt.unyt_array([1.0, 0.0, 0.0], "Mpc"))
+    m1_vel,m2_vel = (unyt.unyt_array([0.0, 0.0, 0.0], "km/s"),
+                    unyt.unyt_array([0.0, 100.0, 0.0], "km/s"))
 
-    # Create a new IC set
+    # Now we create the IC's via the method call.
     ic = InitialConditions.create_ics(
         "my_ic_directory",
-        ("clusterA", model, pos, vel),
+        ("model1", model_1, m1_pos, m1_vel),
+        ("model2", model_2, m2_pos, m2_vel),
         overwrite=True
     )
 
@@ -139,7 +149,7 @@ As shown, each model is specified as a tuple containing its name, model object,
 and a few other pieces of metadata. The base class expects the following structures
 to be provided when you add a model:
 
-.. code-block:: raw
+.. code-block:: text
 
     (name, model, position, velocity[, orientation][, spin])
 
@@ -166,6 +176,12 @@ where:
    * - ``spin`` *(optional)*
      - Scalar ``float`` (unitless) specifying the spin parameter. Defaults to ``0.0``.
 
+In addition, the method takes a few useful arguments; most notably, the ``overwrite`` keyword, which
+allows you to delete an existing IC directory if it already exists and is non-empty. This is useful
+when you want to recreate the ICs from scratch without worrying about leftover files from previous runs.
+Another important keyword is ``file_processing_mode``, which determines whether the input files are copied
+or moved into the IC directory. By default, files are copied, but you can set this to ``"move"`` if you want
+to transfer files instead of duplicating them.
 
 **Attaching particle datasets**:
 
@@ -187,14 +203,6 @@ If you already have particle data for a given model, you can pass it via the
 
 Particle files will be copied (or moved) into the IC directory and renamed using
 the ``<model_name>_p.hdf5`` convention.
-
-**Additional options**:
-
-- ``file_processing_mode`` — either ``"copy"`` (default) or ``"move"``; determines
-  whether input files are copied or moved into the IC directory.
-- ``overwrite`` — if ``True``, an existing non-empty IC directory will be deleted
-  before creating the new one.
-- ``ndim`` — number of spatial dimensions (default: 3). All models must match this.
 
 The returned :meth:`~pisces.extensions.simulation.core.initial_conditions.InitialConditions` instance is ready
 for inspection, manipulation, or export to supported simulation formats.
@@ -348,7 +356,7 @@ Advanced IC Manipulations
 ------------------------------
 
 Beyond simply placing models and assigning particle datasets, the
-:class:`~pisces.extensions.simulation.core.InitialConditions` class includes
+:class:`InitialConditions` class includes
 methods for performing **mass-weighted transformations** and **dynamical
 analyses** on your initial setup.
 
@@ -437,18 +445,3 @@ integrator.
    .. code-block:: bash
 
       pip install rebound
-
-Simulation Frontend Support
-------------------------------
-
-Most simulation frontends will take an :class:`InitialConditions` object
-as input and handle the conversion to their native format internally.
-This allows you to prepare your ICs once and use them across multiple
-simulation codes with minimal effort. In some scenarios, it may be necessary
-for the frontend to expose a specialized initial conditions class subclassed from
-:class:`InitialConditions` to handle code-specific requirements. In that case,
-you'll need to ensure that the frontend's IC class is what you're using.
-
-For more details on using initial conditions with specific simulation codes,
-see the documentation for the relevant frontend in
-:mod:`~pisces.extensions.simulation.frontends`.

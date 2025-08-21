@@ -87,9 +87,15 @@ Pisces is designed to interoperate with the broader scientific Python ecosystem.
 and optional integrations are supported, allowing users to plug Pisces into custom pipelines or
 expand its functionality with minimal effort.
 
+Particle Datasets
+^^^^^^^^^^^^^^^^^
+
+Pisces includes support for generating and manipulating particle datasets, which are commonly used
+in N-body simulations and other applications. These datasets can be created from Pisces models
+and exported to a variety of formats.
+
 .. toctree::
    :maxdepth: 1
-   :caption: Extension Datatypes
 
    particles/overview
 
@@ -101,6 +107,5 @@ for simulations.
 
 .. toctree::
    :maxdepth: 1
-   :caption: Hydrodynamics and Simulation Integration
 
-   extensions/simulation/initial_conditions_overview
+   extensions/simulation/simulations_home
