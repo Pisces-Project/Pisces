@@ -1,6 +1,0 @@
-profiles.temperature.IsothermalTemperatureProfile.get\_output\_units
-====================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: IsothermalTemperatureProfile.get_output_units

@@ -1,6 +1,0 @@
-profiles.base.BaseSphericalRadialProfile.\_\_init\_\_
-=====================================================
-
-.. currentmodule:: profiles.base
-
-.. automethod:: BaseSphericalRadialProfile.__init__

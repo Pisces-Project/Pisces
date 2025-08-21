@@ -1,6 +1,0 @@
-profiles.density.FlaredDiskDensityProfile.to\_json
-==================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: FlaredDiskDensityProfile.to_json

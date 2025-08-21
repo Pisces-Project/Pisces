@@ -1,6 +1,0 @@
-pisces.extensions.simulation.core.initial\_conditions.InitialConditions.get\_model\_coordinate\_system
-======================================================================================================
-
-.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
-
-.. automethod:: InitialConditions.get_model_coordinate_system

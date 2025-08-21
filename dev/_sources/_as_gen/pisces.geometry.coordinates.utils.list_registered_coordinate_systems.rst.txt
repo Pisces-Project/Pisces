@@ -1,6 +1,0 @@
-pisces.geometry.coordinates.utils.list\_registered\_coordinate\_systems
-=======================================================================
-
-.. currentmodule:: pisces.geometry.coordinates.utils
-
-.. autofunction:: list_registered_coordinate_systems

@@ -1,6 +1,0 @@
-profiles.density.CoredPowerLawDensityProfile.get\_derived\_profile
-==================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredPowerLawDensityProfile.get_derived_profile

@@ -1,6 +1,0 @@
-profiles.base.BaseCylindricalDiskProfile.to\_hdf5
-=================================================
-
-.. currentmodule:: profiles.base
-
-.. automethod:: BaseCylindricalDiskProfile.to_hdf5

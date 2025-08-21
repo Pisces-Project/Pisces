@@ -1,6 +1,0 @@
-profiles.density.SechDiskDensityProfile.get\_output\_units
-==========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: SechDiskDensityProfile.get_output_units

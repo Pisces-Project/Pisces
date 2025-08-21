@@ -1,6 +1,0 @@
-pisces.geometry.coordinates.coordinate\_systems.SphericalCoordinateSystem.ndim
-==============================================================================
-
-.. currentmodule:: pisces.geometry.coordinates.coordinate_systems
-
-.. autoproperty:: SphericalCoordinateSystem.ndim

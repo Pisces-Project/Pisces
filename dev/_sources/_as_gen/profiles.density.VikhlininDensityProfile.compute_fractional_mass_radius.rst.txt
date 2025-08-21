@@ -1,6 +1,0 @@
-profiles.density.VikhlininDensityProfile.compute\_fractional\_mass\_radius
-==========================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: VikhlininDensityProfile.compute_fractional_mass_radius

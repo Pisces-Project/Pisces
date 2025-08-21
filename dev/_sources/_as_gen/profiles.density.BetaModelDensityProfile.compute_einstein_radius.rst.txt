@@ -1,6 +1,0 @@
-profiles.density.BetaModelDensityProfile.compute\_einstein\_radius
-==================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BetaModelDensityProfile.compute_einstein_radius

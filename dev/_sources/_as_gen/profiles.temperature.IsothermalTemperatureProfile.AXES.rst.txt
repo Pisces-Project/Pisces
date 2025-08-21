@@ -1,6 +1,0 @@
-profiles.temperature.IsothermalTemperatureProfile.AXES
-======================================================
-
-.. currentmodule:: profiles.temperature
-
-.. autoattribute:: IsothermalTemperatureProfile.AXES

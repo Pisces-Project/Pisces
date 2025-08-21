@@ -1,6 +1,0 @@
-profiles.density.CoredNFWDensityProfile.compute\_fractional\_mass\_radius
-=========================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredNFWDensityProfile.compute_fractional_mass_radius

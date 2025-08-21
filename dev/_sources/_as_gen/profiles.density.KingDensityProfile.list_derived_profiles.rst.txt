@@ -1,6 +1,0 @@
-profiles.density.KingDensityProfile.list\_derived\_profiles
-===========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: KingDensityProfile.list_derived_profiles

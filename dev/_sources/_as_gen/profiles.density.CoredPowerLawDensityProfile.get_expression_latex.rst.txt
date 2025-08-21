@@ -1,6 +1,0 @@
-profiles.density.CoredPowerLawDensityProfile.get\_expression\_latex
-===================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredPowerLawDensityProfile.get_expression_latex

@@ -1,6 +1,0 @@
-pisces.models.stars.polytropes.PolytropicStarModel.logger
-=========================================================
-
-.. currentmodule:: pisces.models.stars.polytropes
-
-.. autoattribute:: PolytropicStarModel.logger

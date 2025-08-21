@@ -1,6 +1,0 @@
-profiles.density.SersicProfile.from\_json
-=========================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: SersicProfile.from_json

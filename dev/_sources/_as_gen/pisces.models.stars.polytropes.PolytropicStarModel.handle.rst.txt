@@ -1,6 +1,0 @@
-pisces.models.stars.polytropes.PolytropicStarModel.handle
-=========================================================
-
-.. currentmodule:: pisces.models.stars.polytropes
-
-.. autoproperty:: PolytropicStarModel.handle

@@ -1,6 +1,0 @@
-pisces.math\_utils.integration.compute\_lame\_emden\_solution
-=============================================================
-
-.. currentmodule:: pisces.math_utils.integration
-
-.. autofunction:: compute_lame_emden_solution

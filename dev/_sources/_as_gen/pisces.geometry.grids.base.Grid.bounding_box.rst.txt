@@ -1,6 +1,0 @@
-pisces.geometry.grids.base.Grid.bounding\_box
-=============================================
-
-.. currentmodule:: pisces.geometry.grids.base
-
-.. autoproperty:: Grid.bounding_box

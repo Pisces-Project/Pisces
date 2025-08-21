@@ -1,6 +1,0 @@
-pisces.geometry.grids.base.Grid.size
-====================================
-
-.. currentmodule:: pisces.geometry.grids.base
-
-.. autoproperty:: Grid.size

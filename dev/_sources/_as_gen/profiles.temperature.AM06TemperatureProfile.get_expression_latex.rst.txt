@@ -1,6 +1,0 @@
-profiles.temperature.AM06TemperatureProfile.get\_expression\_latex
-==================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: AM06TemperatureProfile.get_expression_latex

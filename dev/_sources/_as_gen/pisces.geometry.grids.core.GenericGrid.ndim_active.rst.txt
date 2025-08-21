@@ -1,6 +1,0 @@
-pisces.geometry.grids.core.GenericGrid.ndim\_active
-===================================================
-
-.. currentmodule:: pisces.geometry.grids.core
-
-.. autoproperty:: GenericGrid.ndim_active
