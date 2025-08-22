@@ -1,6 +1,0 @@
-profiles.temperature.BaseSphericalTemperatureProfile.from\_dict
-===============================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: BaseSphericalTemperatureProfile.from_dict

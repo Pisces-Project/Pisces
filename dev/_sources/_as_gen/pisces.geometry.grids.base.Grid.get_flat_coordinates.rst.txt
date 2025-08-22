@@ -1,6 +1,0 @@
-pisces.geometry.grids.base.Grid.get\_flat\_coordinates
-======================================================
-
-.. currentmodule:: pisces.geometry.grids.base
-
-.. automethod:: Grid.get_flat_coordinates

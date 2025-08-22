@@ -1,6 +1,0 @@
-profiles.temperature.BaseSphericalTemperatureProfile.substitute\_expression
-===========================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: BaseSphericalTemperatureProfile.substitute_expression

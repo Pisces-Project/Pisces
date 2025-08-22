@@ -1,6 +1,0 @@
-profiles.density.JaffeDensityProfile.substitute\_expression
-===========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: JaffeDensityProfile.substitute_expression

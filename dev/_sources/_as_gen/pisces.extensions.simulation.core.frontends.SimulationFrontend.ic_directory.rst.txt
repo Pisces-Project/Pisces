@@ -1,6 +1,0 @@
-pisces.extensions.simulation.core.frontends.SimulationFrontend.ic\_directory
-============================================================================
-
-.. currentmodule:: pisces.extensions.simulation.core.frontends
-
-.. autoproperty:: SimulationFrontend.ic_directory

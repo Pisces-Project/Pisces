@@ -1,6 +1,0 @@
-profiles.temperature.BaseSphericalTemperatureProfile.AXES
-=========================================================
-
-.. currentmodule:: profiles.temperature
-
-.. autoattribute:: BaseSphericalTemperatureProfile.AXES

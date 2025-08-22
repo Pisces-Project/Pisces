@@ -1,6 +1,0 @@
-pisces.particles.base.ParticleDataset.fields
-============================================
-
-.. currentmodule:: pisces.particles.base
-
-.. autoproperty:: ParticleDataset.fields

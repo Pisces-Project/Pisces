@@ -1,6 +1,0 @@
-profiles.density.DehnenDensityProfile.get\_expression\_latex
-============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: DehnenDensityProfile.get_expression_latex

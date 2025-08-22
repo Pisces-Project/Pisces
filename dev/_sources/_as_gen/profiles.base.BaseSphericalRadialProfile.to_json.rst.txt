@@ -1,6 +1,0 @@
-profiles.base.BaseSphericalRadialProfile.to\_json
-=================================================
-
-.. currentmodule:: profiles.base
-
-.. automethod:: BaseSphericalRadialProfile.to_json

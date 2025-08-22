@@ -1,6 +1,0 @@
-profiles.density.JaffeDensityProfile.to\_yaml
-=============================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: JaffeDensityProfile.to_yaml

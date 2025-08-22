@@ -1,6 +1,0 @@
-pisces.utilities.io\_tools.UnytArrayHandler.from\_yaml
-======================================================
-
-.. currentmodule:: pisces.utilities.io_tools
-
-.. automethod:: UnytArrayHandler.from_yaml

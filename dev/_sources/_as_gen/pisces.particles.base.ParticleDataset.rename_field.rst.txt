@@ -1,6 +1,0 @@
-pisces.particles.base.ParticleDataset.rename\_field
-===================================================
-
-.. currentmodule:: pisces.particles.base
-
-.. automethod:: ParticleDataset.rename_field

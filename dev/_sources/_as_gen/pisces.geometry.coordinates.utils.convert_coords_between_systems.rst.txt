@@ -1,6 +1,0 @@
-pisces.geometry.coordinates.utils.convert\_coords\_between\_systems
-===================================================================
-
-.. currentmodule:: pisces.geometry.coordinates.utils
-
-.. autofunction:: convert_coords_between_systems

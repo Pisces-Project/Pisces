@@ -1,6 +1,0 @@
-profiles.density.EinastoDensityProfile.compute\_circular\_velocity
-==================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: EinastoDensityProfile.compute_circular_velocity

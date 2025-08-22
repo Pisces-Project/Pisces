@@ -1,6 +1,0 @@
-pisces.models.stars.polytropes.PolytropicStarModel.active\_grid\_axes
-=====================================================================
-
-.. currentmodule:: pisces.models.stars.polytropes
-
-.. autoproperty:: PolytropicStarModel.active_grid_axes
