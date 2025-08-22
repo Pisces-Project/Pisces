@@ -9,11 +9,11 @@ components. For more details on the Pisces model format and conventions, see :re
 import datetime
 from abc import ABC
 from pathlib import Path
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Union
 
 import h5py
 import numpy as np
-from unyt import unyt_array
+from unyt import Unit, unyt_array
 
 from pisces._generic import RegistryMeta
 from pisces._registries import __default_model_registry__
@@ -780,7 +780,7 @@ class BaseModel(_HookTools, ABC, metaclass=RegistryMeta):
         if item in self.__fields__:
             return self.__fields__[item]
         if item in self.__grid__.active_axes:
-            return self.__grid__.get_axis_array(axis=item, units=True)
+            return self.__grid__.get_axis_array(axis=item)
         else:
             raise KeyError(f"Item '{item}' not found in model.")
 
@@ -847,3 +847,349 @@ class BaseModel(_HookTools, ABC, metaclass=RegistryMeta):
     def active_grid_axes(self) -> list[str]:
         """List of active axes in the model's grid."""
         return self.__grid__.active_axes
+
+    # ========================================= #
+    # Modification Methods: Fields              #
+    # ========================================= #
+    # These methods provide a safe and consistent interface for
+    # retrieving, adding, modifying, copying, and removing fields.
+
+    def get_field(self, name: str) -> unyt_array | np.ndarray:
+        """Retrieve a physical field by name.
+
+        Parameters
+        ----------
+        name : str
+            The name of the field to retrieve.
+
+        Returns
+        -------
+        unyt_array or numpy.ndarray
+            The requested field as a :class:`unyt_array` with units,
+            or a plain :class:`numpy.ndarray` if unitless.
+
+        Raises
+        ------
+        KeyError
+            If the field does not exist in the model.
+        """
+        if name not in self.__fields__:
+            raise KeyError(f"Field '{name}' not found in model.")
+        return self.__fields__[name]
+
+    def add_field(
+        self,
+        name: str,
+        element_shape: tuple[int, ...] = (),
+        units: Union[str, Unit] = None,
+        data: unyt_array | np.ndarray = None,
+        overwrite: bool = False,
+        **kwargs,
+    ):
+        """Add a new physical field to the model.
+
+        Fields represent physical quantities (e.g., density, temperature, velocity)
+        defined on the model’s spatial grid. This method creates a new field with
+        optional initialization from user-provided data.
+
+        Parameters
+        ----------
+        name : str
+            Name of the field (e.g., ``"density"``).
+        element_shape : tuple of int, optional
+            Extra trailing dimensions for vector/tensor fields (e.g., ``(3,)``).
+            Defaults to ``()``.
+        units : str or unyt.Unit, optional
+            Units for the field. If ``None``, the field is unitless.
+        data : unyt_array or numpy.ndarray, optional
+            Values to initialize the field. If ``None``, initialized to zeros.
+            Must have shape ``grid.shape + element_shape``.
+        overwrite : bool, optional
+            If ``True``, replaces an existing field with the same name. If ``False``,
+            raises :class:`KeyError` if the field already exists.
+
+        Raises
+        ------
+        ValueError
+            If provided data does not match the expected shape.
+        KeyError
+            If the field already exists and ``overwrite=False``.
+
+        Notes
+        -----
+        - The field is written to both memory and the on-disk HDF5 file under
+          ``/FIELDS/{name}``.
+        - Unit handling is powered by :mod:`unyt`.
+
+        """
+        expected_shape = self.__grid__.shape + element_shape
+
+        # Initialize array
+        if data is None:
+            arr = np.zeros(expected_shape, dtype=kwargs.get("dtype", "f8"))
+            arr = unyt_array(arr, units) if units is not None else arr
+        else:
+            if data.shape != expected_shape:
+                raise ValueError(f"Field '{name}' has shape {data.shape}, expected {expected_shape}.")
+            arr = unyt_array(data, units) if units is not None else unyt_array(data)
+
+        # Handle overwrite logic
+        if name in self.__fields__ and not overwrite:
+            raise KeyError(f"Field '{name}' already exists. Use overwrite=True to replace it.")
+
+        fields_group = self.__handle__["FIELDS"]
+        if name in fields_group:
+            if overwrite:
+                del fields_group[name]
+            else:
+                raise KeyError(f"Field '{name}' already exists in file.")
+
+        # Write dataset
+        dset = fields_group.create_dataset(name, data=arr.d if hasattr(arr, "d") else np.asarray(arr))
+        if hasattr(arr, "units"):
+            dset.attrs["units"] = str(arr.units)
+
+        # Reload cache
+        self.__fields__ = self.__read_fields__()
+        self.logger.info("Added field '%s' (shape=%s, units=%s).", name, expected_shape, units)
+
+    def remove_field(self, name: str):
+        """Remove a physical field from the model.
+
+        Deletes the field from both memory and the HDF5 file.
+
+        Parameters
+        ----------
+        name : str
+            Name of the field to remove.
+
+        Raises
+        ------
+        KeyError
+            If the field does not exist.
+        """
+        if name not in self.__fields__:
+            raise KeyError(f"Field '{name}' not found in model.")
+
+        del self.__handle__["FIELDS"][name]
+        del self.__fields__[name]
+
+        self.logger.info("Removed field '%s'.", name)
+
+    def list_fields(self) -> list[str]:
+        """List all physical fields currently stored in the model.
+
+        Returns
+        -------
+        list of str
+            Field names available in the model.
+        """
+        return list(self.__fields__.keys())
+
+    def rename_field(self, old_name: str, new_name: str):
+        """Rename an existing field in the model.
+
+        Changes the field name in both memory and the HDF5 file.
+
+        Parameters
+        ----------
+        old_name : str
+            Current name of the field.
+        new_name : str
+            New name for the field.
+
+        Raises
+        ------
+        KeyError
+            If ``old_name`` does not exist or ``new_name`` already exists.
+        """
+        if old_name not in self.__fields__:
+            raise KeyError(f"Field '{old_name}' not found in model.")
+        if new_name in self.__fields__:
+            raise KeyError(f"Field '{new_name}' already exists.")
+
+        self.__handle__["FIELDS"].move(old_name, new_name)
+        self.__fields__ = self.__read_fields__()
+
+        self.logger.info("Renamed field '%s' → '%s'.", old_name, new_name)
+
+    def copy_field(self, old_name: str, new_name: str):
+        """Create a duplicate of an existing field under a new name.
+
+        Parameters
+        ----------
+        old_name : str
+            Name of the existing field.
+        new_name : str
+            Name for the copied field.
+
+        Raises
+        ------
+        KeyError
+            If ``old_name`` does not exist or ``new_name`` already exists.
+        """
+        if old_name not in self.__fields__:
+            raise KeyError(f"Field '{old_name}' not found in model.")
+        if new_name in self.__fields__:
+            raise KeyError(f"Field '{new_name}' already exists in model.")
+
+        self.__handle__["FIELDS"].copy(old_name, new_name)
+        self.__fields__ = self.__read_fields__()
+
+        self.logger.info("Copied field '%s' → '%s'.", old_name, new_name)
+
+    # ========================================= #
+    # Modification Methods: Profiles            #
+    # ========================================= #
+    # These methods provide a safe and consistent interface for
+    # retrieving, adding, modifying, copying, and removing profiles.
+
+    def get_profile(self, name: str) -> "BaseProfile":
+        """Retrieve an analytic profile by name.
+
+        Parameters
+        ----------
+        name : str
+            The name of the profile to retrieve.
+
+        Returns
+        -------
+        BaseProfile
+            The requested profile object.
+
+        Raises
+        ------
+        KeyError
+            If the profile does not exist in the model.
+        """
+        if name not in self.__profiles__:
+            raise KeyError(f"Profile '{name}' not found in model.")
+        return self.__profiles__[name]
+
+    def add_profile(
+        self,
+        name: str,
+        profile: "BaseProfile",
+        overwrite: bool = False,
+    ):
+        """Add a new analytic profile to the model.
+
+        Profiles represent analytic functions (e.g., NFW, Vikhlinin) that can
+        generate fields or describe physical quantities. This method saves the
+        profile in both memory and the on-disk HDF5 file.
+
+        Parameters
+        ----------
+        name : str
+            Name of the profile (e.g., ``"density"``).
+        profile : BaseProfile
+            An instance of a subclass of :class:`BaseProfile`.
+        overwrite : bool, optional
+            If ``True``, replaces an existing profile with the same name.
+            Defaults to ``False``.
+
+        Raises
+        ------
+        KeyError
+            If the profile already exists and ``overwrite=False``.
+        """
+        if name in self.__profiles__ and not overwrite:
+            raise KeyError(f"Profile '{name}' already exists. Use overwrite=True to replace it.")
+
+        profiles_group = self.__handle__["PROFILES"]
+        if name in profiles_group:
+            if overwrite:
+                del profiles_group[name]
+            else:
+                raise KeyError(f"Profile '{name}' already exists in file.")
+
+        subgrp = profiles_group.create_group(name)
+        profile.to_hdf5(subgrp, name)
+
+        self.__profiles__ = self.__read_profiles__()
+        self.logger.info("Added profile '%s'.", name)
+
+    def remove_profile(self, name: str):
+        """Remove an analytic profile from the model.
+
+        Deletes the profile from both memory and the HDF5 file.
+
+        Parameters
+        ----------
+        name : str
+            Name of the profile to remove.
+
+        Raises
+        ------
+        KeyError
+            If the profile does not exist.
+        """
+        if name not in self.__profiles__:
+            raise KeyError(f"Profile '{name}' not found in model.")
+
+        del self.__handle__["PROFILES"][name]
+        del self.__profiles__[name]
+
+        self.logger.info("Removed profile '%s'.", name)
+
+    def rename_profile(self, old_name: str, new_name: str):
+        """Rename an existing profile in the model.
+
+        Changes the profile name in both memory and the HDF5 file.
+
+        Parameters
+        ----------
+        old_name : str
+            Current name of the profile.
+        new_name : str
+            New name for the profile.
+
+        Raises
+        ------
+        KeyError
+            If ``old_name`` does not exist or ``new_name`` already exists.
+        """
+        if old_name not in self.__profiles__:
+            raise KeyError(f"Profile '{old_name}' not found in model.")
+        if new_name in self.__profiles__:
+            raise KeyError(f"Profile '{new_name}' already exists.")
+
+        self.__handle__["PROFILES"].move(old_name, new_name)
+        self.__profiles__ = self.__read_profiles__()
+
+        self.logger.info("Renamed profile '%s' → '%s'.", old_name, new_name)
+
+    def copy_profile(self, old_name: str, new_name: str):
+        """Create a duplicate of an existing profile under a new name.
+
+        Parameters
+        ----------
+        old_name : str
+            Name of the existing profile.
+        new_name : str
+            Name for the copied profile.
+
+        Raises
+        ------
+        KeyError
+            If ``old_name`` does not exist or ``new_name`` already exists.
+        """
+        if old_name not in self.__profiles__:
+            raise KeyError(f"Profile '{old_name}' not found in model.")
+        if new_name in self.__profiles__:
+            raise KeyError(f"Profile '{new_name}' already exists in model.")
+
+        self.__handle__["PROFILES"].copy(old_name, new_name)
+        self.__profiles__ = self.__read_profiles__()
+
+        self.logger.info("Copied profile '%s' → '%s'.", old_name, new_name)
+
+    def list_profiles(self) -> list[str]:
+        """List all analytic profiles currently stored in the model.
+
+        Returns
+        -------
+        list of str
+            Profile names available in the model.
+        """
+        return list(self.__profiles__.keys())
