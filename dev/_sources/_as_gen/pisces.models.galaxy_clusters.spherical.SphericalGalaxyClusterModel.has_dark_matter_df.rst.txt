@@ -1,0 +1,6 @@
+pisces.models.galaxy\_clusters.spherical.SphericalGalaxyClusterModel.has\_dark\_matter\_df
+==========================================================================================
+
+.. currentmodule:: pisces.models.galaxy_clusters.spherical
+
+.. autoproperty:: SphericalGalaxyClusterModel.has_dark_matter_df

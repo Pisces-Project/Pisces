@@ -1,0 +1,6 @@
+pisces.geometry.grids.core.GenericGrid.\_\_init\_\_
+===================================================
+
+.. currentmodule:: pisces.geometry.grids.core
+
+.. automethod:: GenericGrid.__init__

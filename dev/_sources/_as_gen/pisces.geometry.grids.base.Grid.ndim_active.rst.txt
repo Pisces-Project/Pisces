@@ -1,0 +1,6 @@
+pisces.geometry.grids.base.Grid.ndim\_active
+============================================
+
+.. currentmodule:: pisces.geometry.grids.base
+
+.. autoproperty:: Grid.ndim_active

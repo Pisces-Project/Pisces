@@ -1,0 +1,6 @@
+profiles.density.CoredPowerLawDensityProfile.compute\_lensing\_convergence
+==========================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoredPowerLawDensityProfile.compute_lensing_convergence

@@ -1,0 +1,6 @@
+pisces.geometry.grids.base.Grid.units
+=====================================
+
+.. currentmodule:: pisces.geometry.grids.base
+
+.. autoproperty:: Grid.units

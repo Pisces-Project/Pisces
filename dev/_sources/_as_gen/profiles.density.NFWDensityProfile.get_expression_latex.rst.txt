@@ -1,0 +1,6 @@
+profiles.density.NFWDensityProfile.get\_expression\_latex
+=========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: NFWDensityProfile.get_expression_latex

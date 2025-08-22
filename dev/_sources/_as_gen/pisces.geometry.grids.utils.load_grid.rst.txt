@@ -1,0 +1,6 @@
+pisces.geometry.grids.utils.load\_grid
+======================================
+
+.. currentmodule:: pisces.geometry.grids.utils
+
+.. autofunction:: load_grid

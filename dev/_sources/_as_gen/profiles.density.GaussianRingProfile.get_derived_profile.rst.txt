@@ -1,0 +1,6 @@
+profiles.density.GaussianRingProfile.get\_derived\_profile
+==========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: GaussianRingProfile.get_derived_profile

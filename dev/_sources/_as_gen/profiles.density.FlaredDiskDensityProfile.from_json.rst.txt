@@ -1,0 +1,6 @@
+profiles.density.FlaredDiskDensityProfile.from\_json
+====================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: FlaredDiskDensityProfile.from_json

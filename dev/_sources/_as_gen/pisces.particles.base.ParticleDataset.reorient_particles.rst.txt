@@ -1,0 +1,6 @@
+pisces.particles.base.ParticleDataset.reorient\_particles
+=========================================================
+
+.. currentmodule:: pisces.particles.base
+
+.. automethod:: ParticleDataset.reorient_particles

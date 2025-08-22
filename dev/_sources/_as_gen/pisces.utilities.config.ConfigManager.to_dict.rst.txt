@@ -1,0 +1,6 @@
+pisces.utilities.config.ConfigManager.to\_dict
+==============================================
+
+.. currentmodule:: pisces.utilities.config
+
+.. automethod:: ConfigManager.to_dict

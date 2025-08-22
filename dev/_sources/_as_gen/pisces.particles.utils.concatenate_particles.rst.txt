@@ -1,0 +1,6 @@
+pisces.particles.utils.concatenate\_particles
+=============================================
+
+.. currentmodule:: pisces.particles.utils
+
+.. autofunction:: concatenate_particles

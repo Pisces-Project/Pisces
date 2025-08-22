@@ -1,0 +1,6 @@
+pisces.extensions.simulation.core.frontends.SimulationFrontend.\_\_init\_\_
+===========================================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.frontends
+
+.. automethod:: SimulationFrontend.__init__

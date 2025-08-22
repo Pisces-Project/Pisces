@@ -1,0 +1,6 @@
+pisces.geometry.grids.base.Grid.dimensions
+==========================================
+
+.. currentmodule:: pisces.geometry.grids.base
+
+.. autoproperty:: Grid.dimensions

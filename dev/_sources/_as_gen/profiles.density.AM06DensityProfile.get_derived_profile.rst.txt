@@ -1,0 +1,6 @@
+profiles.density.AM06DensityProfile.get\_derived\_profile
+=========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: AM06DensityProfile.get_derived_profile

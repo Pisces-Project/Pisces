@@ -1,0 +1,6 @@
+profiles.density.DehnenDensityProfile.compute\_lensing\_convergence
+===================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DehnenDensityProfile.compute_lensing_convergence

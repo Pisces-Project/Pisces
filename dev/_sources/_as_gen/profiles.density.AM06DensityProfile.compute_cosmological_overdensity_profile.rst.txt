@@ -1,0 +1,6 @@
+profiles.density.AM06DensityProfile.compute\_cosmological\_overdensity\_profile
+===============================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: AM06DensityProfile.compute_cosmological_overdensity_profile

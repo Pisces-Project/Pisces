@@ -1,0 +1,6 @@
+profiles.density.PlummerDensityProfile.from\_yaml
+=================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: PlummerDensityProfile.from_yaml

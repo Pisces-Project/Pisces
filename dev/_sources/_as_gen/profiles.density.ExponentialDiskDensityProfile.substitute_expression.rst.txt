@@ -1,0 +1,6 @@
+profiles.density.ExponentialDiskDensityProfile.substitute\_expression
+=====================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: ExponentialDiskDensityProfile.substitute_expression

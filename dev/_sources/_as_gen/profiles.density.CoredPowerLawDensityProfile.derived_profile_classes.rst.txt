@@ -1,0 +1,6 @@
+profiles.density.CoredPowerLawDensityProfile.derived\_profile\_classes
+======================================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: CoredPowerLawDensityProfile.derived_profile_classes
