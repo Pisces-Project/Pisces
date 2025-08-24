@@ -1,6 +1,0 @@
-pisces.models.galaxy\_clusters.spherical.MagnetizedSphericalGalaxyClusterModel.from\_temperature\_and\_density
-==============================================================================================================
-
-.. currentmodule:: pisces.models.galaxy_clusters.spherical
-
-.. automethod:: MagnetizedSphericalGalaxyClusterModel.from_temperature_and_density

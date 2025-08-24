@@ -1,6 +1,0 @@
-pisces.geometry.coordinates.coordinate\_systems.Cartesian3DCoordinateSystem.to\_json\_string
-============================================================================================
-
-.. currentmodule:: pisces.geometry.coordinates.coordinate_systems
-
-.. automethod:: Cartesian3DCoordinateSystem.to_json_string

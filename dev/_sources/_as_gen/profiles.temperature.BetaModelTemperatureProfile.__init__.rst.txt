@@ -1,6 +1,0 @@
-profiles.temperature.BetaModelTemperatureProfile.\_\_init\_\_
-=============================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: BetaModelTemperatureProfile.__init__

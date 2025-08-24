@@ -1,6 +1,0 @@
-profiles.density.HernquistDensityProfile.variables
-==================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: HernquistDensityProfile.variables

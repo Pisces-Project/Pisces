@@ -1,6 +1,0 @@
-pisces.models.core.base.BaseModel.rename\_profile
-=================================================
-
-.. currentmodule:: pisces.models.core.base
-
-.. automethod:: BaseModel.rename_profile

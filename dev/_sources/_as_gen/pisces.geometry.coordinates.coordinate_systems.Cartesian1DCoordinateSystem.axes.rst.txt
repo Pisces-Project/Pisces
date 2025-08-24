@@ -1,6 +1,0 @@
-pisces.geometry.coordinates.coordinate\_systems.Cartesian1DCoordinateSystem.axes
-================================================================================
-
-.. currentmodule:: pisces.geometry.coordinates.coordinate_systems
-
-.. autoproperty:: Cartesian1DCoordinateSystem.axes

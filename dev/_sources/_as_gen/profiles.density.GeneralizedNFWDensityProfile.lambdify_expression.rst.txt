@@ -1,6 +1,0 @@
-profiles.density.GeneralizedNFWDensityProfile.lambdify\_expression
-==================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: GeneralizedNFWDensityProfile.lambdify_expression

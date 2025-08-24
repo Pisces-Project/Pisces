@@ -1,6 +1,0 @@
-profiles.temperature.BetaModelTemperatureProfile.get\_expression\_latex
-=======================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: BetaModelTemperatureProfile.get_expression_latex

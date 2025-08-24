@@ -1,6 +1,0 @@
-pisces.models.stars.polytropes.PolytropicStarModel.from\_components
-===================================================================
-
-.. currentmodule:: pisces.models.stars.polytropes
-
-.. automethod:: PolytropicStarModel.from_components

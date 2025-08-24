@@ -1,6 +1,0 @@
-profiles.density.AM06DensityProfile.get\_parameters\_latex
-==========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: AM06DensityProfile.get_parameters_latex

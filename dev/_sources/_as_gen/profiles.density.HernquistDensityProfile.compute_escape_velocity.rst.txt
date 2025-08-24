@@ -1,6 +1,0 @@
-profiles.density.HernquistDensityProfile.compute\_escape\_velocity
-==================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: HernquistDensityProfile.compute_escape_velocity

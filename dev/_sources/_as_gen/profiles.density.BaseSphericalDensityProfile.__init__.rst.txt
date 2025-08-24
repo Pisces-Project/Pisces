@@ -1,6 +1,0 @@
-profiles.density.BaseSphericalDensityProfile.\_\_init\_\_
-=========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BaseSphericalDensityProfile.__init__

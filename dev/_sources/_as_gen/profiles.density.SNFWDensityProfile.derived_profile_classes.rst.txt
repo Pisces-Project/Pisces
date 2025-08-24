@@ -1,6 +1,0 @@
-profiles.density.SNFWDensityProfile.derived\_profile\_classes
-=============================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: SNFWDensityProfile.derived_profile_classes

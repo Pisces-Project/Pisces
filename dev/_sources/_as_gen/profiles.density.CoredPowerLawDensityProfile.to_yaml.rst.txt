@@ -1,6 +1,0 @@
-profiles.density.CoredPowerLawDensityProfile.to\_yaml
-=====================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredPowerLawDensityProfile.to_yaml

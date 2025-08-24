@@ -1,6 +1,0 @@
-profiles.density.PlummerDensityProfile.get\_derived\_profile
-============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: PlummerDensityProfile.get_derived_profile
