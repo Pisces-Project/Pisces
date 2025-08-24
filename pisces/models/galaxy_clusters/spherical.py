@@ -391,7 +391,7 @@ class SphericalGalaxyClusterModel(BaseModel, SGCParticleGenerationHook):
 
         .. math::
 
-            \Phi(r) = -G \left[ \frac{M(<r)}{r} + 4\pi \int_0^r \rho(r') \, r' \, dr' \right]
+            \Phi(r) = -G \left[ \frac{M(<r)}{r} + 4\pi \int_0^\infty \rho(r') \, r' \, dr' \right]
 
         Parameters
         ----------
