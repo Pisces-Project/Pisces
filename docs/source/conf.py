@@ -59,6 +59,29 @@ exclude_patterns = []
 #
 html_theme = "pydata_sphinx_theme"
 
+html_theme_options = {
+    "logo": {
+        "text": "Pisces",
+        "image_light": "images/pisces.svg",
+        "image_dark": "images/pisces.svg",
+        "alt_text": "Pisces Documentation - Home",
+    },
+    "icon_links": [
+        {
+            # Label for this link
+            "name": "GitHub",
+            # URL where the link will redirect
+            "url": "https://github.com/pisces-project/pisces",  # required
+            # Icon class (if "type": "fontawesome"), or path to local image (if "type": "local")
+            "icon": "fa-brands fa-square-github",
+            # The type of image to be used (see below for details)
+            "type": "fontawesome",
+        }
+    ],
+}
+
+html_favicon = "images/pisces_favicon.svg"
+
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".

@@ -34,6 +34,9 @@ gaps, or have feature suggestions, we encourage you to submit them via the repos
 Getting Started
 ---------------
 
+To get started using Pisces, check out the `Quickstart Guide <https://pisces-project.github.io/Pisces/dev/getting_started.html>`__,
+which provides an overview of installation, basic usage, and links to further resources. You can also explore the
+`Full Documentation <https://pisces-project.github.io/Pisces/dev/>`__ for comprehensive guides, API references, and examples.
 
 Acknowledgment
 --------------
@@ -49,11 +52,11 @@ If you use Pisces for academic work, please include a statement in your publicat
    :alt: Works with yt
 
 .. |docs| image:: https://img.shields.io/badge/docs-latest-brightgreen.svg
-   :target: https://eliza-diggins.github.io/Pisces
+   :target: https://pisces-project.github.io/Pisces
    :alt: Latest Docs
 
 .. |docs-stable| image:: https://img.shields.io/badge/docs-stable-brightgreen.svg
-   :target: https://eliza-diggins.github.io/Pisces/stable/
+   :target: https://pisces-project.github.io/Pisces/stable
    :alt: Latest Docs
 
 .. |ruff| image:: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json
@@ -77,9 +80,9 @@ If you use Pisces for academic work, please include a statement in your publicat
    :alt: Commit style: Conventional Commits
 
 .. |contributors| image:: https://img.shields.io/github/contributors/eliza-diggins/Pisces
-   :target: https://github.com/eliza-diggins/Pisces/graphs/contributors
+   :target: https://github.com/pisces-project/Pisces/graphs/contributors
    :alt: GitHub Contributors
 
 .. |last-commit| image:: https://img.shields.io/github/last-commit/eliza-diggins/Pisces
-   :target: https://github.com/eliza-diggins/Pisces
+   :target: https://github.com/pisces-project/Pisces
    :alt: Last Commit
