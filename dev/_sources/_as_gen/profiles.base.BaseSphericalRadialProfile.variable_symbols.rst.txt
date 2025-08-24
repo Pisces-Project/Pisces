@@ -1,0 +1,6 @@
+profiles.base.BaseSphericalRadialProfile.variable\_symbols
+==========================================================
+
+.. currentmodule:: profiles.base
+
+.. autoproperty:: BaseSphericalRadialProfile.variable_symbols

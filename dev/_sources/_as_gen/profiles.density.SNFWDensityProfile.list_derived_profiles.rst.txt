@@ -1,0 +1,6 @@
+profiles.density.SNFWDensityProfile.list\_derived\_profiles
+===========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SNFWDensityProfile.list_derived_profiles

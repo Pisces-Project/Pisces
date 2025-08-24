@@ -1,0 +1,6 @@
+pisces.models.core.base.BaseModel.profiles
+==========================================
+
+.. currentmodule:: pisces.models.core.base
+
+.. autoproperty:: BaseModel.profiles

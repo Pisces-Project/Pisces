@@ -1,0 +1,6 @@
+profiles.density.EinastoDensityProfile.compute\_enclosed\_mass
+==============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: EinastoDensityProfile.compute_enclosed_mass

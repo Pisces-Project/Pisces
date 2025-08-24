@@ -1,0 +1,6 @@
+profiles.density.TNFWDensityProfile.from\_hdf5
+==============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: TNFWDensityProfile.from_hdf5

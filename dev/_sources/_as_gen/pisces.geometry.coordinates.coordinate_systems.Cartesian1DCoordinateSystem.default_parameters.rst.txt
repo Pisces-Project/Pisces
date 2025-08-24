@@ -1,0 +1,6 @@
+pisces.geometry.coordinates.coordinate\_systems.Cartesian1DCoordinateSystem.default\_parameters
+===============================================================================================
+
+.. currentmodule:: pisces.geometry.coordinates.coordinate_systems
+
+.. automethod:: Cartesian1DCoordinateSystem.default_parameters

@@ -1,0 +1,1107 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pisces.models.stars.polytropes &#8212; Pisces  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pisces/models/stars/polytropes';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Pisces  documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../reference/user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../reference/user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">pisces.models.stars.polytropes</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for pisces.models.stars.polytropes</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Polytropic models of stellar structure.</span>
+
+<span class="sd">This module contains a variety of models which all rely on an assumed polytropic equation of state and</span>
+<span class="sd">the resulting Lane-Emden equation to compute the structure of a star. The models are designed to be used</span>
+<span class="sd">in a variety of contexts, from simple stellar models to more complex systems that require polytropic</span>
+<span class="sd">equations of state.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">unyt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.interpolate</span><span class="w"> </span><span class="kn">import</span> <span class="n">InterpolatedUnivariateSpline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm.auto</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm.contrib.logging</span><span class="w"> </span><span class="kn">import</span> <span class="n">logging_redirect_tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">unyt</span><span class="w"> </span><span class="kn">import</span> <span class="n">Unit</span><span class="p">,</span> <span class="n">unyt_array</span><span class="p">,</span> <span class="n">unyt_quantity</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">unyt.physical_constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">G</span><span class="p">,</span> <span class="n">kb</span><span class="p">,</span> <span class="n">mp</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pisces.geometry.coordinates</span><span class="w"> </span><span class="kn">import</span> <span class="n">SphericalCoordinateSystem</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pisces.geometry.grids.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenericGrid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pisces.math_utils.integration</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">compute_lame_emden_solution</span><span class="p">,</span>
+    <span class="n">integrate</span><span class="p">,</span>
+    <span class="n">integrate_mass</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pisces.models.core.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pisces.utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">pisces_config</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">._hooks</span><span class="w"> </span><span class="kn">import</span> <span class="n">PolytropicParticleGenerationHook</span>
+
+
+<div class="viewcode-block" id="PolytropicStarModel">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.models.stars.polytropes.PolytropicStarModel.html#pisces.models.stars.polytropes.PolytropicStarModel">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PolytropicStarModel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">,</span> <span class="n">PolytropicParticleGenerationHook</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Spherical polytropic stellar structure model.</span>
+
+<span class="sd">    This model represents a self-gravitating, spherically symmetric star in hydrostatic equilibrium,</span>
+<span class="sd">    governed by a polytropic equation of state:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        P = K \rho^{1 + 1/n}</span>
+
+<span class="sd">    where :math:`n` is the polytropic index and :math:`K` is a constant determined by core conditions.</span>
+
+<span class="sd">    The stellar structure is computed by solving the Lane-Emden equation:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \frac{1}{\xi^2} \frac{d}{d\xi} \left( \xi^2 \frac{d\theta}{d\xi} \right) = -\theta^n</span>
+
+<span class="sd">    where :math:`\theta(\xi)` is the dimensionless density and :math:`\xi` is the dimensionless radius.</span>
+
+<span class="sd">    Fields</span>
+<span class="sd">    ======</span>
+
+<span class="sd">    The following physical fields are computed and stored in the model:</span>
+
+<span class="sd">    .. csv-table:: Polytropic Star Model Fields</span>
+<span class="sd">       :file: ../../../docs/source/tables/model_fields/PolytropicStarModel_fields.csv</span>
+<span class="sd">       :header-rows: 1</span>
+<span class="sd">       :widths: 15, 40, 25, 25</span>
+
+<span class="sd">    Metadata</span>
+<span class="sd">    ========</span>
+
+<span class="sd">    The following pieces of metadata are computed and stored in the model:</span>
+
+<span class="sd">    .. csv-table:: Polytropic Star Model Metadata</span>
+<span class="sd">       :file: ../../../docs/source/tables/model_fields/PolytropicStarModel_meta.csv</span>
+<span class="sd">       :header-rows: 1</span>
+<span class="sd">       :widths: 15, 40, 25, 25</span>
+
+<span class="sd">    Methodology</span>
+<span class="sd">    ===========</span>
+
+<span class="sd">    The model can be constructed in one of two ways:</span>
+
+<span class="sd">    .. tab-set::</span>
+
+<span class="sd">       .. tab-item:: Core Density + Core Temperature</span>
+
+<span class="sd">          .. hint::</span>
+
+<span class="sd">             This mode is available through :meth:`from_density_and_temperature`.</span>
+
+<span class="sd">          1. Specify the central density :math:`\rho_c` and central temperature :math:`T_c`.</span>
+<span class="sd">          2. Use these to compute the polytropic constant :math:`K` and scale length :math:`\alpha`.</span>
+<span class="sd">          3. Solve the Lane-Emden equation for the given index :math:`n`.</span>
+<span class="sd">          4. Use :math:`\theta(\xi)` to compute physical profiles:</span>
+
+<span class="sd">             - Density: :math:`\rho(r) = \rho_c \theta^n`</span>
+<span class="sd">             - Pressure: :math:`P(r) = K \rho^{1 + 1/n}`</span>
+<span class="sd">             - Temperature: from ideal gas law</span>
+<span class="sd">             - Enclosed mass via: :math:`M(&lt;r) = \int_0^r 4\pi r^2 \rho(r) \, dr`</span>
+<span class="sd">             - Potential: using total mass and gravitational integration</span>
+
+<span class="sd">       .. tab-item:: Total Mass + Radius</span>
+
+<span class="sd">          .. hint::</span>
+
+<span class="sd">             This mode is available through :meth:`from_mass_and_radius`.</span>
+
+<span class="sd">          1. Specify the total stellar mass :math:`M_{\rm tot}` and radius :math:`R`.</span>
+<span class="sd">          2. Solve Lane-Emden equation to obtain :math:`\xi_{\rm max}` and compute:</span>
+
+<span class="sd">             .. math::</span>
+
+<span class="sd">                \alpha = \frac{R}{\xi_{\rm max}}</span>
+
+<span class="sd">          3. Use Lane-Emden integral to solve for core density:</span>
+
+<span class="sd">             .. math::</span>
+
+<span class="sd">                \rho_c = \frac{M_{\rm tot}}{4\pi \alpha^3 \int_0^{\xi_{\rm max}} \theta^n \xi^2 d\xi}</span>
+
+<span class="sd">          4. Compute central temperature via hydrostatic equilibrium and ideal gas law:</span>
+
+<span class="sd">             .. math::</span>
+
+<span class="sd">                T_c = \rho_c \cdot \frac{4\pi \mu m_p G \alpha^2}{(n+1) k_B}</span>
+
+<span class="sd">          5. Pass results to density+temperature constructor to build the model.</span>
+
+<span class="sd">    Assumptions</span>
+<span class="sd">    ===========</span>
+
+<span class="sd">    - **Spherical symmetry**: all fields are radial functions.</span>
+<span class="sd">    - **Polytropic equation of state**: gas follows :math:`P = K \rho^{1 + 1/n}`.</span>
+<span class="sd">    - **Hydrostatic equilibrium**: neglects rotation, magnetic fields, or turbulence.</span>
+<span class="sd">    - **Ideal gas law**: used to relate temperature, pressure, and density.</span>
+<span class="sd">    - **Fixed mean molecular weight**: assumed constant throughout the star.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">__IS_ABSTRACT__</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># ========================================= #</span>
+    <span class="c1"># Model Generator Methods                   #</span>
+    <span class="c1"># ========================================= #</span>
+    <span class="c1"># These methods are the generator methods for the model. They</span>
+    <span class="c1"># should take some set of inputs (whatever is needed for the model)</span>
+    <span class="c1"># and yield a resulting model.</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_construct_radial_grid</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">min_radius</span><span class="p">:</span> <span class="n">unyt_quantity</span><span class="p">,</span>
+        <span class="n">max_radius</span><span class="p">:</span> <span class="n">unyt_quantity</span><span class="p">,</span>
+        <span class="n">num_points</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">spacing</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;log&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GenericGrid&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Construct a radial grid between `min_radius` and `max_radius`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        min_radius : ~unyt.array.unyt_quantity</span>
+<span class="sd">            The minimum radius (e.g., 1 * kpc).</span>
+<span class="sd">        max_radius : ~unyt.array.unyt_quantity</span>
+<span class="sd">            The maximum radius (e.g., 1 * Mpc).</span>
+<span class="sd">        num_points : int</span>
+<span class="sd">            Number of radial samples to generate.</span>
+<span class="sd">        spacing : {&quot;log&quot;, &quot;linear&quot;}, default: &quot;log&quot;</span>
+<span class="sd">            The type of spacing to use for the radial grid.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        GenericGrid</span>
+<span class="sd">            Array of radial values with units attached.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If spacing type is unrecognized or min/max radius are invalid.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">min_radius</span> <span class="o">&gt;=</span> <span class="n">max_radius</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;min_radius must be less than max_radius.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">spacing</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span><span class="p">:</span>
+            <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">geomspace</span><span class="p">(</span><span class="n">min_radius</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;km&quot;</span><span class="p">),</span> <span class="n">max_radius</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;km&quot;</span><span class="p">),</span> <span class="n">num</span><span class="o">=</span><span class="n">num_points</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">Unit</span><span class="p">(</span><span class="s2">&quot;km&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">spacing</span> <span class="o">==</span> <span class="s2">&quot;linear&quot;</span><span class="p">:</span>
+            <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">min_radius</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;km&quot;</span><span class="p">),</span> <span class="n">max_radius</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;km&quot;</span><span class="p">),</span> <span class="n">num</span><span class="o">=</span><span class="n">num_points</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">Unit</span><span class="p">(</span><span class="s2">&quot;km&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported spacing type &#39;</span><span class="si">{</span><span class="n">spacing</span><span class="si">}</span><span class="s2">&#39;. Use &#39;log&#39; or &#39;linear&#39;.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Build the actual grid object in spherical coordinates using a</span>
+        <span class="c1"># single (radial) axis.</span>
+        <span class="n">cs</span> <span class="o">=</span> <span class="n">SphericalCoordinateSystem</span><span class="p">()</span>
+        <span class="n">grid</span> <span class="o">=</span> <span class="n">GenericGrid</span><span class="p">(</span>
+            <span class="n">cs</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;r&quot;</span><span class="p">],</span> <span class="n">units</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="s2">&quot;km&quot;</span><span class="p">,</span> <span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;phi&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">},</span> <span class="n">fill_values</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;phi&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="bp">cls</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;Constructed </span><span class="si">%s</span><span class="s2">-spaced radial grid from </span><span class="si">%.2e</span><span class="s2"> to </span><span class="si">%.2e</span><span class="s2"> (</span><span class="si">%d</span><span class="s2"> points)&quot;</span><span class="p">,</span>
+            <span class="n">spacing</span><span class="p">,</span>
+            <span class="n">min_radius</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;km&quot;</span><span class="p">),</span>
+            <span class="n">max_radius</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;km&quot;</span><span class="p">),</span>
+            <span class="n">num_points</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">grid</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_potential</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">radii</span><span class="p">:</span> <span class="n">unyt_array</span><span class="p">,</span>
+        <span class="n">total_density_field</span><span class="p">:</span> <span class="n">unyt_array</span><span class="p">,</span>
+        <span class="n">total_mass_field</span><span class="p">:</span> <span class="n">unyt_array</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">unyt_array</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute the gravitational potential profile using the total density.</span>
+
+<span class="sd">        This solves the spherical gravitational potential using the formula:</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \Phi(r) = -G \left[ \frac{M(&lt;r)}{r} + 4\pi \int_0^r \rho(r&#39;) \, r&#39; \, dr&#39; \right]</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        radii : unyt_array</span>
+<span class="sd">            Radial grid (:math:`r`). Must have units of length (e.g., :math:`\mathrm{kpc}`).</span>
+<span class="sd">        total_density_field : unyt_array</span>
+<span class="sd">            Total density profile :math:`\rho(r)` in units of mass/volume (e.g., :math:`M_\odot / \mathrm{kpc}^3`).</span>
+<span class="sd">        total_mass_field : unyt_array</span>
+<span class="sd">            Enclosed mass profile :math:`M(&lt;r)` in units of mass (e.g., :math:`M_\odot`).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        unyt_array</span>
+<span class="sd">            Gravitational potential :math:`\\Phi(r)` in units of :math:`\mathrm{kpc}^2 / \mathrm{Myr}^2`.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Extract the radius and the density.</span>
+        <span class="n">rr</span> <span class="o">=</span> <span class="n">radii</span><span class="o">.</span><span class="n">d</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">total_density_field</span><span class="o">.</span><span class="n">d</span>
+        <span class="n">rho_interp</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">rho</span><span class="p">)</span>
+
+        <span class="c1"># Perform the first integral term.</span>
+        <span class="n">integrand</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">rho_interp</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">r</span>
+        <span class="n">integral_term</span> <span class="o">=</span> <span class="n">integrate</span><span class="p">(</span><span class="n">integrand</span><span class="p">,</span> <span class="n">rr</span><span class="p">)</span>
+        <span class="n">integral_term</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span>
+            <span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">integral_term</span><span class="p">,</span>
+            <span class="n">units</span><span class="o">=</span><span class="n">total_density_field</span><span class="o">.</span><span class="n">units</span> <span class="o">*</span> <span class="n">radii</span><span class="o">.</span><span class="n">units</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Complete the potential calculation.</span>
+        <span class="n">potential</span> <span class="o">=</span> <span class="o">-</span><span class="n">G</span> <span class="o">*</span> <span class="p">(</span><span class="n">total_mass_field</span> <span class="o">/</span> <span class="n">radii</span> <span class="o">+</span> <span class="n">integral_term</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">potential</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_polytropic_constants</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">rho_c</span><span class="p">,</span> <span class="n">T_c</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Use the core density, core temperature, and polytropic index, to compute the critical constants.&quot;&quot;&quot;</span>
+        <span class="n">mu</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;mean_molecular_weight&quot;</span><span class="p">]</span>
+
+        <span class="n">K</span> <span class="o">=</span> <span class="n">rho_c</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">kb</span> <span class="o">*</span> <span class="n">T_c</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">mu</span> <span class="o">*</span> <span class="n">mp</span><span class="p">)</span>
+        <span class="n">alpha_squared</span> <span class="o">=</span> <span class="p">((</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">K</span> <span class="o">*</span> <span class="n">rho_c</span> <span class="o">**</span> <span class="p">((</span><span class="mi">1</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">G</span><span class="p">)</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">alpha_squared</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;km&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">K</span><span class="p">,</span> <span class="n">alpha</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_fields_from_theta</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">rho_c</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Use the theta profile (`theta`) to compute the density, pressure, and temperature profiles.&quot;&quot;&quot;</span>
+        <span class="c1"># Start with the density. This is just rho = rho_c * theta**n.</span>
+        <span class="n">density</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho_c</span> <span class="o">*</span> <span class="n">theta</span><span class="o">**</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/m**3&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Now compute the pressure using the polytropic relation P = K * rho**(1 + 1/n).</span>
+        <span class="n">pressure</span> <span class="o">=</span> <span class="p">(</span><span class="n">K</span> <span class="o">*</span> <span class="n">density</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">n</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;Pa&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Finally, compute the temperature using the ideal gas law T = P / (rho * mu * mp). Thus</span>
+        <span class="c1"># needs to be done a little bit carefully because we have div/0 issues that can crop up</span>
+        <span class="c1"># due to the cutoff on the radius.</span>
+        <span class="n">temperature</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;K&quot;</span><span class="p">)</span>
+        <span class="n">valid_mask</span> <span class="o">=</span> <span class="n">theta</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+        <span class="n">temperature</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">pressure</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">*</span> <span class="bp">cls</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;mean_molecular_weight&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">mp</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">density</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">*</span> <span class="n">kb</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;K&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;density&quot;</span><span class="p">:</span> <span class="n">density</span><span class="p">,</span>
+            <span class="s2">&quot;pressure&quot;</span><span class="p">:</span> <span class="n">pressure</span><span class="p">,</span>
+            <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="n">temperature</span><span class="p">,</span>
+        <span class="p">}</span>
+
+<div class="viewcode-block" id="PolytropicStarModel.from_density_and_temperature">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.models.stars.polytropes.PolytropicStarModel.from_density_and_temperature.html#pisces.models.stars.polytropes.PolytropicStarModel.from_density_and_temperature">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_density_and_temperature</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">filename</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">core_density</span><span class="p">:</span> <span class="n">unyt_quantity</span><span class="p">,</span>
+        <span class="n">core_temperature</span><span class="p">:</span> <span class="n">unyt_quantity</span><span class="p">,</span>
+        <span class="n">polytropic_index</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">rmin</span><span class="p">:</span> <span class="n">unyt_quantity</span> <span class="o">=</span> <span class="n">unyt_quantity</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;km&quot;</span><span class="p">),</span>
+        <span class="n">rmax</span><span class="p">:</span> <span class="n">unyt_quantity</span> <span class="o">=</span> <span class="n">unyt_quantity</span><span class="p">(</span><span class="mi">100_000</span><span class="p">,</span> <span class="s2">&quot;km&quot;</span><span class="p">),</span>
+        <span class="n">num_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct a polytropic star model from core density and core temperature.</span>
+
+<span class="sd">        This method generates a complete stellar model assuming a polytropic equation of state</span>
+<span class="sd">        defined by the given core density, core temperature, and polytropic index. It solves</span>
+<span class="sd">        the Lane-Emden equation, builds physical profiles, and writes out all relevant fields.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : Path or str</span>
+<span class="sd">            The path to the file where the resulting model will be stored. If the file already exists,</span>
+<span class="sd">            it will not be overwritten unless `overwrite` is set to True.</span>
+<span class="sd">        core_density : unyt_quantity</span>
+<span class="sd">            The central density of the star (e.g., in kg/m**3).</span>
+<span class="sd">        core_temperature : unyt_quantity</span>
+<span class="sd">            The central temperature of the star (e.g., in K).</span>
+<span class="sd">        polytropic_index : float</span>
+<span class="sd">            The polytropic index `n` governing the stellar structure equation. By</span>
+<span class="sd">            default, this is set to 1.0.</span>
+<span class="sd">        rmin : unyt_quantity</span>
+<span class="sd">            Minimum radial value of the stellar model grid. Default is 1 km.</span>
+<span class="sd">        rmax : unyt_quantity</span>
+<span class="sd">            Maximum radial value of the stellar model grid. Default is 100,000 km.</span>
+<span class="sd">        num_points : int</span>
+<span class="sd">            Number of radial points in the model grid. Default is 1000.</span>
+<span class="sd">        overwrite : bool, default: False</span>
+<span class="sd">            Whether to overwrite the existing file if it already exists.</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Additional keyword arguments:</span>
+
+<span class="sd">            - spacing : {&quot;log&quot;, &quot;linear&quot;}, default: &quot;log&quot;</span>
+<span class="sd">                Whether to use logarithmic or linear spacing for the radial grid.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        PolytropicStarModel</span>
+<span class="sd">            An instance of the constructed polytropic star model.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the Lane-Emden equation does not converge before hitting the maximum value of `xi`.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Print out the leading logger information.</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Generating PolytropicStarModel...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Enter the model generation context with logging redirection</span>
+        <span class="c1"># and the step-by-step progress bar.</span>
+        <span class="k">with</span> <span class="n">logging_redirect_tqdm</span><span class="p">(</span><span class="n">loggers</span><span class="o">=</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">logger</span><span class="p">]):</span>
+            <span class="n">progress_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
+                <span class="n">total</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Preparing metadata...&quot;</span><span class="p">,</span>
+                <span class="n">disable</span><span class="o">=</span><span class="n">pisces_config</span><span class="p">[</span><span class="s2">&quot;system.appearance.disable_progress_bars&quot;</span><span class="p">],</span>
+                <span class="n">leave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="c1"># --- Prepare Metadata, Profiles, and Fields --- #</span>
+            <span class="c1"># (STEP 1)</span>
+            <span class="c1"># This section prepares the metadata, profiles, and fields</span>
+            <span class="c1"># for the model. It initializes the fields dictionary,</span>
+            <span class="c1"># metadata dictionary, and profiles dictionary.</span>
+            <span class="n">fields</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">unyt_array</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">profiles</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="c1"># --- Create the radial grid --- #</span>
+            <span class="c1"># (STEP 2)</span>
+            <span class="c1"># The next step is to build the radial grid.</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s2">&quot;Generating grid...&quot;</span><span class="p">)</span>
+
+            <span class="n">grid</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_construct_radial_grid</span><span class="p">(</span><span class="n">rmin</span><span class="p">,</span> <span class="n">rmax</span><span class="p">,</span> <span class="n">num_points</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;spacing&quot;</span><span class="p">,</span> <span class="s2">&quot;log&quot;</span><span class="p">))</span>
+            <span class="n">radii</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_array</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="s2">&quot;r&quot;</span><span class="p">]</span>
+            <span class="c1"># --- Compute Constants --- #</span>
+            <span class="c1"># (STEP 3)</span>
+            <span class="c1"># Now we compute the polytropic constants K and alpha. These are</span>
+            <span class="c1"># needed to define the polytropic star model.</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s2">&quot;Computing model constants...&quot;</span><span class="p">)</span>
+
+            <span class="n">_K</span><span class="p">,</span> <span class="n">_alpha</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_compute_polytropic_constants</span><span class="p">(</span><span class="n">core_density</span><span class="p">,</span> <span class="n">core_temperature</span><span class="p">,</span> <span class="n">polytropic_index</span><span class="p">)</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;K_constant&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_K</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;alpha_constant&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_alpha</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;km&quot;</span><span class="p">)</span>
+
+            <span class="c1"># --- Solving Lame-Emden Equation --- #</span>
+            <span class="c1"># (STEP 4)</span>
+            <span class="c1"># In this step, we proceed with solving the Lane-Emden equation. To do so,</span>
+            <span class="c1"># we construct a xi_array based on the radii and the alpha constant. We then</span>
+            <span class="c1"># solve, compute the theta values and get the cutoff radius. From there, we&#39;re</span>
+            <span class="c1"># ready to compute the density, pressure, and temperature profiles.</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s2">&quot;Solving Lame-Emden Eq...&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Setup the xi array for the evaluation. We also need to</span>
+            <span class="c1"># minimum xi flag because of the numerical issues when solving</span>
+            <span class="c1"># the equation at very small radii.</span>
+            <span class="n">_xi</span> <span class="o">=</span> <span class="p">(</span><span class="n">radii</span> <span class="o">/</span> <span class="n">_alpha</span><span class="p">)</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;dimensionless&quot;</span><span class="p">)</span>
+            <span class="n">_xi_min</span> <span class="o">=</span> <span class="mf">1e-6</span>
+
+            <span class="c1"># Compute the solution to the Lane-Emden equation.</span>
+            <span class="n">le_solution</span> <span class="o">=</span> <span class="n">compute_lame_emden_solution</span><span class="p">(</span>
+                <span class="n">xi_max</span><span class="o">=</span><span class="n">_xi</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
+                <span class="n">n</span><span class="o">=</span><span class="n">polytropic_index</span><span class="p">,</span>
+                <span class="n">xi_min</span><span class="o">=</span><span class="n">_xi_min</span><span class="p">,</span>
+                <span class="n">end_at_first_zero</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">t_eval</span><span class="o">=</span><span class="n">_xi</span><span class="p">[</span><span class="n">_xi</span> <span class="o">&gt;=</span> <span class="n">_xi_min</span><span class="p">],</span>  <span class="c1"># Evaluate only at valid xi values</span>
+                <span class="n">max_step</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;max_step&quot;</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="n">xi_sol</span><span class="p">,</span> <span class="n">theta_sol</span> <span class="o">=</span> <span class="n">le_solution</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">le_solution</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># Extract the cutoff xi and the radius of that cutoff if</span>
+            <span class="c1"># it exists.</span>
+            <span class="n">_cutoff_xi</span> <span class="o">=</span> <span class="n">xi_sol</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">_cutoff_radius</span> <span class="o">=</span> <span class="n">_cutoff_xi</span> <span class="o">*</span> <span class="n">_alpha</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;km&quot;</span><span class="p">)</span>
+
+            <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;stellar_radius&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_cutoff_radius</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;km&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Create the field for theta by interpolating the solution</span>
+            <span class="c1"># using an InterpolatedUnivariateSpline and then enforcing the</span>
+            <span class="c1"># cutoff radius.</span>
+            <span class="n">_theta_interpolator</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">xi_sol</span><span class="p">,</span> <span class="n">theta_sol</span><span class="p">)</span>
+            <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;Theta&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_theta_interpolator</span><span class="p">(</span><span class="n">_xi</span><span class="p">)</span>
+            <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;Theta&quot;</span><span class="p">][</span><span class="n">_xi</span> <span class="o">&gt;</span> <span class="n">_cutoff_xi</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># Enforce cutoff</span>
+            <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;Theta&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;Theta&quot;</span><span class="p">],</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;dimensionless&quot;</span><span class="p">)</span>
+
+            <span class="c1"># --- Derive Density, Pressure, and Temperature Profiles --- #</span>
+            <span class="c1"># (STEP 5)</span>
+            <span class="c1"># Now we derive the density, pressure, and temperature profiles from</span>
+            <span class="c1"># the theta values. The density is computed using the polytropic relation,</span>
+            <span class="c1"># and the pressure and temperature are derived from the density.</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s2">&quot;Computing fields...&quot;</span><span class="p">)</span>
+
+            <span class="n">fields</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_compute_fields_from_theta</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;Theta&quot;</span><span class="p">],</span> <span class="n">core_density</span><span class="p">,</span> <span class="n">polytropic_index</span><span class="p">,</span> <span class="n">_K</span><span class="p">))</span>
+
+            <span class="c1"># --- Compute the gravitational field --- #</span>
+            <span class="c1"># (STEP 6)</span>
+            <span class="c1"># Next, we compute the enclosed mass, gravitational field, and potential.</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s2">&quot;Computing gravitational potential...&quot;</span><span class="p">)</span>
+
+            <span class="c1"># We start with the total mass. This requires interpolating the density</span>
+            <span class="c1"># and integrating as far as the cutoff radius. Past that, we&#39;ll require constant values.</span>
+            <span class="n">_x</span><span class="p">,</span> <span class="n">_y</span> <span class="o">=</span> <span class="n">radii</span><span class="p">,</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;kg/km**3&quot;</span><span class="p">)</span>
+            <span class="n">_xmax</span> <span class="o">=</span> <span class="n">_cutoff_radius</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;km&quot;</span><span class="p">)</span>
+
+            <span class="n">_density_interpolator</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">_x</span><span class="p">[</span><span class="n">_x</span> <span class="o">&lt;=</span> <span class="n">_xmax</span><span class="p">],</span> <span class="n">_y</span><span class="p">[</span><span class="n">_x</span> <span class="o">&lt;=</span> <span class="n">_xmax</span><span class="p">])</span>
+
+            <span class="c1"># Now integrate the mass out to the cutoff radius.</span>
+            <span class="n">_mass_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">_x</span><span class="p">)</span>
+            <span class="n">_mass_array</span><span class="p">[</span><span class="n">_x</span> <span class="o">&lt;=</span> <span class="n">_xmax</span><span class="p">]</span> <span class="o">=</span> <span class="n">integrate_mass</span><span class="p">(</span>
+                <span class="n">_density_interpolator</span><span class="p">,</span>
+                <span class="n">_x</span><span class="p">[</span><span class="n">_x</span> <span class="o">&lt;=</span> <span class="n">_xmax</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="n">_mass_array</span><span class="p">[</span><span class="n">_x</span> <span class="o">&gt;</span> <span class="n">_xmax</span><span class="p">]</span> <span class="o">=</span> <span class="n">_mass_array</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+            <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">_mass_array</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;kg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;Msun&quot;</span><span class="p">)</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;total_mass&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;Msun&quot;</span><span class="p">)</span>
+
+            <span class="c1"># With the mass and the density available, we can now compute the gravitational potential.</span>
+            <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;potential&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">radii</span><span class="p">),</span> <span class="s2">&quot;km**2/s**2&quot;</span><span class="p">)</span>
+            <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;potential&quot;</span><span class="p">][</span><span class="n">_x</span> <span class="o">&lt;=</span> <span class="n">_xmax</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_compute_potential</span><span class="p">(</span>
+                <span class="n">radii</span><span class="o">=</span><span class="n">radii</span><span class="p">[</span><span class="n">_x</span> <span class="o">&lt;=</span> <span class="n">_xmax</span><span class="p">],</span>
+                <span class="n">total_density_field</span><span class="o">=</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">][</span><span class="n">_x</span> <span class="o">&lt;=</span> <span class="n">_xmax</span><span class="p">],</span>
+                <span class="n">total_mass_field</span><span class="o">=</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">][</span><span class="n">_x</span> <span class="o">&lt;=</span> <span class="n">_xmax</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;potential&quot;</span><span class="p">][</span><span class="n">_x</span> <span class="o">&gt;</span> <span class="n">_xmax</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">G</span> <span class="o">*</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">/</span> <span class="n">radii</span><span class="p">[</span><span class="n">_x</span> <span class="o">&gt;</span> <span class="n">_xmax</span><span class="p">]</span>
+
+            <span class="c1"># We also compute the gravitational field, which is the negative gradient of the potential.</span>
+            <span class="c1"># we use a spline interpolation.</span>
+            <span class="n">_pot_interp</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span>
+                <span class="n">radii</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;km&quot;</span><span class="p">),</span>
+                <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;potential&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;km**2/s**2&quot;</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pot_interp</span><span class="p">(</span><span class="n">radii</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;km&quot;</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">Unit</span><span class="p">(</span><span class="s2">&quot;km/s**2&quot;</span><span class="p">)</span>
+
+            <span class="c1"># End the progress bar.</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s2">&quot;Finalizing model...&quot;</span><span class="p">)</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="c1"># Return the model as a new instance of the class.</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_components</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">profiles</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PolytropicStarModel.from_mass_and_radius">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.models.stars.polytropes.PolytropicStarModel.from_mass_and_radius.html#pisces.models.stars.polytropes.PolytropicStarModel.from_mass_and_radius">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_mass_and_radius</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">filename</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">mass</span><span class="p">:</span> <span class="n">unyt_quantity</span><span class="p">,</span>
+        <span class="n">radius</span><span class="p">:</span> <span class="n">unyt_quantity</span><span class="p">,</span>
+        <span class="n">polytropic_index</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">rmin</span><span class="p">:</span> <span class="n">unyt_quantity</span> <span class="o">=</span> <span class="n">unyt_quantity</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;km&quot;</span><span class="p">),</span>
+        <span class="n">rmax</span><span class="p">:</span> <span class="n">unyt_quantity</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">num_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct a polytropic star model from its total mass and radius.</span>
+
+<span class="sd">        This method determines the core density and temperature required to match the</span>
+<span class="sd">        given total mass and radius for a specified polytropic index. These parameters</span>
+<span class="sd">        are then passed to the :meth:`from_density_and_temperature` constructor to build the model.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : Path or str</span>
+<span class="sd">            Output filename to write the model to. If the file already exists,</span>
+<span class="sd">            then it will not be overwritten unless `overwrite` is set to True.</span>
+<span class="sd">        mass : unyt_quantity</span>
+<span class="sd">            Total stellar mass (e.g., in Msun).</span>
+<span class="sd">        radius : unyt_quantity</span>
+<span class="sd">            Total stellar radius (e.g., in Rsun).</span>
+<span class="sd">        polytropic_index : float, default: 1.0</span>
+<span class="sd">            The polytropic index `n` for the equation of state.</span>
+<span class="sd">        rmin : unyt_quantity, default: 1 km</span>
+<span class="sd">            Minimum radial value for the model grid.</span>
+<span class="sd">        rmax : unyt_quantity, optional</span>
+<span class="sd">            Maximum radial value for the model grid. If None, uses `radius`.</span>
+<span class="sd">        num_points : int, default: 1000</span>
+<span class="sd">            Number of radial grid points.</span>
+<span class="sd">        overwrite : bool, default: False</span>
+<span class="sd">            Whether to overwrite an existing file.</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Additional keyword arguments forwarded to :meth:`from_density_and_temperature`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        PolytropicStarModel</span>
+<span class="sd">            An instance of the constructed model.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the Lane-Emden equation fails to converge.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Extract xi_max from kwargs if provided (default is 10)</span>
+        <span class="n">xi_max</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;xi_max&quot;</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">)</span>
+
+        <span class="c1"># Compute the core density and temperature from mass and radius</span>
+        <span class="n">rho_c</span><span class="p">,</span> <span class="n">T_c</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">compute_parameters_from_mass_and_radius</span><span class="p">(</span>
+            <span class="n">mass</span><span class="o">=</span><span class="n">mass</span><span class="p">,</span>
+            <span class="n">radius</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span>
+            <span class="n">polytropic_index</span><span class="o">=</span><span class="n">polytropic_index</span><span class="p">,</span>
+            <span class="n">xi_max</span><span class="o">=</span><span class="n">xi_max</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Set default rmax if not explicitly provided</span>
+        <span class="k">if</span> <span class="n">rmax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rmax</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;km&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Pass to the density+temperature model constructor</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_density_and_temperature</span><span class="p">(</span>
+            <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
+            <span class="n">core_density</span><span class="o">=</span><span class="n">rho_c</span><span class="p">,</span>
+            <span class="n">core_temperature</span><span class="o">=</span><span class="n">T_c</span><span class="p">,</span>
+            <span class="n">polytropic_index</span><span class="o">=</span><span class="n">polytropic_index</span><span class="p">,</span>
+            <span class="n">rmin</span><span class="o">=</span><span class="n">rmin</span><span class="p">,</span>
+            <span class="n">rmax</span><span class="o">=</span><span class="n">rmax</span><span class="p">,</span>
+            <span class="n">num_points</span><span class="o">=</span><span class="n">num_points</span><span class="p">,</span>
+            <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+    <span class="c1"># ========================================= #</span>
+    <span class="c1"># Scaling Methods and Relations             #</span>
+    <span class="c1"># ========================================= #</span>
+<div class="viewcode-block" id="PolytropicStarModel.compute_parameters_from_mass_and_radius">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.models.stars.polytropes.PolytropicStarModel.compute_parameters_from_mass_and_radius.html#pisces.models.stars.polytropes.PolytropicStarModel.compute_parameters_from_mass_and_radius">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_parameters_from_mass_and_radius</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">mass</span><span class="p">:</span> <span class="n">unyt_quantity</span><span class="p">,</span>
+        <span class="n">radius</span><span class="p">:</span> <span class="n">unyt_quantity</span><span class="p">,</span>
+        <span class="n">polytropic_index</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">xi_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">unyt_quantity</span><span class="p">,</span> <span class="n">unyt_quantity</span><span class="p">]:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the central density and temperature of a polytropic star from its mass and radius.</span>
+
+<span class="sd">        This method derives the core properties of a polytropic stellar model, specifically the central</span>
+<span class="sd">        density (:math:`\rho_c`) and central temperature (:math:`T_c`), based on the total stellar mass,</span>
+<span class="sd">        total stellar radius, and the chosen polytropic index. It numerically solves the Lane-Emden</span>
+<span class="sd">        equation for the given index to determine the structure of the polytrope, and uses scaling</span>
+<span class="sd">        relations to connect the dimensionless solution to physical units.</span>
+
+<span class="sd">        The computed central density is determined by matching the Lane-Emden mass integral to the</span>
+<span class="sd">        desired total mass. The central temperature is then derived from the ideal gas law assuming</span>
+<span class="sd">        hydrostatic equilibrium and a known mean molecular weight.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        mass : ~unyt.array.unyt_quantity</span>
+<span class="sd">            Total stellar mass (e.g., in solar masses). This must be consistent with units of mass.</span>
+<span class="sd">            If no unit is provided, it defaults to solar masses (Msun).</span>
+<span class="sd">        radius : ~unyt.array.unyt_quantity</span>
+<span class="sd">            Total stellar radius (e.g., in solar radii). This must have dimensions of length.</span>
+<span class="sd">            If no unit is provided, it defaults to solar radii (Rsun).</span>
+<span class="sd">        polytropic_index : float, default: 1.0</span>
+<span class="sd">            The polytropic index :math:`n` controlling the equation of state.</span>
+<span class="sd">        mu : float, optional</span>
+<span class="sd">            Mean molecular weight. If None, pulled from the class configuration.</span>
+<span class="sd">        xi_max : float, default: 10</span>
+<span class="sd">            Maximum dimensionless radius to use when integrating the Lane-Emden equation. If this is</span>
+<span class="sd">            too small, the Lane-Emden equation will not hit its first zero before reaching the truncation</span>
+<span class="sd">            point and an error will be raised.</span>
+
+<span class="sd">            If this occurs, it is generally safe to simply increase this value to ensure the solution is valid.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        rho_c : ~unyt.array.unyt_quantity</span>
+<span class="sd">            Central mass density of the star.</span>
+<span class="sd">        T_c : ~unyt.array.unyt_quantity</span>
+<span class="sd">            Central temperature of the star.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the Lane-Emden solver does not encounter a zero crossing before `xi_max`.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        For a given polytropic index :math:`n`, the Lane-Emden equation is solved numerically via a call to</span>
+<span class="sd">        the low-level :func:`~math_units.integration.compute_lame_emden_solution`. Given the truncation point</span>
+<span class="sd">        :math:`\xi_{\rm max}`, the scale parameter :math:`\alpha` is computed as the ratio of the total radius to the</span>
+<span class="sd">        truncation point, i.e., :math:`\alpha = R / \xi_{\rm max}`.</span>
+
+<span class="sd">        The total mass of the star is</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            M_{\rm total} = 4\pi \alpha^3 \rho_c \int_0^{\xi_{\rm max}} \theta^n \xi^2 d\xi.</span>
+
+<span class="sd">        As such, the integral is computed and used to determine the core density :math:`\rho_c` as.</span>
+
+<span class="sd">        Finally, the central temperature is computed using the ideal gas law.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Load the relevant configuration / sort of the</span>
+        <span class="c1"># units and ensure everything is in the right place.</span>
+        <span class="n">mass</span><span class="p">,</span> <span class="n">radius</span> <span class="o">=</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="s2">&quot;Msun&quot;</span><span class="p">),</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="s2">&quot;Rsun&quot;</span><span class="p">)</span>
+        <span class="n">mu</span> <span class="o">=</span> <span class="n">mu</span> <span class="k">if</span> <span class="n">mu</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">cls</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;mean_molecular_weight&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Use the polytropic index to compute the solution to the Lane-Emden equation.</span>
+        <span class="c1"># This will then give us the maximum radius and we can use that to scale things.</span>
+        <span class="n">le_solution</span> <span class="o">=</span> <span class="n">compute_lame_emden_solution</span><span class="p">(</span>
+            <span class="n">xi_max</span><span class="o">=</span><span class="n">xi_max</span><span class="p">,</span>
+            <span class="n">n</span><span class="o">=</span><span class="n">polytropic_index</span><span class="p">,</span>
+            <span class="n">end_at_first_zero</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">max_step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>  <span class="c1"># Ensure we have a reasonable step size for convergence)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Check that the solution reached a termination event.</span>
+        <span class="k">if</span> <span class="n">le_solution</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;The Lane-Emden equation did not encounter a zero within xi_max. Please&quot;</span>
+                <span class="s2">&quot; increase the threshold value for xi_max to ensure the solution is valid.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">xi</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">le_solution</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">le_solution</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># Using the solution of the LEE, we can compute the special integral</span>
+        <span class="c1"># int_0^xi_max theta^n xi^2 dxi, which is used to compute the central density.</span>
+        <span class="n">_interpolator</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">theta</span><span class="o">**</span><span class="n">polytropic_index</span><span class="p">)</span>
+        <span class="n">_mass_integral</span> <span class="o">=</span> <span class="n">integrate_mass</span><span class="p">(</span><span class="n">_interpolator</span><span class="p">,</span> <span class="n">xi</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># Using the xi bound, we can compute the alpha parameter on the scale.</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="n">radius</span> <span class="o">/</span> <span class="n">xi</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Scale radius by the truncation point.</span>
+
+        <span class="c1"># Now combine these to compute the central density value.</span>
+        <span class="n">rho_c</span> <span class="o">=</span> <span class="n">mass</span> <span class="o">/</span> <span class="p">(</span><span class="n">alpha</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="n">_mass_integral</span><span class="p">)</span>
+
+        <span class="c1"># Finally, we compute the central temperature using the ideal gas law.</span>
+        <span class="n">T_c</span> <span class="o">=</span> <span class="n">rho_c</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">mp</span> <span class="o">*</span> <span class="n">G</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">((</span><span class="n">polytropic_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">kb</span><span class="p">)</span>
+
+        <span class="c1"># Return the values</span>
+        <span class="k">return</span> <span class="n">rho_c</span><span class="p">,</span> <span class="n">T_c</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># Example usage of the PolytropicStarModel class</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">PolytropicStarModel</span><span class="o">.</span><span class="n">from_density_and_temperature</span><span class="p">(</span>
+        <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;polytropic_star_model.h5&quot;</span><span class="p">,</span>
+        <span class="n">core_density</span><span class="o">=</span><span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span><span class="p">(</span><span class="mf">1e3</span><span class="p">,</span> <span class="s2">&quot;kg/m**3&quot;</span><span class="p">),</span>
+        <span class="n">core_temperature</span><span class="o">=</span><span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span><span class="p">(</span><span class="mf">1e6</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">),</span>
+        <span class="n">polytropic_index</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">rmin</span><span class="o">=</span><span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;km&quot;</span><span class="p">),</span>
+        <span class="n">rmax</span><span class="o">=</span><span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span><span class="p">(</span><span class="mi">100_000</span><span class="p">,</span> <span class="s2">&quot;km&quot;</span><span class="p">),</span>
+        <span class="n">num_points</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Eliza Diggins.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

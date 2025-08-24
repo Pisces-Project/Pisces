@@ -1,0 +1,6 @@
+pisces.geometry.coordinates.coordinate\_systems.SphericalCoordinateSystem.to\_dict
+==================================================================================
+
+.. currentmodule:: pisces.geometry.coordinates.coordinate_systems
+
+.. automethod:: SphericalCoordinateSystem.to_dict

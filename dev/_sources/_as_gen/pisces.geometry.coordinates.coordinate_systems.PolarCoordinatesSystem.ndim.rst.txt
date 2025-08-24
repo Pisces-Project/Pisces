@@ -1,0 +1,6 @@
+pisces.geometry.coordinates.coordinate\_systems.PolarCoordinatesSystem.ndim
+===========================================================================
+
+.. currentmodule:: pisces.geometry.coordinates.coordinate_systems
+
+.. autoproperty:: PolarCoordinatesSystem.ndim

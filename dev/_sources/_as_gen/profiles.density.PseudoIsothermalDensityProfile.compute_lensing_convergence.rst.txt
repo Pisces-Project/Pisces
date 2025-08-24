@@ -1,0 +1,6 @@
+profiles.density.PseudoIsothermalDensityProfile.compute\_lensing\_convergence
+=============================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: PseudoIsothermalDensityProfile.compute_lensing_convergence

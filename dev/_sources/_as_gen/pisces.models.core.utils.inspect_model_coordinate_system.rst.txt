@@ -1,0 +1,6 @@
+pisces.models.core.utils.inspect\_model\_coordinate\_system
+===========================================================
+
+.. currentmodule:: pisces.models.core.utils
+
+.. autofunction:: inspect_model_coordinate_system

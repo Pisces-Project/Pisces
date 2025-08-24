@@ -1,0 +1,6 @@
+profiles.density.HernquistDensityProfile.lambdify\_expression
+=============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: HernquistDensityProfile.lambdify_expression

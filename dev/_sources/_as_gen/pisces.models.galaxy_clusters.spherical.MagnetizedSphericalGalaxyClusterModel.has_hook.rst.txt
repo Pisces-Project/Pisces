@@ -1,0 +1,6 @@
+pisces.models.galaxy\_clusters.spherical.MagnetizedSphericalGalaxyClusterModel.has\_hook
+========================================================================================
+
+.. currentmodule:: pisces.models.galaxy_clusters.spherical
+
+.. automethod:: MagnetizedSphericalGalaxyClusterModel.has_hook

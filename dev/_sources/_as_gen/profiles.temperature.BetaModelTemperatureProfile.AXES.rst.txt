@@ -1,0 +1,6 @@
+profiles.temperature.BetaModelTemperatureProfile.AXES
+=====================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoattribute:: BetaModelTemperatureProfile.AXES

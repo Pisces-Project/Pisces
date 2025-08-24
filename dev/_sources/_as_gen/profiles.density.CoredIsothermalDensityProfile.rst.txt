@@ -1,0 +1,63 @@
+CoredIsothermalDensityProfile
+==============================================
+
+.. currentmodule:: profiles.density
+
+.. autoclass:: profiles.density.CoredIsothermalDensityProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~CoredIsothermalDensityProfile.__init__
+      ~CoredIsothermalDensityProfile.compute_circular_velocity
+      ~CoredIsothermalDensityProfile.compute_cosmological_overdensity_profile
+      ~CoredIsothermalDensityProfile.compute_cosmological_overdensity_radius
+      ~CoredIsothermalDensityProfile.compute_deflection_angle
+      ~CoredIsothermalDensityProfile.compute_einstein_radius
+      ~CoredIsothermalDensityProfile.compute_enclosed_mass
+      ~CoredIsothermalDensityProfile.compute_escape_velocity
+      ~CoredIsothermalDensityProfile.compute_fractional_mass_radius
+      ~CoredIsothermalDensityProfile.compute_gravitational_field
+      ~CoredIsothermalDensityProfile.compute_gravitational_potential
+      ~CoredIsothermalDensityProfile.compute_lensing_convergence
+      ~CoredIsothermalDensityProfile.compute_surface_density
+      ~CoredIsothermalDensityProfile.compute_total_mass
+      ~CoredIsothermalDensityProfile.from_dict
+      ~CoredIsothermalDensityProfile.from_hdf5
+      ~CoredIsothermalDensityProfile.from_json
+      ~CoredIsothermalDensityProfile.from_yaml
+      ~CoredIsothermalDensityProfile.get_derived_profile
+      ~CoredIsothermalDensityProfile.get_expression_latex
+      ~CoredIsothermalDensityProfile.get_output_units
+      ~CoredIsothermalDensityProfile.get_parameters_latex
+      ~CoredIsothermalDensityProfile.lambdify_expression
+      ~CoredIsothermalDensityProfile.list_derived_profiles
+      ~CoredIsothermalDensityProfile.substitute_expression
+      ~CoredIsothermalDensityProfile.to_dict
+      ~CoredIsothermalDensityProfile.to_hdf5
+      ~CoredIsothermalDensityProfile.to_json
+      ~CoredIsothermalDensityProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~CoredIsothermalDensityProfile.derived_profile_classes
+      ~CoredIsothermalDensityProfile.parameter_symbols
+      ~CoredIsothermalDensityProfile.parameters
+      ~CoredIsothermalDensityProfile.variable_symbols
+      ~CoredIsothermalDensityProfile.variables
+   
+   

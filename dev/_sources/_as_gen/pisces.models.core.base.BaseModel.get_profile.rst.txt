@@ -1,0 +1,6 @@
+pisces.models.core.base.BaseModel.get\_profile
+==============================================
+
+.. currentmodule:: pisces.models.core.base
+
+.. automethod:: BaseModel.get_profile

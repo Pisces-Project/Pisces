@@ -1,0 +1,6 @@
+pisces.particles.base.ParticleDataset.cut\_particles\_to\_bbox
+==============================================================
+
+.. currentmodule:: pisces.particles.base
+
+.. automethod:: ParticleDataset.cut_particles_to_bbox

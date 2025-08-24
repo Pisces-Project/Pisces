@@ -1,0 +1,6 @@
+profiles.density.VikhlininDensityProfile.list\_derived\_profiles
+================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: VikhlininDensityProfile.list_derived_profiles

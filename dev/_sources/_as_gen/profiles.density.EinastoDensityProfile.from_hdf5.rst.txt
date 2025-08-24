@@ -1,0 +1,6 @@
+profiles.density.EinastoDensityProfile.from\_hdf5
+=================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: EinastoDensityProfile.from_hdf5

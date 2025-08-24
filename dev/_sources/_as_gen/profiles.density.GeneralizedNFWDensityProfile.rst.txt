@@ -1,0 +1,63 @@
+GeneralizedNFWDensityProfile
+=============================================
+
+.. currentmodule:: profiles.density
+
+.. autoclass:: profiles.density.GeneralizedNFWDensityProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~GeneralizedNFWDensityProfile.__init__
+      ~GeneralizedNFWDensityProfile.compute_circular_velocity
+      ~GeneralizedNFWDensityProfile.compute_cosmological_overdensity_profile
+      ~GeneralizedNFWDensityProfile.compute_cosmological_overdensity_radius
+      ~GeneralizedNFWDensityProfile.compute_deflection_angle
+      ~GeneralizedNFWDensityProfile.compute_einstein_radius
+      ~GeneralizedNFWDensityProfile.compute_enclosed_mass
+      ~GeneralizedNFWDensityProfile.compute_escape_velocity
+      ~GeneralizedNFWDensityProfile.compute_fractional_mass_radius
+      ~GeneralizedNFWDensityProfile.compute_gravitational_field
+      ~GeneralizedNFWDensityProfile.compute_gravitational_potential
+      ~GeneralizedNFWDensityProfile.compute_lensing_convergence
+      ~GeneralizedNFWDensityProfile.compute_surface_density
+      ~GeneralizedNFWDensityProfile.compute_total_mass
+      ~GeneralizedNFWDensityProfile.from_dict
+      ~GeneralizedNFWDensityProfile.from_hdf5
+      ~GeneralizedNFWDensityProfile.from_json
+      ~GeneralizedNFWDensityProfile.from_yaml
+      ~GeneralizedNFWDensityProfile.get_derived_profile
+      ~GeneralizedNFWDensityProfile.get_expression_latex
+      ~GeneralizedNFWDensityProfile.get_output_units
+      ~GeneralizedNFWDensityProfile.get_parameters_latex
+      ~GeneralizedNFWDensityProfile.lambdify_expression
+      ~GeneralizedNFWDensityProfile.list_derived_profiles
+      ~GeneralizedNFWDensityProfile.substitute_expression
+      ~GeneralizedNFWDensityProfile.to_dict
+      ~GeneralizedNFWDensityProfile.to_hdf5
+      ~GeneralizedNFWDensityProfile.to_json
+      ~GeneralizedNFWDensityProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~GeneralizedNFWDensityProfile.derived_profile_classes
+      ~GeneralizedNFWDensityProfile.parameter_symbols
+      ~GeneralizedNFWDensityProfile.parameters
+      ~GeneralizedNFWDensityProfile.variable_symbols
+      ~GeneralizedNFWDensityProfile.variables
+   
+   

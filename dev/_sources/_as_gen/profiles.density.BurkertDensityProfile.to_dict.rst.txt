@@ -1,0 +1,6 @@
+profiles.density.BurkertDensityProfile.to\_dict
+===============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BurkertDensityProfile.to_dict

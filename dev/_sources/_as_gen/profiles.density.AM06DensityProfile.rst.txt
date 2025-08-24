@@ -1,0 +1,63 @@
+AM06DensityProfile
+===================================
+
+.. currentmodule:: profiles.density
+
+.. autoclass:: profiles.density.AM06DensityProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~AM06DensityProfile.__init__
+      ~AM06DensityProfile.compute_circular_velocity
+      ~AM06DensityProfile.compute_cosmological_overdensity_profile
+      ~AM06DensityProfile.compute_cosmological_overdensity_radius
+      ~AM06DensityProfile.compute_deflection_angle
+      ~AM06DensityProfile.compute_einstein_radius
+      ~AM06DensityProfile.compute_enclosed_mass
+      ~AM06DensityProfile.compute_escape_velocity
+      ~AM06DensityProfile.compute_fractional_mass_radius
+      ~AM06DensityProfile.compute_gravitational_field
+      ~AM06DensityProfile.compute_gravitational_potential
+      ~AM06DensityProfile.compute_lensing_convergence
+      ~AM06DensityProfile.compute_surface_density
+      ~AM06DensityProfile.compute_total_mass
+      ~AM06DensityProfile.from_dict
+      ~AM06DensityProfile.from_hdf5
+      ~AM06DensityProfile.from_json
+      ~AM06DensityProfile.from_yaml
+      ~AM06DensityProfile.get_derived_profile
+      ~AM06DensityProfile.get_expression_latex
+      ~AM06DensityProfile.get_output_units
+      ~AM06DensityProfile.get_parameters_latex
+      ~AM06DensityProfile.lambdify_expression
+      ~AM06DensityProfile.list_derived_profiles
+      ~AM06DensityProfile.substitute_expression
+      ~AM06DensityProfile.to_dict
+      ~AM06DensityProfile.to_hdf5
+      ~AM06DensityProfile.to_json
+      ~AM06DensityProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~AM06DensityProfile.derived_profile_classes
+      ~AM06DensityProfile.parameter_symbols
+      ~AM06DensityProfile.parameters
+      ~AM06DensityProfile.variable_symbols
+      ~AM06DensityProfile.variables
+   
+   

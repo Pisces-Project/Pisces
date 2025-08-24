@@ -1,0 +1,6 @@
+profiles.density.CoreSersicProfile.\_\_init\_\_
+===============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoreSersicProfile.__init__

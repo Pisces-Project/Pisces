@@ -1,0 +1,6 @@
+profiles.density.PlummerDensityProfile.compute\_lensing\_convergence
+====================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: PlummerDensityProfile.compute_lensing_convergence

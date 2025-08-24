@@ -1,0 +1,6 @@
+profiles.density.HernquistDensityProfile.compute\_gravitational\_field
+======================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: HernquistDensityProfile.compute_gravitational_field

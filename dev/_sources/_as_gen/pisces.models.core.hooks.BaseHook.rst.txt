@@ -1,0 +1,23 @@
+BaseHook
+=================================
+
+.. currentmodule:: pisces.models.core.hooks
+
+.. autoclass:: pisces.models.core.hooks.BaseHook
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~BaseHook.__init__
+   
+   
+
+   
+   
+   

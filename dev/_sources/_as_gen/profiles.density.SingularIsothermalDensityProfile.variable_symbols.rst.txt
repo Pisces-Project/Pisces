@@ -1,0 +1,6 @@
+profiles.density.SingularIsothermalDensityProfile.variable\_symbols
+===================================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: SingularIsothermalDensityProfile.variable_symbols

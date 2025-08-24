@@ -1,0 +1,6 @@
+pisces.math\_utils.integration.integrate
+========================================
+
+.. currentmodule:: pisces.math_utils.integration
+
+.. autofunction:: integrate

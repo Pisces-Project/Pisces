@@ -1,0 +1,37 @@
+Gadget2Frontend
+=============================================================
+
+.. currentmodule:: pisces.extensions.simulation.gadget.frontends
+
+.. autoclass:: pisces.extensions.simulation.gadget.frontends.Gadget2Frontend
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~Gadget2Frontend.__init__
+      ~Gadget2Frontend.generate_initial_conditions
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~Gadget2Frontend.config
+      ~Gadget2Frontend.config_path
+      ~Gadget2Frontend.default_configuration_path
+      ~Gadget2Frontend.ic_directory
+      ~Gadget2Frontend.initial_conditions
+      ~Gadget2Frontend.logger
+   
+   

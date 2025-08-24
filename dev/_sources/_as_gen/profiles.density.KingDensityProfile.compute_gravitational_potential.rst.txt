@@ -1,0 +1,6 @@
+profiles.density.KingDensityProfile.compute\_gravitational\_potential
+=====================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: KingDensityProfile.compute_gravitational_potential

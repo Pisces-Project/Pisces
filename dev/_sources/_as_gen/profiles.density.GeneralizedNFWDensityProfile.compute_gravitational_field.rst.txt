@@ -1,0 +1,6 @@
+profiles.density.GeneralizedNFWDensityProfile.compute\_gravitational\_field
+===========================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: GeneralizedNFWDensityProfile.compute_gravitational_field

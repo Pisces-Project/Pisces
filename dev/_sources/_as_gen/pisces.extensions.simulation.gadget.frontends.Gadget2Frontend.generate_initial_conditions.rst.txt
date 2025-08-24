@@ -1,0 +1,6 @@
+pisces.extensions.simulation.gadget.frontends.Gadget2Frontend.generate\_initial\_conditions
+===========================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.gadget.frontends
+
+.. automethod:: Gadget2Frontend.generate_initial_conditions

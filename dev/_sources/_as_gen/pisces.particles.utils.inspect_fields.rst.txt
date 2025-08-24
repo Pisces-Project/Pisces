@@ -1,0 +1,6 @@
+pisces.particles.utils.inspect\_fields
+======================================
+
+.. currentmodule:: pisces.particles.utils
+
+.. autofunction:: inspect_fields

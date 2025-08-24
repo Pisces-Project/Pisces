@@ -1,0 +1,6 @@
+pisces.geometry.coordinates.coordinate\_systems.SphericalCoordinateSystem.copy
+==============================================================================
+
+.. currentmodule:: pisces.geometry.coordinates.coordinate_systems
+
+.. automethod:: SphericalCoordinateSystem.copy
