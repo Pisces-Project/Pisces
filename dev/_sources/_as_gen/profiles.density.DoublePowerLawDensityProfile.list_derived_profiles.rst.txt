@@ -1,6 +1,0 @@
-profiles.density.DoublePowerLawDensityProfile.list\_derived\_profiles
-=====================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: DoublePowerLawDensityProfile.list_derived_profiles

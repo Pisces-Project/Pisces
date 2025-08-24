@@ -1,6 +1,0 @@
-profiles.density.BetaModelDensityProfile.to\_hdf5
-=================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BetaModelDensityProfile.to_hdf5

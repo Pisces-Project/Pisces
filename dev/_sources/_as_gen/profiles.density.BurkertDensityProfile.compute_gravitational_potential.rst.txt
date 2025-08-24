@@ -1,6 +1,0 @@
-profiles.density.BurkertDensityProfile.compute\_gravitational\_potential
-========================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BurkertDensityProfile.compute_gravitational_potential

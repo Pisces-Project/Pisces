@@ -1,6 +1,0 @@
-pisces.geometry.coordinates.utils.load\_coordinate\_string
-==========================================================
-
-.. currentmodule:: pisces.geometry.coordinates.utils
-
-.. autofunction:: load_coordinate_string

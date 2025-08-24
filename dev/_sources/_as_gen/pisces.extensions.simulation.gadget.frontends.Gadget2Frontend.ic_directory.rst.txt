@@ -1,6 +1,0 @@
-pisces.extensions.simulation.gadget.frontends.Gadget2Frontend.ic\_directory
-===========================================================================
-
-.. currentmodule:: pisces.extensions.simulation.gadget.frontends
-
-.. autoproperty:: Gadget2Frontend.ic_directory

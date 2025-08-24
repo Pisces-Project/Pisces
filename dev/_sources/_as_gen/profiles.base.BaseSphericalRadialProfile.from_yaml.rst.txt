@@ -1,6 +1,0 @@
-profiles.base.BaseSphericalRadialProfile.from\_yaml
-===================================================
-
-.. currentmodule:: profiles.base
-
-.. automethod:: BaseSphericalRadialProfile.from_yaml

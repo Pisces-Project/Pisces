@@ -1,6 +1,0 @@
-profiles.density.MooreDensityProfile.compute\_escape\_velocity
-==============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: MooreDensityProfile.compute_escape_velocity

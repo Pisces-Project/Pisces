@@ -1,6 +1,0 @@
-profiles.density.BurkertDensityProfile.substitute\_expression
-=============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BurkertDensityProfile.substitute_expression

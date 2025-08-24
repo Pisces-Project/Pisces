@@ -1,6 +1,0 @@
-profiles.density.MooreDensityProfile.compute\_surface\_density
-==============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: MooreDensityProfile.compute_surface_density

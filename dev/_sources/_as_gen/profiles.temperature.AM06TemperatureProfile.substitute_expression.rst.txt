@@ -1,6 +1,0 @@
-profiles.temperature.AM06TemperatureProfile.substitute\_expression
-==================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: AM06TemperatureProfile.substitute_expression

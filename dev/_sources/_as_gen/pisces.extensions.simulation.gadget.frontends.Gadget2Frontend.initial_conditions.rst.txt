@@ -1,6 +1,0 @@
-pisces.extensions.simulation.gadget.frontends.Gadget2Frontend.initial\_conditions
-=================================================================================
-
-.. currentmodule:: pisces.extensions.simulation.gadget.frontends
-
-.. autoproperty:: Gadget2Frontend.initial_conditions

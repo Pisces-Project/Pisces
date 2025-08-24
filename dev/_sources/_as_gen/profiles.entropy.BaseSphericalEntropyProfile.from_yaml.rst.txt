@@ -1,6 +1,0 @@
-profiles.entropy.BaseSphericalEntropyProfile.from\_yaml
-=======================================================
-
-.. currentmodule:: profiles.entropy
-
-.. automethod:: BaseSphericalEntropyProfile.from_yaml

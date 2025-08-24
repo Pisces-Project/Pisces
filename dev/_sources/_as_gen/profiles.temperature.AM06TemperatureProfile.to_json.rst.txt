@@ -1,6 +1,0 @@
-profiles.temperature.AM06TemperatureProfile.to\_json
-====================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: AM06TemperatureProfile.to_json

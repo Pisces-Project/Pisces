@@ -1,6 +1,0 @@
-profiles.density.AM06DensityProfile.variables
-=============================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: AM06DensityProfile.variables

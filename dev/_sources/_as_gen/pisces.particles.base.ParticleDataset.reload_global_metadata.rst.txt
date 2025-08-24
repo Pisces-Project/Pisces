@@ -1,6 +1,0 @@
-pisces.particles.base.ParticleDataset.reload\_global\_metadata
-==============================================================
-
-.. currentmodule:: pisces.particles.base
-
-.. automethod:: ParticleDataset.reload_global_metadata

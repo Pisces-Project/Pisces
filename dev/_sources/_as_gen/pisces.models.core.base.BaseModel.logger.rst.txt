@@ -1,6 +1,0 @@
-pisces.models.core.base.BaseModel.logger
-========================================
-
-.. currentmodule:: pisces.models.core.base
-
-.. autoattribute:: BaseModel.logger

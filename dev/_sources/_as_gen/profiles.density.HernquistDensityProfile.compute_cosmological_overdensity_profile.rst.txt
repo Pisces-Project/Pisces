@@ -1,6 +1,0 @@
-profiles.density.HernquistDensityProfile.compute\_cosmological\_overdensity\_profile
-====================================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: HernquistDensityProfile.compute_cosmological_overdensity_profile

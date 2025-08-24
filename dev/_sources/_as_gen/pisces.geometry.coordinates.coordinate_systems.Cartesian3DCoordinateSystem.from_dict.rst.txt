@@ -1,6 +1,0 @@
-pisces.geometry.coordinates.coordinate\_systems.Cartesian3DCoordinateSystem.from\_dict
-======================================================================================
-
-.. currentmodule:: pisces.geometry.coordinates.coordinate_systems
-
-.. automethod:: Cartesian3DCoordinateSystem.from_dict

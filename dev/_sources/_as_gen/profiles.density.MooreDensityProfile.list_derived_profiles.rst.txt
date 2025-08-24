@@ -1,6 +1,0 @@
-profiles.density.MooreDensityProfile.list\_derived\_profiles
-============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: MooreDensityProfile.list_derived_profiles

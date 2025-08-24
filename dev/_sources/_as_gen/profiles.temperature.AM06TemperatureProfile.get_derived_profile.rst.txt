@@ -1,6 +1,0 @@
-profiles.temperature.AM06TemperatureProfile.get\_derived\_profile
-=================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: AM06TemperatureProfile.get_derived_profile

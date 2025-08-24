@@ -1,6 +1,0 @@
-profiles.base.BaseProfile.\_\_init\_\_
-======================================
-
-.. currentmodule:: profiles.base
-
-.. automethod:: BaseProfile.__init__

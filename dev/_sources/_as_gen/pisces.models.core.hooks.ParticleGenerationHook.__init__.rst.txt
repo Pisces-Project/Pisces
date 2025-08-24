@@ -1,6 +1,0 @@
-pisces.models.core.hooks.ParticleGenerationHook.\_\_init\_\_
-============================================================
-
-.. currentmodule:: pisces.models.core.hooks
-
-.. automethod:: ParticleGenerationHook.__init__
