@@ -183,66 +183,194 @@ class BaseSphericalDensityProfile(BaseSphericalRadialProfile, ABC):
     __IS_ABSTRACT__ = True
 
     # ------------------------------ #
-    # Derived Profile Implementation #
-    # ------------------------------ #
-    @derived_profile("enclosed_mass")
-    @classmethod
-    def _enclosed_mass(cls):
-        def _func(r, **params):
-            rho = cls.__function__(r, **params)
-            return 4 * sp.pi * sp.integrate(rho * r**2, (r, 0, r))
-
-        def _unit_func(r, **param_units):
-            rho_unit = cls.__function_units__(r, **param_units)
-            return rho_unit * r**3
-
-        return _func, _unit_func, ["r"], cls.__PARAMETERS__.copy()
-
-    @derived_profile("gravitational_field")
-    @classmethod
-    def _gravitational_field(cls):
-        def _func(r, **params):
-            G = params.pop("G")
-            rho = cls.__function__(r, **params)
-            M = 4 * sp.pi * sp.integrate(rho * r**2, (r, 0, r))
-            return G * M / r**2
-
-        def _unit_func(r, **params):
-            G = params.pop("G").units
-            rho_unit = cls.__function_units__(r, **params)
-            return G * rho_unit * r
-
-        # Add G to the available parameters.
-        parameters = cls.__PARAMETERS__.copy()
-        # noinspection PyUnresolvedReferences
-        parameters["G"] = unyt.physical_constants.gravitational_constant
-
-        return _func, _unit_func, ["r"], parameters
-
-    @derived_profile("gravitational_potential")
-    @classmethod
-    def _gravitational_potential(cls):
-        def _func(r, **params):
-            G = params.pop("G")
-            rho = cls.__function__(r, **params)
-            M = 4 * sp.pi * sp.integrate(rho * r**2, (r, 0, r))
-            return -G * M / r
-
-        def _unit_func(r, **param_units):
-            G = param_units.pop("G").units
-            rho_unit = cls.__function_units__(r, **param_units)
-            return G * rho_unit * r**2
-
-        # Add G to the available parameters.
-        parameters = cls.__PARAMETERS__.copy()
-        # noinspection PyUnresolvedReferences
-        parameters["G"] = unyt.physical_constants.gravitational_constant
-
-        return _func, _unit_func, ["r"], parameters
-
-    # ------------------------------ #
     # Numerical Computations         #
     # ------------------------------ #
+    def compute_gravitational_field(
+        self,
+        r: _UnitValue,
+        units: _UnitType | None = None,
+        G: unyt.unyt_quantity | None = None,
+        **kwargs,
+    ) -> _UnitValue:
+        r"""Numerically compute the gravitational field :math:`g(r)` at radius :math:`r`.
+
+        The radial gravitational field in a spherically symmetric potential is
+
+        .. math::
+
+            g(r) = -\frac{G M(r)}{r^2},
+
+        where :math:`M(r)` is the enclosed mass at radius :math:`r` and :math:`G`
+        is the gravitational constant.
+
+        Parameters
+        ----------
+        r : ~unyt.array.unyt_quantity or ~unyt.array.unyt_array
+            Radius or array of radii at which to compute the gravitational field.
+            Must carry length units (e.g. ``kpc``, ``pc``).
+        units : str or ~unyt.unit_object.Unit, optional
+            Desired output units for the gravitational field. If not provided,
+            the natural units implied by ``G`` and the profile parameters are used.
+        G : ~unyt.array.unyt_quantity, optional
+            Gravitational constant to use. Defaults to
+            :data:`unyt.physical_constants.gravitational_constant`.
+        **kwargs
+            Additional arguments passed to :meth:`compute_enclosed_mass`.
+
+        Returns
+        -------
+        g : ~unyt.array.unyt_quantity or ~unyt.array.unyt_array
+            Gravitational field at each input radius with appropriate units.
+
+        Notes
+        -----
+        - This method always returns the *magnitude* of the inward field (negative sign included).
+        - Assumes spherical symmetry.
+
+        Examples
+        --------
+        Compute the gravitational field for an Einasto profile:
+
+        .. code-block:: python
+
+            import numpy as np
+            import unyt
+            from pisces.profiles.density import (
+                EinastoDensityProfile,
+            )
+
+            profile = EinastoDensityProfile(
+                rho_0=0.01 * unyt.Msun / unyt.kpc**3,
+                r_s=20 * unyt.kpc,
+                alpha=0.2,
+            )
+
+            radii = np.logspace(0, 2, 50) * unyt.kpc
+            g = profile.compute_gravitational_field(
+                radii, units="km/s**2"
+            )
+            print(g)
+
+        See Also
+        --------
+        compute_gravitational_potential, compute_enclosed_mass, compute_circular_velocity
+        """
+        G = G if G is not None else unyt.physical_constants.gravitational_constant
+        r_array = unyt.array.unyt_array(r)
+        m_enc = self.compute_enclosed_mass(r_array, **kwargs)
+        g = -G * m_enc / r_array**2
+        return g.to(units) if units else g
+
+    def compute_gravitational_potential(
+        self,
+        r: _UnitValue,
+        units: _UnitType | None = None,
+        G: unyt.unyt_quantity | None = None,
+        **kwargs,
+    ) -> _UnitValue:
+        r"""Numerically compute the gravitational potential :math:`\Phi(r)`.
+
+        The potential of a spherical mass distribution can be expressed as
+
+        .. math::
+
+            \Phi(r) = -G \left[
+                \frac{M(r)}{r} \;+\; 4 \pi \int_r^\infty \rho(r') \, r' \, dr'
+            \right],
+
+        where :math:`M(r)` is the enclosed mass within radius :math:`r` and
+        the second term accounts for contributions from shells at :math:`r' > r`.
+
+        This formulation ensures convergence even for profiles with infinite
+        total mass (e.g., NFW), provided the density falls off sufficiently
+        fast at large radii.
+
+        Parameters
+        ----------
+        r : ~unyt.array.unyt_quantity or ~unyt.array.unyt_array
+            Radius or array of radii at which to compute the potential.
+            Must carry length units.
+        units : str or ~unyt.unit_object.Unit, optional
+            Desired output units for the potential. Defaults to
+            ``cm**2/s**2`` if not specified.
+        G : ~unyt.unyt_quantity, optional
+            Gravitational constant to use. Defaults to
+            :data:`unyt.physical_constants.gravitational_constant`.
+        **kwargs
+            Additional arguments passed to :meth:`compute_enclosed_mass`
+            and the integration routine.
+
+        Returns
+        -------
+        phi : ~unyt.unyt_quantity or ~unyt.unyt_array
+            Gravitational potential at each radius.
+
+        Notes
+        -----
+        - The potential is defined to vanish at infinity.
+        - The boundary term :math:`M(r)/r` is explicitly included.
+        - Uses the internal :func:`pisces.math_utils.integration.integrate`
+          utility for stable quadrature.
+
+        Examples
+        --------
+        .. code-block:: python
+
+            import numpy as np, unyt
+            from pisces.profiles.density import (
+                EinastoDensityProfile,
+            )
+
+            profile = EinastoDensityProfile(
+                rho_0=0.01 * unyt.Msun / unyt.kpc**3,
+                r_s=20 * unyt.kpc,
+                alpha=0.18,
+            )
+
+            radii = np.logspace(0, 2, 50) * unyt.kpc
+            phi = profile.compute_gravitational_potential(
+                radii, units="km**2/s**2"
+            )
+            print(phi)
+
+        See Also
+        --------
+        compute_gravitational_field, compute_enclosed_mass, compute_escape_velocity
+        """
+        from pisces.math_utils.integration import integrate_toinf
+
+        # Gravitational constant
+        G = G if G is not None else unyt.physical_constants.gravitational_constant
+
+        # Ensure radius is a unyt_array
+        r_array = unyt.array.unyt_array(r)
+        r_unit = r_array.units
+
+        # Define integrand: rho(r') * r'
+        def _integrand(rp):
+            return self.__call_no_units__(rp) * rp
+
+        # Perform integration from r to infinity
+        integral_vals = integrate_toinf(_integrand, r_array.d)
+
+        # Attach units: density * length^2
+        integral_vals = unyt.unyt_array(
+            integral_vals * 4 * np.pi,
+            units=self.get_output_units(r_unit) * r_unit**2,
+        )
+
+        # Boundary term: M(r)/r
+        M_r = self.compute_enclosed_mass(r_array, **kwargs)
+
+        # Potential: -G [ M(r)/r + 4π int ρ(r') r' dr' ]
+        phi = -G * (M_r / r_array + integral_vals)
+
+        # Convert to desired units and scalarize if needed
+        phi = phi.to(units) if units else phi
+        if np.isscalar(r):
+            return phi[0]
+        return phi
+
     def compute_surface_density(self, R: _UnitValue, units: _UnitType | None = None, **kwargs) -> _UnitValue:
         r"""Numerically compute the projected surface density at radius R from the origin.
 
@@ -1376,10 +1504,10 @@ class NFWDensityProfile(BaseSphericalDensityProfile):
         def _func(r, **params):
             rho0, r_s = params["rho_0"], params["r_s"]
             G = params["G"]
-            return -4 * sp.pi * G * rho0 * r_s**2 * sp.log(1 + r / r_s) / r
+            return -4 * sp.pi * G * rho0 * r_s**3 * sp.log(1 + r / r_s) / r
 
         def _unit_func(r, **params):
-            return params["G"].units * params["rho_0"].units * params["r_s"].units ** 2 / r
+            return params["G"].units * params["rho_0"].units * params["r_s"].units ** 3 / r
 
         # Add G to the available parameters.
         parameters = cls.__PARAMETERS__.copy()
