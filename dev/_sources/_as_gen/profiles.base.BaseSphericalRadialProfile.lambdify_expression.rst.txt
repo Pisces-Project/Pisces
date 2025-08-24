@@ -1,0 +1,6 @@
+profiles.base.BaseSphericalRadialProfile.lambdify\_expression
+=============================================================
+
+.. currentmodule:: profiles.base
+
+.. automethod:: BaseSphericalRadialProfile.lambdify_expression

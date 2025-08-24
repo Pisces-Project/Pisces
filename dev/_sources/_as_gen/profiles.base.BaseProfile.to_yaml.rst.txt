@@ -1,0 +1,6 @@
+profiles.base.BaseProfile.to\_yaml
+==================================
+
+.. currentmodule:: profiles.base
+
+.. automethod:: BaseProfile.to_yaml

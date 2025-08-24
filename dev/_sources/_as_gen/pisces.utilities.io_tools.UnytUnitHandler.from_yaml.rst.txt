@@ -1,0 +1,6 @@
+pisces.utilities.io\_tools.UnytUnitHandler.from\_yaml
+=====================================================
+
+.. currentmodule:: pisces.utilities.io_tools
+
+.. automethod:: UnytUnitHandler.from_yaml

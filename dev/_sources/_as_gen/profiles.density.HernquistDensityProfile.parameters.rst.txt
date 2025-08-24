@@ -1,0 +1,6 @@
+profiles.density.HernquistDensityProfile.parameters
+===================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: HernquistDensityProfile.parameters

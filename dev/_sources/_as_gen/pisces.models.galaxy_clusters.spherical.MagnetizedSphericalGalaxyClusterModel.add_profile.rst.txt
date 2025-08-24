@@ -1,0 +1,6 @@
+pisces.models.galaxy\_clusters.spherical.MagnetizedSphericalGalaxyClusterModel.add\_profile
+===========================================================================================
+
+.. currentmodule:: pisces.models.galaxy_clusters.spherical
+
+.. automethod:: MagnetizedSphericalGalaxyClusterModel.add_profile

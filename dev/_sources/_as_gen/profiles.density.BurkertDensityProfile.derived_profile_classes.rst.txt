@@ -1,0 +1,6 @@
+profiles.density.BurkertDensityProfile.derived\_profile\_classes
+================================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: BurkertDensityProfile.derived_profile_classes

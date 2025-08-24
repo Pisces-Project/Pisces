@@ -1,0 +1,6 @@
+pisces.models.core.base.BaseModel.add\_field
+============================================
+
+.. currentmodule:: pisces.models.core.base
+
+.. automethod:: BaseModel.add_field

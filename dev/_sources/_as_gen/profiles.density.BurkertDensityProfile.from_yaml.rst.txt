@@ -1,0 +1,6 @@
+profiles.density.BurkertDensityProfile.from\_yaml
+=================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BurkertDensityProfile.from_yaml

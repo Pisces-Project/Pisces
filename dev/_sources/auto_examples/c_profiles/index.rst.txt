@@ -1,0 +1,69 @@
+
+
+.. _sphx_glr_auto_examples_c_profiles:
+
+*************************************
+Profiles
+*************************************
+
+This section provides examples illustrating how to use and customize built-in profiles for density,
+temperature, entropy, and related physical quantities.
+
+Examples here are generally isolated to demonstrate specific analytic or empirical profiles and how they
+can be composed into more complex systems.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example compares several widely used spherically symmetric density profiles in astrophysics:">
+
+.. only:: html
+
+  .. image:: /auto_examples/c_profiles/images/thumb/sphx_glr_plot_comparing_density_profiles_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_c_profiles_plot_comparing_density_profiles.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Comparing Common Density Profiles</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="See how profiles can provide both numeric and analytical derived quantities.">
+
+.. only:: html
+
+  .. image:: /auto_examples/c_profiles/images/thumb/sphx_glr_plot_nfw_einasto_potential_profiles_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_c_profiles_plot_nfw_einasto_potential_profiles.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Derived and Computed Gravitational Potentials</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/c_profiles/plot_comparing_density_profiles
+   /auto_examples/c_profiles/plot_nfw_einasto_potential_profiles
+

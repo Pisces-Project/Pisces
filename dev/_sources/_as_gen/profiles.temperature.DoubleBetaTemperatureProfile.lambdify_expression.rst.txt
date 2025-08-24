@@ -1,0 +1,6 @@
+profiles.temperature.DoubleBetaTemperatureProfile.lambdify\_expression
+======================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: DoubleBetaTemperatureProfile.lambdify_expression

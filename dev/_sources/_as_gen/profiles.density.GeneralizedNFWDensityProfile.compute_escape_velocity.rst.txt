@@ -1,0 +1,6 @@
+profiles.density.GeneralizedNFWDensityProfile.compute\_escape\_velocity
+=======================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: GeneralizedNFWDensityProfile.compute_escape_velocity

@@ -1,0 +1,6 @@
+pisces.geometry.grids.core.GenericGrid.get\_meshgrid
+====================================================
+
+.. currentmodule:: pisces.geometry.grids.core
+
+.. automethod:: GenericGrid.get_meshgrid

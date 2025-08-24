@@ -1,0 +1,6 @@
+profiles.entropy.BaseSphericalEntropyProfile.AXES
+=================================================
+
+.. currentmodule:: profiles.entropy
+
+.. autoattribute:: BaseSphericalEntropyProfile.AXES

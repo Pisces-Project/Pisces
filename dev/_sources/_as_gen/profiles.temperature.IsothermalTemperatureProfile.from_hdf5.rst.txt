@@ -1,0 +1,6 @@
+profiles.temperature.IsothermalTemperatureProfile.from\_hdf5
+============================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: IsothermalTemperatureProfile.from_hdf5

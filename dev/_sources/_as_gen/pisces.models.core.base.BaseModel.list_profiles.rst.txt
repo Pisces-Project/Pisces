@@ -1,0 +1,6 @@
+pisces.models.core.base.BaseModel.list\_profiles
+================================================
+
+.. currentmodule:: pisces.models.core.base
+
+.. automethod:: BaseModel.list_profiles

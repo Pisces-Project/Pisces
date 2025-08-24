@@ -1,0 +1,6 @@
+pisces.geometry.coordinates.coordinate\_systems.SphericalCoordinateSystem.axes
+==============================================================================
+
+.. currentmodule:: pisces.geometry.coordinates.coordinate_systems
+
+.. autoproperty:: SphericalCoordinateSystem.axes

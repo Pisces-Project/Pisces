@@ -1,0 +1,6 @@
+profiles.density.BurkertDensityProfile.parameter\_symbols
+=========================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: BurkertDensityProfile.parameter_symbols

@@ -1,0 +1,6 @@
+pisces.geometry.coordinates.coordinate\_systems.Cartesian1DCoordinateSystem.convert\_coords\_from
+=================================================================================================
+
+.. currentmodule:: pisces.geometry.coordinates.coordinate_systems
+
+.. automethod:: Cartesian1DCoordinateSystem.convert_coords_from

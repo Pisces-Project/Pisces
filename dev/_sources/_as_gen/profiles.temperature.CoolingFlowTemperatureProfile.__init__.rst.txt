@@ -1,0 +1,6 @@
+profiles.temperature.CoolingFlowTemperatureProfile.\_\_init\_\_
+===============================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: CoolingFlowTemperatureProfile.__init__

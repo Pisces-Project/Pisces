@@ -1,0 +1,6 @@
+pisces.geometry.coordinates.base.CoordinateSystem.ndim
+======================================================
+
+.. currentmodule:: pisces.geometry.coordinates.base
+
+.. autoproperty:: CoordinateSystem.ndim

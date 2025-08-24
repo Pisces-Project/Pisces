@@ -1,0 +1,6 @@
+pisces.geometry.coordinates.utils.get\_coordinate\_system\_class
+================================================================
+
+.. currentmodule:: pisces.geometry.coordinates.utils
+
+.. autofunction:: get_coordinate_system_class

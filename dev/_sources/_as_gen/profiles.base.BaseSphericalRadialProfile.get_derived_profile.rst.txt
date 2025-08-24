@@ -1,0 +1,6 @@
+profiles.base.BaseSphericalRadialProfile.get\_derived\_profile
+==============================================================
+
+.. currentmodule:: profiles.base
+
+.. automethod:: BaseSphericalRadialProfile.get_derived_profile

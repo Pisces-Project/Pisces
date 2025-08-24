@@ -1,0 +1,6 @@
+pisces.utilities.config.ConfigManager.pop
+=========================================
+
+.. currentmodule:: pisces.utilities.config
+
+.. automethod:: ConfigManager.pop

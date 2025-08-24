@@ -1,0 +1,6 @@
+pisces.particles.base.ParticleDataset.concatenate\_inplace
+==========================================================
+
+.. currentmodule:: pisces.particles.base
+
+.. automethod:: ParticleDataset.concatenate_inplace

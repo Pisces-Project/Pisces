@@ -1,0 +1,35 @@
+﻿pisces.math_utils
+=================
+
+.. automodule:: pisces.math_utils
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Modules
+
+   .. autosummary::
+      :toctree:
+      :template: module.rst
+      :recursive:
+
+   
+      integration
+      sampling
+   
+   
+
+   
+   
+   
+
+   
+   
+   

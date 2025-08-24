@@ -1,0 +1,72 @@
+InitialConditions
+======================================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
+
+.. autoclass:: pisces.extensions.simulation.core.initial_conditions.InitialConditions
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~InitialConditions.__init__
+      ~InitialConditions.add_model
+      ~InitialConditions.add_particles_to_model
+      ~InitialConditions.compute_center_of_mass
+      ~InitialConditions.compute_center_of_mass_frame_positions
+      ~InitialConditions.compute_center_of_mass_frame_velocities
+      ~InitialConditions.compute_center_of_mass_velocity
+      ~InitialConditions.compute_total_mass
+      ~InitialConditions.create_ics
+      ~InitialConditions.generate_particles
+      ~InitialConditions.get_model_coordinate_system
+      ~InitialConditions.get_model_fields
+      ~InitialConditions.get_model_grid
+      ~InitialConditions.get_model_info
+      ~InitialConditions.get_model_metadata
+      ~InitialConditions.get_model_summary
+      ~InitialConditions.get_particle_count
+      ~InitialConditions.get_particle_fields
+      ~InitialConditions.get_particle_path
+      ~InitialConditions.get_particle_path_dict
+      ~InitialConditions.get_particle_species
+      ~InitialConditions.has_model
+      ~InitialConditions.has_particles
+      ~InitialConditions.integrate_point_mass_orbits
+      ~InitialConditions.list_models
+      ~InitialConditions.list_models_with_particles
+      ~InitialConditions.load_model
+      ~InitialConditions.load_particles
+      ~InitialConditions.remove_model
+      ~InitialConditions.remove_particles_from_model
+      ~InitialConditions.shift_to_COM_frame
+      ~InitialConditions.update_model
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~InitialConditions.config
+      ~InitialConditions.directory
+      ~InitialConditions.logger
+      ~InitialConditions.metadata
+      ~InitialConditions.model_orientations
+      ~InitialConditions.model_positions
+      ~InitialConditions.model_spins
+      ~InitialConditions.model_velocities
+      ~InitialConditions.models
+      ~InitialConditions.ndim
+      ~InitialConditions.particles
+   
+   

@@ -1,0 +1,6 @@
+profiles.density.BurkertDensityProfile.list\_derived\_profiles
+==============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BurkertDensityProfile.list_derived_profiles

@@ -1,0 +1,6 @@
+profiles.density.TNFWDensityProfile.compute\_deflection\_angle
+==============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: TNFWDensityProfile.compute_deflection_angle

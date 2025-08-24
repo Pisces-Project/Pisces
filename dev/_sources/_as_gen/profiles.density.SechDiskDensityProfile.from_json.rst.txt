@@ -1,0 +1,6 @@
+profiles.density.SechDiskDensityProfile.from\_json
+==================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SechDiskDensityProfile.from_json

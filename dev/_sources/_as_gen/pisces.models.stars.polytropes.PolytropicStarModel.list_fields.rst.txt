@@ -1,0 +1,6 @@
+pisces.models.stars.polytropes.PolytropicStarModel.list\_fields
+===============================================================
+
+.. currentmodule:: pisces.models.stars.polytropes
+
+.. automethod:: PolytropicStarModel.list_fields

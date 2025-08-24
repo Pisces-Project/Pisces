@@ -1,0 +1,6 @@
+pisces.extensions.simulation.gadget.frontends.Gadget2Frontend.default\_configuration\_path
+==========================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.gadget.frontends
+
+.. autoproperty:: Gadget2Frontend.default_configuration_path

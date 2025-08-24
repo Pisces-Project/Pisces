@@ -1,0 +1,6 @@
+profiles.base.BaseCylindricalDiskProfile.get\_output\_units
+===========================================================
+
+.. currentmodule:: profiles.base
+
+.. automethod:: BaseCylindricalDiskProfile.get_output_units

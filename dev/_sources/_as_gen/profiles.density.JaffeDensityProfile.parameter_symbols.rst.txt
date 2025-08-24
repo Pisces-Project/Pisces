@@ -1,0 +1,6 @@
+profiles.density.JaffeDensityProfile.parameter\_symbols
+=======================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: JaffeDensityProfile.parameter_symbols

@@ -1,0 +1,6 @@
+profiles.density.BurkertDensityProfile.compute\_fractional\_mass\_radius
+========================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BurkertDensityProfile.compute_fractional_mass_radius

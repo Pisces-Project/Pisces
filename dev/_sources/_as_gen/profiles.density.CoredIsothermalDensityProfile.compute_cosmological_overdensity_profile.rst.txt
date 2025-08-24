@@ -1,0 +1,6 @@
+profiles.density.CoredIsothermalDensityProfile.compute\_cosmological\_overdensity\_profile
+==========================================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoredIsothermalDensityProfile.compute_cosmological_overdensity_profile
