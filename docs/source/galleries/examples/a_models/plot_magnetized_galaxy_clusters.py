@@ -1,6 +1,6 @@
 """
 ====================================
-Comparing Magnetized Galaxy Clusters
+Build a Magnetized Galaxy Cluster
 ====================================
 
 This example generates a set of magnetized galaxy cluster models with varying
@@ -14,8 +14,8 @@ demonstrating the effects of magnetization on thermodynamic quantities.
 # %%
 # Setup
 # -----
-# In this example, we'll use the :class:`~models.galaxy_clusters.spherical.MagnetizedSphericalGalaxyClusterModel` class
-# to construct magnetized galaxy clusters with different degrees of physical support. This is
+# In this example, we'll use the :class:`~pisces.models.galaxy_clusters.spherical.MagnetizedSphericalGalaxyClusterModel`
+# class to construct magnetized galaxy clusters with different degrees of physical support. This is
 # parameterized through the :math:`\beta` parameter which is defined such that
 #
 # .. math::
@@ -59,7 +59,7 @@ gas_density_profile = NFWDensityProfile(
 # Model Construction
 # ------------------
 # Now that we have the density profiles, it's an easy matter to generate the relevant profiles using
-# the :meth:`~models.galaxy_clusters.spherical.MagnetizedSphericalGalaxyClusterModel.from_density_and_total_density`
+# the :meth:`~pisces.models.galaxy_clusters.spherical.MagnetizedSphericalGalaxyClusterModel.from_density_and_total_density`
 # method. We'll store the data files in a temporary directory and create a number of models for different values
 # of the :math:`\beta` parameter.
 

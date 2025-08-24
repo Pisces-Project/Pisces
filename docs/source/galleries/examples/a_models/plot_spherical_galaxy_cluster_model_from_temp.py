@@ -1,10 +1,10 @@
 """
 ===========================================================
-Galaxy Cluster Model from Temperature and Gas Density
+Build a Galaxy Cluster From Temperature and Density
 ===========================================================
 
 This example demonstrates how to build a spherical galaxy cluster model from an analytic
-temperature profile and a gas density profile using the ``from_temperature_and_density``
+temperature profile and a gas density profile using the ``.from_temperature_and_density``
 constructor.
 
 The temperature structure is defined using the Vikhlinin profile, and the gas density is
@@ -18,7 +18,7 @@ hydrostatic equilibrium.
 # -----
 # We'll use the following classes:
 #
-# - :class:`~models.galaxy_clusters.spherical.SphericalGalaxyClusterModel`
+# - :class:`~pisces.models.galaxy_clusters.spherical.SphericalGalaxyClusterModel`
 # - :class:`~profiles.density.NFWDensityProfile`
 # - :class:`~profiles.temperature.VikhlininTemperatureProfile`
 

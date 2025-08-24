@@ -1,6 +1,6 @@
 """
 =========================================
-Basic Spherical Galaxy Cluster Model
+Build a Spherical Galaxy Cluster
 =========================================
 
 This example constructs a simple spherical galaxy cluster model using Pisces and visualizes
@@ -16,7 +16,7 @@ profile under spherical symmetry.
 # -----
 # We begin by importing the required profiles and model class. This example uses:
 #
-# - :class:`~models.galaxy_clusters.spherical.SphericalGalaxyClusterModel`
+# - :class:`~pisces.models.galaxy_clusters.spherical.SphericalGalaxyClusterModel`
 # - :class:`~profiles.density.NFWDensityProfile`
 
 import tempfile

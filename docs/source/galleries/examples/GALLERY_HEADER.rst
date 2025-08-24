@@ -1,6 +1,6 @@
 :orphan:
 
-.. image:: ../images/pisces.png
+.. image:: ../images/pisces.svg
    :width: 300px
    :align: center
 
@@ -26,6 +26,6 @@ templates to accelerate your scientific modeling.
 
 Examples are grouped by their conceptual location within the Pisces codebase.
 
-.. contents::
+.. contents:: Gallery Sections
    :local:
    :depth: 2

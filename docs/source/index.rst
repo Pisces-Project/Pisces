@@ -1,4 +1,4 @@
-.. image:: ./images/pisces.png
+.. image:: ./images/pisces.svg
    :width: 200px
    :align: center
 
@@ -79,7 +79,7 @@ Resources
             To the Examples Page
 
     .. grid-item-card::
-        :img-top: images/index/book.svg
+        :img-top: images/index/book.png
 
         User References
         ^^^^^^^^^^^^^^^^

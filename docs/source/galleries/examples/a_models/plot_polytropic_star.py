@@ -1,6 +1,7 @@
 """
-Polytropic Stellar Structure
-============================
+=============================
+Build a Polytropic Star Model
+=============================
 
 This example shows how to use the :class:`~pisces.models.stars.polytropes.PolytropicStarModel`
 to generate the internal structure of a star governed by a polytropic equation of state.

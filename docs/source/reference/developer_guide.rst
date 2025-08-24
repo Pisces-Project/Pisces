@@ -1,4 +1,4 @@
-.. image:: ../images/pisces.png
+.. image:: ../images/pisces.svg
    :width: 200px
    :align: center
 
