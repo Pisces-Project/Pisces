@@ -61,7 +61,7 @@ HDF5 datasets with precomputed physical fields.
 
 
 Galaxy Cluster Models
-''''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Models for spherically symmetric galaxy clusters in hydrostatic equilibrium. These tools allow construction of
 clusters from analytic density, temperature, or entropy profiles and compute derived quantities such as total
@@ -77,7 +77,7 @@ mass, gravitational potential, and sound speed.
 
 
 Stellar Models
-''''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Stellar model generators (e.g., for polytropes, ZAMS stars, or neutron stars) will be included here.
 
@@ -90,7 +90,7 @@ Stellar model generators (e.g., for polytropes, ZAMS stars, or neutron stars) wi
 
 
 Galaxy Models
-''''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Future models for galaxies (e.g., stellar+dark matter composites, rotating disks) will be listed here.
 
@@ -120,7 +120,8 @@ to 3rd-party libraries / software.
     particles
 
 Simulation Extensions
-''''''''''''''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^^^
+
 The **Simulation Extensions** modules provide high-level tools for preparing and manipulating
 initial conditions for astrophysical simulations. These extensions build on Pisces’ core
 modeling capabilities to produce simulation-ready datasets. Initial conditions objects can be coupled
