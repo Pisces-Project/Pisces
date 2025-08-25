@@ -11,9 +11,9 @@ from pathlib import Path
 import h5py
 import numpy as np
 import unyt
-from extensions.simulation import InitialConditions
 
 from pisces.extensions.simulation.core.frontends import SimulationFrontend
+from pisces.extensions.simulation.core.initial_conditions import InitialConditions
 
 from .particles import GadgetParticleDataset
 
@@ -141,14 +141,18 @@ class Gadget4Frontend(SimulationFrontend):
         # Begin by fetching the simulation boxsize and then convert that
         # into a bounding box we can use to cut the particles as needed.
         try:
-            simulation_boxsize = self.config["parameters.boxsize"] * self.config["parameters.units.length"]
+            simulation_boxsize = self.config["parameters.boxsize"]
         except Exception as exp:
             raise RuntimeError(
                 "Failed to load the boxsize (parameters.boxsize) from the Gadget-4 configuration!"
             ) from exp
 
+        if not isinstance(simulation_boxsize, unyt.unyt_quantity):
+            raise TypeError(f"Boxsize must be a `unyt_quantity` with length units, got {type(simulation_boxsize)}!")
+
+        simulation_boxsize = simulation_boxsize.to_value(self.config["parameters.units.length"])
         simulation_bbox = np.stack([[0, simulation_boxsize] for _ in range(3)], axis=1)
-        simulation_bbox = unyt.unyt_array(simulation_bbox, simulation_boxsize.units)
+        simulation_bbox = unyt.unyt_array(simulation_bbox, self.config["parameters.units.length"])
 
         # We now cycle through the models and fetch their particle datasets
         # so that we can begin the reductions.
