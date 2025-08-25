@@ -1,8 +1,8 @@
 """
-Frontends for Gadget-2 simulation code.
+Frontends for Gadget-4 simulation code.
 
 This module provides the :class`Gadget2Frontend` class, which is responsible for
-managing initial conditions and generating input files for the Gadget-2 simulation code.
+managing initial conditions and generating input files for the Gadget-4 simulation code.
 
 """
 
@@ -15,19 +15,21 @@ from extensions.simulation import InitialConditions
 
 from pisces.extensions.simulation.core.frontends import SimulationFrontend
 
+from .particles import GadgetParticleDataset
+
 # Fetch a reference to this directory so that we can
 # setup configuration paths.
 __local_path__ = Path(__file__).parents[0]
 
 
-class Gadget2Frontend(SimulationFrontend):
+class Gadget4Frontend(SimulationFrontend):
     """
-    Simulation frontend for the Gadget-2 N-body/SPH code.
+    Simulation frontend for the Gadget-4 N-body/SPH code.
 
     This class translates Pisces :class:`~pisces.extensions.simulation.core.initial_conditions.InitialConditions`
-    objects into Gadget-2–compatible HDF5 initial condition (IC) files. It manages
+    objects into Gadget-4–compatible HDF5 initial condition (IC) files. It manages
     configuration, validation, preprocessing, and file generation to ensure that
-    particle data and metadata are correctly written in Gadget-2’s expected format.
+    particle data and metadata are correctly written in Gadget-4’s expected format.
 
     """
 
@@ -37,7 +39,7 @@ class Gadget2Frontend(SimulationFrontend):
     # These are class-level variables which define connections to
     # the configuration along with some other aspects of the
     # frontend's behavior.
-    __default_configuration_path__: Path = __local_path__ / "gadget_2_default_config.yaml"
+    __default_configuration_path__: Path = __local_path__ / "gadget_4_default_config.yaml"
     """The path to the default configuration file.
     """
 
@@ -45,7 +47,7 @@ class Gadget2Frontend(SimulationFrontend):
     # Initialization and Configuration        #
     # --------------------------------------- #
     def _validate_input_ic(self, initial_conditions: InitialConditions) -> bool:
-        # We don't need to do any special validation for the Gadget-2 ICs since
+        # We don't need to do any special validation for the Gadget-4 ICs since
         # there shouldn't be any special requirements beyond the base class.
         #
         # We will need to validate before runtime to ensure that the user
@@ -55,9 +57,9 @@ class Gadget2Frontend(SimulationFrontend):
 
     def _setup_config(self):
         """
-        Configure the simulation configuration for the Gadget-2 frontend.
+        Configure the simulation configuration for the Gadget-4 frontend.
 
-        For Gadget-2, we need to take the ``model_DEFAULT`` entry from the configuration
+        For Gadget-4, we need to take the ``model_DEFAULT`` entry from the configuration
         and copy it through for each model in the ``model`` section so that the users
         can modify the field and particle type names present in the particle data.
         """
@@ -68,15 +70,15 @@ class Gadget2Frontend(SimulationFrontend):
         # the right position.
         self.config["models"] = {}
         for model_name in self.initial_conditions.list_models():
-            self.logger.debug(f"Added {model_name} to the Gadget-2 configuration models...")
+            self.logger.debug(f"Added {model_name} to the Gadget-4 configuration models...")
             self.config["models"][model_name] = dict(default_model_config.copy())
 
     def __post_init__(self):
         """
-        Finalize the Gadget-2 frontend after initialization.
+        Finalize the Gadget-4 frontend after initialization.
 
         Aside from the ``_setup_config`` step, we don't need to do anything
-        special during post-initialization for the Gadget-2 frontend.
+        special during post-initialization for the Gadget-4 frontend.
         """
         pass
 
@@ -85,9 +87,9 @@ class Gadget2Frontend(SimulationFrontend):
     # --------------------------------------- #
     def _validate_runtime_configuration(self, *args, **kwargs):
         """
-        Validate the runtime configuration for the Gadget-2 frontend.
+        Validate the runtime configuration for the Gadget-4 frontend.
 
-        For the Gadget-2 frontend, we need to ensure a couple of things. The first
+        For the Gadget-4 frontend, we need to ensure a couple of things. The first
         is that each model appears in the configuration file correctly (providing
         us with mappings to fields and particle types). The second is that each
         model has an existing particle file available in the initial conditions.
@@ -113,7 +115,7 @@ class Gadget2Frontend(SimulationFrontend):
                 raise RuntimeError(
                     f"Model `{model}` is missing particles in the ICs!\n"
                     "HINT: Ensure that you have generated particles for each model before calling the"
-                    " Gadget-2 frontend.\n"
+                    " Gadget-4 frontend.\n"
                     "HINT: You can use `add_particles_to_model` on the IC object to generate particles."
                 )
 
@@ -124,7 +126,7 @@ class Gadget2Frontend(SimulationFrontend):
         for model in self.initial_conditions.list_models():
             if model not in self.config["models"]:
                 raise RuntimeError(
-                    f"Model `{model}` is missing from the Gadget-2 frontend configuration!\n"
+                    f"Model `{model}` is missing from the Gadget-4 frontend configuration!\n"
                     "HINT: Ensure that you have added an entry for each model in the `models` "
                     "section of the"
                     " configuration file.\n"
@@ -142,7 +144,7 @@ class Gadget2Frontend(SimulationFrontend):
             simulation_boxsize = self.config["parameters.boxsize"] * self.config["parameters.units.length"]
         except Exception as exp:
             raise RuntimeError(
-                "Failed to load the boxsize (parameters.boxsize) from the Gadget-2 configuration!"
+                "Failed to load the boxsize (parameters.boxsize) from the Gadget-4 configuration!"
             ) from exp
 
         simulation_bbox = np.stack([[0, simulation_boxsize] for _ in range(3)], axis=1)
@@ -176,7 +178,7 @@ class Gadget2Frontend(SimulationFrontend):
             # level.
             #
             # We ONLY REORIENT the position and velocity since there is no support
-            # for magnetic fields or other vector fields in the Gadget-2 frontend.
+            # for magnetic fields or other vector fields in the Gadget-4 frontend.
             particle_dataset.reorient_particles(
                 model_orientation,
                 spin=model_spin,
@@ -205,27 +207,24 @@ class Gadget2Frontend(SimulationFrontend):
         self.logger.info(f"{self.__class__.__name__}:\t Preprocessing... [DONE]\n" + _pcount_log_statements)
 
     def _count_particles(self):
-        """Count particles of each Gadget-2 type across all models.
+        """Count particles of each Gadget-4 type across all models.
 
         Returns
         -------
         np.ndarray
-            1D array of length = number of Gadget-2 particle types,
+            1D array of length = number of Gadget-4 particle types,
             dtype is uint64.
         """
-        # Choose correct integer dtype for Gadget-2
-        dtype = np.uint64
-
-        # Number of Gadget-2 particle types (typically 6)
-        n_types = 6
-        final_count = np.zeros(n_types, dtype=dtype)
+        # Number of Gadget-4 particle types (typically 6)
+        n_types = self.config["makefile.number_of_particle_types"]
+        final_count = np.zeros(n_types, dtype=int)
 
         # Iterate over models defined in initial conditions
         for model_name in self.initial_conditions.list_models():
             model_config = self.config[f"models.{model_name}"]
             particle_counts = self.initial_conditions.get_particle_count(model_name)
 
-            # Map model's native particle types into Gadget-2 ordering
+            # Map model's native particle types into Gadget-4 ordering
             for i, (_gadget_type, cfg) in enumerate(model_config.items()):
                 native_type = cfg["name"]
                 count = particle_counts.get(native_type, 0)
@@ -234,7 +233,7 @@ class Gadget2Frontend(SimulationFrontend):
         return final_count
 
     def _construct_header_particle_specifiers(self):
-        """Construct the three Gadget-2 particle count arrays for the header.
+        """Construct the three Gadget-4 particle count arrays for the header.
 
         This generates:
           - ``Npart``  (per-file counts, 6-element array)
@@ -290,178 +289,141 @@ class Gadget2Frontend(SimulationFrontend):
 
         # We now need to handle the particle counts. This is a bit more
         # involved since we need to map from the native particle types
-        # in the initial conditions to the Gadget-2 particle types.
+        # in the initial conditions to the Gadget-4 particle types.
         Npart, Nall, NallHW = self._construct_header_particle_specifiers()
         header_group.attrs["NumPart_ThisFile"] = np.asarray(Npart, dtype=np.uint32)
         header_group.attrs["NumPart_Total"] = np.asarray(Nall, dtype=np.uint32)
         header_group.attrs["NumPart_Total_HW"] = np.asarray(NallHW, dtype=np.uint32)
 
-    def _generate_initial_conditions(self, filename: str, overwrite: bool = False, *args, **kwargs):
-        """
-        Generate the initial condition files for the target simulation code.
-
-        This is the core implementation method that *must* be overridden
-        by subclasses. It should read from `self.config` and
-        `self.initial_conditions` and write any necessary files in the format
-        expected by the simulation code.
-
-        Parameters
-        ----------
-        filename: str
-            The name of the output file to write the Gadget-2 initial conditions to.
-        overwrite: bool
-            Whether to overwrite existing files. If `False` and the file
-            already exists, an error should be raised.
-
-        """
+    def _generate_initial_conditions(self, filename: str, overwrite: bool, *args, **kwargs):
         # Begin by handling the file checking and overwrite language
         # before proceeding to the actual generation element of the method.
         path = self.ic_directory / filename
         if path.exists() and not overwrite:
             raise FileExistsError(f"Output file {path} already exists and overwrite is set to False!")
         elif path.exists() and overwrite:
-            self.logger.debug(f"Overwriting existing Gadget-2 IC file at {path}...")
+            self.logger.debug(f"Overwriting existing Gadget-4 IC file at {path}...")
             path.unlink()
         else:
             pass
 
+        # --- Pre-Processing --- #
         # We can now pre-process our particle datasets so that
         # they are contained within the specified bounding box and
         # so that they have the correct offsets, rotations, and velocities.
         self._preprocess_particle_dataset()
 
-        # Now, with pre-processing complete, we can start managing
-        # the structure of the file system for the file.
+        # --- Unit System Setup --- #
+        # Setup up a unit system for the Gadget-4 ICs so that we can
+        # arbitrarily convert from the units in the initial conditions
+        _time_unit = (1 * self.config["parameters.units.length"]) / (1 * self.config["parameters.units.velocity"])
+        _time_unit = _time_unit.to("Myr")
 
-        # Generate the the file that we're going to be using.
-        with h5py.File(path, "w") as ic_file:
-            self.logger.debug(f"Generating Gadget-2 IC file at {path}...")
+        _gadget_unit_system = unyt.unit_systems.UnitSystem(
+            "gadget_simulation_system",
+            length_unit=self.config["parameters.units.length"],
+            mass_unit=self.config["parameters.units.mass"],
+            time_unit=unyt.Unit(_time_unit).simplify(),
+        )
+        self.logger.debug(
+            f"Using Gadget-4 unit system:\n"
+            f"\tLength Unit: {_gadget_unit_system['length']}\n"
+            f"\tMass Unit: {_gadget_unit_system['mass']}\n"
+            f"\tTime Unit: {_gadget_unit_system['time']}\n"
+            f"\tVelocity Unit: {_gadget_unit_system['velocity']}\n"
+        )
 
-            # Generate the various top level elements (groups) that are going
-            # to be necessary for the structure.
-            _header_group = ic_file.create_group("Header")
-            _part_groups = {
-                "Type0": ic_file.create_group("Type0"),  # Gas
-                "Type1": ic_file.create_group("Type1"),  # Dark Matter
-                "Type2": ic_file.create_group("Type2"),  # Disk Stars
-                "Type3": ic_file.create_group("Type3"),  # Bulge Stars
-                "Type4": ic_file.create_group("Type4"),  # Stars
-                "Type5": ic_file.create_group("Type5"),  # Boundary Particles
-            }
+        # --- File Generation --- #
+        # With preprocessing complete, we proceed by creating a Gadget-4 particle
+        # dataset file with the correct number of particles and whatnot and then
+        # use the individual particle datasets to fill in the relevant fields.
+        ic_particles = GadgetParticleDataset.build_particle_dataset(
+            path,
+            number_of_particles=self._count_particles(),
+            box_size=self.config["parameters.boxsize"] * self.config["parameters.units.length"],
+            unit_system=_gadget_unit_system,
+            overwrite=overwrite,
+        )
 
-            # Now we're going to write the header group's attributes
-            # in self._write_header_attributes.
-            self.logger.debug("Writing Gadget-2 header attributes...")
-            self._write_header_attributes(_header_group)
-            self.logger.debug("Finished writing Gadget-2 header attributes.")
+        # With the skeleton written, we now cycle through each of the models,
+        # extract their particle datasets, cast the names to the right things, and
+        # the proceed to write the data into the file.
+        _particle_count_offsets = np.zeros(self.config["makefile.number_of_particle_types"], dtype=np.uint64)
+        for model_name in self.initial_conditions.list_models():
+            # Extract the model's configuration data from the frontend
+            # configuration file and load the particle dataset that we
+            # are going to be using.
+            model_config = self.config[f"models.{model_name}"]
+            particle_dataset = self.initial_conditions.load_particles(model_name)
 
-            # Setup up a unit system for the Gadget-2 ICs so that we can
-            # arbitrarily convert from the units in the initial conditions
-            _time_unit = (1 * self.config["parameters.units.length"]) / (1 * self.config["parameters.units.velocity"])
-            _time_unit = _time_unit.to("Myr")
-
-            _gadget_unit_system = unyt.unit_systems.UnitSystem(
-                "gadget_simulation_system",
-                length_unit=self.config["parameters.units.length"],
-                mass_unit=self.config["parameters.units.mass"],
-                time_unit=unyt.Unit(_time_unit).simplify(),
-            )
-            self.logger.debug(
-                f"Using Gadget-2 unit system:\n"
-                f"\tLength Unit: {_gadget_unit_system['length']}\n"
-                f"\tMass Unit: {_gadget_unit_system['mass']}\n"
-                f"\tTime Unit: {_gadget_unit_system['time']}\n"
-                f"\tVelocity Unit: {_gadget_unit_system['velocity']}\n"
-            )
-
-            # ========================================== #
-            # Write particle data for each Gadget-2 type #
-            # ========================================== #
-            # This is the most logically complex part of the IC generation
-            # process. We proceed as follows:
-            #
-            # - Cycle through each model in the initial conditions.
-            #   - Cycle through each gadget-2 particle type (0-5).
-            #     - Check that the model has particles of this type. If not,
-            #       skip to the next type.
-            #     - If it does, fetch the relevant fields and
-            #     - Iterate through each field, converting to the correct units
-            #       and writing to the correct dataset in the file.
-
-            # We need to keep track of the particle IDs that we are attaching
-            # to the particles. As such, we create the _pidx array of particle
-            # indices for each particle type and the total_particles counter.
-            particle_offsets = np.zeros(6, dtype=np.uint64)
-            total_particles = self._count_particles()
-
-            # --- Cycle through each model -- #
-
-            for model_name in self.initial_conditions.list_models():
+            # We iterate through each of the initial conditions' particle
+            # types and map them to Gadget-4 types.
+            for gptype in range(self.config["makefile.number_of_particle_types"]):
                 # Extract relevant metadata.
-                model_config = self.config[f"models.{model_name}"]
+                gpkey = f"ParticleType{gptype}"
+                ipkey = model_config[gpkey]["name"]
 
-                # Load the particle dataset for this model.
-                particle_dataset = self.initial_conditions.load_particles(model_name)
+                # Check if the model even includes this particle type.
+                if ipkey not in particle_dataset.particle_groups:
+                    self.logger.debug(
+                        f"Model `{model_name}` does not have particles of type `{ipkey}`!"
+                        f" Skipping Gadget-4 type `{gpkey}`."
+                    )
+                    continue
 
-                for gptype in range(6):
-                    # Extract relevant metadata.
-                    gpkey = f"Type{gptype}"
-                    ipkey = model_config[gpkey]["name"]
-
-                    # Check if the model even includes this particle type.
-                    if ipkey not in particle_dataset.particle_groups:
-                        self.logger.debug(
-                            f"Model `{model_name}` does not have particles of type `{ipkey}`!"
-                            f" Skipping Gadget-2 type `{gpkey}`."
-                        )
+                for gfield, ifield in model_config[gpkey]["fields"].items():
+                    # Skip the ID column because we are going to handle
+                    # that ourselves at the very end once all the
+                    # particles have been written.
+                    if gfield == "ParticleIDs":
                         continue
 
-                    for gfield, ifield in model_config[gpkey]["fields"].items():
-                        # Skip the ID column because we are going to handle
-                        # that ourselves at the very end once all the
-                        # particles have been written.
-                        if gfield == "ID":
-                            continue
-
-                        # Extract the particle array from the particle file
-                        # for this model.
-                        if f"{ipkey}.{ifield}" not in particle_dataset:
-                            raise RuntimeError(
-                                f"Model `{model_name}` is missing required field"
-                                f" `{ifield}` for particle type `{ipkey}`!\n"
-                                f"HINT: If it exists, is it named something different? Modify the"
-                                f" configuration file to match the field name in the particle dataset.\n"
-                                f"HINT: If it doesn't exist, you may need to derive it manually."
-                            )
-
-                        # Ensure that the dataset we're writing into exists. This
-                        # will require us keeping track of the shape.
-                        if gfield in ("Coordinates", "Velocities"):
-                            dset_shape = (total_particles[gptype], 3)
-                            dset_dtype = np.float32
-                        else:
-                            dset_shape = (total_particles[gptype],)
-                            dset_dtype = np.float32
-
-                        hdf5_dataset = _part_groups[gpkey].require_dataset(gfield, shape=dset_shape, dtype=dset_dtype)
-
-                        # Now, with the dataset handle available and the particles
-                        # loaded, we need to transfer. We'll load the particle data into
-                        # memory and coerce the units to the Gadget-2 unit system.
-                        _i_data_array = particle_dataset.get_particle_field(ipkey, ifield)
-                        _i_data_array = _i_data_array.in_base(_gadget_unit_system).d
-
-                        # Now we write the array data into the dataset by virtue of
-                        # the tracked slicing.
-                        _slc = slice(
-                            int(particle_offsets[gptype]), int(particle_offsets[gptype] + _i_data_array.shape[0])
+                    # Extract the particle array from the particle file
+                    # for this model.
+                    if f"{ipkey}.{ifield}" not in particle_dataset:
+                        raise RuntimeError(
+                            f"Model `{model_name}` is missing required field"
+                            f" `{ifield}` for particle type `{ipkey}`!\n"
+                            f"HINT: If it exists, is it named something different? Modify the"
+                            f" configuration file to match the field name in the particle dataset.\n"
+                            f"HINT: If it doesn't exist, you may need to derive it manually."
                         )
-                        hdf5_dataset[_slc] = _i_data_array
 
-                    # After writing all the fields, we need to increment the particle offsets
-                    particle_offsets[gptype] += particle_dataset.num_particles[ipkey]
-                    self.logger.info(
-                        f"[{self.__class__.__name__}]: Model `{model_name}` wrote"
-                        f" {particle_dataset.num_particles[ipkey]} particles of type"
-                        f" `{ipkey}` to Gadget-2 type `{gpkey}`."
+                    # Access the dataset in the Gadget-4 particle dataset and
+                    # dump our data into it.
+                    field_handle = ic_particles.get_particle_field_handle(gpkey, gfield)
+                    field_unit = ic_particles.get_field_units(gpkey, gfield)
+
+                    # Now we write the array data into the dataset by virtue of
+                    # the tracked slicing.
+                    _slc = slice(
+                        int(_particle_count_offsets[gptype]),
+                        int(_particle_count_offsets[gptype] + particle_dataset.num_particles[ipkey]),
                     )
+                    field_handle[_slc, ...] = particle_dataset.get_particle_field(ipkey, ifield).to_value(field_unit)
+
+                # After writing all the fields, we need to increment the particle offsets
+                _particle_count_offsets[gptype] += particle_dataset.num_particles[ipkey]
+                self.logger.info(
+                    f"[{self.__class__.__name__}]: Model `{model_name}` wrote"
+                    f" {particle_dataset.num_particles[ipkey]} particles of type"
+                    f" `{ipkey}` to Gadget-4 type `{gpkey}`."
+                )
+
+        # --- Add IDs --- #
+        # With all of the other fields written, we now need to handle
+        # the particle IDs. Gadget-4 expects these to be unique across
+        # all particle types, so we need to be a bit careful about how
+        # we generate them.
+        if self.config["makefile.nbits_id"] == 64:
+            dtype = np.uint64
+        elif self.config["makefile.nbits_id"] == 32:
+            dtype = np.uint32
+        else:
+            raise RuntimeError(
+                f"Unsupported ID bit-width {self.config['makefile.nbits_id']} in Gadget-4 configuration!"
+            )
+
+        ic_particles.add_particle_ids(policy="global", overwrite=True, start_id=1, dtype=dtype)
+
+        return ic_particles

@@ -100,23 +100,23 @@ frontend documentation.
       - Documentation
       - Support Level
       - Notes
-    * - `Gadget-2 <https://wwwmpa.mpa-garching.mpg.de/gadget/>`__
-      - :class:`~frontends.gadget_2.Gadget2Frontend`
-      - :ref:`simulations_gadget2`
+    * - `Gadget-4 <https://wwwmpa.mpa-garching.mpg.de/gadget4/>`__
+      - :class:`~gadget.frontends.Gadget4Frontend`
+      - :ref:`simulations_gadget`
       - |complete|
       -
     * - `RAMSES <https://www.ias.u-psud.fr/ramses/>`__
-      - :class:`~frontends.ramses.RAMSESFrontend`
+      - :class:`~ramses.RAMSESFrontend`
       - :ref:`simulations_ramses`
       - |planned|
       -
     * - `AREPO <https://arepo-code.org/>`__
-      - :class:`~frontends.arepo.ArepoFrontend`
+      - :class:`~arepo.ArepoFrontend`
       - :ref:`simulations_arepo`
       - |planned|
       -
     * - `FLASH <https://flash.uchicago.edu/site/flashcode/>`__
-      - :class:`~frontends.flash.FLASHFrontend`
+      - :class:`~flash.FLASHFrontend`
       - :ref:`simulations_flash`
       - |planned|
       -
