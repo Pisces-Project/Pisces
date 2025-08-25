@@ -1,0 +1,6 @@
+pisces.extensions.simulation.gadget.particles.GadgetParticleDataset.get\_particle\_field\_handle
+================================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.gadget.particles
+
+.. automethod:: GadgetParticleDataset.get_particle_field_handle

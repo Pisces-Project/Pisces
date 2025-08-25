@@ -1,0 +1,6 @@
+profiles.temperature.VikhlininTemperatureProfile.lambdify\_expression
+=====================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: VikhlininTemperatureProfile.lambdify_expression

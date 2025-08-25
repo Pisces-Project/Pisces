@@ -1,0 +1,6 @@
+profiles.density.JaffeDensityProfile.derived\_profile\_classes
+==============================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: JaffeDensityProfile.derived_profile_classes

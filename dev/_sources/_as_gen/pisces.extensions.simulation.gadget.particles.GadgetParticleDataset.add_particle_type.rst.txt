@@ -1,0 +1,6 @@
+pisces.extensions.simulation.gadget.particles.GadgetParticleDataset.add\_particle\_type
+=======================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.gadget.particles
+
+.. automethod:: GadgetParticleDataset.add_particle_type

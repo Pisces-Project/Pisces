@@ -1,0 +1,663 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Simulations in Pisces &#8212; Pisces  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/extensions/simulation/simulations_home';</script>
+    <link rel="icon" href="../../../_static/pisces_favicon.svg"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Pisces Example Gallery" href="../../../auto_examples/index.html" />
+    <link rel="prev" title="Particle Representations in Pisces" href="../../particles/overview.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/pisces.svg" class="logo__image only-light" alt="Pisces Documentation - Home"/>
+    <img src="../../../_static/pisces.svg" class="logo__image only-dark pst-js-only" alt="Pisces Documentation - Home"/>
+  
+  
+    <p class="title logo__title">Pisces</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/pisces-project/pisces" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/pisces-project/pisces" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../models/overview.html">Astrophysics Models in Pisces</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Types</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../models/galaxies.html">Pisces Galaxy Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/galaxy_clusters.html">Pisces Galaxy Cluster Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/stars.html">Pisces Stellar Models</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Building Blocks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../profiles/overview.html">Pisces Profiles Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../grids/overview.html">Grids in Pisces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../coordinate_systems/overview.html">Coordinate Systems in Pisces</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Configuration</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../configuration.html">Pisces Configuration and Logging</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../particles/overview.html">Particle Representations in Pisces</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Simulations in Pisces</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../user_guide.html" class="nav-link">Pisces User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Simulations in Pisces</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="simulations-in-pisces">
+<span id="simulations"></span><h1>Simulations in Pisces<a class="headerlink" href="#simulations-in-pisces" title="Link to this heading">#</a></h1>
+<p>One of the principle applications of Pisces is the generation of initial conditions for
+hydrodynamic and N-body simulations. Pisces includes support for several popular simulation codes through
+dedicated initial conditions configuration and specialized <em>frontends</em>.</p>
+<p>In this document, we’ll cover all the basic functionality for running simulations with Pisces-generated data.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>In order to integrate with external simulation codes, Pisces provides a system with two main components:</p>
+<ol class="arabic simple">
+<li><p>The <strong>initial conditions</strong>, which allow multiple Pisces models to be placed into a simulation domain with various
+orientations, offsets, and velocities. These initial conditions set a “foundation” for the eventual conversion
+into simulation-code-specific formats.</p></li>
+<li><p>The <strong>frontend interfaces</strong>, which provide code-specific configuration and execution capabilities. Each
+supported simulation code has a dedicated frontend that handles the conversion of Pisces data into the
+appropriate format, generates configuration files, and runs the simulation itself.</p></li>
+</ol>
+<p>In most scenarios, users create one or many Pisces models representing the physical systems they wish to simulate.
+These <a class="reference internal" href="../../../_as_gen/pisces.models.core.base.BaseModel.html#pisces.models.core.base.BaseModel" title="pisces.models.core.base.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a> objects are then combined into a single initial conditions object
+(<a class="reference internal" href="../../../_as_gen/pisces.extensions.simulation.core.initial_conditions.InitialConditions.html#pisces.extensions.simulation.core.initial_conditions.InitialConditions" title="pisces.extensions.simulation.core.initial_conditions.InitialConditions"><code class="xref py py-class docutils literal notranslate"><span class="pre">InitialConditions</span></code></a>), which is responsible for managing the models and their
+placement in the simulation domain. Users will then need to determine which simulation code they wish to use
+for their simulation. For each supported code, Pisces provides a dedicated frontend class that handles the
+conversion of the initial conditions into the appropriate format, generates any necessary configuration files,
+additional structures, etc. Finally, the output from that conversion process is passed to the simulation code’s
+execution command, which runs the simulation with the Pisces-generated initial conditions.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In some scenarios, simulation software requires “problem initializers” which are highly integrated
+into their source code. In these cases, Pisces provides both a frontend and a <strong>problem initializer</strong>,
+which is hosted on github under the Pisces project, but is not a core part of the Pisces package. Each
+problem initializer is written in the language of the simulation code (e.g., Fortran, C, etc.) and is
+responsible for directly interacting with the simulation code’s internal data structures to set up the
+initial conditions. These problem initializers are not part of the Pisces package itself, but they are
+developed and maintained by the Pisces team and are available as part of the larger Pisces project.</p>
+</div>
+<section id="initial-conditions">
+<h3>Initial Conditions<a class="headerlink" href="#initial-conditions" title="Link to this heading">#</a></h3>
+<p>Initial conditions are a key component of any simulation, as they define the starting state of the system being modeled.
+In Pisces, initial conditions are represented by the <a class="reference internal" href="../../../_as_gen/pisces.extensions.simulation.core.initial_conditions.InitialConditions.html#pisces.extensions.simulation.core.initial_conditions.InitialConditions" title="pisces.extensions.simulation.core.initial_conditions.InitialConditions"><code class="xref py py-class docutils literal notranslate"><span class="pre">InitialConditions</span></code></a> class,
+and its subclasses, which allow users to combine multiple Pisces models into a single initial conditions object.</p>
+<p>These initial conditions can include various models, such as galaxies, galaxy clusters, or other astrophysical systems,
+and can be configured with various parameters such as orientation, offsets, and velocities. The initial conditions
+system in Pisces is designed to be flexible and extensible, allowing users to create complex initial conditions
+that can be used with different simulation codes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For a more detailed overview of the initial conditions system in Pisces, see the
+<a class="reference internal" href="ics/initial_conditions_overview.html#initial-conditions-overview"><span class="std std-ref">Initial Conditions for Simulations</span></a> section of the user guide.</p>
+</div>
+</section>
+<section id="frontends">
+<h3>Frontends<a class="headerlink" href="#frontends" title="Link to this heading">#</a></h3>
+<p>Frontends in Pisces are specialized classes that handle the conversion of Pisces data into the format required
+by specific simulation codes. Each frontend is responsible for generating the necessary configuration files,
+additional structures, and any other code-specific requirements needed to run the simulation.
+These frontends are designed to be modular and extensible, allowing users to easily add support for new simulation codes
+or customize existing frontends to suit their needs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For a more detailed overview of the frontend system in Pisces, see the
+<a class="reference internal" href="frontends/frontends.html#simulation-frontends"><span class="std std-ref">Simulation Frontends in Pisces</span></a> section of the reference documentation.</p>
+</div>
+</section>
+<section id="problem-initializers">
+<h3>Problem Initializers<a class="headerlink" href="#problem-initializers" title="Link to this heading">#</a></h3>
+<p>In some cases, simulation codes require specialized problem initializers that are tightly integrated with their
+source code. These problem initializers are responsible for directly interacting with the simulation code’s internal
+data structures to set up the initial conditions. In Pisces, these problem initializers are developed and maintained
+by the Pisces team, but they are not part of the core Pisces package. Instead, they are hosted on GitHub as part of
+the larger Pisces project. Each problem initializer is written in the language of the simulation code (e.g., Fortran,
+C, etc.) and is designed to work seamlessly with the corresponding frontend. If a code requires a problem initializer,
+it will be specified in the documentation for that code’s frontend.</p>
+</section>
+</section>
+<section id="supported-simulation-codes">
+<h2>Supported Simulation Codes<a class="headerlink" href="#supported-simulation-codes" title="Link to this heading">#</a></h2>
+<p>Below is a list of the simulation codes currently supported by Pisces, along with links to their respective
+frontend documentation.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id1">
+<caption><span class="caption-text">Supported Simulation Codes</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 14.3%" />
+<col style="width: 14.3%" />
+<col style="width: 19.0%" />
+<col style="width: 14.3%" />
+<col style="width: 38.1%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Code Name</p></th>
+<th class="head"><p>Frontend Class</p></th>
+<th class="head"><p>Documentation</p></th>
+<th class="head"><p>Support Level</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://wwwmpa.mpa-garching.mpg.de/gadget4/">Gadget-4</a></p></td>
+<td><p><a class="reference internal" href="../../../_as_gen/pisces.extensions.simulation.gadget.frontends.Gadget4Frontend.html#pisces.extensions.simulation.gadget.frontends.Gadget4Frontend" title="pisces.extensions.simulation.gadget.frontends.Gadget4Frontend"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gadget4Frontend</span></code></a></p></td>
+<td><p><a class="reference internal" href="codes/gadget.html#simulations-gadget"><span class="std std-ref">Simulations with Gadget</span></a></p></td>
+<td><p><img alt="complete" src="https://img.shields.io/badge/Support-Full-brightgreen.svg" /></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.ias.u-psud.fr/ramses/">RAMSES</a></p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">RAMSESFrontend</span></code></p></td>
+<td><p><span class="xref std std-ref">simulations_ramses</span></p></td>
+<td><p><img alt="planned" src="https://img.shields.io/badge/Support-Planned-orange.svg" /></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://arepo-code.org/">AREPO</a></p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ArepoFrontend</span></code></p></td>
+<td><p><span class="xref std std-ref">simulations_arepo</span></p></td>
+<td><p><img alt="planned" src="https://img.shields.io/badge/Support-Planned-orange.svg" /></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://flash.uchicago.edu/site/flashcode/">FLASH</a></p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">FLASHFrontend</span></code></p></td>
+<td><p><span class="xref std std-ref">simulations_flash</span></p></td>
+<td><p><img alt="planned" src="https://img.shields.io/badge/Support-Planned-orange.svg" /></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../particles/overview.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Particle Representations in Pisces</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../../auto_examples/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Pisces Example Gallery</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initial-conditions">Initial Conditions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#frontends">Frontends</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-initializers">Problem Initializers</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-simulation-codes">Supported Simulation Codes</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/reference/extensions/simulation/simulations_home.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Eliza Diggins.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

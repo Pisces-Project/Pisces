@@ -1,0 +1,6 @@
+pisces.extensions.simulation.gadget.frontends.Gadget4Frontend.config
+====================================================================
+
+.. currentmodule:: pisces.extensions.simulation.gadget.frontends
+
+.. autoproperty:: Gadget4Frontend.config

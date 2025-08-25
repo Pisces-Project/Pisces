@@ -1,0 +1,6 @@
+pisces.geometry.grids.core.GenericGrid.size
+===========================================
+
+.. currentmodule:: pisces.geometry.grids.core
+
+.. autoproperty:: GenericGrid.size

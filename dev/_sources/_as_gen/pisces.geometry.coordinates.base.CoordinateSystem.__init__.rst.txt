@@ -1,0 +1,6 @@
+pisces.geometry.coordinates.base.CoordinateSystem.\_\_init\_\_
+==============================================================
+
+.. currentmodule:: pisces.geometry.coordinates.base
+
+.. automethod:: CoordinateSystem.__init__

@@ -1,0 +1,6 @@
+pisces.models.stars.polytropes.PolytropicStarModel.grid
+=======================================================
+
+.. currentmodule:: pisces.models.stars.polytropes
+
+.. autoproperty:: PolytropicStarModel.grid

@@ -1,0 +1,24 @@
+SphericalParticleGenerationHook
+========================================================
+
+.. currentmodule:: pisces.models.core.hooks
+
+.. autoclass:: pisces.models.core.hooks.SphericalParticleGenerationHook
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~SphericalParticleGenerationHook.__init__
+      ~SphericalParticleGenerationHook.generate_particles
+   
+   
+
+   
+   
+   

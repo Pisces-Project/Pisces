@@ -1,0 +1,6 @@
+pisces.extensions.simulation.gadget.particles.GadgetParticleDataset.delete\_group\_metadata\_keys
+=================================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.gadget.particles
+
+.. automethod:: GadgetParticleDataset.delete_group_metadata_keys

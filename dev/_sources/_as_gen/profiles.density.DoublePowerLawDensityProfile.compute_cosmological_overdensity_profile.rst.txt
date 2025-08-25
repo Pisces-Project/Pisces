@@ -1,0 +1,6 @@
+profiles.density.DoublePowerLawDensityProfile.compute\_cosmological\_overdensity\_profile
+=========================================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DoublePowerLawDensityProfile.compute_cosmological_overdensity_profile

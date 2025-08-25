@@ -1,0 +1,6 @@
+profiles.temperature.DoubleBetaTemperatureProfile.variables
+===========================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoproperty:: DoubleBetaTemperatureProfile.variables

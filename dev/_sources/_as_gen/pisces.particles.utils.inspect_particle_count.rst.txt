@@ -1,0 +1,6 @@
+pisces.particles.utils.inspect\_particle\_count
+===============================================
+
+.. currentmodule:: pisces.particles.utils
+
+.. autofunction:: inspect_particle_count

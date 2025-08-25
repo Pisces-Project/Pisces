@@ -1,0 +1,6 @@
+profiles.density.SingularIsothermalDensityProfile.compute\_gravitational\_potential
+===================================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SingularIsothermalDensityProfile.compute_gravitational_potential

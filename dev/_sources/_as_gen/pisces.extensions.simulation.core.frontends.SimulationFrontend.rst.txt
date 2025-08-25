@@ -1,0 +1,37 @@
+SimulationFrontend
+==============================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.frontends
+
+.. autoclass:: pisces.extensions.simulation.core.frontends.SimulationFrontend
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~SimulationFrontend.__init__
+      ~SimulationFrontend.generate_initial_conditions
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~SimulationFrontend.config
+      ~SimulationFrontend.config_path
+      ~SimulationFrontend.default_configuration_path
+      ~SimulationFrontend.ic_directory
+      ~SimulationFrontend.initial_conditions
+      ~SimulationFrontend.logger
+   
+   

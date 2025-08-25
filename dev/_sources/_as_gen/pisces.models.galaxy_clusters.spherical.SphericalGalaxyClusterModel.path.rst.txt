@@ -1,0 +1,6 @@
+pisces.models.galaxy\_clusters.spherical.SphericalGalaxyClusterModel.path
+=========================================================================
+
+.. currentmodule:: pisces.models.galaxy_clusters.spherical
+
+.. autoproperty:: SphericalGalaxyClusterModel.path

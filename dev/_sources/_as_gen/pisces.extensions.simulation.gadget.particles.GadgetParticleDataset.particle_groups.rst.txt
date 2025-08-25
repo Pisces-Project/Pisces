@@ -1,0 +1,6 @@
+pisces.extensions.simulation.gadget.particles.GadgetParticleDataset.particle\_groups
+====================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.gadget.particles
+
+.. autoproperty:: GadgetParticleDataset.particle_groups

@@ -1,0 +1,6 @@
+profiles.density.BaseSphericalDensityProfile.compute\_circular\_velocity
+========================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseSphericalDensityProfile.compute_circular_velocity

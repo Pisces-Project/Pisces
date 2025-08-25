@@ -1,0 +1,6 @@
+pisces.extensions.simulation.gadget.particles.GadgetParticleDataset.total\_particles
+====================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.gadget.particles
+
+.. autoproperty:: GadgetParticleDataset.total_particles

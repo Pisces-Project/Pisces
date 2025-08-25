@@ -1,0 +1,6 @@
+pisces.extensions.simulation.gadget.frontends.Gadget4Frontend.config\_path
+==========================================================================
+
+.. currentmodule:: pisces.extensions.simulation.gadget.frontends
+
+.. autoproperty:: Gadget4Frontend.config_path

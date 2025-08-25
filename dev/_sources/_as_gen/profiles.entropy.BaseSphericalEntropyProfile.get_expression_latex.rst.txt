@@ -1,0 +1,6 @@
+profiles.entropy.BaseSphericalEntropyProfile.get\_expression\_latex
+===================================================================
+
+.. currentmodule:: profiles.entropy
+
+.. automethod:: BaseSphericalEntropyProfile.get_expression_latex

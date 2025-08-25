@@ -1,0 +1,6 @@
+profiles.temperature.CoolingFlowTemperatureProfile.AXES
+=======================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoattribute:: CoolingFlowTemperatureProfile.AXES

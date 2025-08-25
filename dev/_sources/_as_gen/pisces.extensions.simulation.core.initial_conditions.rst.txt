@@ -1,0 +1,34 @@
+pisces.extensions.simulation.core.initial_conditions
+====================================================
+
+.. automodule:: pisces.extensions.simulation.core.initial_conditions
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class.rst
+      :recursive:
+   
+      InitialConditions
+   
+   
+
+   
+   
+   

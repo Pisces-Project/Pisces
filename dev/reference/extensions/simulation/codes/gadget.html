@@ -1,0 +1,716 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Simulations with Gadget &#8212; Pisces  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/extensions/simulation/codes/gadget';</script>
+    <link rel="icon" href="../../../../_static/pisces_favicon.svg"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/pisces.svg" class="logo__image only-light" alt="Pisces Documentation - Home"/>
+    <img src="../../../../_static/pisces.svg" class="logo__image only-dark pst-js-only" alt="Pisces Documentation - Home"/>
+  
+  
+    <p class="title logo__title">Pisces</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/pisces-project/pisces" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/pisces-project/pisces" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Simulations with Gadget</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="simulations-with-gadget">
+<span id="simulations-gadget"></span><h1>Simulations with Gadget<a class="headerlink" href="#simulations-with-gadget" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://wwwmpa.mpa-garching.mpg.de/gadget/">Gadget-4</a> is a state-of-the-art code for cosmological
+N-body and smoothed particle hydrodynamics (SPH) simulations. It remains one of the most widely used
+and actively developed tools in the community, and is also among the more straightforward codes to
+set up and run with Pisces-generated initial conditions.</p>
+<section id="installing-gadget-4">
+<h2>Installing Gadget-4<a class="headerlink" href="#installing-gadget-4" title="Link to this heading">#</a></h2>
+<p>Detailed installation instructions are provided in the official
+<a class="reference external" href="https://wwwmpa.mpa-garching.mpg.de/gadget/users-guide.pdf">Gadget-4 User Guide</a>.
+For Pisces compatibility, you will also need to adjust certain compile-time options in the
+Makefile. See <a class="reference internal" href="#gadget-makefile-settings"><span class="std std-ref">Makefile Settings</span></a> for a summary of the required changes.</p>
+</section>
+<section id="gadget-support-in-pisces">
+<h2>Gadget Support in Pisces<a class="headerlink" href="#gadget-support-in-pisces" title="Link to this heading">#</a></h2>
+<p>In order to support Gadget-4 initial conditions, Pisces provides the <a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.gadget.html#module-pisces.extensions.simulation.gadget" title="pisces.extensions.simulation.gadget"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gadget</span></code></a>
+extension module which contains two useful classes:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.gadget.frontends.Gadget4Frontend.html#pisces.extensions.simulation.gadget.frontends.Gadget4Frontend" title="pisces.extensions.simulation.gadget.frontends.Gadget4Frontend"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gadget4Frontend</span></code></a>: A frontend for generating
+Gadget-4 initial conditions from a <a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.core.initial_conditions.InitialConditions.html#pisces.extensions.simulation.core.initial_conditions.InitialConditions" title="pisces.extensions.simulation.core.initial_conditions.InitialConditions"><code class="xref py py-class docutils literal notranslate"><span class="pre">InitialConditions</span></code></a>
+object.</p></li>
+<li><p><a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.gadget.particles.GadgetParticleDataset.html#pisces.extensions.simulation.gadget.particles.GadgetParticleDataset" title="pisces.extensions.simulation.gadget.particles.GadgetParticleDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">GadgetParticleDataset</span></code></a>: A particle dataset class for reading
+and writing Gadget-4 HDF5 files.</p></li>
+</ul>
+<p>The general process for generating initial conditions in Pisces and transferring them to Gadget-4 is as follows:</p>
+<ol class="arabic simple">
+<li><p><strong>Build the constituent models</strong>: Create whatever models you are trying to simulate using
+the Pisces ecosystem. If you are unsure of how to build the models you need, see the
+modeling documentation: <a class="reference internal" href="../../../models/overview.html#models-overview"><span class="std std-ref">Astrophysics Models in Pisces</span></a>.</p></li>
+<li><p><strong>Build the ICs</strong> With your models in hand, create an initial conditions object which combines the
+relevant models into a single initial conditions dataset. See <a class="reference internal" href="../ics/initial_conditions_overview.html#initial-conditions-overview"><span class="std std-ref">Initial Conditions for Simulations</span></a> for details.</p></li>
+<li><p><strong>Generate particles for each model</strong>: Gadget-4 is a particle-based code, so each model in your
+initial conditions must be converted to particles. Because this process can be somewhat dependent on
+exactly what you, the user, want to achieve, Pisces does not do this step automatically. For each model
+you’ll need to use the
+<a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.core.initial_conditions.InitialConditions.generate_particles.html#pisces.extensions.simulation.core.initial_conditions.InitialConditions.generate_particles" title="pisces.extensions.simulation.core.initial_conditions.InitialConditions.generate_particles"><code class="xref py py-meth docutils literal notranslate"><span class="pre">generate_particles()</span></code></a> method
+to generate particles. See <a class="reference internal" href="../../../particles/overview.html#particles-overview"><span class="std std-ref">Particle Representations in Pisces</span></a> for details.</p></li>
+<li><p><strong>Initialize the Gadget-4 frontend</strong>: With your initial conditions object fully specified, you can
+create a <a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.gadget.frontends.Gadget4Frontend.html#pisces.extensions.simulation.gadget.frontends.Gadget4Frontend" title="pisces.extensions.simulation.gadget.frontends.Gadget4Frontend"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gadget4Frontend</span></code></a> object. This will
+generate a configuration file which you can modify to suit your needs. This document will provide all of
+the details regarding the various configuration options. In this step, you’ll provide some information about
+your Gadget-4 installation, and you’ll also specify how the models in your initial conditions should be
+mapped to Gadget-4 particle types and fields.</p></li>
+<li><p><strong>Write the initial conditions</strong>: Finally, you can call the <a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.gadget.frontends.Gadget4Frontend.generate_initial_conditions.html#pisces.extensions.simulation.gadget.frontends.Gadget4Frontend.generate_initial_conditions" title="pisces.extensions.simulation.gadget.frontends.Gadget4Frontend.generate_initial_conditions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">generate_initial_conditions()</span></code></a>
+method to write the initial conditions to disk in a format that Gadget-4 can read.</p></li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>As is the case with all hydrodynamical simulation codes, Gadget-4 has a rather complicated set of
+configuration options. Pisces attempts to make the process of generating compatible initial conditions
+as straightforward as possible, but it is ultimately the user’s responsibility to ensure that the
+configuration options in the frontend match those used when compiling and running Gadget-4 itself.</p>
+<p>For example, if you compile Gadget-4 to perform 2D simulations but then generate 3D initial conditions,
+the simulation will likely fail to run. Similarly, if you compile Gadget-4 with single-precision
+particle IDs but then generate initial conditions with 64-bit IDs, the simulation will likely
+fail. Always double-check that the configuration options in your frontend match those used
+when compiling and running Gadget-4.</p>
+</div>
+</section>
+<section id="the-gadget-4-frontend">
+<h2>The Gadget-4 Frontend<a class="headerlink" href="#the-gadget-4-frontend" title="Link to this heading">#</a></h2>
+<p>As with all simulation codes supported by Pisces, Gadget-4 is accessed through a dedicated <em>frontend</em>.
+The Gadget-4 frontend is implemented in <a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.gadget.frontends.html#module-pisces.extensions.simulation.gadget.frontends" title="pisces.extensions.simulation.gadget.frontends"><code class="xref py py-mod docutils literal notranslate"><span class="pre">frontends</span></code></a>, and the main
+entry point is the <a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.gadget.frontends.Gadget4Frontend.html#pisces.extensions.simulation.gadget.frontends.Gadget4Frontend" title="pisces.extensions.simulation.gadget.frontends.Gadget4Frontend"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gadget4Frontend</span></code></a> class.</p>
+<p>To create a frontend, initialize it on an existing initial conditions object
+(<a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.core.initial_conditions.InitialConditions.html#pisces.extensions.simulation.core.initial_conditions.InitialConditions" title="pisces.extensions.simulation.core.initial_conditions.InitialConditions"><code class="xref py py-class docutils literal notranslate"><span class="pre">InitialConditions</span></code></a>):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pisces.extensions.simulation.frontends</span><span class="w"> </span><span class="kn">import</span> <span class="n">Gadget2Frontend</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pisces.extensions.simulation</span><span class="w"> </span><span class="kn">import</span> <span class="n">InitialConditions</span>
+
+<span class="c1"># Load the initial conditions object from disk.</span>
+<span class="n">ic</span> <span class="o">=</span> <span class="n">InitialConditions</span><span class="p">(</span><span class="s2">&quot;path/to/initial/conditions/file&quot;</span><span class="p">)</span>
+
+<span class="c1"># Initialize the Gadget-4 frontend.</span>
+<span class="n">frontend</span> <span class="o">=</span> <span class="n">Gadget2Frontend</span><span class="p">(</span><span class="n">ic</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will generate a configuration file, <code class="docutils literal notranslate"><span class="pre">Gadget4Frontend_config.yaml</span></code>, in the same directory as the
+initial conditions. The configuration file can be modified either by hand or through the frontend
+API (see <a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.core.frontends.SimulationFrontend.html#pisces.extensions.simulation.core.frontends.SimulationFrontend" title="pisces.extensions.simulation.core.frontends.SimulationFrontend"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulationFrontend</span></code></a> for details).</p>
+<section id="frontend-configuration-options">
+<h3>Frontend Configuration Options<a class="headerlink" href="#frontend-configuration-options" title="Link to this heading">#</a></h3>
+<p>The frontend’s configuration options largely mirror the options available in Gadget-4’s
+<code class="docutils literal notranslate"><span class="pre">parameterfile</span></code>. The configuration file is divided into sections, each corresponding to a
+section of the Gadget-4 parameter file. Each option is documented in the configuration file itself,
+and the Gadget-4 user guide should be consulted for further details on each option.</p>
+<section id="makefile-settings">
+<span id="gadget-makefile-settings"></span><h4>Makefile Settings<a class="headerlink" href="#makefile-settings" title="Link to this heading">#</a></h4>
+<p>These settings concern the compile-time options from Gadget-4 and should be set to match those
+set when compiling Gadget-4 itself. They are stored in the <code class="docutils literal notranslate"><span class="pre">makefile</span></code> section of the
+frontend configuration file.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id1">
+<caption><span class="caption-text">Makefile Settings</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Makefile Option</p></th>
+<th class="head"><p>Frontend Option</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">IDS_NBIT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">makefile.nbits_id</span></code></p></td>
+<td><p>Determines the number of bits used for particle IDs. Common values are <code class="docutils literal notranslate"><span class="pre">32</span></code> and <code class="docutils literal notranslate"><span class="pre">64</span></code>.
+The value here must match that used when compiling Gadget-4 itself. It is used to ensure
+that the particle IDs in the initial conditions are compatible with the simulation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NTYPES</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">makefile.number_of_particle_types</span></code></p></td>
+<td><p>The number of particle types supported by the Gadget-4 installation. This value must be
+greater than or equal to the number of unique particle types used in your initial conditions.
+For example, if your initial conditions contain gas, dark matter, and star particles, you
+will need to set this value to at least <code class="docutils literal notranslate"><span class="pre">3</span></code>. Typically, 6 is chosen.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>In addition to the settings above, the following makefile options are <strong>required</strong> for Pisces compatibility:</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id2">
+<caption><span class="caption-text">Makefile Settings</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Makefile Option</p></th>
+<th class="head"><p>Frontend Option</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GADGET2_HEADER</span></code></p></td>
+<td><p>N/A</p></td>
+<td><p>Must not be active.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NGENIC</span></code></p></td>
+<td><p>N/A</p></td>
+<td><p>Must not be active. This option is for the N-GenIC initial conditions generator, which
+is not compatible with Pisces.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="parameter-file-settings">
+<h4>Parameter File Settings<a class="headerlink" href="#parameter-file-settings" title="Link to this heading">#</a></h4>
+<p>Like the makefile settings, several parameter file settings from Gadget-4 are needed for Pisces to successfully
+generate compatible initial conditions. For the most part, these settings simply need to be consistent between
+your Pisces frontend configuration and your Gadget-4 parameter file. However, a few settings are required to
+be set to specific values for Pisces compatibility. They are marked as so in the below table:</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id3">
+<caption><span class="caption-text">Makefile Settings</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Frontend Flag</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ICFormat</span></code></p></td>
+<td></td>
+<td><p>Must be set to <code class="docutils literal notranslate"><span class="pre">3</span></code> to read HDF5 initial conditions. Pisces does not support the legacy binary format.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BoxSize</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">parameters.box_size</span></code></p></td>
+<td><p>The size of the simulation box in code units. All of the models in the initial conditions
+will be placed within this box ([0, BoxSize] in each dimension).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">UnitVelocity_in_cm_per_s</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">parameters.units.velocity</span></code></p></td>
+<td><p>Provide the Pisces configuration with an unyt unit equivalent to that used in your
+Gadget-4 parameter file. Any velocities in the initial conditions will be converted to this unit.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">UnitLength_in_cm</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">parameters.units.length</span></code></p></td>
+<td><p>Provide the Pisces configuration with an unyt unit equivalent to that used in your
+Gadget-4 parameter file. Any lengths in the initial conditions will be converted to this unit.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">UnitMass_in_g</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">parameters.units.mass</span></code></p></td>
+<td><p>Provide the Pisces configuration with an unyt unit equivalent to that used in your
+Gadget-4 parameter file. Any masses in the initial conditions will be converted to this unit.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="fields-and-particle-types">
+<h4>Fields and Particle Types<a class="headerlink" href="#fields-and-particle-types" title="Link to this heading">#</a></h4>
+<p>Pisces follows a standard convention for naming particle types and data fields in its particle
+datasets (see <a class="reference internal" href="../../../particles/overview.html#particles-overview"><span class="std std-ref">Particle Representations in Pisces</span></a>). In most cases, these conventions are applied automatically
+when generating initial conditions.</p>
+<p>There are situations, however, where a model may not conform to the standard naming scheme, or where
+you may want to explicitly control which fields are written to the Gadget-4 initial conditions.
+To support this, the frontend configuration file includes a <code class="docutils literal notranslate"><span class="pre">models</span></code> section. Each model defined
+in the input <a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.core.initial_conditions.InitialConditions.html#pisces.extensions.simulation.core.initial_conditions.InitialConditions" title="pisces.extensions.simulation.core.initial_conditions.InitialConditions"><code class="xref py py-class docutils literal notranslate"><span class="pre">InitialConditions</span></code></a> object will have
+a corresponding entry here.</p>
+<p>A typical model section looks like this:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">[</span><span class="nv">MODEL_NAME</span><span class="p p-Indicator">]:</span>
+<span class="w">    </span><span class="nt">PART_TYPE_0</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">name in model particle file</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">fields</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">GADGET_FIELD_1</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">name in model particle file</span><span class="p p-Indicator">]</span>
+<span class="w">            </span><span class="nt">GADGET_FIELD_2</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">name in model particle file</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>In this mapping:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PART_TYPE_0</span></code> refers to the Gadget-4 particle type (see the Gadget-4 user guide for available types).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code> specifies the name of the model’s particle group to be associated with this particle type.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fields</span></code> maps Gadget-4 field names to the corresponding field names in the model’s particle file.</p></li>
+</ul>
+<p>By default, Pisces generates these mappings according to its internal conventions. You only need to
+modify them if your model uses non-standard names or if you wish to customize the exported fields. A
+common scenario in which you might want to modify the field mappings is when your model includes
+star particles with additional attributes (e.g., metallicity, age) that you want to include in the
+Gadget-4 initial conditions. You may also have new particle types which need to be added to the configuration.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-gadget-4">Installing Gadget-4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gadget-support-in-pisces">Gadget Support in Pisces</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-gadget-4-frontend">The Gadget-4 Frontend</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#frontend-configuration-options">Frontend Configuration Options</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#makefile-settings">Makefile Settings</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-file-settings">Parameter File Settings</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fields-and-particle-types">Fields and Particle Types</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../_sources/reference/extensions/simulation/codes/gadget.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Eliza Diggins.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

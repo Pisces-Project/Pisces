@@ -1,0 +1,888 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Astrophysics Models in Pisces &#8212; Pisces  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/models/overview';</script>
+    <link rel="icon" href="../../_static/pisces_favicon.svg"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Pisces Galaxy Models" href="galaxies.html" />
+    <link rel="prev" title="Pisces User Guide" href="../user_guide.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/pisces.svg" class="logo__image only-light" alt="Pisces Documentation - Home"/>
+    <img src="../../_static/pisces.svg" class="logo__image only-dark pst-js-only" alt="Pisces Documentation - Home"/>
+  
+  
+    <p class="title logo__title">Pisces</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/pisces-project/pisces" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/pisces-project/pisces" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Astrophysics Models in Pisces</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Types</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="galaxies.html">Pisces Galaxy Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="galaxy_clusters.html">Pisces Galaxy Cluster Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stars.html">Pisces Stellar Models</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Building Blocks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../profiles/overview.html">Pisces Profiles Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../grids/overview.html">Grids in Pisces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coordinate_systems/overview.html">Coordinate Systems in Pisces</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Configuration</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Pisces Configuration and Logging</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../particles/overview.html">Particle Representations in Pisces</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../extensions/simulation/simulations_home.html">Simulations in Pisces</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../user_guide.html" class="nav-link">Pisces User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Astrophysics Models in Pisces</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="astrophysics-models-in-pisces">
+<span id="models-overview"></span><h1>Astrophysics Models in Pisces<a class="headerlink" href="#astrophysics-models-in-pisces" title="Link to this heading">#</a></h1>
+<p>The most important part of the Pisces ecosystem is its models. Pisces
+models are used to represent astrophysical systems ranging from simple
+dark matter halos to fully realized disk galaxies, stellar models, and
+more.</p>
+<p>Behind the scenes, a model is generally an abstract wrapper around
+a number of physics computations to allow a user to go from a set of
+input quantities (parameters, profiles, etc.) to a set of <strong>fields</strong>,
+representing the physical data of the model. The complexity of
+this process and its numerical cost is dependent on the nature of the
+model.</p>
+<p>One of the most important elements of Pisces models is their extensibility.
+Recognizing that</p>
+<ol class="arabic simple">
+<li><p>Astrophysical models are constantly changing and becoming more
+sophisticated to incorporate a larger set of relevant processes, and</p></li>
+<li><p>Many models require domain-specific expertise which could not possibly
+be provided by a single developer,</p></li>
+</ol>
+<p>we have designed the <a class="reference internal" href="../../_as_gen/pisces.models.html#module-pisces.models" title="pisces.models"><code class="xref py py-mod docutils literal notranslate"><span class="pre">models</span></code></a> module to be not only extremely flexible, but
+also quite easy to develop new code from. In many cases, a user might begin
+their scientific workflow by building a custom model class and relying on Pisces
+model-interacting infrastructure to perform their science. For details on
+writing new models, see <a class="reference internal" href="writing_models.html#models-development"><span class="std std-ref">Model Development in Pisces</span></a>.</p>
+<section id="model-basics">
+<h2>Model Basics<a class="headerlink" href="#model-basics" title="Link to this heading">#</a></h2>
+<p>Pisces models are the core building blocks for representing astrophysical
+systems. A model is a <em>self-contained file on disk</em> that stores all of the
+data you need: spatial coordinates, physical quantities (fields), analytic
+profiles, and descriptive metadata.</p>
+<p>As a user, you can think of a model as your <strong>system in a file</strong>.
+You set up the system you want (e.g. a galaxy cluster, a stellar halo),
+save it, and then return later to analyze, plot, or compare it without
+having to recompute everything from scratch.</p>
+<p>In general, you’ll select a model which captures the physics / system you’re interested in modeling,
+provide some set of minimal inputs (profiles, parameters, etc.), and the model will then use the
+information you provide to do all the heavy lifting to compute the relevant physical fields.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>For example, you might create a model of a spiral galaxy by specifying the radial density of the
+bulge and the disk. Then the model could compute things like the potential, velocity field,
+ISM temperature, etc. based on those inputs.</p>
+</div>
+<p>Every model has the following set of critical components:</p>
+<ul class="simple">
+<li><p>A <strong>grid</strong> and <strong>coordinate system</strong> that defines the spatial layout of the model. These are
+accessible via the <a class="reference internal" href="../../_as_gen/pisces.models.core.base.BaseModel.grid.html#pisces.models.core.base.BaseModel.grid" title="pisces.models.core.base.BaseModel.grid"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseModel.grid</span></code></a> and <a class="reference internal" href="../../_as_gen/pisces.models.core.base.BaseModel.coordinate_system.html#pisces.models.core.base.BaseModel.coordinate_system" title="pisces.models.core.base.BaseModel.coordinate_system"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseModel.coordinate_system</span></code></a> attributes.</p></li>
+<li><p>A set of <strong>fields</strong> that represent the physical quantities of interest (e.g., density, potential,
+velocity). These are accessible via the <a class="reference internal" href="../../_as_gen/pisces.models.core.base.BaseModel.fields.html#pisces.models.core.base.BaseModel.fields" title="pisces.models.core.base.BaseModel.fields"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseModel.fields</span></code></a> attribute.</p></li>
+<li><p><strong>Metadata</strong> that describes the model, including its parameters, and other relevant
+information. These are accessible via the <a class="reference internal" href="../../_as_gen/pisces.models.core.base.BaseModel.metadata.html#pisces.models.core.base.BaseModel.metadata" title="pisces.models.core.base.BaseModel.metadata"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseModel.metadata</span></code></a> attribute.</p></li>
+<li><p><strong>Profiles</strong> that define analytic functions or distributions used in the model. These are
+accessible via the <a class="reference internal" href="../../_as_gen/pisces.models.core.base.BaseModel.profiles.html#pisces.models.core.base.BaseModel.profiles" title="pisces.models.core.base.BaseModel.profiles"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseModel.profiles</span></code></a> attribute.</p></li>
+</ul>
+<section id="building-a-model">
+<h3>Building a Model<a class="headerlink" href="#building-a-model" title="Link to this heading">#</a></h3>
+<p>In the most simple case, the user will be able to identify an existing model that captures the physics
+they are interested in, and then use that model to compute the fields they need. This is done by
+providing the model with the necessary parameters and profiles, which it will then use to compute
+the relevant fields. In order to do this, look at the API documentation for the model you are
+interested in, which will provide details on how to create and manipulate the model.</p>
+<p>For example, a spherical galaxy cluster model might require you to provide a density and temperature profile,
+and then it will compute the gravitational potential, pressure, and other relevant fields based on those inputs.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pisces.models.galaxy_clusters</span><span class="w"> </span><span class="kn">import</span> <span class="n">SphericalGalaxyClusterModel</span>
+
+<span class="c1"># Create a temporary output file</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;basic_cluster_model.h5&quot;</span>
+
+<span class="c1"># Define the radial range</span>
+<span class="n">rmin</span> <span class="o">=</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
+<span class="n">rmax</span> <span class="o">=</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="s2">&quot;Mpc&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create the gas density and total density profiles</span>
+<span class="n">gas_density</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">total_density</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="c1"># Build the model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">SphericalGalaxyClusterModel</span><span class="o">.</span><span class="n">from_density_and_total_density</span><span class="p">(</span>
+    <span class="n">gas_density</span><span class="p">,</span>
+    <span class="n">total_density</span><span class="p">,</span>
+    <span class="n">filename</span><span class="p">,</span>
+    <span class="n">min_radius</span><span class="o">=</span><span class="n">rmin</span><span class="p">,</span>
+    <span class="n">max_radius</span><span class="o">=</span><span class="n">rmax</span><span class="p">,</span>
+    <span class="n">num_points</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The model will then compute the relevant fields based on the provided profiles and parameters.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>These generation methods are usually named things like <code class="docutils literal notranslate"><span class="pre">from_&lt;something&gt;</span></code>.</p>
+</div>
+</section>
+<section id="loading-a-model-from-disk">
+<h3>Loading a Model from Disk<a class="headerlink" href="#loading-a-model-from-disk" title="Link to this heading">#</a></h3>
+<p>Once a model has been written to disk, you can bring it back into memory
+for analysis. There are two main ways to do this:</p>
+<ol class="arabic">
+<li><p><strong>Direct constructor call</strong>
+Each model subclass can be initialized directly with the filename of
+a saved model. This goes through the class’ <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method, which
+verifies the file on disk, checks that it matches the expected
+<code class="docutils literal notranslate"><span class="pre">__model_class__</span></code> tag, and then loads metadata, profiles, grid, and
+fields into memory.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pisces.models.galaxy_clusters</span><span class="w"> </span><span class="kn">import</span> <span class="n">SphericalGalaxyClusterModel</span>
+
+<span class="c1"># Load an existing model from its file</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">SphericalGalaxyClusterModel</span><span class="p">(</span><span class="s2">&quot;basic_cluster_model.h5&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>             <span class="c1"># &lt;SphericalGalaxyClusterModel @ basic_cluster_model.h5&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>  <span class="c1"># dict_keys([&quot;density&quot;, &quot;temperature&quot;, ...])</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Using the registry loader</strong>
+If you don’t know the exact subclass of the model you want to open,
+you can use the convenience function
+<a class="reference internal" href="../../_as_gen/pisces.models.core.utils.load_model.html#pisces.models.core.utils.load_model" title="pisces.models.core.utils.load_model"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_model()</span></code></a>. This function inspects the
+<code class="docutils literal notranslate"><span class="pre">__model_class__</span></code> attribute stored in the file and uses Pisces’
+model registry to dispatch to the correct subclass automatically.
+This is particularly helpful when loading models produced by other
+people or by automated workflows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pisces.models.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_model</span>
+
+<span class="c1"># Load a model without needing to know its class</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;basic_cluster_model.h5&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+<span class="c1"># &lt;class &#39;pisces.models.galaxy_clusters.SphericalGalaxyClusterModel&#39;&gt;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Pisces uses a central <strong>model registry</strong> (<code class="docutils literal notranslate"><span class="pre">__DEFAULT_REGISTRY__</span></code>)
+to keep track of all known model subclasses. This is how the
+<a class="reference internal" href="../../_as_gen/pisces.models.core.utils.load_model.html#pisces.models.core.utils.load_model" title="pisces.models.core.utils.load_model"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_model()</span></code></a> function knows which class to instantiate. If you are
+writing your own custom model class, you should make sure it is
+registered so that it can be loaded from disk seamlessly.</p>
+</div>
+</section>
+<section id="the-geometry-of-the-model">
+<h3>The Geometry of the Model<a class="headerlink" href="#the-geometry-of-the-model" title="Link to this heading">#</a></h3>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>For a deeper tour of grids and coordinates, see <span class="xref std std-ref">grids_overview</span>
+and <span class="xref std std-ref">coordinate_systems_overview</span>.</p>
+</div>
+<p>Every model carries its own <strong>grid</strong> (the spatial layout and resolution) and
+its <strong>coordinate system</strong> (e.g., Cartesian, spherical). These provide the following
+key features:</p>
+<ul class="simple">
+<li><p>The grid defines <strong>coordinates</strong> (radius, x/y/z, etc.).</p></li>
+<li><p>The grid’s shape tells you how large each field array will be.</p></li>
+<li><p>The grid comes with a <strong>coordinate system</strong>, so you always know
+whether you’re working in Cartesian, spherical, or another system.</p></li>
+</ul>
+<p>To access the grid or the coordinate system of a model, just access the relevant attributes:
+<a class="reference internal" href="../../_as_gen/pisces.models.core.base.BaseModel.grid.html#pisces.models.core.base.BaseModel.grid" title="pisces.models.core.base.BaseModel.grid"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseModel.grid</span></code></a> and <a class="reference internal" href="../../_as_gen/pisces.models.core.base.BaseModel.coordinate_system.html#pisces.models.core.base.BaseModel.coordinate_system" title="pisces.models.core.base.BaseModel.coordinate_system"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseModel.coordinate_system</span></code></a>.</p>
+<p>The most common grid interaction is extracting the coordinates of the grid axes, which can be done
+by simply indexing into the grid:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the grid coordinates</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="p">[</span><span class="s2">&quot;r&quot;</span><span class="p">]</span>  <span class="c1"># Radial coordinate in spherical systems</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>  <span class="c1"># Cartesian x-coordinate</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>  <span class="c1"># Cartesian y-coordinate</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="p">[</span><span class="s2">&quot;z&quot;</span><span class="p">]</span>  <span class="c1"># Cartesian z-coordinate</span>
+</pre></div>
+</div>
+<p>There are a number of other useful methods on the grid, which can be read about in <span class="xref std std-ref">grids_overview</span>.</p>
+</section>
+<section id="accessing-model-data">
+<h3>Accessing Model Data<a class="headerlink" href="#accessing-model-data" title="Link to this heading">#</a></h3>
+<p>Once you have created or loaded a model, the next step is to <strong>explore and
+analyze its data</strong>. All of this goes through the model’s <strong>fields</strong>, which are
+NumPy-like arrays (wrapped in <a class="reference external" href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_array" title="(in unyt v3.0.1.post30+gcb71e02)"><code class="xref py py-class docutils literal notranslate"><span class="pre">unyt_array</span></code></a> so that units are
+preserved).</p>
+<p>The simplest access pattern is dictionary-style indexing:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load a model from disk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pisces.models.galaxy_clusters</span><span class="w"> </span><span class="kn">import</span> <span class="n">SphericalGalaxyClusterModel</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">SphericalGalaxyClusterModel</span><span class="p">(</span><span class="s2">&quot;basic_cluster_model.h5&quot;</span><span class="p">)</span>
+
+<span class="c1"># Access fields by name</span>
+<span class="n">density</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span>
+<span class="n">temperature</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">density</span><span class="p">))</span>
+<span class="c1"># &lt;class &#39;unyt.array.unyt_array&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">density</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
+<span class="c1"># g/cm**3</span>
+
+<span class="c1"># Access grid axis arrays in the same way</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="s2">&quot;r&quot;</span><span class="p">]</span>   <span class="c1"># radial coordinate</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The values come out as <code class="xref py py-class docutils literal notranslate"><span class="pre">unyt.unyt_array</span></code>, which means they behave like
+NumPy arrays but automatically track physical units. You can convert them to
+different units, strip units if needed, or use them directly in calculations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert density to solar masses per cubic kiloparsec</span>
+<span class="n">dens_msun</span> <span class="o">=</span> <span class="n">density</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">)</span>
+
+<span class="c1"># Strip units and get a plain NumPy array</span>
+<span class="n">dens_values</span> <span class="o">=</span> <span class="n">density</span><span class="o">.</span><span class="n">value</span>
+
+<span class="c1"># Perform arithmetic with units carried through</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">density</span> <span class="o">*</span> <span class="n">temperature</span>  <span class="c1"># unit-aware product</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Always use the arrays directly from the model when plotting or
+analyzing—they are guaranteed to have the right shape for the grid
+and keep their units intact.</p>
+</div>
+</section>
+<section id="accessing-metadata-and-profiles">
+<h3>Accessing Metadata and Profiles<a class="headerlink" href="#accessing-metadata-and-profiles" title="Link to this heading">#</a></h3>
+<p>In addition to fields and grids, models also carry <strong>metadata</strong> and optional
+<strong>analytic profiles</strong>. These components provide context and reproducibility.</p>
+<p>Metadata lives at the root of the model file and includes descriptive
+information such as when the model was created, what parameters were used,
+and any free-form tags or notes you added.</p>
+<p>Access it directly from the <a class="reference internal" href="../../_as_gen/pisces.models.core.base.BaseModel.metadata.html#pisces.models.core.base.BaseModel.metadata" title="pisces.models.core.base.BaseModel.metadata"><code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code></a> property:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Inspect model metadata</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">])</span>
+<span class="c1"># &quot;Hydrostatic mass test model.&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;date_created&quot;</span><span class="p">))</span>
+<span class="c1"># 2025-07-24T15:31:10.103Z</span>
+</pre></div>
+</div>
+<p>You can store anything meaningful in metadata when you first create the
+model—for example, the name of the simulation run or the person who built it.</p>
+<p>Profiles are analytic functions (e.g., NFW, Vikhlinin) that were used to
+generate or compare against fields. They are stored in the model’s
+<code class="docutils literal notranslate"><span class="pre">/PROFILES</span></code> group and reconstituted into live Python objects when you load
+the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># List all profiles in the model</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>  <span class="c1"># e.g., dict_keys([&quot;density&quot;, &quot;temperature&quot;])</span>
+
+<span class="c1"># Grab one profile and use it</span>
+<span class="n">density_profile</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">profiles</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span>
+<span class="n">rho_val</span> <span class="o">=</span> <span class="n">density_profile</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Profiles make it easy to go back to the analytic form that generated your
+fields, or to compare analytic predictions against numerical arrays.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Profiles are optional. Some models are built entirely from raw fields,
+while others pair fields with profiles for richer analytic control.</p>
+</div>
+</section>
+<section id="the-structure-of-a-model">
+<h3>The Structure of a Model<a class="headerlink" href="#the-structure-of-a-model" title="Link to this heading">#</a></h3>
+<p>A Pisces model is always saved as a <strong>single HDF5 file on disk</strong>. This makes
+models easy to share, archive, and reload in a fully reproducible way. The
+internal structure of the file is standardized so that any Pisces model can be
+recognized and loaded automatically.</p>
+<p>At a high level, the file contains:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GRID/</span></code> – the spatial grid and coordinate system</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FIELDS/</span></code> – physical field arrays (density, temperature, etc.)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PROFILES/</span></code> – analytic profiles (optional)</p></li>
+<li><p>root attributes – metadata and identity tags</p></li>
+</ul>
+<p>As a user, you do not normally interact with these groups directly. Instead,
+you use the <a class="reference internal" href="../../_as_gen/pisces.models.core.base.BaseModel.html#pisces.models.core.base.BaseModel" title="pisces.models.core.base.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a> API to access the grid,
+fields, profiles, and metadata in a natural Pythonic way.</p>
+</section>
+<section id="model-fields">
+<h3>Model Fields<a class="headerlink" href="#model-fields" title="Link to this heading">#</a></h3>
+<p>Fields are the <strong>core data products</strong> of a model. They are stored in the
+<code class="docutils literal notranslate"><span class="pre">FIELDS</span></code> group of the HDF5 file, and each corresponds to a physical quantity
+defined over the model’s grid (for example, gas density, temperature, pressure,
+or velocity).</p>
+<p>When loaded into Python, fields are returned as <a class="reference external" href="https://unyt.readthedocs.io/en/latest/modules/unyt.array.html#unyt.array.unyt_array" title="(in unyt v3.0.1.post30+gcb71e02)"><code class="xref py py-class docutils literal notranslate"><span class="pre">unyt_array</span></code></a>
+objects, meaning they behave like NumPy arrays but also carry physical units:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Access fields directly from the model</span>
+<span class="n">density</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span>
+<span class="n">temperature</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">density</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>   <span class="c1"># g/cm**3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temperature</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Because units are always preserved, you can safely perform calculations
+without losing track of physical dimensions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute pressure as density * temperature</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">density</span> <span class="o">*</span> <span class="n">temperature</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pressure</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Fields can also be converted to different units or stripped of units if
+needed:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert to solar masses per cubic kiloparsec</span>
+<span class="n">dens_msun</span> <span class="o">=</span> <span class="n">density</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">)</span>
+
+<span class="c1"># Strip units to get a raw NumPy array</span>
+<span class="n">raw_dens</span> <span class="o">=</span> <span class="n">density</span><span class="o">.</span><span class="n">value</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>All fields are guaranteed to have shapes that match the grid of the
+model. This ensures consistency when plotting, integrating, or combining
+multiple fields.</p>
+</div>
+</section>
+</section>
+<section id="extension-hooks">
+<h2>Extension Hooks<a class="headerlink" href="#extension-hooks" title="Link to this heading">#</a></h2>
+<p>Some Pisces models come with <strong>hooks</strong> – optional add-ons that give the model
+extra capabilities beyond its core fields and grid. Hooks are a way for models
+to “plug in” special functionality without changing how the rest of the model
+works.</p>
+<p>For example, a spherical galaxy cluster model might include a hook that knows
+how to generate a particle realization of the cluster. Another model might use
+a hook to provide extra diagnostic tools or quick plotting helpers.</p>
+<p>As a user, you don’t need to know the implementation details. What matters is
+that hooks can give your model extra powers, and you can easily see which ones
+are available.</p>
+<p><strong>Checking for hooks</strong></p>
+<p>Every model has a few simple methods for working with hooks:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># See all hooks attached to the model</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">get_all_hooks</span><span class="p">())</span>
+
+<span class="c1"># See only the hooks that are active</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">get_active_hooks</span><span class="p">())</span>
+
+<span class="c1"># Check if a specific hook is available</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">has_hook</span><span class="p">(</span><span class="s2">&quot;particle_sampler&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>If a hook is active, you can usually just call its methods directly on the
+model, just like any other method.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Not all models have hooks, and the hooks available will depend on the
+type of model you are using. If you’re curious, check
+<a class="reference internal" href="../../_as_gen/pisces.models.core.base.BaseModel.get_active_hooks.html#pisces.models.core.base.BaseModel.get_active_hooks" title="pisces.models.core.base.BaseModel.get_active_hooks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BaseModel.get_active_hooks()</span></code></a> to quickly see what extras your model supports.</p>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../user_guide.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Pisces User Guide</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="galaxies.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Pisces Galaxy Models</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-basics">Model Basics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-model">Building a Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-a-model-from-disk">Loading a Model from Disk</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-geometry-of-the-model">The Geometry of the Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-model-data">Accessing Model Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-metadata-and-profiles">Accessing Metadata and Profiles</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-structure-of-a-model">The Structure of a Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-fields">Model Fields</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extension-hooks">Extension Hooks</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/reference/models/overview.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Eliza Diggins.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

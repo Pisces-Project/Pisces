@@ -1,0 +1,6 @@
+pisces.extensions.simulation.gadget.particles.GadgetParticleDataset.offset\_particle\_positions
+===============================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.gadget.particles
+
+.. automethod:: GadgetParticleDataset.offset_particle_positions

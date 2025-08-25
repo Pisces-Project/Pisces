@@ -1,0 +1,6 @@
+pisces.extensions.simulation.core.initial\_conditions.InitialConditions.remove\_model
+=====================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
+
+.. automethod:: InitialConditions.remove_model

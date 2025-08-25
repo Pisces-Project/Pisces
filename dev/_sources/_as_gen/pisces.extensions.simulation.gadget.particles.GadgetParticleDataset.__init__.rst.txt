@@ -1,0 +1,6 @@
+pisces.extensions.simulation.gadget.particles.GadgetParticleDataset.\_\_init\_\_
+================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.gadget.particles
+
+.. automethod:: GadgetParticleDataset.__init__

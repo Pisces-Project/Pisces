@@ -1,0 +1,6 @@
+profiles.density.JaffeDensityProfile.compute\_circular\_velocity
+================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: JaffeDensityProfile.compute_circular_velocity

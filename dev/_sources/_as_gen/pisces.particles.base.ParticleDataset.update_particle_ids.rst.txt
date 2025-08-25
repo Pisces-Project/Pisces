@@ -1,0 +1,6 @@
+pisces.particles.base.ParticleDataset.update\_particle\_ids
+===========================================================
+
+.. currentmodule:: pisces.particles.base
+
+.. automethod:: ParticleDataset.update_particle_ids

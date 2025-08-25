@@ -1,0 +1,6 @@
+pisces.extensions.simulation.core.frontends.SimulationFrontend.config
+=====================================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.frontends
+
+.. autoproperty:: SimulationFrontend.config

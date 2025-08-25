@@ -1,0 +1,6 @@
+profiles.density.AM06DensityProfile.derived\_profile\_classes
+=============================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: AM06DensityProfile.derived_profile_classes

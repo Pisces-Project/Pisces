@@ -1,0 +1,6 @@
+profiles.entropy.BaseSphericalEntropyProfile.DEFAULT\_PARAMETERS
+================================================================
+
+.. currentmodule:: profiles.entropy
+
+.. autoattribute:: BaseSphericalEntropyProfile.DEFAULT_PARAMETERS

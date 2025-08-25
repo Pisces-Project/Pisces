@@ -1,0 +1,6 @@
+pisces.extensions.simulation.gadget.particles.GadgetParticleDataset.path
+========================================================================
+
+.. currentmodule:: pisces.extensions.simulation.gadget.particles
+
+.. autoproperty:: GadgetParticleDataset.path
