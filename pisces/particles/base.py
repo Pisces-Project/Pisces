@@ -38,6 +38,51 @@ class ParticleDataset:
     if there is need.
     """
 
+    # --------------------------------- #
+    # Class Constants / Flags           #
+    # --------------------------------- #
+    # These flags provide standard names for built-in access to specific
+    # fields in the dataset. This ensures that those areas of the code are
+    # not hardcoded with string literals. These can be overridden in
+    # subclasses if the dataset uses different naming conventions.
+
+    # --- Field Name Conventions --- #
+    _POSITION_FIELD_NAME: str = "particle_position"
+    """str: The standard name for the position field in each particle group."""
+    _VELOCITY_FIELD_NAME: str = "particle_velocity"
+    """str: The standard name for the velocity field in each particle group."""
+    _MASS_FIELD_NAME: str = "particle_mass"
+    """str: The standard name for the mass field in each particle group."""
+    _ID_FIELD_NAME: str = "particle_id"
+    """str: The standard name for the unique identifier field in each particle group."""
+
+    # --- Class Settings --- #
+    _ID_POLICY: str = "global"
+    """str: The policy for assigning unique particle IDs.
+
+    This can be either "global" or "per_group":
+
+    - "global": Particle IDs are unique across all groups in the dataset.
+    - "per_group": Particle IDs are only unique within each group.
+
+    This setting affects how particle IDs are interpreted and managed within the dataset.
+    Default is "global".
+    """
+
+    # --- Metadata Requirements ---#
+    __REQUIRED_GLOBAL_METADATA__: list[str] = ["CLASS_NAME", "GEN_TIME"]
+    """list of str: The required global metadata attributes for this dataset.
+
+    If these are not all present in the global metadata on load, then
+    the dataset will raise a :py:class:`IOError` during validation.
+    """
+    __REQUIRED_GROUP_METADATA__: list[str] = ["NUMBER_OF_PARTICLES"]
+    """list of str: The required group metadata attributes for each particle group.
+
+    If these are not all present in the group metadata, then
+    the dataset will raise a :py:class:`ValueError` during validation.
+    """
+
     @classmethod
     def _serialized(cls, obj):
         """Serialize an object using the dataset's metadata serializer.
@@ -77,25 +122,6 @@ class ParticleDataset:
             return cls.metadata_serializer.deserialize_dict(obj)
         else:
             return cls.metadata_serializer.deserialize_data(obj)
-
-    # -------------------------------------- #
-    # Class Level Flags / Attributes         #
-    # -------------------------------------- #
-    # These flags and attributes can be modified to
-    # alter the behavior of the dataset class in its
-    # subclasses.
-    __REQUIRED_GLOBAL_METADATA__: list[str] = ["CLASS_NAME", "GEN_TIME"]
-    """list of str: The required global metadata attributes for this dataset.
-
-    If these are not all present in the global metadata on load, then
-    the dataset will raise a :py:class:`IOError` during validation.
-    """
-    __REQUIRED_GROUP_METADATA__: list[str] = ["NUMBER_OF_PARTICLES"]
-    """list of str: The required group metadata attributes for each particle group.
-
-    If these are not all present in the group metadata, then
-    the dataset will raise a :py:class:`ValueError` during validation.
-    """
 
     # -------------------------------------- #
     # Initialization and Validation Methods  #
@@ -1205,7 +1231,11 @@ class ParticleDataset:
                     source_group = other.handle[group]
                     self.handle.copy(source=source_group, dest=self.handle, name=group)
 
-    def reduce_group(self, group_name: str, mask: np.ndarray | unyt.unyt_array):
+    def reduce_group(
+        self,
+        group_name: str,
+        mask: np.ndarray | unyt.unyt_array,
+    ):
         """Reduce a particle group by applying a boolean mask.
 
         This method filters all fields in the specified group by the given mask,
@@ -1301,10 +1331,15 @@ class ParticleDataset:
     def offset_particle_positions(self, offset: unyt.unyt_array, groups: list[str] = None):
         """Apply a constant offset to particle positions in specified groups.
 
-        This method adds the given offset vector to the ``particle_position`` field
-        of each specified group. If `groups` is not provided, the offset is applied to all groups.
-
+        The method adds the given offset vector to the particle position field.
         This is the correct way to shift particle coordinates around via translation.
+
+        .. note::
+
+            The name of the particle position field is assumed to be that specified by
+            the class's ``_POSITION_FIELD_NAME`` attribute. If your dataset does not have
+            this field, you will need to manually apply the offset to the appropriate field
+            or rename the field.
 
         Parameters
         ----------
@@ -1321,6 +1356,12 @@ class ParticleDataset:
         ValueError
             If `offset` is not a 3-element vector.
 
+        Notes
+        -----
+        To ensure that this method functions properly across subclasses with various naming
+        conventions, we require that the position field be named according to the class
+        attribute ``_POSITION_FIELD_NAME``. Subclasses may change this attribute to match
+        a particular naming convention.
         """
         # Ensure that the offset gets cast to an unyt array so
         # that it at least has unit attributes. We will check for
@@ -1335,14 +1376,14 @@ class ParticleDataset:
         # cycle through, apply the offset, and continue.
         # If we run into a shape issue, we raise an error.
         for group in groups:
-            field_key = f"{group}.particle_position"
+            field_key = f"{group}.{self.__class__._POSITION_FIELD_NAME}"
 
             if field_key not in self:
                 continue
 
             # Obtain the handle and the units.
-            handle = self.get_particle_field_handle(group, "particle_position")
-            units = self.get_field_units(group, "particle_position")
+            handle = self.get_particle_field_handle(group, self.__class__._POSITION_FIELD_NAME)
+            units = self.get_field_units(group, self.__class__._POSITION_FIELD_NAME)
 
             # Check the shape.
             if handle.shape[-1] != len(offset):
@@ -1354,10 +1395,15 @@ class ParticleDataset:
     def offset_particle_velocities(self, offset: unyt.unyt_array, groups: list[str] = None):
         """Apply a constant offset to particle velocities in specified groups.
 
-        This method adds the given offset vector to the ``particle_velocity`` field
-        of each specified group. If `groups` is not provided, the offset is applied to all groups.
+        The method adds the given offset vector to the particle velocity field.
+        This is the correct way to shift particle coordinates around via translation.
 
-        This is the correct way to impart a bulk velocity or center-of-mass frame shift.
+        .. note::
+
+            The name of the particle velocity field is assumed to be that specified by
+            the class's ``_VELOCITY_FIELD_NAME`` attribute. If your dataset does not have
+            this field, you will need to manually apply the offset to the appropriate field
+            or rename the field.
 
         Parameters
         ----------
@@ -1383,14 +1429,14 @@ class ParticleDataset:
             groups = self.particle_groups
 
         for group in groups:
-            field_key = f"{group}.particle_velocity"
+            field_key = f"{group}.{self.__class__._VELOCITY_FIELD_NAME}"
 
             if field_key not in self:
                 continue
 
-            # Access the velocity dataset and its units.
-            handle = self.get_particle_field_handle(group, "particle_velocity")
-            units = self.get_field_units(group, "particle_velocity")
+            # Obtain the handle and the units.
+            handle = self.get_particle_field_handle(group, self.__class__._VELOCITY_FIELD_NAME)
+            units = self.get_field_units(group, self.__class__._VELOCITY_FIELD_NAME)
 
             # Confirm shape match.
             if handle.shape[-1] != len(offset):
@@ -1403,7 +1449,7 @@ class ParticleDataset:
         self,
         matrix: np.ndarray,
         groups: list[str] = None,
-        fields: tuple[str, ...] = ("particle_position", "particle_velocity"),
+        fields: tuple[str, ...] = None,
     ):
         r"""Apply a linear transformation matrix to vector fields in specified particle groups.
 
@@ -1448,6 +1494,11 @@ class ParticleDataset:
           :math:`N` is the number of particles and :math:`D` is the number of spatial dimensions.
 
         """
+        # Set the default fields to all of the standard vector fields we
+        # expect.
+        if fields is None:
+            fields = (self.__class__._POSITION_FIELD_NAME, self.__class__._VELOCITY_FIELD_NAME)
+
         matrix = np.asarray(matrix)
         if matrix.ndim != 2 or matrix.shape[0] != matrix.shape[1]:
             raise ValueError(f"Transformation matrix must be square (D, D), got shape {matrix.shape}.")
@@ -1478,7 +1529,7 @@ class ParticleDataset:
         norm: np.ndarray,
         angle: float,
         groups: list[str] = None,
-        fields: tuple[str, ...] = ("particle_position", "particle_velocity"),
+        fields: tuple[str, ...] = None,
     ):
         r"""Rotate vector fields in specified particle groups around a given axis.
 
@@ -1514,6 +1565,11 @@ class ParticleDataset:
             If the axis is not a 3-element vector, or if the angle is invalid.
 
         """
+        # Set the default fields to all of the standard vector fields we
+        # expect.
+        if fields is None:
+            fields = (self.__class__._POSITION_FIELD_NAME, self.__class__._VELOCITY_FIELD_NAME)
+
         # Normalize axis
         axis = np.asarray(norm, dtype=float)
         if axis.shape != (3,):
@@ -1532,7 +1588,7 @@ class ParticleDataset:
         direction_vector: np.ndarray,
         spin: float,
         groups: list[str] = None,
-        fields: tuple[str, ...] = ("particle_position", "particle_velocity"),
+        fields: tuple[str, ...] = None,
     ):
         """
         Reorient particles given a direction vector and spin angle.
@@ -1565,6 +1621,11 @@ class ParticleDataset:
         numpy.ndarray
             The 3x3 rotation matrix applied: ``R = R_spin @ R_align``.
         """
+        # Set the default fields to all of the standard vector fields we
+        # expect.
+        if fields is None:
+            fields = (self.__class__._POSITION_FIELD_NAME, self.__class__._VELOCITY_FIELD_NAME)
+
         # Validate and normalize the direction vector for
         # the target axis.
         direction_vector = np.asarray(direction_vector, dtype=float)
@@ -1658,8 +1719,8 @@ class ParticleDataset:
             # Extract the position array for this particle type
             # so that we can determine the dimension and eventually
             # obtain the mask.
-            position_field_handle = self.get_particle_field_handle(particle_type, "particle_position")
-            position_field_units = self.get_field_units(particle_type, "particle_position")
+            position_field_handle = self.get_particle_field_handle(particle_type, self._POSITION_FIELD_NAME)
+            position_field_units = self.get_field_units(particle_type, self._POSITION_FIELD_NAME)
             ndim = position_field_handle.shape[-1]
 
             # Check that the number of dimensions is compatible with the
@@ -1693,6 +1754,170 @@ class ParticleDataset:
             # With the mask, we can now reduce the particle group accordingly.
             self.reduce_group(particle_type, mask)
 
+    def add_particle_ids(self, groups: list[str] = None, policy: str = None, overwrite: bool = False, **kwargs):
+        """
+        Add unique particle IDs to specified groups.
+
+        Parameters
+        ----------
+        groups: list of str, optional
+            List of particle group names to add particle ids to. If None, all groups are used.
+            This can be used both to specify the groups that should be given an ID field and
+            (for ``policy='global'``) to specify the order in which the IDs are assigned to each
+            group.
+        policy : {"global", "per_group"}, optional
+            The policy for assigning particle IDs. Options are:
+
+            - "global": Assign unique IDs across all specified groups, ensuring no duplicates.
+              IDs are assigned sequentially starting from 1, in the order of groups provided.
+            - "per_group": Assign unique IDs within each group, starting from 1 for each group.
+              This allows for duplicate IDs across different groups.
+
+            Default is "global".
+        overwrite: bool, optional
+            Whether to overwrite existing ID fields if they already exist. Defaults to False.
+        kwargs:
+            Additional keyword arguments passed to the ID generation function. The following
+            are recognized:
+
+            - ``start_id``: int, optional
+                The starting ID number for the first group (default is 1).
+            - ``dtype``: numpy dtype, optional
+                The numpy dtype to use for the ID field (default is np.uint32).
+
+        Notes
+        -----
+        Behind the scenes, this method will do two things:
+
+        1. Create a "particle id" group (named following the class's ``_ID_FIELD_NAME`` attribute) which contains
+           an ordered list of all of the particle IDs for that particle type. Depending on the policy,
+           these ids will either start from 1 for each group or will be globally unique across all groups.
+        2. Each group will get a ``PIDOFF`` attribute, which indicates the PID of the very first particle in
+           that group.
+
+        """
+        # Validate the input information, set up the groups, pull the ID
+        # policy, and the starting ID.
+        groups = groups if groups is not None else self.particle_groups
+        if any(grp not in self.particle_groups for grp in groups):
+            raise ValueError("All specified groups must exist in the dataset.")
+
+        policy = policy if policy is not None else self.__class__._ID_POLICY
+        if policy not in ("global", "per_group"):
+            raise ValueError("Policy must be either 'global' or 'per_group'.")
+
+        start_id = kwargs.get("start_id", 1)
+        dtype = kwargs.get("dtype", np.uint32)
+
+        # Now for each group in the list of groups, we go through and add the
+        # relevant field. If we encounter an existing field and overwrite is False,
+        # we raise an error.
+        _offset = start_id
+        for group in groups:
+            # Extract the number of particles in this group
+            num_particles = self.get_group_metadata(group)["NUMBER_OF_PARTICLES"]
+
+            # Generate the IDs based on the policy.
+            _id_array = np.arange(_offset, _offset + num_particles, dtype=dtype)
+            self.add_particle_field(
+                group_name=group,
+                field_name=self.__class__._ID_FIELD_NAME,
+                data=unyt.unyt_array(_id_array, ""),
+                overwrite=overwrite,
+            )
+            self.update_group_metadata(group, {"PIDOFF": _offset})
+
+            if policy == "global":
+                _offset += num_particles
+            else:
+                pass
+
+    def update_particle_ids(self, groups: list[str] = None, policy: str = None, **kwargs):
+        """
+        Update (reset) particle IDs for groups that already have an ID field.
+
+        This method goes through each of the specified groups and checks for the existence
+        of a particle ID field. If the field exists, it is overwritten with a new set of IDs
+        according to the specified policy. If the field does not exist, the group is skipped
+        silently.
+
+        For ``policy='global'``, IDs are assigned sequentially across all specified groups. As such,
+        even if a group does not have particle ids, it's total number of particles is still counted
+        towards the global ID assignment.
+
+        Parameters
+        ----------
+        groups: list of str, optional
+            List of particle group names to add particle ids to. If None, all groups are used.
+            This can be used both to specify the groups that should be given an ID field and
+            (for ``policy='global'``) to specify the order in which the IDs are assigned to each
+            group.
+        policy : {"global", "per_group"}, optional
+            The policy for assigning particle IDs. Options are:
+
+            - "global": Assign unique IDs across all specified groups, ensuring no duplicates.
+              IDs are assigned sequentially starting from 1, in the order of groups provided.
+            - "per_group": Assign unique IDs within each group, starting from 1 for each group.
+              This allows for duplicate IDs across different groups.
+
+            Default is "global".
+        kwargs:
+            Additional keyword arguments passed to the ID generation function. The following
+            are recognized:
+
+            - ``start_id``: int, optional
+                The starting ID number for the first group (default is 1).
+            - ``dtype``: numpy dtype, optional
+                The numpy dtype to use for the ID field (default is np.uint32).
+
+        Notes
+        -----
+        - Groups without an existing ID field are skipped silently.
+        - This operation **overwrites** the existing ID field for selected groups.
+        - IDs are always assigned as **1-based** positive integers, consistent with
+          Gadget and most downstream analysis tools.
+        """
+        # Validate the input information, set up the groups, pull the ID
+        # policy, and the starting ID.
+        groups = groups if groups is not None else self.particle_groups
+        if any(grp not in self.particle_groups for grp in groups):
+            raise ValueError("All specified groups must exist in the dataset.")
+
+        policy = policy if policy is not None else self.__class__._ID_POLICY
+        if policy not in ("global", "per_group"):
+            raise ValueError("Policy must be either 'global' or 'per_group'.")
+
+        start_id = kwargs.get("start_id", 1)
+        dtype = kwargs.get("dtype", np.uint32)
+
+        # Track running offset for global assignment
+        offset = start_id
+        id_field = self.__class__._ID_FIELD_NAME
+
+        for group in groups:
+            n = int(self.get_group_metadata(group)["NUMBER_OF_PARTICLES"])
+
+            if f"{group}.{id_field}" in self:
+                # Group has an existing ID field → reset it
+                if policy == "global":
+                    ids = np.arange(offset, offset + n, dtype=dtype)
+                    self.update_group_metadata(group, {"PIDOFF": offset})
+                else:  # per_group
+                    ids = np.arange(start_id, start_id + n, dtype=dtype)
+                    self.update_group_metadata(group, {"PIDOFF": start_id})
+
+                self.add_particle_field(
+                    group_name=group,
+                    field_name=id_field,
+                    data=unyt.unyt_array(ids, ""),  # dimensionless
+                    overwrite=True,
+                )
+
+            # For global policy: always advance the offset,
+            # even if the group did not have an ID field.
+            if policy == "global":
+                offset += n
+
     # ------------------------------------- #
     # Generation Methods                    #
     # ------------------------------------- #
@@ -1700,8 +1925,8 @@ class ParticleDataset:
     def build_particle_dataset(
         cls,
         path: str | Path,
-        fields: dict[str, unyt.unyt_array] = None,
         *args,
+        fields: dict[str, unyt.unyt_array] = None,
         overwrite: bool = False,
         **kwargs,
     ):
