@@ -1,6 +1,0 @@
-profiles.density.CoredPowerLawDensityProfile.compute\_einstein\_radius
-======================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredPowerLawDensityProfile.compute_einstein_radius

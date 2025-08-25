@@ -1,6 +1,0 @@
-profiles.density.BetaModelDensityProfile.derived\_profile\_classes
-==================================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: BetaModelDensityProfile.derived_profile_classes

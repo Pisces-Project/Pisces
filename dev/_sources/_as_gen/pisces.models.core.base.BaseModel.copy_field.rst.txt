@@ -1,6 +1,0 @@
-pisces.models.core.base.BaseModel.copy\_field
-=============================================
-
-.. currentmodule:: pisces.models.core.base
-
-.. automethod:: BaseModel.copy_field

@@ -1,6 +1,0 @@
-profiles.density.SersicProfile.to\_yaml
-=======================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: SersicProfile.to_yaml

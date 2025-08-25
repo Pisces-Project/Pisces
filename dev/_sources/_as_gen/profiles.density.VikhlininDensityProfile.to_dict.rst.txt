@@ -1,6 +1,0 @@
-profiles.density.VikhlininDensityProfile.to\_dict
-=================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: VikhlininDensityProfile.to_dict

@@ -1,6 +1,0 @@
-profiles.density.SingularIsothermalDensityProfile.to\_yaml
-==========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: SingularIsothermalDensityProfile.to_yaml

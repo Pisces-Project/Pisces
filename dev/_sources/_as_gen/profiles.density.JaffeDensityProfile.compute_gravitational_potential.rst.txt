@@ -1,6 +1,0 @@
-profiles.density.JaffeDensityProfile.compute\_gravitational\_potential
-======================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: JaffeDensityProfile.compute_gravitational_potential

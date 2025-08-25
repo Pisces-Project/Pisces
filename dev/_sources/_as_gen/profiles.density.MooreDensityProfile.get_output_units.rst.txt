@@ -1,6 +1,0 @@
-profiles.density.MooreDensityProfile.get\_output\_units
-=======================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: MooreDensityProfile.get_output_units

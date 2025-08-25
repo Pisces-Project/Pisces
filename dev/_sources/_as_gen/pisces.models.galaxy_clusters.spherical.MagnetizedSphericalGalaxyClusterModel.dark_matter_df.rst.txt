@@ -1,6 +1,0 @@
-pisces.models.galaxy\_clusters.spherical.MagnetizedSphericalGalaxyClusterModel.dark\_matter\_df
-===============================================================================================
-
-.. currentmodule:: pisces.models.galaxy_clusters.spherical
-
-.. autoproperty:: MagnetizedSphericalGalaxyClusterModel.dark_matter_df

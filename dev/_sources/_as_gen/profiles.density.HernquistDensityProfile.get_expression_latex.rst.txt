@@ -1,6 +1,0 @@
-profiles.density.HernquistDensityProfile.get\_expression\_latex
-===============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: HernquistDensityProfile.get_expression_latex

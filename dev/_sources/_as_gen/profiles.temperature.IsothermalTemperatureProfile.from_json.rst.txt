@@ -1,6 +1,0 @@
-profiles.temperature.IsothermalTemperatureProfile.from\_json
-============================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: IsothermalTemperatureProfile.from_json

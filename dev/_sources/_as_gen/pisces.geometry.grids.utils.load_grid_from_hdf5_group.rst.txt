@@ -1,6 +1,0 @@
-pisces.geometry.grids.utils.load\_grid\_from\_hdf5\_group
-=========================================================
-
-.. currentmodule:: pisces.geometry.grids.utils
-
-.. autofunction:: load_grid_from_hdf5_group

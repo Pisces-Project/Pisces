@@ -1,6 +1,0 @@
-pisces.models.galaxy\_clusters.spherical.MagnetizedSphericalGalaxyClusterModel.remove\_profile
-==============================================================================================
-
-.. currentmodule:: pisces.models.galaxy_clusters.spherical
-
-.. automethod:: MagnetizedSphericalGalaxyClusterModel.remove_profile

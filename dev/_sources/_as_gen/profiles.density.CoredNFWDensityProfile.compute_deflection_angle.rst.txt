@@ -1,6 +1,0 @@
-profiles.density.CoredNFWDensityProfile.compute\_deflection\_angle
-==================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredNFWDensityProfile.compute_deflection_angle

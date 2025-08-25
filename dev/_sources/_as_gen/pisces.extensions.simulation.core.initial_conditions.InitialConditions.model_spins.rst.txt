@@ -1,6 +1,0 @@
-pisces.extensions.simulation.core.initial\_conditions.InitialConditions.model\_spins
-====================================================================================
-
-.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
-
-.. autoproperty:: InitialConditions.model_spins

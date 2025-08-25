@@ -1,6 +1,0 @@
-profiles.density.KingDensityProfile.compute\_cosmological\_overdensity\_profile
-===============================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: KingDensityProfile.compute_cosmological_overdensity_profile

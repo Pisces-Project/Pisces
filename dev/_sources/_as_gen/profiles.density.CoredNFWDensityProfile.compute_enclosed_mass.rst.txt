@@ -1,6 +1,0 @@
-profiles.density.CoredNFWDensityProfile.compute\_enclosed\_mass
-===============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredNFWDensityProfile.compute_enclosed_mass

@@ -1,6 +1,0 @@
-pisces.models.core.base.BaseModel.handle
-========================================
-
-.. currentmodule:: pisces.models.core.base
-
-.. autoproperty:: BaseModel.handle

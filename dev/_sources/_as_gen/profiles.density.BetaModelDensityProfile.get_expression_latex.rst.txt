@@ -1,6 +1,0 @@
-profiles.density.BetaModelDensityProfile.get\_expression\_latex
-===============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BetaModelDensityProfile.get_expression_latex

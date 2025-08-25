@@ -1,6 +1,0 @@
-pisces.models.stars.polytropes.PolytropicStarModel.coordinate\_system
-=====================================================================
-
-.. currentmodule:: pisces.models.stars.polytropes
-
-.. autoproperty:: PolytropicStarModel.coordinate_system

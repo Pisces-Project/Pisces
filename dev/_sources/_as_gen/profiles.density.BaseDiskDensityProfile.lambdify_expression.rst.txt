@@ -1,6 +1,0 @@
-profiles.density.BaseDiskDensityProfile.lambdify\_expression
-============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BaseDiskDensityProfile.lambdify_expression

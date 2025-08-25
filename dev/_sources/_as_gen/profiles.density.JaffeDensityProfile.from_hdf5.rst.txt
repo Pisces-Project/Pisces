@@ -1,6 +1,0 @@
-profiles.density.JaffeDensityProfile.from\_hdf5
-===============================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: JaffeDensityProfile.from_hdf5

@@ -1,6 +1,0 @@
-profiles.base.BaseSphericalRadialProfile.get\_expression\_latex
-===============================================================
-
-.. currentmodule:: profiles.base
-
-.. automethod:: BaseSphericalRadialProfile.get_expression_latex

@@ -1,6 +1,0 @@
-profiles.temperature.CoolingFlowTemperatureProfile.get\_output\_units
-=====================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. automethod:: CoolingFlowTemperatureProfile.get_output_units
