@@ -293,6 +293,36 @@ class HDF5Serializer:
         return {k: cls.deserialize_data(v) for k, v in data.items()}
 
 
+class NullHDF5Serializer(HDF5Serializer):
+    """A no-op serializer that performs no serialization/deserialization."""
+
+    # ----------------------------------------------- #
+    # Class Variables / Registry                      #
+    # ----------------------------------------------- #
+    __REGISTRY__: dict[type, tuple[str, Callable[[Any], dict], Callable[[dict], Any]]] = {}
+
+    # -------- public API (updated) --------
+    @classmethod
+    def serialize_data(cls, data: Any) -> Any:
+        """Recursively serialize `data` to a JSON string for HDF5 attributes."""
+        return data
+
+    @classmethod
+    def deserialize_data(cls, data: Any) -> Any:
+        """Recursively deserialize a JSON string produced by `serialize_data`."""
+        return data
+
+    @classmethod
+    def serialize_dict(cls, data: dict) -> dict:
+        """Recursively serialize a dict’s values (keys must be strings)."""
+        return data
+
+    @classmethod
+    def deserialize_dict(cls, data: dict) -> dict:
+        """Recursively deserialize a dict produced by `serialize_dict`."""
+        return data
+
+
 # ----------------------------------------------- #
 # YAML Reader/Writer tools                        #
 # ----------------------------------------------- #
