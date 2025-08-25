@@ -11,6 +11,7 @@ requirements.
 import shutil
 from abc import ABC, abstractmethod
 from pathlib import Path
+from typing import Any
 
 from pisces.utilities.config import ConfigManager
 
@@ -495,7 +496,7 @@ class SimulationFrontend(ABC):
         """
         pass
 
-    def generate_initial_conditions(self, *args, **kwargs):
+    def generate_initial_conditions(self, *args, **kwargs) -> Any:
         """
         Generate the necessary initial condition files from this frontend.
 
@@ -516,6 +517,10 @@ class SimulationFrontend(ABC):
         **kwargs
             Keyword arguments forwarded to both validation and generation.
 
+        Returns
+        -------
+        The output from :meth:`_generate_initial_conditions`, which may vary
+        depending on the frontend implementation.
         """
         self.logger.info(f"[{self.__class__.__name__}] Generating ICs - {self.initial_conditions}...")
 
@@ -524,7 +529,7 @@ class SimulationFrontend(ABC):
         self.logger.info(f"[{self.__class__.__name__}]\t Validating runtime configuration... [DONE]")
 
         # Then generate the initial conditions files.
-        self._generate_initial_conditions(*args, **kwargs)
+        out = self._generate_initial_conditions(*args, **kwargs)
         self.logger.info(f"[{self.__class__.__name__}] Generating ICs - {self.initial_conditions}... [DONE]")
 
-        return
+        return out
