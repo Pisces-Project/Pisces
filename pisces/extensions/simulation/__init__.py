@@ -7,6 +7,8 @@ It provides a core class (:class:`~pisces.extensions.simulation.core.initial_con
 that can load, manipulate, and export IC datasets in formats compatible with popular simulation frameworks.
 """
 
-__all__ = ["InitialConditions"]
+__all__ = ["InitialConditions", "Gadget4Frontend", "gadget"]
 
+from . import gadget
 from .core import InitialConditions
+from .gadget import Gadget4Frontend
