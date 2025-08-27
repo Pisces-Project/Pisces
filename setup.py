@@ -16,6 +16,11 @@ extensions = cythonize(
             sources=["pisces/physics/virialization/_eddington_sampling.pyx"],
             include_dirs=[np.get_include()],
         ),
+        Extension(
+            name="pisces.math_utils._random_fields",
+            sources=["pisces/math_utils/_random_fields.pyx"],
+            include_dirs=[np.get_include()],
+        ),
     ],
     language_level="3",
 )
