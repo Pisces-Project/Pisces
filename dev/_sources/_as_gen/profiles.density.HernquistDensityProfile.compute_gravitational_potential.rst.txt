@@ -1,6 +1,0 @@
-profiles.density.HernquistDensityProfile.compute\_gravitational\_potential
-==========================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: HernquistDensityProfile.compute_gravitational_potential

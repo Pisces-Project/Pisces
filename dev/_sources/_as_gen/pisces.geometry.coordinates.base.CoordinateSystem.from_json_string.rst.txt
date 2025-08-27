@@ -1,6 +1,0 @@
-pisces.geometry.coordinates.base.CoordinateSystem.from\_json\_string
-====================================================================
-
-.. currentmodule:: pisces.geometry.coordinates.base
-
-.. automethod:: CoordinateSystem.from_json_string

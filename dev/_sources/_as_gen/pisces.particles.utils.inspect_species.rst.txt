@@ -1,6 +1,0 @@
-pisces.particles.utils.inspect\_species
-=======================================
-
-.. currentmodule:: pisces.particles.utils
-
-.. autofunction:: inspect_species

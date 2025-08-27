@@ -1,6 +1,0 @@
-profiles.density.GeneralizedNFWDensityProfile.get\_output\_units
-================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: GeneralizedNFWDensityProfile.get_output_units

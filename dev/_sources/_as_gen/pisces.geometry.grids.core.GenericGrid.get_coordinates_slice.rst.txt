@@ -1,6 +1,0 @@
-pisces.geometry.grids.core.GenericGrid.get\_coordinates\_slice
-==============================================================
-
-.. currentmodule:: pisces.geometry.grids.core
-
-.. automethod:: GenericGrid.get_coordinates_slice

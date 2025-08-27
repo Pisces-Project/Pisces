@@ -1,6 +1,0 @@
-pisces.particles.base.ParticleDataset.add\_particle\_ids
-========================================================
-
-.. currentmodule:: pisces.particles.base
-
-.. automethod:: ParticleDataset.add_particle_ids

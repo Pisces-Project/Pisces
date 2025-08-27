@@ -1,6 +1,0 @@
-profiles.temperature.IsothermalTemperatureProfile.parameter\_symbols
-====================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. autoproperty:: IsothermalTemperatureProfile.parameter_symbols

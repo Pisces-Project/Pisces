@@ -1,6 +1,0 @@
-pisces.models.core.utils.inspect\_model\_metadata
-=================================================
-
-.. currentmodule:: pisces.models.core.utils
-
-.. autofunction:: inspect_model_metadata

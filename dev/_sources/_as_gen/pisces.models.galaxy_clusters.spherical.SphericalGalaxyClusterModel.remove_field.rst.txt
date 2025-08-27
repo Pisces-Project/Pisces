@@ -1,6 +1,0 @@
-pisces.models.galaxy\_clusters.spherical.SphericalGalaxyClusterModel.remove\_field
-==================================================================================
-
-.. currentmodule:: pisces.models.galaxy_clusters.spherical
-
-.. automethod:: SphericalGalaxyClusterModel.remove_field

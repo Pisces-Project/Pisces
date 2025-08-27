@@ -1,6 +1,0 @@
-pisces.models.core.base.BaseModel.config
-========================================
-
-.. currentmodule:: pisces.models.core.base
-
-.. autoattribute:: BaseModel.config

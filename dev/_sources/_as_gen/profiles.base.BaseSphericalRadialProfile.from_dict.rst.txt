@@ -1,6 +1,0 @@
-profiles.base.BaseSphericalRadialProfile.from\_dict
-===================================================
-
-.. currentmodule:: profiles.base
-
-.. automethod:: BaseSphericalRadialProfile.from_dict

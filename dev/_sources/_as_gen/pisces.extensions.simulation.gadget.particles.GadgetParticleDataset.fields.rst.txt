@@ -1,6 +1,0 @@
-pisces.extensions.simulation.gadget.particles.GadgetParticleDataset.fields
-==========================================================================
-
-.. currentmodule:: pisces.extensions.simulation.gadget.particles
-
-.. autoproperty:: GadgetParticleDataset.fields

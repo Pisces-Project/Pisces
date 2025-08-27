@@ -1,6 +1,0 @@
-profiles.density.JaffeDensityProfile.lambdify\_expression
-=========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: JaffeDensityProfile.lambdify_expression

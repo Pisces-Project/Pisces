@@ -1,6 +1,0 @@
-pisces.utilities.io\_tools.UnytQuantityHandler.from\_yaml
-=========================================================
-
-.. currentmodule:: pisces.utilities.io_tools
-
-.. automethod:: UnytQuantityHandler.from_yaml

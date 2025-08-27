@@ -1,6 +1,0 @@
-profiles.density.NFWDensityProfile.parameters
-=============================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: NFWDensityProfile.parameters

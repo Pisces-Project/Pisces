@@ -1,6 +1,0 @@
-profiles.entropy.BaseSphericalEntropyProfile.\_\_init\_\_
-=========================================================
-
-.. currentmodule:: profiles.entropy
-
-.. automethod:: BaseSphericalEntropyProfile.__init__

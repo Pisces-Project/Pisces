@@ -1,6 +1,0 @@
-pisces.geometry.coordinates.coordinate\_systems.PolarCoordinatesSystem.copy
-===========================================================================
-
-.. currentmodule:: pisces.geometry.coordinates.coordinate_systems
-
-.. automethod:: PolarCoordinatesSystem.copy

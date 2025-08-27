@@ -1,6 +1,0 @@
-profiles.density.CoredPowerLawDensityProfile.compute\_gravitational\_potential
-==============================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredPowerLawDensityProfile.compute_gravitational_potential
