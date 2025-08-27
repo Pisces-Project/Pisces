@@ -1,0 +1,6 @@
+profiles.density.DehnenDensityProfile.list\_derived\_profiles
+=============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DehnenDensityProfile.list_derived_profiles

@@ -1,0 +1,6 @@
+pisces.models.core.base.BaseModel.grid
+======================================
+
+.. currentmodule:: pisces.models.core.base
+
+.. autoproperty:: BaseModel.grid

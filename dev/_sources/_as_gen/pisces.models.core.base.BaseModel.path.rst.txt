@@ -1,0 +1,6 @@
+pisces.models.core.base.BaseModel.path
+======================================
+
+.. currentmodule:: pisces.models.core.base
+
+.. autoproperty:: BaseModel.path

@@ -1,0 +1,6 @@
+profiles.density.SNFWDensityProfile.from\_yaml
+==============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SNFWDensityProfile.from_yaml

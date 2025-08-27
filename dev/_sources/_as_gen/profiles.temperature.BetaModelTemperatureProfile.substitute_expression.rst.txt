@@ -1,0 +1,6 @@
+profiles.temperature.BetaModelTemperatureProfile.substitute\_expression
+=======================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: BetaModelTemperatureProfile.substitute_expression

@@ -1,0 +1,1558 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pisces.math_utils.random_fields &#8212; Pisces  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pisces/math_utils/random_fields';</script>
+    <link rel="icon" href="../../../_static/pisces_favicon.svg"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/pisces.svg" class="logo__image only-light" alt="Pisces Documentation - Home"/>
+    <img src="../../../_static/pisces.svg" class="logo__image only-dark pst-js-only" alt="Pisces Documentation - Home"/>
+  
+  
+    <p class="title logo__title">Pisces</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../reference/user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/pisces-project/pisces" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../reference/user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/pisces-project/pisces" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">pisces.math_utils.random_fields</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for pisces.math_utils.random_fields</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Support for generating random fields and related utilities.</span>
+
+<span class="sd">This module provides base classes and helper functions for constructing</span>
+<span class="sd">random fields on regular grids, with particular emphasis on Gaussian</span>
+<span class="sd">Random Fields (GRFs) specified by an input power spectrum.</span>
+
+<span class="sd">Overview</span>
+<span class="sd">--------</span>
+<span class="sd">The key abstraction is the :class:`RandomField` base class, which defines</span>
+<span class="sd">the spatial domain, Fourier-space utilities, and interface for generating</span>
+<span class="sd">random fields. A concrete implementation,</span>
+<span class="sd">:class:`GaussianRandomField`, generates realizations of Gaussian random</span>
+<span class="sd">fields by sampling complex Fourier coefficients consistent with a chosen</span>
+<span class="sd">power spectrum, followed by an inverse FFT to real space.</span>
+
+<span class="sd">This framework is useful in astrophysical and cosmological applications</span>
+<span class="sd">(e.g. generating initial conditions for magnetic fields in galaxy</span>
+<span class="sd">clusters), as well as in more general stochastic modeling contexts where</span>
+<span class="sd">random fields with prescribed statistics are needed.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">._random_fields</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">div_clean_c_2d</span><span class="p">,</span>
+    <span class="n">div_clean_c_3d</span><span class="p">,</span>
+    <span class="n">div_clean_fd_2d</span><span class="p">,</span>
+    <span class="n">div_clean_fd_3d</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="c1"># ========================================= #</span>
+<span class="c1"># Power Spectrum Definitions                #</span>
+<span class="c1"># ========================================= #</span>
+<div class="viewcode-block" id="generate_white_noise_power_spectrum">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.generate_white_noise_power_spectrum.html#pisces.math_utils.random_fields.generate_white_noise_power_spectrum">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_white_noise_power_spectrum</span><span class="p">(</span><span class="n">amplitude</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a white-noise (flat) power spectrum function.</span>
+
+<span class="sd">    A white-noise spectrum is defined by a constant power at all</span>
+<span class="sd">    wavenumbers :math:`k`, i.e.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        P(k) = A,</span>
+
+<span class="sd">    where :math:`A` is the amplitude. This corresponds to a random</span>
+<span class="sd">    field with equal variance contributed by all Fourier modes,</span>
+<span class="sd">    independent of scale.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    amplitude : float, optional</span>
+<span class="sd">        Constant amplitude :math:`A` of the power spectrum.</span>
+<span class="sd">        Default is ``1.0``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Callable</span>
+<span class="sd">        A function ``P(kx, ky, ...)`` that takes arrays of wavenumber</span>
+<span class="sd">        components and</span>
+<span class="sd">        returns the constant power spectrum evaluated on that grid.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    .. plot::</span>
+<span class="sd">        :include-source:</span>
+
+<span class="sd">        from pisces.math_utils.random_fields import generate_white_noise_power_spectrum</span>
+<span class="sd">        L, n = 10.0, 128</span>
+<span class="sd">        k_grid = np.fft.fftfreq(n, d=L/n) * 2 * np.pi</span>
+<span class="sd">        power_spectrum = generate_white_noise_power_spectrum()</span>
+<span class="sd">        ps_array = power_spectrum(k_grid)</span>
+
+<span class="sd">        import matplotlib.pyplot as plt</span>
+<span class="sd">        plt.loglog(k_grid, ps_array)</span>
+<span class="sd">        plt.xlabel(&#39;Wavenumber k&#39;)</span>
+<span class="sd">        plt.ylabel(&#39;Power Spectrum P(k)&#39;)</span>
+<span class="sd">        plt.title(&#39;White Noise Power Spectrum&#39;)</span>
+<span class="sd">        plt.show()</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_ps_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">amplitude</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">_ps_func</span></div>
+
+
+
+<div class="viewcode-block" id="generate_power_law_power_spectrum">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.generate_power_law_power_spectrum.html#pisces.math_utils.random_fields.generate_power_law_power_spectrum">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_power_law_power_spectrum</span><span class="p">(</span><span class="n">amplitude</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">k0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">slope</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mi">11</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a power-law power spectrum function.</span>
+
+<span class="sd">    A power-law spectrum is defined by</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        P(k) = A \left( \frac{k}{k_0} \right)^{\alpha},</span>
+
+<span class="sd">    where :math:`A` is the amplitude, :math:`k_0` is a reference</span>
+<span class="sd">    wavenumber for normalization, and :math:`\alpha` is the slope.</span>
+<span class="sd">    A slope of :math:`\alpha = -11/3` corresponds to the Kolmogorov</span>
+<span class="sd">    scaling for incompressible turbulence.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    amplitude : float, optional</span>
+<span class="sd">        Normalization amplitude :math:`A`. Default is ``1.0``.</span>
+<span class="sd">    k0 : float, optional</span>
+<span class="sd">        Reference wavenumber :math:`k_0`. Default is ``1.0``.</span>
+<span class="sd">    slope : float, optional</span>
+<span class="sd">        Power-law slope :math:`\alpha`. Default is ``-11/3``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Callable</span>
+<span class="sd">        A function ``P(kx, ky, ...)`` that takes arrays of wavenumber</span>
+<span class="sd">        components</span>
+<span class="sd">        and returns the power-law spectrum evaluated on that grid.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    .. plot::</span>
+<span class="sd">        :include-source:</span>
+
+<span class="sd">        from pisces.math_utils.random_fields import generate_power_law_power_spectrum</span>
+<span class="sd">        L, n = 10.0, 128</span>
+<span class="sd">        k_grid = np.fft.fftfreq(n, d=L/n) * 2 * np.pi</span>
+<span class="sd">        k_mag = np.abs(k_grid)</span>
+<span class="sd">        power_spectrum = generate_power_law_power_spectrum(slope=-11/3)</span>
+<span class="sd">        ps_array = power_spectrum(k_mag)</span>
+
+<span class="sd">        import matplotlib.pyplot as plt</span>
+<span class="sd">        plt.loglog(k_mag[1:], ps_array[1:])  # skip k=0</span>
+<span class="sd">        plt.xlabel(&#39;Wavenumber k&#39;)</span>
+<span class="sd">        plt.ylabel(&#39;Power Spectrum P(k)&#39;)</span>
+<span class="sd">        plt.title(&#39;Power-Law Spectrum (slope = -11/3)&#39;)</span>
+<span class="sd">        plt.show()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_ps_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">k_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">ki</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">ki</span> <span class="ow">in</span> <span class="n">args</span><span class="p">))</span>
+        <span class="n">P</span> <span class="o">=</span> <span class="n">amplitude</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">k_mag</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">k_mag</span> <span class="o">/</span> <span class="n">k0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span> <span class="o">**</span> <span class="n">slope</span>
+        <span class="n">P</span><span class="p">[</span><span class="n">k_mag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">return</span> <span class="n">P</span>
+
+    <span class="k">return</span> <span class="n">_ps_func</span></div>
+
+
+
+<div class="viewcode-block" id="generate_gaussian_cutoff_power_spectrum">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.generate_gaussian_cutoff_power_spectrum.html#pisces.math_utils.random_fields.generate_gaussian_cutoff_power_spectrum">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_gaussian_cutoff_power_spectrum</span><span class="p">(</span><span class="n">amplitude</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">k0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a Gaussian-cutoff power spectrum function.</span>
+
+<span class="sd">    The Gaussian-cutoff spectrum is defined by</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        P(k) = A \exp\!\left[-\frac{1}{2}</span>
+<span class="sd">        \left(\frac{k - k_0}{\sigma}\right)^2\right],</span>
+
+<span class="sd">    where :math:`A` is the amplitude, :math:`k_0` is the central</span>
+<span class="sd">    wavenumber, and :math:`\sigma` controls the width of the Gaussian.</span>
+<span class="sd">    This spectrum is peaked around :math:`k_0` and falls off rapidly</span>
+<span class="sd">    away from the peak.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    amplitude : float, optional</span>
+<span class="sd">        Normalization amplitude :math:`A`. Default is ``1.0``.</span>
+<span class="sd">    k0 : float, optional</span>
+<span class="sd">        Central wavenumber :math:`k_0`. Default is ``1.0``.</span>
+<span class="sd">    sigma : float, optional</span>
+<span class="sd">        Width of the Gaussian :math:`\sigma`. Default is ``1.0``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Callable</span>
+<span class="sd">        A function ``P(kx, ky, ...)`` that takes arrays of wavenumber</span>
+<span class="sd">        components</span>
+<span class="sd">        and returns the Gaussian-cutoff spectrum.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    .. plot::</span>
+<span class="sd">        :include-source:</span>
+
+<span class="sd">        from pisces.math_utils.random_fields import generate_gaussian_cutoff_power_spectrum</span>
+<span class="sd">        L, n = 10.0, 256</span>
+<span class="sd">        k_grid = np.fft.fftfreq(n, d=L/n) * 2 * np.pi</span>
+<span class="sd">        k_mag = np.abs(k_grid)</span>
+<span class="sd">        power_spectrum = generate_gaussian_cutoff_power_spectrum(k0=5.0, sigma=2.0)</span>
+<span class="sd">        ps_array = power_spectrum(k_mag)</span>
+
+<span class="sd">        import matplotlib.pyplot as plt</span>
+<span class="sd">        plt.plot(k_mag, ps_array)</span>
+<span class="sd">        plt.xlabel(&#39;Wavenumber k&#39;)</span>
+<span class="sd">        plt.ylabel(&#39;Power Spectrum P(k)&#39;)</span>
+<span class="sd">        plt.title(&#39;Gaussian-Cutoff Spectrum&#39;)</span>
+<span class="sd">        plt.show()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_ps_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">k_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">ki</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">ki</span> <span class="ow">in</span> <span class="n">args</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">amplitude</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">k_mag</span> <span class="o">-</span> <span class="n">k0</span><span class="p">)</span> <span class="o">/</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_ps_func</span></div>
+
+
+
+<div class="viewcode-block" id="generate_kolmogorov_power_spectrum">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.generate_kolmogorov_power_spectrum.html#pisces.math_utils.random_fields.generate_kolmogorov_power_spectrum">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_kolmogorov_power_spectrum</span><span class="p">(</span>
+    <span class="n">amplitude</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">k0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">k_cut</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a Kolmogorov-like turbulence power spectrum function.</span>
+
+<span class="sd">    The Kolmogorov turbulence scaling predicts an energy spectrum</span>
+<span class="sd">    :math:`E(k) \propto k^{-5/3}`, which corresponds to a power spectrum</span>
+<span class="sd">    :math:`P(k) \propto k^{-11/3}` in three dimensions. This function</span>
+<span class="sd">    implements</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        P(k) = A \left(\frac{k}{k_0}\right)^{-11/3}</span>
+<span class="sd">        \exp\!\left[-\left(\frac{k}{k_\mathrm{cut}}\right)^2\right],</span>
+
+<span class="sd">    where the exponential cutoff is optional and only applied if</span>
+<span class="sd">    :math:`k_\mathrm{cut}` is specified.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    amplitude : float, optional</span>
+<span class="sd">        Normalization amplitude :math:`A`. Default is ``1.0``.</span>
+<span class="sd">    k0 : float, optional</span>
+<span class="sd">        Reference wavenumber :math:`k_0`. Default is ``1.0``.</span>
+<span class="sd">    k_cut : float, optional</span>
+<span class="sd">        High-wavenumber cutoff :math:`k_\mathrm{cut}`. If provided, applies</span>
+<span class="sd">        a Gaussian suppression factor. Default is ``None``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Callable</span>
+<span class="sd">        A function ``P(kx, ky, ...)`` that takes arrays of wavenumber</span>
+<span class="sd">        components</span>
+<span class="sd">        and returns the Kolmogorov-like spectrum.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    .. plot::</span>
+<span class="sd">        :include-source:</span>
+
+<span class="sd">        from pisces.math_utils.random_fields import generate_kolmogorov_power_spectrum</span>
+<span class="sd">        L, n = 10.0, 256</span>
+<span class="sd">        k_grid = np.fft.fftfreq(n, d=L/n) * 2 * np.pi</span>
+<span class="sd">        k_mag = np.abs(k_grid)</span>
+<span class="sd">        power_spectrum = generate_kolmogorov_power_spectrum(amplitude=1.0, k0=1.0, k_cut=20.0)</span>
+<span class="sd">        ps_array = power_spectrum(k_mag)</span>
+
+<span class="sd">        import matplotlib.pyplot as plt</span>
+<span class="sd">        plt.loglog(k_mag[1:], ps_array[1:])  # skip k=0</span>
+<span class="sd">        plt.xlabel(&#39;Wavenumber k&#39;)</span>
+<span class="sd">        plt.ylabel(&#39;Power Spectrum P(k)&#39;)</span>
+<span class="sd">        plt.title(&#39;Kolmogorov-like Spectrum with Cutoff&#39;)</span>
+<span class="sd">        plt.show()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">k_cut</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">_ps_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="n">k_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">ki</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">ki</span> <span class="ow">in</span> <span class="n">args</span><span class="p">))</span>
+            <span class="n">P</span> <span class="o">=</span> <span class="n">amplitude</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">k_mag</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">k_mag</span> <span class="o">/</span> <span class="n">k0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">11</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="n">P</span><span class="p">[</span><span class="n">k_mag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">return</span> <span class="n">P</span>
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">_ps_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="n">k_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">ki</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">ki</span> <span class="ow">in</span> <span class="n">args</span><span class="p">))</span>
+            <span class="n">P</span> <span class="o">=</span> <span class="n">amplitude</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">k_mag</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">k_mag</span> <span class="o">/</span> <span class="n">k0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">11</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">((</span><span class="n">k_mag</span> <span class="o">/</span> <span class="n">k_cut</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="n">P</span><span class="p">[</span><span class="n">k_mag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">return</span> <span class="n">P</span>
+
+    <span class="k">return</span> <span class="n">_ps_func</span></div>
+
+
+
+<div class="viewcode-block" id="generate_zh11_power_spectrum">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.generate_zh11_power_spectrum.html#pisces.math_utils.random_fields.generate_zh11_power_spectrum">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_zh11_power_spectrum</span><span class="p">(</span><span class="n">amplitude</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">k0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">k1</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a Kolmogorov-like power spectrum following ZuHone et al. (2011).</span>
+
+<span class="sd">    The spectrum is defined as</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        P(k) = A \, k^{-11/3} \,</span>
+<span class="sd">        \exp\!\left[-\left(\frac{k}{k_0}\right)^2\right]</span>
+<span class="sd">        \exp\!\left[-\frac{k_1}{k}\right],</span>
+
+<span class="sd">    where</span>
+
+<span class="sd">    - :math:`A` is the normalization amplitude,</span>
+<span class="sd">    - :math:`k_0` sets the high-wavenumber (small-scale) cutoff,</span>
+<span class="sd">    - :math:`k_1` sets the low-wavenumber (large-scale) cutoff.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    amplitude : float, optional</span>
+<span class="sd">        Normalization amplitude :math:`A`. Default is ``1.0``.</span>
+<span class="sd">    k0 : float, optional</span>
+<span class="sd">        High-wavenumber cutoff :math:`k_0`. Default is ``1.0``.</span>
+<span class="sd">    k1 : float, optional</span>
+<span class="sd">        Low-wavenumber cutoff :math:`k_1`. Default is ``5.0``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Callable</span>
+<span class="sd">        A function ``P(kx, ky, ...)`` that takes arrays of wavenumber</span>
+<span class="sd">        components</span>
+<span class="sd">        and returns the ZuHone+11 spectrum evaluated on that grid.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    .. plot::</span>
+<span class="sd">        :include-source:</span>
+
+<span class="sd">        from pisces.math_utils.random_fields import generate_zh11_power_spectrum</span>
+<span class="sd">        L, n = 10.0, 256</span>
+<span class="sd">        k_grid = np.fft.fftfreq(n, d=L/n) * 2 * np.pi</span>
+<span class="sd">        k_mag = np.abs(k_grid)</span>
+<span class="sd">        ps_func = generate_zh11_power_spectrum(amplitude=1.0, k0=5.0, k1=0.5)</span>
+<span class="sd">        ps_array = ps_func(k_mag)</span>
+
+<span class="sd">        import matplotlib.pyplot as plt</span>
+<span class="sd">        plt.loglog(k_mag[1:], ps_array[1:])  # skip k=0</span>
+<span class="sd">        plt.xlabel(&#39;Wavenumber k&#39;)</span>
+<span class="sd">        plt.ylabel(&#39;Power Spectrum P(k)&#39;)</span>
+<span class="sd">        plt.title(&#39;ZuHone+11 Spectrum with Cutoffs&#39;)</span>
+<span class="sd">        plt.show()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_ps_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">k_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">ki</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">ki</span> <span class="ow">in</span> <span class="n">args</span><span class="p">))</span>
+
+        <span class="n">f1</span> <span class="o">=</span> <span class="n">amplitude</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">k_mag</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">k_mag</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">11</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">f2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">((</span><span class="n">k_mag</span> <span class="o">/</span> <span class="n">k0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>  <span class="c1"># high-k cutoff</span>
+        <span class="n">f3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">k1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">k_mag</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">k_mag</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>  <span class="c1"># low-k cutoff</span>
+
+        <span class="n">P</span> <span class="o">=</span> <span class="n">f1</span> <span class="o">*</span> <span class="n">f2</span> <span class="o">*</span> <span class="n">f3</span>
+        <span class="n">P</span><span class="p">[</span><span class="n">k_mag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># enforce zero at DC mode</span>
+
+        <span class="k">return</span> <span class="n">P</span>
+
+    <span class="k">return</span> <span class="n">_ps_func</span></div>
+
+
+
+<div class="viewcode-block" id="RandomField">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.RandomField.html#pisces.math_utils.random_fields.RandomField">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RandomField</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstract base class for defining random fields in arbitrary dimensions.</span>
+
+<span class="sd">    This class provides a general framework for representing random fields</span>
+<span class="sd">    on uniform grids. It encapsulates domain geometry, spatial and Fourier</span>
+<span class="sd">    space utilities, and a standard interface for generating random field</span>
+<span class="sd">    realizations.</span>
+
+<span class="sd">    Subclasses should implement :meth:`generate`, which constructs a</span>
+<span class="sd">    particular type of random field (e.g. Gaussian random field with a</span>
+<span class="sd">    specified power spectrum).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    domain_dimensions : numpy.ndarray of int</span>
+<span class="sd">        Number of grid points along each axis of the domain. Must be a</span>
+<span class="sd">        1D array of length equal to the spatial dimensionality.</span>
+<span class="sd">    bounding_box : numpy.ndarray</span>
+<span class="sd">        The lower and upper bounds of the domain in each dimension. For</span>
+<span class="sd">        example, ``[[x_min, y_min], [x_max, y_max]]`` in 2D. The shape</span>
+<span class="sd">        must be ``(2, ndim)``.</span>
+<span class="sd">    rng : numpy.random.Generator, optional</span>
+<span class="sd">        Random number generator instance. Defaults to</span>
+<span class="sd">        ``np.random.default_rng()``.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    - The class provides convenience methods to compute real-space grids</span>
+<span class="sd">      (:meth:`compute_spatial_mgrid`) and Fourier-space grids</span>
+<span class="sd">      (:meth:`compute_wavenumber_mgrid`).</span>
+<span class="sd">    - This base class does not implement the actual random field</span>
+<span class="sd">      generation logic; see :class:`GaussianRandomField` for an example</span>
+<span class="sd">      subclass.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RandomField.__init__">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.RandomField.__init__.html#pisces.math_utils.random_fields.RandomField.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain_dimensions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">bounding_box</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># --- Validate Domain Inputs --- #</span>
+        <span class="c1"># We set up the domain dimensions and bounding box here. This</span>
+        <span class="c1"># requires checking the domain dimensions and bounding box</span>
+        <span class="c1"># are consistent.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">domain_dimensions</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bbox</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">bounding_box</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dd</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;domain_dimensions must be a 1D array.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ndim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dd</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bbox</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ndim</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;bounding_box must have shape (2, ndim).&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;bounding_box upper bounds must be greater than lower bounds.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Now that the grid has been defined we can derive a few</span>
+        <span class="c1"># of the relevant parameters that will be used later.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_grid_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_grid_spacing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grid_range</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dd</span>
+
+        <span class="c1"># Create the RNG object as well.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;rng&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">())</span></div>
+
+
+    <span class="c1"># ========================================= #</span>
+    <span class="c1"># Properties                                #</span>
+    <span class="c1"># ========================================= #</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dd</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Domain dimensions of the random field.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dd</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bbox</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Bounding box of the random field.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bbox</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ndim</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of dimensions of the random field.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ndim</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">grid_range</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Range of the grid in each dimension.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grid_range</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">grid_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Spacing of the grid in each dimension.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grid_spacing</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dl</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alias for :attr:`grid_spacing`.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grid_spacing</span>
+
+    <span class="c1"># ========================================= #</span>
+    <span class="c1"># Space Utilities                           #</span>
+    <span class="c1"># ========================================= #</span>
+<div class="viewcode-block" id="RandomField.compute_grid_arrays">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.RandomField.compute_grid_arrays.html#pisces.math_utils.random_fields.RandomField.compute_grid_arrays">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_grid_arrays</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the meshgrid of spatial coordinates for the random field.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Meshgrid of spatial coordinates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dd</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ndim</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RandomField.compute_spatial_mgrid">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.RandomField.compute_spatial_mgrid.html#pisces.math_utils.random_fields.RandomField.compute_spatial_mgrid">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_spatial_mgrid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the meshgrid of spatial coordinates for the random field.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Additional keyword arguments to pass to np.meshgrid.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Meshgrid of spatial coordinates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_grid_arrays</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="o">*</span><span class="n">axes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ========================================= #</span>
+    <span class="c1"># Fourier Space Utilities                   #</span>
+    <span class="c1"># ========================================= #</span>
+<div class="viewcode-block" id="RandomField.compute_wavenumber_arrays">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.RandomField.compute_wavenumber_arrays.html#pisces.math_utils.random_fields.RandomField.compute_wavenumber_arrays">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_wavenumber_arrays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fft_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;real&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the 1D wavenumber arrays for each axis of the domain.</span>
+
+<span class="sd">        This method constructs the Fourier-space sampling frequencies along</span>
+<span class="sd">        each axis of the grid, converting from discrete FFT frequencies</span>
+<span class="sd">        (in cycles per unit length) to angular wavenumbers (radians per unit length).</span>
+
+<span class="sd">        The choice of FFT convention determines whether the last axis uses</span>
+<span class="sd">        a reduced frequency representation:</span>
+
+<span class="sd">        - If ``fft_type=&#39;complex&#39;`` (full complex FFT, via ``np.fft.fftn``),</span>
+<span class="sd">          then all axes use ``np.fft.fftfreq`` and include both positive and</span>
+<span class="sd">          negative frequencies.</span>
+
+<span class="sd">        - If ``fft_type=&#39;real&#39;`` (real-to-complex FFT, via ``np.fft.rfftn``),</span>
+<span class="sd">          then the last axis uses ``np.fft.rfftfreq`` to return only the</span>
+<span class="sd">          non-negative frequencies, while all earlier axes still use</span>
+<span class="sd">          ``np.fft.fftfreq``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fft_type : {&#39;real&#39;, &#39;complex&#39;}, optional</span>
+<span class="sd">            FFT convention to use. Default is ``&#39;real&#39;``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of np.ndarray</span>
+<span class="sd">            Tuple of 1D arrays, one per axis, giving the discrete angular</span>
+<span class="sd">            wavenumbers (radians per unit length) along each axis. The</span>
+<span class="sd">            arrays can be combined with :func:`numpy.meshgrid` (for example</span>
+<span class="sd">            via :meth:`compute_wavenumber_mgrid`) to construct the full</span>
+<span class="sd">            multidimensional Fourier grid.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        - The wavenumber values are computed as::</span>
+
+<span class="sd">            k = 2 * pi * freq</span>
+
+<span class="sd">          where ``freq`` is the output of ``np.fft.fftfreq`` or</span>
+<span class="sd">          ``np.fft.rfftfreq``.</span>
+
+<span class="sd">        - The grid spacing is inferred from the domain dimensions and</span>
+<span class="sd">          bounding box provided at initialization.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Define the buffer for the output</span>
+        <span class="c1"># arrays.</span>
+        <span class="n">output_arrays</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Iterate through each of the axes and</span>
+        <span class="c1"># pull out the length and count of the grid along</span>
+        <span class="c1"># that axis so that we can build the K arrays.</span>
+        <span class="k">for</span> <span class="n">axid</span><span class="p">,</span> <span class="p">(</span><span class="n">n_points</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grid_range</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">)):</span>
+            <span class="n">dx</span> <span class="o">=</span> <span class="n">length</span> <span class="o">/</span> <span class="n">n_points</span>
+
+            <span class="c1"># If we are using a real FFT, then we need to</span>
+            <span class="c1"># use the rfftfreq function for the last axis.</span>
+            <span class="k">if</span> <span class="n">fft_type</span> <span class="o">==</span> <span class="s2">&quot;real&quot;</span> <span class="ow">and</span> <span class="n">axid</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">freq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfftfreq</span><span class="p">(</span><span class="n">n_points</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">freq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">n_points</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
+
+            <span class="c1"># Convert from cycles/length to radians/length</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">freq</span>
+            <span class="n">output_arrays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">output_arrays</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RandomField.compute_wavenumber_mgrid">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.RandomField.compute_wavenumber_mgrid.html#pisces.math_utils.random_fields.RandomField.compute_wavenumber_mgrid">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_wavenumber_mgrid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fft_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;real&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the meshgrid of wavenumber arrays for the random field.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fft_type : str, optional</span>
+<span class="sd">            Type of FFT to consider (&#39;real&#39; or &#39;complex&#39;), by default &#39;real&#39;.</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Additional keyword arguments to pass to np.meshgrid.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Meshgrid of wavenumber arrays.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">k_arrays</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_wavenumber_arrays</span><span class="p">(</span><span class="n">fft_type</span><span class="o">=</span><span class="n">fft_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="o">*</span><span class="n">k_arrays</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ========================================= #</span>
+    <span class="c1"># Generation Methods                        #</span>
+    <span class="c1"># ========================================= #</span>
+<div class="viewcode-block" id="RandomField.generate">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.RandomField.generate.html#pisces.math_utils.random_fields.RandomField.generate">[docs]</a>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a realization of the random field.</span>
+
+<span class="sd">        This method must be implemented by subclasses. It should return a</span>
+<span class="sd">        field defined on the spatial grid specified by</span>
+<span class="sd">        :attr:`domain_dimensions` and :attr:`bounding_box`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Array representing the generated random field. The shape</span>
+<span class="sd">            should be ``(*domain_dimensions, *field_shape)``, where</span>
+<span class="sd">            ``field_shape`` is defined by the subclass (e.g. scalar or</span>
+<span class="sd">            vector field).</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        - Implementations may include additional parameters (e.g. power</span>
+<span class="sd">          spectrum, spatial envelope) to control the statistical</span>
+<span class="sd">          properties of the field.</span>
+<span class="sd">        - The output should generally be real-valued, even if Fourier</span>
+<span class="sd">          methods are used internally.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="GaussianRandomField">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.GaussianRandomField.html#pisces.math_utils.random_fields.GaussianRandomField">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GaussianRandomField</span><span class="p">(</span><span class="n">RandomField</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class for generating Gaussian random fields in arbitrary dimensions.&quot;&quot;&quot;</span>
+
+    <span class="c1"># ======================================== #</span>
+    <span class="c1"># Class Flags                              #</span>
+    <span class="c1"># ======================================== #</span>
+    <span class="c1"># Default parameters for power spectrum, envelope, and mean field.</span>
+    <span class="c1"># These can be overridden at initialization or generation time.</span>
+    <span class="c1"># They are defined as class attributes so that they can be</span>
+    <span class="c1"># easily modified for different use cases.</span>
+    <span class="n">_default_power_spectrum</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">generate_white_noise_power_spectrum</span><span class="p">()</span>
+    <span class="n">_default_envelope_function</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_default_mean_field</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># ======================================== #</span>
+    <span class="c1"># Initialization                           #</span>
+    <span class="c1"># ======================================== #</span>
+<div class="viewcode-block" id="GaussianRandomField.__init__">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.GaussianRandomField.__init__.html#pisces.math_utils.random_fields.GaussianRandomField.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">domain_dimensions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">bounding_box</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">field_shape</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="c1"># --- Configure the Field Shape --- #</span>
+        <span class="c1"># The field shape defines the shape of the field at each</span>
+        <span class="c1"># grid point. If None, we assume a scalar field.</span>
+        <span class="k">if</span> <span class="n">field_shape</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">field_shape</span> <span class="o">=</span> <span class="p">()</span>  <span class="c1"># Scalar field</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">field_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">field_shape</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_field_shape</span> <span class="o">=</span> <span class="n">field_shape</span>
+
+        <span class="c1"># --- Manage Defaults --- #</span>
+        <span class="c1"># We now set up the power spectrum, envelope, and mean field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_power_spectrum</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;power_spectrum&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_power_spectrum</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_envelope_function</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;envelope_function&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_envelope_function</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mean_field</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;mean_field&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_mean_field</span><span class="p">)</span>
+
+        <span class="c1"># --- Initialize the Base Class --- #</span>
+        <span class="c1"># This must come after setting the field shape</span>
+        <span class="c1"># so that any methods called during initialization</span>
+        <span class="c1"># have access to it.</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">domain_dimensions</span><span class="p">,</span> <span class="n">bounding_box</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ========================================= #</span>
+    <span class="c1"># Properties                                #</span>
+    <span class="c1"># ========================================= #</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">field_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Shape of the field at each grid point.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_shape</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">power_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Power spectrum function defining the statistical properties of the field.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_power_spectrum</span>
+
+    <span class="nd">@power_spectrum</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">power_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ps_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the power spectrum function.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ps_func : Callable</span>
+<span class="sd">            Function P(kx, ky, ...,) returning the power spectrum evaluated</span>
+<span class="sd">            on the Fourier grid. Must accept arrays of shape given by</span>
+<span class="sd">            :meth:`compute_wavenumber_mgrid`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_power_spectrum</span> <span class="o">=</span> <span class="n">ps_func</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">envelope_function</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Spatial envelope function modulating the field.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_envelope_function</span>
+
+    <span class="nd">@envelope_function</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">envelope_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env_func</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the spatial envelope function.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        env_func : Callable or None</span>
+<span class="sd">            Function f(x1, x2, ..., ) defining a multiplicative spatial envelope.</span>
+<span class="sd">            It will be evaluated on the spatial meshgrid and applied to the</span>
+<span class="sd">            generated field in real space. If None, no modulation is applied.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_envelope_function</span> <span class="o">=</span> <span class="n">env_func</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mean_field</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mean field value added to the generated field.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean_field</span>
+
+    <span class="nd">@mean_field</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mean_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the mean field value.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        value : float or numpy.ndarray</span>
+<span class="sd">            Mean field value to add to the generated field.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mean_field</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="c1"># ========================================= #</span>
+    <span class="c1"># Generation Methods                        #</span>
+    <span class="c1"># ========================================= #</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_fourier_space_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ps_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate Fourier-space random coefficients for the field.</span>
+
+<span class="sd">        This constructs complex Gaussian random variables on the Fourier grid</span>
+<span class="sd">        and scales them by the square root of the target power spectrum.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ps_func : Callable</span>
+<span class="sd">            Function P(kx, ky, ...,) returning the power spectrum evaluated</span>
+<span class="sd">            on the Fourier grid. Must accept arrays of shape given by</span>
+<span class="sd">            :meth:`compute_wavenumber_mgrid`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Complex-valued Fourier coefficients with shape</span>
+<span class="sd">            ``(*domain_dimensions, *field_shape)``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Configure the grid and determine the shape of the fourier-space</span>
+        <span class="c1"># field. This is generally different from the real-space field shape</span>
+        <span class="c1"># because of the reduced representation along the last axis.</span>
+        <span class="n">_wn_arrays</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_wavenumber_arrays</span><span class="p">(</span><span class="n">fft_type</span><span class="o">=</span><span class="s2">&quot;real&quot;</span><span class="p">)</span>
+        <span class="n">_wn_meshgrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="o">*</span><span class="n">_wn_arrays</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+        <span class="n">grid_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="k">for</span> <span class="n">arr</span> <span class="ow">in</span> <span class="n">_wn_arrays</span><span class="p">)</span>
+
+        <span class="c1"># Generate the real and imaginary parts of the Fourier coefficients.</span>
+        <span class="c1"># This is then combined into a complex array.</span>
+        <span class="n">re</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">grid_shape</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_shape</span><span class="p">)</span>
+        <span class="n">im</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">grid_shape</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_shape</span><span class="p">)</span>
+        <span class="n">coeffs</span> <span class="o">=</span> <span class="p">(</span><span class="n">re</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">im</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>  <span class="c1"># variance = 1 per complex DOF</span>
+
+        <span class="c1"># With the wavenumber grid in hand, we can now compute the</span>
+        <span class="c1"># relevant power spectrum array. We ignore errors because they</span>
+        <span class="c1"># should just get mapped over for k=0 modes.</span>
+        <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">invalid</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">divide</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">):</span>
+            <span class="n">_power_spectrum</span> <span class="o">=</span> <span class="n">ps_func</span><span class="p">(</span><span class="o">*</span><span class="n">_wn_meshgrid</span><span class="p">)</span>  <span class="c1"># shape ~ (*domain_dimensions,)</span>
+
+        <span class="n">_power_spectrum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">_power_spectrum</span><span class="p">,</span> <span class="n">grid_shape</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_field_shape</span><span class="p">))</span>
+
+        <span class="c1"># Define the complex output field and then correct for the</span>
+        <span class="c1"># DC and Nyquist modes to ensure a real-valued field when we</span>
+        <span class="c1"># invert the FFT.</span>
+        <span class="n">_complex_output_field</span> <span class="o">=</span> <span class="n">coeffs</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">_power_spectrum</span><span class="p">)</span>
+
+        <span class="c1"># Correct the DC mode at k = 0.</span>
+        <span class="n">_complex_output_field</span><span class="p">[(</span><span class="mi">0</span><span class="p">,)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ndim</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># Correct the Nyquist modes if they exist.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dd</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Nyquist plane in last axis</span>
+            <span class="n">slicer</span> <span class="o">=</span> <span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),)</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dd</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,)</span>
+            <span class="n">_complex_output_field</span><span class="p">[</span><span class="n">slicer</span><span class="p">]</span> <span class="o">=</span> <span class="n">_complex_output_field</span><span class="p">[</span><span class="n">slicer</span><span class="p">]</span><span class="o">.</span><span class="n">real</span>
+
+        <span class="k">return</span> <span class="n">_complex_output_field</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_real_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ps_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a real-space random field with the specified power spectrum.</span>
+
+<span class="sd">        This method constructs Fourier-space coefficients scaled by the</span>
+<span class="sd">        target power spectrum, then performs an inverse FFT to return a</span>
+<span class="sd">        real-valued field on the spatial grid.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ps_func : Callable</span>
+<span class="sd">            Function P(kx, ky, ...,) returning the power spectrum evaluated</span>
+<span class="sd">            on the Fourier grid.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Real-valued random field with shape ``(*domain_dimensions, *field_shape)``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.fft</span><span class="w"> </span><span class="kn">import</span> <span class="n">irfftn</span>
+
+        <span class="c1"># Step 1: Fourier coefficients with power spectrum scaling</span>
+        <span class="n">coeffs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_fourier_space_field</span><span class="p">(</span><span class="n">ps_func</span><span class="p">)</span>
+
+        <span class="c1"># Step 2: Inverse FFT back to real space</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">irfftn</span><span class="p">(</span><span class="n">coeffs</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_dd</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ndim</span><span class="p">),</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;ortho&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Step 3: Real part (imag should be numerical noise ~1e-15)</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">field</span>
+
+<div class="viewcode-block" id="GaussianRandomField.generate">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.GaussianRandomField.generate.html#pisces.math_utils.random_fields.GaussianRandomField.generate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a real-space Gaussian random field with the specified power spectrum.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Real-valued random field with shape</span>
+<span class="sd">            ``(*domain_dimensions, *field_shape)``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Generate the real random field for the given power spectrum.</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_real_field</span><span class="p">(</span><span class="n">ps_func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">power_spectrum</span><span class="p">)</span>
+
+        <span class="c1"># Correct for the envelope if it is asked for.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">envelope_function</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Calculate the RMS value of the field so that we can</span>
+            <span class="c1"># rescale as desired to set the envelope.</span>
+            <span class="n">field_rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">field</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+            <span class="c1"># Compute the spatial coordinate grid and</span>
+            <span class="c1"># evaluate the envelope function on it.</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_spatial_mgrid</span><span class="p">(</span><span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+            <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">envelope_function</span><span class="p">(</span><span class="o">*</span><span class="n">coords</span><span class="p">)</span>
+
+            <span class="c1"># broadcast to field_shape if needed</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_shape</span><span class="p">:</span>
+                <span class="n">env</span> <span class="o">=</span> <span class="n">env</span><span class="p">[(</span><span class="o">...</span><span class="p">,)</span> <span class="o">+</span> <span class="p">(</span><span class="kc">None</span><span class="p">,)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_field_shape</span><span class="p">)]</span>
+            <span class="n">field</span> <span class="o">*=</span> <span class="n">env</span> <span class="o">/</span> <span class="n">field_rms</span>
+
+        <span class="c1"># Add the mean field offset if it is</span>
+        <span class="c1"># specified.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_field</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">field</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_field</span>
+
+        <span class="k">return</span> <span class="n">field</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="GaussianRandomVectorField">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.GaussianRandomVectorField.html#pisces.math_utils.random_fields.GaussianRandomVectorField">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GaussianRandomVectorField</span><span class="p">(</span><span class="n">GaussianRandomField</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class for generating Gaussian random vector fields in arbitrary dimensions.&quot;&quot;&quot;</span>
+
+    <span class="c1"># ======================================== #</span>
+    <span class="c1"># Initialization                           #</span>
+    <span class="c1"># ======================================== #</span>
+<div class="viewcode-block" id="GaussianRandomVectorField.__init__">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.GaussianRandomVectorField.__init__.html#pisces.math_utils.random_fields.GaussianRandomVectorField.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain_dimensions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">bounding_box</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># Initialize the base class with the appropriate</span>
+        <span class="c1"># field shape.</span>
+        <span class="n">domain_dimensions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">domain_dimensions</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">domain_dimensions</span><span class="p">,</span> <span class="n">bounding_box</span><span class="p">,</span> <span class="n">field_shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">domain_dimensions</span><span class="p">),),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ========================================= #</span>
+    <span class="c1"># Generation Methods                        #</span>
+    <span class="c1"># ========================================= #</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_fourier_space_field</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">ps_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">divergence_cleaning</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate Fourier-space random coefficients for the field.</span>
+
+<span class="sd">        This constructs complex Gaussian random variables on the Fourier grid</span>
+<span class="sd">        and scales them by the square root of the target power spectrum.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ps_func : Callable</span>
+<span class="sd">            Function P(kx, ky, ...,) returning the power spectrum evaluated</span>
+<span class="sd">            on the Fourier grid. Must accept arrays of shape given by</span>
+<span class="sd">            :meth:`compute_wavenumber_mgrid`.</span>
+<span class="sd">        divergence_cleaning: {&#39;discrete&#39;, &#39;continuous&#39;, False}, optional</span>
+<span class="sd">            If &#39;discrete&#39; or &#39;continuous&#39;, perform divergence cleaning</span>
+<span class="sd">            in Fourier space to ensure the field is divergence-free.</span>
+<span class="sd">            If False or &#39;off&#39;, no divergence cleaning is applied.</span>
+<span class="sd">            Default is &#39;discrete&#39;.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Complex-valued Fourier coefficients with shape</span>
+<span class="sd">            ``(*domain_dimensions, *field_shape)``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Configure the grid and determine the shape of the fourier-space</span>
+        <span class="c1"># field. This is generally different from the real-space field shape</span>
+        <span class="c1"># because of the reduced representation along the last axis.</span>
+        <span class="n">_wn_arrays</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_wavenumber_arrays</span><span class="p">(</span><span class="n">fft_type</span><span class="o">=</span><span class="s2">&quot;real&quot;</span><span class="p">)</span>
+        <span class="n">_wn_meshgrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="o">*</span><span class="n">_wn_arrays</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+        <span class="n">grid_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="k">for</span> <span class="n">arr</span> <span class="ow">in</span> <span class="n">_wn_arrays</span><span class="p">)</span>
+
+        <span class="c1"># Generate the real and imaginary parts of the Fourier coefficients.</span>
+        <span class="c1"># This is then combined into a complex array.</span>
+        <span class="n">re</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">grid_shape</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_shape</span><span class="p">)</span>
+        <span class="n">im</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">grid_shape</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_shape</span><span class="p">)</span>
+        <span class="n">coeffs</span> <span class="o">=</span> <span class="p">(</span><span class="n">re</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">im</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>  <span class="c1"># variance = 1 per complex DOF</span>
+
+        <span class="c1"># With the wavenumber grid in hand, we can now compute the</span>
+        <span class="c1"># relevant power spectrum array. We ignore errors because they</span>
+        <span class="c1"># should just get mapped over for k=0 modes.</span>
+        <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">invalid</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">divide</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">):</span>
+            <span class="n">_power_spectrum</span> <span class="o">=</span> <span class="n">ps_func</span><span class="p">(</span><span class="o">*</span><span class="n">_wn_meshgrid</span><span class="p">)</span>  <span class="c1"># shape ~ (*domain_dimensions,)</span>
+
+        <span class="n">_power_spectrum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">_power_spectrum</span><span class="p">,</span> <span class="n">grid_shape</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_field_shape</span><span class="p">))</span>
+
+        <span class="c1"># Define the complex output field and then correct for the</span>
+        <span class="c1"># DC and Nyquist modes to ensure a real-valued field when we</span>
+        <span class="c1"># invert the FFT.</span>
+        <span class="n">_complex_output_field</span> <span class="o">=</span> <span class="n">coeffs</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">_power_spectrum</span><span class="p">)</span>
+
+        <span class="c1"># Perform first round divergence cleaning if requested so</span>
+        <span class="c1"># that we can ensure the field is divergence-free.</span>
+        <span class="k">if</span> <span class="n">divergence_cleaning</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;off&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+            <span class="n">_complex_output_field</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_divergence_cleaning</span><span class="p">(</span><span class="n">_complex_output_field</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">divergence_cleaning</span><span class="p">)</span>
+
+        <span class="c1"># Correct the DC mode at k = 0.</span>
+        <span class="n">_complex_output_field</span><span class="p">[(</span><span class="mi">0</span><span class="p">,)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ndim</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># Correct the Nyquist modes if they exist.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dd</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Nyquist plane in last axis</span>
+            <span class="n">slicer</span> <span class="o">=</span> <span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),)</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dd</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,)</span>
+            <span class="n">_complex_output_field</span><span class="p">[</span><span class="n">slicer</span><span class="p">]</span> <span class="o">=</span> <span class="n">_complex_output_field</span><span class="p">[</span><span class="n">slicer</span><span class="p">]</span><span class="o">.</span><span class="n">real</span>
+
+        <span class="k">return</span> <span class="n">_complex_output_field</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_real_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ps_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">divergence_cleaning</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a real-space random field with the specified power spectrum.</span>
+
+<span class="sd">        This method constructs Fourier-space coefficients scaled by the</span>
+<span class="sd">        target power spectrum, then performs an inverse FFT to return a</span>
+<span class="sd">        real-valued field on the spatial grid.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ps_func : Callable</span>
+<span class="sd">            Function P(kx, ky, ...,) returning the power spectrum evaluated</span>
+<span class="sd">            on the Fourier grid.</span>
+<span class="sd">        divergence_cleaning: {&#39;discrete&#39;, &#39;continuous&#39;, False}, optional</span>
+<span class="sd">            If &#39;discrete&#39; or &#39;continuous&#39;, perform divergence cleaning</span>
+<span class="sd">            in Fourier space to ensure the field is divergence-free.</span>
+<span class="sd">            If False or &#39;off&#39;, no divergence cleaning is applied.</span>
+<span class="sd">            Default is &#39;discrete&#39;.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Real-valued random field with shape ``(*domain_dimensions, *field_shape)``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.fft</span><span class="w"> </span><span class="kn">import</span> <span class="n">irfftn</span>
+
+        <span class="c1"># Step 1: Fourier coefficients with power spectrum scaling</span>
+        <span class="n">coeffs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_fourier_space_field</span><span class="p">(</span><span class="n">ps_func</span><span class="p">,</span> <span class="n">divergence_cleaning</span><span class="o">=</span><span class="n">divergence_cleaning</span><span class="p">)</span>
+
+        <span class="c1"># Step 2: Inverse FFT back to real space</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">irfftn</span><span class="p">(</span><span class="n">coeffs</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_dd</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ndim</span><span class="p">),</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;ortho&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Step 3: Real part (imag should be numerical noise ~1e-15)</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">field</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_divergence_cleaning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fourier_field</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;discrete&quot;</span><span class="p">):</span>
+        <span class="c1"># Check that the divergence mode is valid. Otherwise, we</span>
+        <span class="c1"># need to raise an error.</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;discrete&quot;</span><span class="p">,</span> <span class="s2">&quot;continuous&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid mode &#39;</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2">&#39;. Use &#39;discrete&#39; or &#39;continuous&#39;.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Distribute by dimension and by mode.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_wavenumber_mgrid</span><span class="p">(</span><span class="n">fft_type</span><span class="o">=</span><span class="s2">&quot;real&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;discrete&quot;</span><span class="p">:</span>
+                <span class="n">div_clean_fd_2d</span><span class="p">(</span><span class="n">fourier_field</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">fourier_field</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dl</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">div_clean_c_2d</span><span class="p">(</span><span class="n">fourier_field</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">fourier_field</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_wavenumber_mgrid</span><span class="p">(</span><span class="n">fft_type</span><span class="o">=</span><span class="s2">&quot;real&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;discrete&quot;</span><span class="p">:</span>
+                <span class="n">div_clean_fd_3d</span><span class="p">(</span>
+                    <span class="n">fourier_field</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">fourier_field</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">fourier_field</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dl</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">div_clean_c_3d</span><span class="p">(</span><span class="n">fourier_field</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">fourier_field</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">fourier_field</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Divergence cleaning not implemented for ndim=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ndim</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">fourier_field</span>
+
+<div class="viewcode-block" id="GaussianRandomVectorField.generate">
+<a class="viewcode-back" href="../../../_as_gen/pisces.math_utils.random_fields.GaussianRandomVectorField.generate.html#pisces.math_utils.random_fields.GaussianRandomVectorField.generate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">divergence_cleaning</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a real-space Gaussian random vector field.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        divergence_cleaning: {&#39;discrete&#39;, &#39;continuous&#39;, False}, optional</span>
+<span class="sd">            If &#39;discrete&#39; or &#39;continuous&#39;, perform divergence cleaning</span>
+<span class="sd">            in Fourier space to ensure the field is divergence-free.</span>
+<span class="sd">            If False or &#39;off&#39;, no divergence cleaning is applied.</span>
+<span class="sd">            Default is &#39;discrete&#39;.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Real-valued random vector field with shape</span>
+<span class="sd">            ``(*domain_dimensions, ndim)``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.fft</span><span class="w"> </span><span class="kn">import</span> <span class="n">irfftn</span><span class="p">,</span> <span class="n">rfftn</span>
+
+        <span class="c1"># Generate the real random field for the given power spectrum.</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_real_field</span><span class="p">(</span><span class="n">ps_func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">power_spectrum</span><span class="p">,</span> <span class="n">divergence_cleaning</span><span class="o">=</span><span class="n">divergence_cleaning</span><span class="p">)</span>
+
+        <span class="c1"># Correct for the envelope if it is asked for.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">envelope_function</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Calculate the RMS value of the field so that we can</span>
+            <span class="c1"># rescale as desired to set the envelope.</span>
+            <span class="n">field_rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">field</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+            <span class="c1"># Compute the spatial coordinate grid and</span>
+            <span class="c1"># evaluate the envelope function on it.</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_spatial_mgrid</span><span class="p">(</span><span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+            <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">envelope_function</span><span class="p">(</span><span class="o">*</span><span class="n">coords</span><span class="p">)</span>
+
+            <span class="c1"># broadcast to field_shape if needed</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_shape</span><span class="p">:</span>
+                <span class="n">env</span> <span class="o">=</span> <span class="n">env</span><span class="p">[(</span><span class="o">...</span><span class="p">,)</span> <span class="o">+</span> <span class="p">(</span><span class="kc">None</span><span class="p">,)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_field_shape</span><span class="p">)]</span>
+            <span class="n">field</span> <span class="o">*=</span> <span class="n">env</span> <span class="o">/</span> <span class="n">field_rms</span>
+
+        <span class="c1"># Add the mean field offset if it is</span>
+        <span class="c1"># specified.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_field</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">field</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_field</span>
+
+        <span class="c1"># We now perform the second cleaning. To do this, we&#39;ll calculate</span>
+        <span class="c1"># the RMS of the field as is, perform the cleaning again, and then</span>
+        <span class="c1"># rescale the field to restore the original RMS.</span>
+        <span class="k">if</span> <span class="n">divergence_cleaning</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;off&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+            <span class="c1"># Calculate the RMS of the field before cleaning.</span>
+            <span class="n">field_rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">field</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+            <span class="c1"># Now transform the field back into its fourier components</span>
+            <span class="n">fourier_field</span> <span class="o">=</span> <span class="n">rfftn</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ndim</span><span class="p">),</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;ortho&quot;</span><span class="p">)</span>
+            <span class="n">fourier_field</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_divergence_cleaning</span><span class="p">(</span><span class="n">fourier_field</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">divergence_cleaning</span><span class="p">)</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">irfftn</span><span class="p">(</span><span class="n">fourier_field</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_dd</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ndim</span><span class="p">),</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;ortho&quot;</span><span class="p">))</span>
+
+            <span class="c1"># Rescale to restore the original RMS.</span>
+            <span class="n">new_rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">field</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">field</span> <span class="o">*=</span> <span class="n">field_rms</span> <span class="o">/</span> <span class="n">new_rms</span>
+
+        <span class="k">return</span> <span class="n">field</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Eliza Diggins.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

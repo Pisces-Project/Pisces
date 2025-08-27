@@ -1,0 +1,6 @@
+profiles.density.KingDensityProfile.compute\_total\_mass
+========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: KingDensityProfile.compute_total_mass

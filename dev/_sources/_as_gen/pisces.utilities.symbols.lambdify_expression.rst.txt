@@ -1,0 +1,6 @@
+pisces.utilities.symbols.lambdify\_expression
+=============================================
+
+.. currentmodule:: pisces.utilities.symbols
+
+.. autofunction:: lambdify_expression

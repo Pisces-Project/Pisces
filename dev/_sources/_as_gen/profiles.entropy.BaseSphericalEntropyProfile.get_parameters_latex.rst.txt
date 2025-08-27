@@ -1,0 +1,6 @@
+profiles.entropy.BaseSphericalEntropyProfile.get\_parameters\_latex
+===================================================================
+
+.. currentmodule:: profiles.entropy
+
+.. automethod:: BaseSphericalEntropyProfile.get_parameters_latex

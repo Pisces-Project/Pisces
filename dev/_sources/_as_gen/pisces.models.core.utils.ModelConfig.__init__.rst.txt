@@ -1,0 +1,6 @@
+pisces.models.core.utils.ModelConfig.\_\_init\_\_
+=================================================
+
+.. currentmodule:: pisces.models.core.utils
+
+.. automethod:: ModelConfig.__init__

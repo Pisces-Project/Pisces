@@ -1,0 +1,6 @@
+pisces.geometry.coordinates.base.CoordinateSystem.parameters
+============================================================
+
+.. currentmodule:: pisces.geometry.coordinates.base
+
+.. autoproperty:: CoordinateSystem.parameters

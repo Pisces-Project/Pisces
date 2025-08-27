@@ -1,0 +1,6 @@
+profiles.temperature.BaseSphericalTemperatureProfile.from\_json
+===============================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: BaseSphericalTemperatureProfile.from_json

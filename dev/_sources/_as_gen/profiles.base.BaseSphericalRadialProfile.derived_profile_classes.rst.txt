@@ -1,0 +1,6 @@
+profiles.base.BaseSphericalRadialProfile.derived\_profile\_classes
+==================================================================
+
+.. currentmodule:: profiles.base
+
+.. autoproperty:: BaseSphericalRadialProfile.derived_profile_classes

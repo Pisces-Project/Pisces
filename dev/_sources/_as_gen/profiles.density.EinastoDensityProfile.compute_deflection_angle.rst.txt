@@ -1,0 +1,6 @@
+profiles.density.EinastoDensityProfile.compute\_deflection\_angle
+=================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: EinastoDensityProfile.compute_deflection_angle

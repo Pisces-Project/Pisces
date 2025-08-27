@@ -1,0 +1,6 @@
+pisces.models.core.base.BaseModel.coordinate\_system
+====================================================
+
+.. currentmodule:: pisces.models.core.base
+
+.. autoproperty:: BaseModel.coordinate_system

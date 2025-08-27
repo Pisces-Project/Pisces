@@ -1,0 +1,6 @@
+profiles.temperature.BetaModelTemperatureProfile.get\_derived\_profile
+======================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: BetaModelTemperatureProfile.get_derived_profile

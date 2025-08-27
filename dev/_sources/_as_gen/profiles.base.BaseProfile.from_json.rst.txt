@@ -1,0 +1,6 @@
+profiles.base.BaseProfile.from\_json
+====================================
+
+.. currentmodule:: profiles.base
+
+.. automethod:: BaseProfile.from_json

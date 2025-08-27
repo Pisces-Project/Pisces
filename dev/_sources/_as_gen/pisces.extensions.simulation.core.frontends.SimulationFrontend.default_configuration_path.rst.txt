@@ -1,0 +1,6 @@
+pisces.extensions.simulation.core.frontends.SimulationFrontend.default\_configuration\_path
+===========================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.frontends
+
+.. autoproperty:: SimulationFrontend.default_configuration_path

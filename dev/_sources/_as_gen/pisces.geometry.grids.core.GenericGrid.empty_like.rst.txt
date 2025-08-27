@@ -1,0 +1,6 @@
+pisces.geometry.grids.core.GenericGrid.empty\_like
+==================================================
+
+.. currentmodule:: pisces.geometry.grids.core
+
+.. automethod:: GenericGrid.empty_like

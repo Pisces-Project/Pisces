@@ -1,0 +1,63 @@
+PseudoIsothermalDensityProfile
+===============================================
+
+.. currentmodule:: profiles.density
+
+.. autoclass:: profiles.density.PseudoIsothermalDensityProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~PseudoIsothermalDensityProfile.__init__
+      ~PseudoIsothermalDensityProfile.compute_circular_velocity
+      ~PseudoIsothermalDensityProfile.compute_cosmological_overdensity_profile
+      ~PseudoIsothermalDensityProfile.compute_cosmological_overdensity_radius
+      ~PseudoIsothermalDensityProfile.compute_deflection_angle
+      ~PseudoIsothermalDensityProfile.compute_einstein_radius
+      ~PseudoIsothermalDensityProfile.compute_enclosed_mass
+      ~PseudoIsothermalDensityProfile.compute_escape_velocity
+      ~PseudoIsothermalDensityProfile.compute_fractional_mass_radius
+      ~PseudoIsothermalDensityProfile.compute_gravitational_field
+      ~PseudoIsothermalDensityProfile.compute_gravitational_potential
+      ~PseudoIsothermalDensityProfile.compute_lensing_convergence
+      ~PseudoIsothermalDensityProfile.compute_surface_density
+      ~PseudoIsothermalDensityProfile.compute_total_mass
+      ~PseudoIsothermalDensityProfile.from_dict
+      ~PseudoIsothermalDensityProfile.from_hdf5
+      ~PseudoIsothermalDensityProfile.from_json
+      ~PseudoIsothermalDensityProfile.from_yaml
+      ~PseudoIsothermalDensityProfile.get_derived_profile
+      ~PseudoIsothermalDensityProfile.get_expression_latex
+      ~PseudoIsothermalDensityProfile.get_output_units
+      ~PseudoIsothermalDensityProfile.get_parameters_latex
+      ~PseudoIsothermalDensityProfile.lambdify_expression
+      ~PseudoIsothermalDensityProfile.list_derived_profiles
+      ~PseudoIsothermalDensityProfile.substitute_expression
+      ~PseudoIsothermalDensityProfile.to_dict
+      ~PseudoIsothermalDensityProfile.to_hdf5
+      ~PseudoIsothermalDensityProfile.to_json
+      ~PseudoIsothermalDensityProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~PseudoIsothermalDensityProfile.derived_profile_classes
+      ~PseudoIsothermalDensityProfile.parameter_symbols
+      ~PseudoIsothermalDensityProfile.parameters
+      ~PseudoIsothermalDensityProfile.variable_symbols
+      ~PseudoIsothermalDensityProfile.variables
+   
+   

@@ -1,0 +1,35 @@
+pisces.extensions.simulation.gadget
+===================================
+
+.. automodule:: pisces.extensions.simulation.gadget
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Modules
+
+   .. autosummary::
+      :toctree:
+      :template: module.rst
+      :recursive:
+
+   
+      frontends
+      particles
+   
+   
+
+   
+   
+   
+
+   
+   
+   

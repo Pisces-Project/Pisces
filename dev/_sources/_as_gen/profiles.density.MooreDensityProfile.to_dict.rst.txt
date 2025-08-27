@@ -1,0 +1,6 @@
+profiles.density.MooreDensityProfile.to\_dict
+=============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: MooreDensityProfile.to_dict

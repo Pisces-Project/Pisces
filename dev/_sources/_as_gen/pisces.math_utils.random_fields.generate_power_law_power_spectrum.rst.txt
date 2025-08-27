@@ -1,0 +1,6 @@
+pisces.math\_utils.random\_fields.generate\_power\_law\_power\_spectrum
+=======================================================================
+
+.. currentmodule:: pisces.math_utils.random_fields
+
+.. autofunction:: generate_power_law_power_spectrum

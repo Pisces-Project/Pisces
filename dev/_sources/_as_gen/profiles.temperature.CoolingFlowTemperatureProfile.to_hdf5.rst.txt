@@ -1,0 +1,6 @@
+profiles.temperature.CoolingFlowTemperatureProfile.to\_hdf5
+===========================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: CoolingFlowTemperatureProfile.to_hdf5

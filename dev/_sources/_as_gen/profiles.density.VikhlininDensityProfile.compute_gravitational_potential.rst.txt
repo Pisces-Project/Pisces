@@ -1,0 +1,6 @@
+profiles.density.VikhlininDensityProfile.compute\_gravitational\_potential
+==========================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: VikhlininDensityProfile.compute_gravitational_potential

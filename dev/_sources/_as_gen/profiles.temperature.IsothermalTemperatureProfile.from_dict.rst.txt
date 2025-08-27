@@ -1,0 +1,6 @@
+profiles.temperature.IsothermalTemperatureProfile.from\_dict
+============================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: IsothermalTemperatureProfile.from_dict

@@ -1,0 +1,6 @@
+profiles.density.DoublePowerLawDensityProfile.from\_yaml
+========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DoublePowerLawDensityProfile.from_yaml

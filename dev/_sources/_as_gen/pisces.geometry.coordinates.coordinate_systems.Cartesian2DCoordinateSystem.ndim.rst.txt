@@ -1,0 +1,6 @@
+pisces.geometry.coordinates.coordinate\_systems.Cartesian2DCoordinateSystem.ndim
+================================================================================
+
+.. currentmodule:: pisces.geometry.coordinates.coordinate_systems
+
+.. autoproperty:: Cartesian2DCoordinateSystem.ndim

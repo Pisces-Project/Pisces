@@ -1,0 +1,6 @@
+profiles.density.CoreSersicProfile.get\_derived\_profile
+========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoreSersicProfile.get_derived_profile

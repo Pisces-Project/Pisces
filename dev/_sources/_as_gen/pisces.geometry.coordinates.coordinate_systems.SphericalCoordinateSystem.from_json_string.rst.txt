@@ -1,0 +1,6 @@
+pisces.geometry.coordinates.coordinate\_systems.SphericalCoordinateSystem.from\_json\_string
+============================================================================================
+
+.. currentmodule:: pisces.geometry.coordinates.coordinate_systems
+
+.. automethod:: SphericalCoordinateSystem.from_json_string

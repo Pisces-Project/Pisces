@@ -1,0 +1,6 @@
+profiles.density.BaseSphericalDensityProfile.compute\_enclosed\_mass
+====================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseSphericalDensityProfile.compute_enclosed_mass

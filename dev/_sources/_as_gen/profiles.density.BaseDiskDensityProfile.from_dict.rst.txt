@@ -1,0 +1,6 @@
+profiles.density.BaseDiskDensityProfile.from\_dict
+==================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseDiskDensityProfile.from_dict

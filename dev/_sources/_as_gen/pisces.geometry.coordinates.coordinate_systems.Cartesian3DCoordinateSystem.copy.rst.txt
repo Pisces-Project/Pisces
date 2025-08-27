@@ -1,0 +1,6 @@
+pisces.geometry.coordinates.coordinate\_systems.Cartesian3DCoordinateSystem.copy
+================================================================================
+
+.. currentmodule:: pisces.geometry.coordinates.coordinate_systems
+
+.. automethod:: Cartesian3DCoordinateSystem.copy

@@ -1,0 +1,6 @@
+pisces.extensions.simulation.gadget.particles.GadgetParticleDataset.global\_metadata
+====================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.gadget.particles
+
+.. autoproperty:: GadgetParticleDataset.global_metadata

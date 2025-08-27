@@ -1,0 +1,6 @@
+profiles.temperature.DoubleBetaTemperatureProfile.from\_hdf5
+============================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: DoubleBetaTemperatureProfile.from_hdf5

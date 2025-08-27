@@ -1,0 +1,6 @@
+profiles.density.CoredPowerLawDensityProfile.compute\_deflection\_angle
+=======================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoredPowerLawDensityProfile.compute_deflection_angle

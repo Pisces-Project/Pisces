@@ -1,0 +1,6 @@
+profiles.density.BaseSphericalDensityProfile.compute\_gravitational\_potential
+==============================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseSphericalDensityProfile.compute_gravitational_potential

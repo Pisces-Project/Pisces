@@ -1,0 +1,6 @@
+profiles.base.BaseCylindricalDiskProfile.get\_parameters\_latex
+===============================================================
+
+.. currentmodule:: profiles.base
+
+.. automethod:: BaseCylindricalDiskProfile.get_parameters_latex

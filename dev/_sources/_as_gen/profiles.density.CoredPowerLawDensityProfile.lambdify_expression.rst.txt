@@ -1,0 +1,6 @@
+profiles.density.CoredPowerLawDensityProfile.lambdify\_expression
+=================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoredPowerLawDensityProfile.lambdify_expression

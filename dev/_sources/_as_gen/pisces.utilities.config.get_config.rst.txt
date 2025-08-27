@@ -1,0 +1,6 @@
+pisces.utilities.config.get\_config
+===================================
+
+.. currentmodule:: pisces.utilities.config
+
+.. autofunction:: get_config

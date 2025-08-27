@@ -1,0 +1,6 @@
+profiles.density.JaffeDensityProfile.compute\_fractional\_mass\_radius
+======================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: JaffeDensityProfile.compute_fractional_mass_radius
