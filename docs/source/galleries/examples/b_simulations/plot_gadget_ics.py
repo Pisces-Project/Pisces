@@ -111,18 +111,28 @@ model = SphericalGalaxyClusterModel.from_density_and_total_density(
 # give them each a kick of around :math:`1000 \;{\rm km \; s^{-1}}` towards each other along the x-axis.
 
 # Import the initial conditions class.
-from pisces.extensions.simulation import InitialConditions
+from pisces.extensions.simulation.core import InitialConditions3DCartesian
 
 # Create the model configuration tuples to tell
 # the ICs where the models are and how they are moving.
 models = [
-    ("cluster_1", model, unyt.unyt_array([3.0, 5.0, 5.0], "Mpc"), unyt.unyt_array([1000.0, 0.0, 0.0], "km/s")),
-    ("cluster_2", model, unyt.unyt_array([7.0, 5.0, 5.0], "Mpc"), unyt.unyt_array([-1000.0, 0.0, 0.0], "km/s")),
+    {
+        "model_name": "cluster_1",
+        "model": model,
+        "position": unyt.unyt_array([3.0, 5.0, 5.0], "Mpc"),
+        "velocity": unyt.unyt_array([1000.0, 0.0, 0.0], "km/s"),
+    },
+    {
+        "model_name": "cluster_2",
+        "model": model,
+        "position": unyt.unyt_array([7.0, 5.0, 5.0], "Mpc"),
+        "velocity": unyt.unyt_array([-1000.0, 0.0, 0.0], "km/s"),
+    },
 ]
 
 # Create the initial conditions object.
 directory = f"{tmpdir.name}/gadget_ics"
-ics = InitialConditions.create_ics(
+ics = InitialConditions3DCartesian.create_ics(
     directory,
     *models,
 )
