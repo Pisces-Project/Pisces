@@ -2648,3 +2648,66 @@ class InitialConditions3DCartesian(InitialConditionsCartesian):
         sim.integrate(sim.t + t_end.to_value("Myr"))
 
         return sim
+
+
+def load_ics(path: Union[str, Path]) -> InitialConditions:
+    """
+    Load an initial conditions directory from its configuration file.
+
+    This function reads the ``IC_CONFIG.yaml`` file in the specified
+    directory, inspects its metadata to determine the correct
+    :class:`InitialConditions` subclass, and returns an instance
+    of that class.
+
+    Parameters
+    ----------
+    path : str or Path
+        Path to the initial conditions directory containing an
+        ``IC_CONFIG.yaml`` file.
+
+    Returns
+    -------
+    InitialConditions
+        An instance of the appropriate subclass populated from the file.
+
+    Raises
+    ------
+    FileNotFoundError
+        If the directory or its ``IC_CONFIG.yaml`` file does not exist.
+    ValueError
+        If the configuration is invalid or the class cannot be resolved.
+    """
+    path = Path(path)
+
+    if not path.exists():
+        raise FileNotFoundError(f"Initial conditions directory does not exist: {path}")
+    if not path.is_dir():
+        raise ValueError(f"Path must be a directory, not a file: {path}")
+
+    config_path = path / "IC_CONFIG.yaml"
+    if not config_path.exists():
+        raise FileNotFoundError(f"No 'IC_CONFIG.yaml' found in directory: {path}")
+
+    try:
+        with open(config_path) as f:
+            config = InitialConditions.__YAML__.load(f)
+    except Exception as e:
+        raise ValueError(f"Failed to parse YAML configuration: {config_path}") from e
+
+    metadata = config.get("metadata", {})
+    class_name = metadata.get("class_name")
+    if not class_name:
+        raise ValueError(f"Configuration missing required 'metadata.class_name': {config_path}")
+
+    # Recursive subclass lookup
+    def _all_subclasses(cls):
+        for sub in cls.__subclasses__():
+            yield sub
+            yield from _all_subclasses(sub)
+
+    subclass_map = {cls.__name__: cls for cls in _all_subclasses(InitialConditions)}
+    ics_class = subclass_map.get(class_name)
+    if ics_class is None:
+        raise ValueError(f"Unknown InitialConditions subclass '{class_name}' in {config_path}")
+
+    return ics_class(path)
