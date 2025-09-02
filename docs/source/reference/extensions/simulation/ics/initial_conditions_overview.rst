@@ -12,7 +12,7 @@ velocities, and properties of all objects in your simulation.
 In order to facilitate the creation, management, and inspection of initial conditions,
 *Pisces* provides a dedicated module for handling ICs in a structured, efficient way. These
 are housed in the :mod:`~pisces.extensions.simulation.core.initial_conditions` package, which features
-its standard base class :class:`InitialConditions`.
+its standard base class :class:`InitialConditions` along with various subclasses.
 
 The :class:`InitialConditions` class provides a framework for assembling
 and managing initial conditions for simulations, allowing you to:
@@ -41,10 +41,10 @@ The Initial Conditions Class
 The base class for managing initial conditions is :class:`InitialConditions`, which provides
 all of the various methods and properties touched on above. In practice, an initial conditions object:
 
-- **Combines multiple models** — Each model is stored with its own position,
-  velocity, orientation, and optional particle dataset.
-- **Places models in space** — Models can be positioned and oriented arbitrarily
-  within the simulation volume.
+- **Combines multiple models** — Each model is stored in its own HDF5 file within the IC directory,
+  and the IC object keeps track of all models and their metadata.
+- **Places models in space** — Depending on the IC class, models can be stored with
+  their positions, velocities, orientations, and spins in the simulation volume.
 - **Stores complete metadata** — All parameters needed to reconstruct the IC state
   are stored in a central configuration file.
 - **Prepares simulation-ready datasets** — Outputs a directory structure and
@@ -56,9 +56,11 @@ and show how to use them to build fully packaged, simulation-ready datasets.
 .. important::
 
     The :class:`InitialConditions` class is designed to be subclassed if necessary to provide
-    additional functionality specific to a simulation code or frontend. However, the base class
-    provides all the core functionality needed to create, manage, and inspect initial conditions
-    across a wide range of astrophysical simulations.
+    additional functionality specific to a simulation code or frontend. Generally, you will use
+    the :class:`InitialConditions3DCartesian`, which provides the specific case of 3D Cartesian
+    coordinates. However, if you need a different coordinate system or dimensionality, you can
+    create your own subclass of :class:`InitialConditions` and implement the necessary methods
+    or use one of the existing subclasses.
 
     Before setting up your initial conditions, look at the frontend for your simulation code
     in :mod:`~pisces.extensions.simulation.frontends`. If your frontend requires a specific
@@ -126,7 +128,7 @@ the :meth:`InitialConditions.create_ics` class method. For example,
 
 .. code-block:: python
 
-    from pisces.extensions.simulation import InitialConditions
+    from pisces.extensions.simulation import InitialConditions3DCartesian
 
     model_1, model_2 = ...  # Load or create your models here
 
@@ -138,7 +140,7 @@ the :meth:`InitialConditions.create_ics` class method. For example,
                     unyt.unyt_array([0.0, 100.0, 0.0], "km/s"))
 
     # Now we create the IC's via the method call.
-    ic = InitialConditions.create_ics(
+    ic = InitialConditions3DCartesian.create_ics(
         "my_ic_directory",
         ("model1", model_1, m1_pos, m1_vel),
         ("model2", model_2, m2_pos, m2_vel),
@@ -146,7 +148,7 @@ the :meth:`InitialConditions.create_ics` class method. For example,
     )
 
 As shown, each model is specified as a tuple containing its name, model object,
-and a few other pieces of metadata. The base class expects the following structures
+and a few other pieces of metadata. The 3D Cartesian class expects the following structures
 to be provided when you add a model:
 
 .. code-block:: text

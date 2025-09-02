@@ -27,6 +27,7 @@ from pisces.utilities.log import LogDescriptor
 if TYPE_CHECKING:
     from logging import Logger
 
+    from pisces.geometry.grids.base import Grid
     from pisces.particles.base import ParticleDataset
 
 
@@ -103,7 +104,7 @@ class InitialConditions(ABC):
     # These flags are easily modified settings that are used throughout
     # the base class and should be easily accessible for modification
     # by subclasses.
-    _model_metadata_required_keys = ["model_name", "model"]
+    _model_metadata_required_keys = []
     _model_metadata_allowed_keys = ["particles"]
     _ndim = 3
 
@@ -164,8 +165,8 @@ class InitialConditions(ABC):
         # separately in the __init__ method.
         self.logger.debug(f"{self} passed configuration validation.")
 
-    @abstractmethod
     @classmethod
+    @abstractmethod
     def _validate_model(cls, model_name: str, model_info: dict) -> None:
         # Ensure that the model info contains a path and that
         # the path exists.
@@ -174,7 +175,8 @@ class InitialConditions(ABC):
             raise FileNotFoundError(f"Model file for '{model_name}' not found: {model_path}")
 
         # Ensure all REQUIRED keys are present
-        for key in cls._model_metadata_required_keys:
+        _check_keys = set(cls._model_metadata_required_keys).union({"path"})
+        for key in _check_keys:
             if key not in model_info:
                 raise ValueError(f"Model '{model_name}' is missing required key '{key}'.")
 
@@ -733,7 +735,7 @@ class InitialConditions(ABC):
 
         return inspect_model_coordinate_system(model_path)
 
-    def get_model_grid(self, model_name: str):
+    def get_model_grid(self, model_name: str) -> "Grid":
         """
         Retrieve the grid object of a stored model without fully loading it.
 
@@ -1212,7 +1214,7 @@ class InitialConditions(ABC):
             self.__directory__ / f"{model_name}{_particle_file_extension}.hdf5", num_particles, **kwargs
         )
         self.config[f"models.{model_name}.particles"] = (
-            self.__directory__ / f"{model_name}_{_particle_file_extension}.hdf5"
+            self.__directory__ / f"{model_name}{_particle_file_extension}.hdf5"
         )
         self.logger.info(f"Generated particles for model '{model_name}' with counts: {num_particles}")
 
@@ -1267,8 +1269,8 @@ class InitialConditions(ABC):
             }
         }
 
-    @abstractmethod
     @classmethod
+    @abstractmethod
     def _validate_input_model(cls, model: dict, existing_models: dict, **kwargs) -> dict:
         """
         Validate and normalize a single input model definition.
@@ -1349,8 +1351,9 @@ class InitialConditions(ABC):
         # Ensure that no unexpected keys are present. This is invariant
         # across all subclasses and should not need to be overwritten.
         allowed_keys = set(cls._model_metadata_required_keys).union(cls._model_metadata_allowed_keys)
+        allowed_keys = allowed_keys.union({"model_name", "model"})
         for key in model.keys():
-            if key not in allowed_keys:
+            if (key not in allowed_keys) and (key != "model_name"):
                 raise ValueError(f"Model definition contains unexpected key: {key}.")
 
         # --- Model Name Uniqueness [Invariant] --- #
@@ -1391,7 +1394,6 @@ class InitialConditions(ABC):
         # Once we complete the validation, we return the model.
         return model
 
-    @abstractmethod
     @classmethod
     def _process_model(
         cls, directory: Path, model_name: str, model_info: dict, file_processing_mode: str = "copy", **kwargs
@@ -1436,12 +1438,14 @@ class InitialConditions(ABC):
         """
         # For each of the models, we need to go through all of the
         # filehook keys and move things.
-        for file_key, extension in cls._model_file_extensions.items():
+        for file_key, info in cls._model_file_extensions.items():
+            extension = info.get("extension", "")
             if file_key in model_info:
                 src_path = Path(model_info[file_key])
                 if not src_path.exists():
                     raise FileNotFoundError(f"File for key '{file_key}' not found for '{model_name}': {src_path}")
-                dest_path = directory / f"{model_name}_{file_key}{extension}"
+                dest_path = directory / f"{model_name}{extension}{src_path.suffix}"
+                print(dest_path)
                 if file_processing_mode == "copy":
                     shutil.copy2(src_path, dest_path)
                 elif file_processing_mode == "move":
@@ -1589,7 +1593,7 @@ class InitialConditions(ABC):
             # into the directory as needed. This is done with the ``_process_model``
             # method.
             _validated_model = cls._process_model(
-                _validated_model_name, _validated_model, file_processing_mode=file_processing_mode, **kwargs
+                directory, _validated_model_name, _validated_model, file_processing_mode=file_processing_mode, **kwargs
             )
 
             # Add the post-validation model to the dictionary of ready-to-go
@@ -1635,7 +1639,7 @@ class InitialConditions1DSpherical(InitialConditions):
     # These flags are easily modified settings that are used throughout
     # the base class and should be easily accessible for modification
     # by subclasses.
-    _model_metadata_required_keys = ["model_name", "model"]
+    _model_metadata_required_keys = []
     _model_metadata_allowed_keys = ["particles"]
     _ndim = 1
 
@@ -1658,7 +1662,6 @@ class InitialConditions1DSpherical(InitialConditions):
     #   model names and their properties. It also moves or copies the model files
     #  into the initial conditions directory as needed.
     #
-    @abstractmethod
     @classmethod
     def _validate_input_model(cls, model: dict, existing_models: dict, **kwargs) -> dict:
         # --- Check Required Keys [Invariant] --- #
@@ -1756,7 +1759,7 @@ class InitialConditionsCartesian(InitialConditions, ABC):
     # These flags are easily modified settings that are used throughout
     # the base class and should be easily accessible for modification
     # by subclasses.
-    _model_metadata_required_keys = ["model_name", "model", "position", "velocity"]
+    _model_metadata_required_keys = []
     _model_metadata_allowed_keys = ["particles"]
     _ndim = 3
 
@@ -1806,8 +1809,8 @@ class InitialConditionsCartesian(InitialConditions, ABC):
     #   model names and their properties. It also moves or copies the model files
     #  into the initial conditions directory as needed.
     #
-    @abstractmethod
     @classmethod
+    @abstractmethod
     def _validate_input_model(cls, model: dict, existing_models: dict, **kwargs) -> dict:
         # Perform the super-class initialization to ensure that we
         # have the basic structure in place.
@@ -2304,7 +2307,7 @@ class InitialConditions1DCartesian(InitialConditionsCartesian):
     # These flags are easily modified settings that are used throughout
     # the base class and should be easily accessible for modification
     # by subclasses.
-    _model_metadata_required_keys = ["model_name", "model", "position", "velocity"]
+    _model_metadata_required_keys = ["position", "velocity"]
     _model_metadata_allowed_keys = ["particles"]
     _ndim = 1
 
@@ -2327,7 +2330,6 @@ class InitialConditions1DCartesian(InitialConditionsCartesian):
     #   model names and their properties. It also moves or copies the model files
     #  into the initial conditions directory as needed.
     #
-    @abstractmethod
     @classmethod
     def _validate_input_model(cls, model: dict, existing_models: dict, **kwargs) -> dict:
         # Perform the super-class initialization to ensure that we
@@ -2362,7 +2364,7 @@ class InitialConditions2DCartesian(InitialConditionsCartesian):
     # These flags are easily modified settings that are used throughout
     # the base class and should be easily accessible for modification
     # by subclasses.
-    _model_metadata_required_keys = ["model_name", "model", "position", "velocity"]
+    _model_metadata_required_keys = ["position", "velocity"]
     _model_metadata_allowed_keys = ["particles", "orientation"]
     _ndim = 2
 
@@ -2400,7 +2402,6 @@ class InitialConditions2DCartesian(InitialConditionsCartesian):
     #   model names and their properties. It also moves or copies the model files
     #  into the initial conditions directory as needed.
     #
-    @abstractmethod
     @classmethod
     def _validate_input_model(cls, model: dict, existing_models: dict, **kwargs) -> dict:
         # Perform the super-class initialization to ensure that we
@@ -2452,7 +2453,7 @@ class InitialConditions3DCartesian(InitialConditionsCartesian):
     # These flags are easily modified settings that are used throughout
     # the base class and should be easily accessible for modification
     # by subclasses.
-    _model_metadata_required_keys = ["model_name", "model", "position", "velocity"]
+    _model_metadata_required_keys = ["position", "velocity"]
     _model_metadata_allowed_keys = ["particles", "orientation", "spin"]
     _ndim = 3
 
@@ -2478,6 +2479,18 @@ class InitialConditions3DCartesian(InitialConditionsCartesian):
         """
         return {name: float(info["spin"]) for name, info in self.models.items()}
 
+    @property
+    def model_orientations(self) -> dict[str, np.ndarray]:
+        """
+        The orientations of the models in the initial conditions.
+
+        Returns
+        -------
+        dict
+            A dictionary mapping model names to their orientation vectors as `np.ndarray`.
+        """
+        return {name: np.asarray(info["orientation"], dtype=float) for name, info in self.models.items()}
+
     # ============================== #
     # Generator Methods              #
     # ============================== #
@@ -2490,7 +2503,7 @@ class InitialConditions3DCartesian(InitialConditionsCartesian):
     #   model names and their properties. It also moves or copies the model files
     #  into the initial conditions directory as needed.
     #
-    @abstractmethod
+
     @classmethod
     def _validate_input_model(cls, model: dict, existing_models: dict, **kwargs) -> dict:
         # Perform the super-class initialization to ensure that we

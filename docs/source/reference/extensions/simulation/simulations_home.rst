@@ -113,7 +113,7 @@ frontend documentation.
     * - `AREPO <https://arepo-code.org/>`__
       - :class:`~arepo.ArepoFrontend`
       - :ref:`simulations_arepo`
-      - |planned|
+      - |partial|
       -
     * - `FLASH <https://flash.uchicago.edu/site/flashcode/>`__
       - :class:`~flash.FLASHFrontend`
