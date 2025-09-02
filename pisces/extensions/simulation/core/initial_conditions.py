@@ -10,15 +10,16 @@ in astrophysical simulations.
 
 import datetime
 import shutil
+from abc import ABC, abstractmethod
 from collections.abc import Sequence
 from pathlib import Path
-from typing import TYPE_CHECKING, Optional, Union
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 import numpy as np
 import unyt
 
 from pisces.models.core.base import BaseModel
-from pisces.models.core.utils import load_model
+from pisces.models.core.utils import inspect_model_grid, load_model
 from pisces.utilities.config import ConfigManager
 from pisces.utilities.io_tools import unyt_yaml
 from pisces.utilities.log import LogDescriptor
@@ -29,7 +30,7 @@ if TYPE_CHECKING:
     from pisces.particles.base import ParticleDataset
 
 
-class InitialConditions:
+class InitialConditions(ABC):
     """
     Central base class for configuring simulation initial conditions.
 
@@ -70,7 +71,6 @@ class InitialConditions:
     - Provide custom YAML formatting options
     - Support additional non-standard Python types
     """
-
     logger: "Logger" = LogDescriptor(mode="ics")
     """
     Logger instance for the InitialConditions class.
@@ -87,6 +87,25 @@ class InitialConditions:
     Settings for the logger may be adjusted in the pisces configuration
     file under the ``ics`` section of ``logging``.
     """
+    _model_file_extensions: dict[str, dict[str, str]] = {"path": {"extension": ""}, "particles": {"extension": "_p"}}
+    """
+    Standard file extensions for model-related files.
+
+    This dictionary maps keys used in the model configuration (e.g., ``"path"``,
+    ``"particles"``) to their corresponding file extensions. The extensions are
+    used when copying or moving model files into the initial conditions directory
+    to avoid filename collisions.
+    """
+
+    # ============================== #
+    # Class Flags                    #
+    # ============================== #
+    # These flags are easily modified settings that are used throughout
+    # the base class and should be easily accessible for modification
+    # by subclasses.
+    _model_metadata_required_keys = ["model_name", "model"]
+    _model_metadata_allowed_keys = ["particles"]
+    _ndim = 3
 
     # ============================== #
     # Initialization Methods         #
@@ -101,9 +120,7 @@ class InitialConditions:
              model entry are present in the configuration.
           2. Verifies that the stored `class_name` in metadata matches the current
              class name. This helps prevent loading ICs with an incompatible class.
-          3. Confirms that the `ndim` field exists in the metadata and that all models
-             have matching position dimensionality.
-          4. Validates that all referenced model and particle files exist on disk.
+          3. Validates that all referenced model and particle files exist on disk.
 
         Subclasses
         ----------
@@ -142,78 +159,24 @@ class InitialConditions:
                 f"Configuration class name '{class_name}' does not match the current class '{self.__class__.__name__}'."
             )
 
-        # Check the NDIM field.
-        if "ndim" not in metadata:
-            raise ValueError("Metadata is missing required 'ndim' field.")
-
         # As long as these pass, we consider the configuration valid. We now need to
         # validate that the models in models each are valid. That is done
         # separately in the __init__ method.
         self.logger.debug(f"{self} passed configuration validation.")
 
+    @abstractmethod
     @classmethod
-    def _validate_model(cls, model_name: str, model_info: dict, expected_ndim: int) -> None:
-        """
-        Validate a single model entry for correctness.
-
-        This method ensures that:
-
-          1. All required keys are present.
-          2. The main model file path exists on disk.
-          3. Vector-valued fields (`position`, `velocity`, `orientation`) have the
-             correct dimensionality (either 1-D of length `ndim` or an `ndim × ndim`
-             rotation matrix for orientation).
-          4. If a particle file is referenced, it exists on disk.
-
-        Parameters
-        ----------
-        model_name : str
-            Name/identifier of the model in the configuration.
-        model_info : dict
-            Dictionary of model attributes from the IC configuration.
-        expected_ndim : int
-            Expected number of spatial dimensions for vector fields.
-
-        Raises
-        ------
-        ValueError
-            If required keys are missing or vector shapes are inconsistent with
-            `expected_ndim`.
-        FileNotFoundError
-            If referenced model or particle files do not exist.
-        """
-        # Ensure that the model info contains all of the required keys. If not,
-        # we need to raise an error letting the user know what's missing.
-        _required_model_keys = ("path", "position", "velocity", "orientation", "spin")
-        for key in _required_model_keys:
-            if key not in model_info:
-                raise ValueError(f"Model '{model_name}' is missing required key '{key}'.")
-
-        # Ensure that the model path actually exists on disk.
+    def _validate_model(cls, model_name: str, model_info: dict) -> None:
+        # Ensure that the model info contains a path and that
+        # the path exists.
         model_path = Path(model_info["path"])
         if not model_path.exists():
-            raise FileNotFoundError(f"Model file for '{model_name}' not found: {model_info['path']}")
+            raise FileNotFoundError(f"Model file for '{model_name}' not found: {model_path}")
 
-        # Check that all of the vector values in the model configuration are
-        # correctly dimensioned for this scenario. If not, we raise an error.
-        _required_vector_keys = ("position", "velocity", "orientation")
-        for _required_vector_key in _required_vector_keys:
-            # obtain the shape of the relevant vector and ensure
-            # it matches the expected dimensionality.
-            vec = model_info[_required_vector_key]
-            shape = getattr(vec, "shape", ())
-            if shape != (expected_ndim,):
-                raise ValueError(
-                    f"Model '{model_name}' has invalid '{_required_vector_key}' shape {shape}; "
-                    f"expected shape ({expected_ndim},)."
-                )
-
-        # Now check that the particle file (if it is specified) is actually
-        # a real file.
-        if "particles" in model_info and model_info["particles"] is not None:
-            particle_path = Path(model_info["particles"])
-            if not particle_path.exists():
-                raise FileNotFoundError(f"Particle file for '{model_name}' not found: {particle_path}")
+        # Ensure all REQUIRED keys are present
+        for key in cls._model_metadata_required_keys:
+            if key not in model_info:
+                raise ValueError(f"Model '{model_name}' is missing required key '{key}'.")
 
     def __init__(self, directory: Union[str, Path]):
         """
@@ -257,7 +220,7 @@ class InitialConditions:
         # Normalize to a Path object for consistent behavior
         # this ensures that we can use all of the relevant Path methods.
         self.__directory__ = Path(directory)
-        self.logger.info("Loading IC object from directory: %s", self.__directory__.absolute())
+        self.logger.info("Loading %s object from directory: %s", self.__class__.__name__, self.__directory__.absolute())
 
         # Verify that the target directory exists and is actually a directory.
         # If we fail to find the directory, we raise an error.
@@ -281,7 +244,7 @@ class InitialConditions:
         # We now validate the models.
         for model_name, model_info in dict(self.__config__["models"]).items():
             self.logger.debug("Validating model '%s'...", model_name)
-            self._validate_model(model_name, model_info, expected_ndim=self.ndim)
+            self._validate_model(model_name, model_info)
 
     # ============================== #
     # Properties                     #
@@ -323,54 +286,6 @@ class InitialConditions:
         return dict(self.__config__["models"])
 
     @property
-    def model_positions(self) -> dict[str, unyt.unyt_array]:
-        """
-        The positions of the models in the initial conditions.
-
-        Returns
-        -------
-        dict
-            A dictionary mapping model names to their position vectors as `unyt.array.unyt_array`.
-        """
-        return {name: unyt.unyt_array(info["position"], units="m") for name, info in self.models.items()}
-
-    @property
-    def model_velocities(self) -> dict[str, unyt.unyt_array]:
-        """
-        The velocities of the models in the initial conditions.
-
-        Returns
-        -------
-        dict
-            A dictionary mapping model names to their velocity vectors as `unyt.array.unyt_array`.
-        """
-        return {name: unyt.unyt_array(info["velocity"], units="km/s") for name, info in self.models.items()}
-
-    @property
-    def model_orientations(self) -> dict[str, np.ndarray]:
-        """
-        The orientations of the models in the initial conditions.
-
-        Returns
-        -------
-        dict
-            A dictionary mapping model names to their orientation vectors as `np.ndarray`.
-        """
-        return {name: np.asarray(info["orientation"], dtype=float) for name, info in self.models.items()}
-
-    @property
-    def model_spins(self) -> dict[str, float]:
-        """
-        The spins of the models in the initial conditions.
-
-        Returns
-        -------
-        dict
-            A dictionary mapping model names to their spin values as `float`.
-        """
-        return {name: float(info["spin"]) for name, info in self.models.items()}
-
-    @property
     def particles(self) -> dict[str, Union[Path, None]]:
         """
         The particle files associated with the models in the initial conditions.
@@ -384,18 +299,6 @@ class InitialConditions:
         return {name: Path(info.get("particles", None)) for name, info in self.models.items()}
 
     @property
-    def ndim(self) -> int:
-        """
-        The number of dimensions for the initial conditions.
-
-        Returns
-        -------
-        int
-            The number of dimensions (e.g., 3 for 3D).
-        """
-        return int(self.__config__["metadata.ndim"])
-
-    @property
     def metadata(self) -> dict:
         """
         The metadata associated with the initial conditions.
@@ -407,11 +310,23 @@ class InitialConditions:
         """
         return dict(self.__config__["metadata"])
 
+    @property
+    def ndim(self) -> int:
+        """
+        The number of spatial dimensions for the initial conditions.
+
+        Returns
+        -------
+        int
+            The number of spatial dimensions (e.g., 3 for 3D).
+        """
+        return self.__class__._ndim
+
     # ============================== #
     # MAGIC Methods                  #
     # ============================== #
     def __repr__(self) -> str:
-        return f"<{self.__class__.__name__}(dir='{self.__directory__}', ndim={self.ndim}, models={len(self.models)})>"
+        return f"<{self.__class__.__name__}(dir='{self.__directory__}', models={len(self.models)})>"
 
     def __str__(self) -> str:
         """Human-readable summary of the InitialConditions object."""
@@ -520,7 +435,7 @@ class InitialConditions:
         model_info = models[name]
 
         # Remove associated files if they exist
-        for key in ("path", "particles"):
+        for key in self._model_file_extensions:
             if key in model_info and model_info[key] is not None:
                 try:
                     Path(model_info[key]).unlink()
@@ -536,19 +451,24 @@ class InitialConditions:
         self,
         name: str,
         model: Union[str, Path, BaseModel],
-        model_config,
+        model_config: dict[str, Any],
         file_processing_mode: str = "copy",
         overwrite: bool = False,
+        **kwargs,
     ):
         """
-        Add a new model to these initial conditions.
+        Add a new model to the initial conditions set.
+
+        This method can be used to incorporate a new model into the initial conditions.
+        In doing so, the model is validated to ensure that it satisfies the conditions for
+        inclusion in the ICs and then is added in the same way that the original dataset
+        was generated. This includes copying or moving the model file into
+        the IC directory and updating the configuration file.
 
         Parameters
         ----------
         name : str
-            Unique name/identifier for the model within the initial conditions set.
-            If the provided name is not unique, then ``overwrite`` will determine if
-            an error is raised or if the existing model is replaced.
+            The name of the model being added.
         model : str, ~pathlib.Path or ~pisces.models.core.base.BaseModel
             The model to add, specified as either:
 
@@ -562,18 +482,15 @@ class InitialConditions:
             this method.
 
         model_config : tuple
-            A tuple specifying the model configuration in the format
+            A tuple specifying the model configuration settings. This may vary from
+            code to code and should be documented in the subclass. Commonly, this
+            includes parameters such as:
 
-            .. code-block:: python
+            - ``position`` : unyt array or sequence of length ``ndim``
+            - ``velocity`` : unyt array or sequence of length ``ndim``
+            - ``orientation`` : sequence or array defining orientation vector
+            - ``spin`` : scalar float
 
-                (position, velocity[, orientation][, spin])
-
-            Where:
-
-            - ``position`` : sequence of length ``ndim`` or unyt array with shape (ndim,)
-            - ``velocity`` : sequence of length ``ndim`` or unyt array with shape (ndim,)
-            - ``orientation`` : optional; sequence or array defining orientation
-            - ``spin`` : optional; scalar float
 
         file_processing_mode : {"copy", "move"}, default="copy"
             Determines how the provided model file is placed into the initial
@@ -589,6 +506,10 @@ class InitialConditions:
             replaced, and any associated files will be deleted or overwritten as
             needed. If ``False`` (default), attempting to add a model with a duplicate
             name will raise a :class:`ValueError`.
+
+        kwargs:
+            Additional keyword arguments passed to the model processing function.
+            This may include options specific to the subclass or model type.
         """
         # Ensure that the model name does not already exist.
         # If it does, we need tell the user to manually remove it first.
@@ -602,13 +523,25 @@ class InitialConditions:
                 self.remove_model(name)
 
         # --- Process the new model --- #
-        if not isinstance(model_config, tuple):
-            model_config = (model_config,)
-        processed = self._process_models(
-            self.directory, (name, model, *model_config), file_processing_mode=file_processing_mode
+        # This mirrors the process we go through for
+        # the initialization of models when creating the class.
+        model_config = dict(model_config)
+        model_config["model_name"] = name
+        model_config["model"] = model
+
+        _validated_model = self.__class__._validate_input_model(model, self.models, **kwargs)
+        _validated_model_name = _validated_model.pop("model_name")
+
+        # Now we need to ensure that the model gets either copied or moved
+        # into the directory as needed. This is done with the ``_process_model``
+        # method.
+        _validated_model = self.__class__._process_model(
+            _validated_model_name, _validated_model, file_processing_mode=file_processing_mode, **kwargs
         )
 
-        self.__config__["models"].update(processed)
+        # Add the post-validation model to the dictionary of ready-to-go
+        # models.
+        self.__config__["models"][_validated_model_name] = _validated_model
         self.logger.info(f"Added model '{name}' to initial conditions.")
 
     def list_models(self):
@@ -647,12 +580,7 @@ class InitialConditions:
         model_name : str
             The name/identifier of the model to update.
         parameters : dict
-            Key-value pairs of parameters to update. Supported keys include:
-
-            - ``position`` : unyt array or sequence of length ``ndim``
-            - ``velocity`` : unyt array or sequence of length ``ndim``
-            - ``orientation`` : sequence or array defining orientation vector
-            - ``spin`` : scalar float
+            Key-value pairs of parameters to update.
 
         Raises
         ------
@@ -661,45 +589,19 @@ class InitialConditions:
         ValueError
             If provided parameters are invalid or inconsistent with expected dimensions/units.
         """
-        # Ensure model exists
+        # Ensure that we have the model to update.
         if model_name not in self.models:
-            raise KeyError(f"No model named '{model_name}' found in initial conditions.")
+            raise ValueError(f"No model named '{model_name}' found in initial conditions.")
 
-        ndim = self.ndim
-        model_info = self.__config__[f"models.{model_name}"]
-
+        # Cycle through the keys and values of the
+        # parameters dictionary and update.
+        _permitted_keys = set(self._model_metadata_required_keys).union(self._model_metadata_allowed_keys)
         for key, value in parameters.items():
-            if key == "position":
-                arr = unyt.unyt_array(value, units="m") if not isinstance(value, unyt.unyt_array) else value
-                if arr.shape != (ndim,):
-                    raise ValueError(f"Position must have shape ({ndim},), got {arr.shape}.")
-                model_info[key] = arr
+            if key not in _permitted_keys:
+                raise ValueError(f"Parameter '{key}' is not a valid model parameter. ")
 
-            elif key == "velocity":
-                arr = unyt.unyt_array(value, units="km/s") if not isinstance(value, unyt.unyt_array) else value
-                if arr.shape != (ndim,):
-                    raise ValueError(f"Velocity must have shape ({ndim},), got {arr.shape}.")
-                model_info[key] = arr
-
-            elif key == "orientation":
-                arr = np.asarray(value, dtype=float)
-                if arr.shape != (ndim,):
-                    raise ValueError(f"Orientation must have shape ({ndim},), got {arr.shape}.")
-                norm = np.linalg.norm(arr)
-                if norm == 0:
-                    raise ValueError("Orientation vector cannot be zero.")
-                model_info[key] = arr / norm  # Normalize
-
-            elif key == "spin":
-                try:
-                    model_info[key] = float(value)
-                except (TypeError, ValueError) as exp:
-                    raise ValueError(f"Spin must be a scalar float, got {value!r}.") from exp
-
-            else:
-                raise ValueError(f"Unsupported model parameter: '{key}'.")
-
-        self.logger.info(f"Updated parameters for model '{model_name}': {list(parameters.keys())}")
+            # Update the value
+            self.__config__[f"models.{model_name}.{key}"] = value
 
     def get_model_info(self, model_name: str):
         """
@@ -896,7 +798,7 @@ class InitialConditions:
         return summary
 
     # ================================ #
-    # Methods - Particle Interaction   #
+    #  Methods - Particle Interaction  #
     # ================================ #
     def has_particles(self, model_name: str) -> bool:
         """
@@ -1059,6 +961,7 @@ class InitialConditions:
         FileExistsError
             If a particle file is already associated with the model and ``overwrite`` is False.
         """
+        _particle_file_extension = self.__class__._model_file_extensions["particles"]["extension"]
         if model_name not in self.models:
             raise KeyError(f"No model named '{model_name}' found in initial conditions.")
 
@@ -1066,7 +969,7 @@ class InitialConditions:
         if not particle_path.exists() or not particle_path.is_file():
             raise FileNotFoundError(f"Particle file '{particle_path}' does not exist.")
 
-        dest_path = self.directory / f"{model_name}_p.hdf5"
+        dest_path = self.directory / f"{model_name}{_particle_file_extension}.hdf5"
 
         # Check for existing particle file
         existing_particle_path = self.models[model_name].get("particles")
@@ -1302,10 +1205,634 @@ class InitialConditions:
             raise NotImplementedError(f"The model '{model_name}' does not support particle generation.")
 
         # Delegate to the model's particle generation method
+        _particle_file_extension = self.__class__._model_file_extensions["particles"]["extension"]
+
         # noinspection PyUnresolvedReferences
-        _p = model.generate_particles(self.__directory__ / f"{model_name}_p.hdf5", num_particles, **kwargs)
-        self.config[f"models.{model_name}.particles"] = self.__directory__ / f"{model_name}_p.hdf5"
+        _generated_particles = model.generate_particles(
+            self.__directory__ / f"{model_name}{_particle_file_extension}.hdf5", num_particles, **kwargs
+        )
+        self.config[f"models.{model_name}.particles"] = (
+            self.__directory__ / f"{model_name}_{_particle_file_extension}.hdf5"
+        )
         self.logger.info(f"Generated particles for model '{model_name}' with counts: {num_particles}")
+
+    # ============================== #
+    # Generator Methods              #
+    # ============================== #
+    # These methods are used to generate the skeleton of an initial conditions
+    # object. The methods here should be overridden in subclasses to specialize
+    # the behavior of the initial conditions for a specific simulation code.
+    #
+    # ``_process_models`` takes a set of models and associated metadata and
+    #   proceeds to process them, returning a CONFIG-compatible dictionary of
+    #   model names and their properties. It also moves or copies the model files
+    #  into the initial conditions directory as needed.
+    #
+    # ``
+    @classmethod
+    def _process_metadata(cls, directory: Path, **kwargs) -> dict:
+        """
+        Generate core metadata for the initial conditions set.
+
+        The base implementation records only invariant structural
+        information required for all IC sets. Subclasses are
+        expected to extend this to add simulation- or
+        geometry-specific keys (e.g., ``ndim``, coordinate
+        system, cosmology parameters).
+
+        Parameters
+        ----------
+        directory : ~pathlib.Path
+            The directory where ICs are being created.
+        **kwargs :
+            Ignored in the base implementation. Subclasses may
+            interpret these values when extending this method.
+
+        Returns
+        -------
+        dict
+            Metadata dictionary to be stored alongside model data.
+            Guaranteed keys:
+              - ``created_at`` : ISO 8601 timestamp (UTC)
+              - ``class_name`` : str, subclass name
+              - ``directory`` : str, absolute resolved path
+        """
+        timestamp = datetime.datetime.now(datetime.UTC).isoformat()
+
+        return {
+            "metadata": {
+                "created_at": timestamp,
+                "class_name": cls.__name__,
+                "directory": str(directory.resolve()),
+            }
+        }
+
+    @abstractmethod
+    @classmethod
+    def _validate_input_model(cls, model: dict, existing_models: dict, **kwargs) -> dict:
+        """
+        Validate and normalize a single input model definition.
+
+        This method enforces a consistent structure for model dictionaries
+        before they are incorporated into an initial conditions set.
+        It is the *primary extension point* for subclasses that need
+        specialized rules (e.g., different dimensionalities, extra fields,
+        spherical coordinates).
+
+        .. rubric:: Validation guarantees
+
+        By default, validation ensures that:
+
+        - ``model_name`` is a unique string across all models in this IC set.
+        - ``model`` points to a valid model file on disk
+          (string/Path or :class:`~pisces.models.core.base.BaseModel`). If a model
+          was provided directly originally, the path to its file is extracted and
+          stored.
+        - ``particles`` (if specified) points to a valid file on disk.
+        - ``position`` is a :class:`~unyt.unyt_array` with length units.
+        - ``velocity`` is a :class:`~unyt.unyt_array` with length/time units.
+
+        This should be improved / extended for subclasses to ensure that
+        the models conform to the expectations of the specific simulation code.
+
+        .. rubric:: Subclass extension points
+
+        - Add or modify required keys by overriding
+          :attr:`_model_metadata_required_keys`.
+        - Enforce dimensionality of vectors (e.g., 1D, 2D, spherical).
+        - Validate additional fields (orientation, spin, metallicity, etc.).
+        - Inject default values for optional parameters if not provided.
+
+        Parameters
+        ----------
+        model : dict
+            Raw model specification provided by the user. Must include at least
+            the keys listed in :attr:`_model_metadata_required_keys`.
+        existing_models : dict
+            Dictionary of already-processed models. Used to ensure uniqueness
+            of ``model_name`` and to cross-check consistency.
+        **kwargs :
+            Extra options passed down from higher-level calls. Subclasses may
+            use these to specialize validation (e.g., enforcing ``ndim``).
+
+        Returns
+        -------
+        dict
+            A validated, standardized model dictionary ready for inclusion
+            in the configuration. Keys are guaranteed to include:
+
+              - ``model_name`` : str
+              - ``path`` : Path
+              - ``position`` : unyt_array
+              - ``velocity`` : unyt_array
+              - ``[particles_path]`` : Path (if provided)
+
+            Subclasses may add additional validated keys.
+
+        Raises
+        ------
+        ValueError
+            If required keys are missing or invalid.
+        TypeError
+            If fields are of incorrect types or units.
+        FileNotFoundError
+            If the referenced model file does not exist.
+        """
+        # --- Check Required Keys [Invariant] --- #
+        # Ensure that all of the required keys are present. This is invariant
+        # across all subclasses and should not need to be overwritten.
+        for _required_key in cls._model_metadata_required_keys:
+            if _required_key not in model:
+                raise ValueError(f"Model definition is missing required key: {_required_key}.")
+
+        # --- Check Only Optional / Required Keys [Invariant] --- #
+        # Ensure that no unexpected keys are present. This is invariant
+        # across all subclasses and should not need to be overwritten.
+        allowed_keys = set(cls._model_metadata_required_keys).union(cls._model_metadata_allowed_keys)
+        for key in model.keys():
+            if key not in allowed_keys:
+                raise ValueError(f"Model definition contains unexpected key: {key}.")
+
+        # --- Model Name Uniqueness [Invariant] --- #
+        # Ensure that the model name is a string and is unique across
+        # all models in this IC set. This is invariant across all
+        # subclasses and should not need to be overwritten.
+        model["model_name"] = str(model["model_name"])
+        if model["model_name"] in existing_models:
+            suffix = 1
+            new_name = f"{model['model_name']}_{suffix}"
+            while new_name in existing_models:
+                suffix += 1
+                new_name = f"{model['model_name']}_{suffix}"
+            model["model_name"] = new_name
+
+        # --- Model Processing [Invariant] --- #
+        # At this stage, we validate the model itself and ensure
+        # that the model exists, convert the model to a path if
+        # necessary and then proceed.
+
+        # Ensure that the model specification is actually a path.
+        attached_model = model.pop("model")
+        if isinstance(attached_model, (str, Path)):
+            model_path = Path(attached_model)
+            if not model_path.exists() or not model_path.is_file():
+                raise FileNotFoundError(f"Model file '{model_path}' does not exist or is not a file.")
+            model["path"] = model_path
+        elif isinstance(attached_model, BaseModel):
+            model_path = Path(attached_model.__path__)
+            if not model_path.exists() or not model_path.is_file():
+                raise FileNotFoundError(f"Model file '{model_path}' does not exist or is not a file.")
+            model["path"] = model_path
+        else:
+            raise TypeError(
+                f"Model must be a string, Path, or BaseModel instance, not {type(attached_model).__name__}."
+            )
+
+        # Once we complete the validation, we return the model.
+        return model
+
+    @abstractmethod
+    @classmethod
+    def _process_model(
+        cls, directory: Path, model_name: str, model_info: dict, file_processing_mode: str = "copy", **kwargs
+    ) -> dict:
+        """
+        Finalize a validated model for inclusion in the IC directory.
+
+        This method performs any required file operations (copy/move) and
+        ensures that the model dictionary is in a config-ready format.
+        Subclasses may extend this to perform additional tasks such as
+        particle generation, orientation defaults, etc.
+
+        Parameters
+        ----------
+        directory : ~pathlib.Path
+            The target directory where the model file should be placed.
+        model_name : str
+            Unique identifier for the model. This is guaranteed to have been
+            validated for uniqueness upstream in :meth:`_validate_input_model`.
+        model_info : dict
+            The validated model dictionary.
+        file_processing_mode : {"copy", "move"}, default="copy"
+            How to place the model file into the IC directory:
+
+            * ``"copy"`` – Copy the source file, preserving the original.
+            * ``"move"`` – Move the source file, removing the original.
+        **kwargs :
+            Extra options forwarded from higher-level calls. Subclasses may
+            use these to specialize processing.
+
+        Returns
+        -------
+        dict
+            The finalized model dictionary.
+
+        Raises
+        ------
+        FileNotFoundError
+            If the source model file does not exist.
+        ValueError
+            If ``file_processing_mode`` is invalid.
+        """
+        # For each of the models, we need to go through all of the
+        # filehook keys and move things.
+        for file_key, extension in cls._model_file_extensions.items():
+            if file_key in model_info:
+                src_path = Path(model_info[file_key])
+                if not src_path.exists():
+                    raise FileNotFoundError(f"File for key '{file_key}' not found for '{model_name}': {src_path}")
+                dest_path = directory / f"{model_name}_{file_key}{extension}"
+                if file_processing_mode == "copy":
+                    shutil.copy2(src_path, dest_path)
+                elif file_processing_mode == "move":
+                    shutil.move(str(src_path), str(dest_path))
+                else:
+                    raise ValueError(
+                        f"Invalid file_processing_mode '{file_processing_mode}'; must be 'copy' or 'move'."
+                    )
+                model_info[file_key] = dest_path
+
+        cls.logger.debug(
+            "Processed model '%s': stored at %s [mode=%s]",
+            model_name,
+            model_info["path"],
+            file_processing_mode,
+        )
+
+        # Return the finalized dictionary for this model.
+        return model_info
+
+    @classmethod
+    def create_ics(cls, directory: Union[str, Path], *models: dict, file_processing_mode: str = "copy", **kwargs):
+        """
+        Create a new initial conditions (IC) directory and return an :class:`InitialConditions` instance.
+
+        This is the main entry point for building an IC set from scratch.
+        It performs all required filesystem setup, model validation, and
+        configuration writing.
+
+        .. rubric:: Workflow
+
+        1. **Directory setup**:
+
+           - Create the target directory if it does not exist.
+           - If it exists and is non-empty, ``overwrite=True`` is required
+             in ``kwargs`` to clear it safely.
+
+        2. **Model processing**:
+
+           - Each model definition (dict) is validated via
+             :meth:`_validate_input_model`.
+           - Files are copied or moved into the IC directory via
+             :meth:`_process_model`.
+
+        3. **Configuration file**:
+
+           - Metadata and processed model information are assembled.
+           - A YAML file ``IC_CONFIG.yaml`` is written for later reload.
+
+        Parameters
+        ----------
+        directory : str or ~pathlib.Path
+            Target directory for the IC set. Must be empty unless
+            ``overwrite=True`` is provided. All of the model files and
+            any connected files will be copied / moved into this directory so
+            that it becomes the centralized location for the IC set.
+        *models : dict
+            Model definitions. The expected keys in each model may vary from
+            subclass to subclass, but at a minimum we expect:
+
+            - ``"model_name"`` : str
+              The unique name/identifier for this model.
+            - ``"model"`` : str, Path, or BaseModel
+               The model specification, either as a path to a model file
+            - ``"position"`` : unyt_array with length units
+              The position of the model in the simulation volume.
+            - ``"velocity"`` : unyt_array with length/time units
+              The bulk velocity of the model in the simulation volume.
+
+        file_processing_mode: {"copy", "move"}, default="copy"
+            How to handle the provided model files:
+
+            * ``"copy"`` – Copy the files into the IC directory (originals remain intact).
+            * ``"move"`` – Move the files into the IC directory (originals are removed).
+
+        **kwargs :
+            Additional keyword arguments which are subclass dependent.
+
+        Returns
+        -------
+        InitialConditions
+            A fully initialized instance pointing to the new directory.
+
+        Raises
+        ------
+        FileExistsError
+            If the directory exists and is non-empty, and ``overwrite`` is False.
+        FileNotFoundError
+            If a referenced model file does not exist.
+        ValueError
+            If a model definition is missing required keys or is otherwise invalid.
+
+        Notes
+        -----
+        - This method is not intended to be overridden by subclasses.
+          Instead, override the following hooks to customize behavior:
+
+          * :meth:`_validate_input_model`
+          * :meth:`_process_model`
+          * :meth:`_process_metadata`
+
+        - The returned instance is ready for immediate use in frontend
+          converters (e.g., Gadget, AREPO).
+        """
+        # --- Directory Setup [INVARIANT] --- #
+        # Process the provided directory. We check that it is a valid directory
+        # and that it doesn't contain any existing files that need to be overwritten.
+        #
+        # This is a structural invariant of this class and should NOT be overwritten
+        # by subclasses to ensure that the structure is contiguous.
+        cls.logger.info("Creating initial conditions in directory: %s", directory)
+        directory = Path(directory)
+
+        if not directory.exists():
+            directory.mkdir(parents=True, exist_ok=True)
+            cls.logger.debug("Created new directory: %s", directory)
+        else:
+            has_content = any(directory.iterdir())
+            if has_content and kwargs.get("overwrite", False):
+                shutil.rmtree(directory)
+                directory.mkdir(parents=True, exist_ok=True)
+                cls.logger.debug("Overwrote existing directory: %s", directory)
+            elif has_content:
+                raise FileExistsError(
+                    f"Directory `{directory}` is not empty. Use `overwrite=True` to replace its contents."
+                )
+
+        # --- Model Processing --- #
+        # At this stage, we move onto model processing. This is a two step process:
+        # 1. We convert the metadata into a standardized dictionary that we can write
+        #    directly into the IC file when we're ready.
+        # 2. We copy or move the model files into the directory as needed.
+        #
+        # Subclasses may override parts of this process.
+        _validated_models = {}
+        for model in models:
+            # Each model is a dictionary contained some set of keys. The first
+            # step will be to ensure all of the expected model attributes are
+            # present and to ensure that there are no unexpected keys. This is
+            # do in the _validate_input_model method.
+            _validated_model = cls._validate_input_model(model, _validated_models, **kwargs)
+            _validated_model_name = _validated_model.pop("model_name")
+
+            # Now we need to ensure that the model gets either copied or moved
+            # into the directory as needed. This is done with the ``_process_model``
+            # method.
+            _validated_model = cls._process_model(
+                _validated_model_name, _validated_model, file_processing_mode=file_processing_mode, **kwargs
+            )
+
+            # Add the post-validation model to the dictionary of ready-to-go
+            # models.
+            _validated_models[_validated_model_name] = _validated_model
+
+        # --- Create the IC_CONFIG File --- #
+        # We create a configuration file that contains the processed models
+        # and their properties. This is a simple YAML file that can be read later.
+        with open(directory / "IC_CONFIG.yaml", "w") as f:
+            metadata = cls._process_metadata(directory, **kwargs)
+            metadata["models"] = _validated_models
+            cls.__YAML__.dump(metadata, f)
+
+        # Return the class initialized with the directory.
+        cls.logger.info("Initial conditions created successfully in %s", directory)
+        return cls(directory)
+
+
+class InitialConditions1DSpherical(InitialConditions):
+    """
+    Initial conditions for 1D spherical simulations.
+
+    This subclass enforces that all models are defined in a strictly spherical
+    coordinate system with only a radial dependence (``r`` axis). Bulk positions
+    and velocities are not used—models are implicitly located at the origin with
+    zero translational motion.
+
+    Use this class when constructing spherically symmetric ICs, e.g. radial
+    gas/halo profiles. The class ensures that:
+
+    - The model grid uses :class:`~pisces.geometry.SphericalCoordinateSystem`.
+    - The grid has exactly one active axis (``r``).
+    - Only ``model_name`` and ``model`` are required keys; particles may be added.
+
+    Subclasses may extend validation to enforce additional spherical-specific
+    metadata (e.g., radial boundary conditions, outer cutoff radii).
+    """
+
+    # ============================== #
+    # Class Flags                    #
+    # ============================== #
+    # These flags are easily modified settings that are used throughout
+    # the base class and should be easily accessible for modification
+    # by subclasses.
+    _model_metadata_required_keys = ["model_name", "model"]
+    _model_metadata_allowed_keys = ["particles"]
+    _ndim = 1
+
+    # ============================== #
+    # Initialization Methods         #
+    # ============================== #
+    @classmethod
+    def _validate_model(cls, model_name: str, model_info: dict) -> None:
+        super()._validate_model(model_name, model_info)
+
+    # ============================== #
+    # Generator Methods              #
+    # ============================== #
+    # These methods are used to generate the skeleton of an initial conditions
+    # object. The methods here should be overridden in subclasses to specialize
+    # the behavior of the initial conditions for a specific simulation code.
+    #
+    # ``_process_models`` takes a set of models and associated metadata and
+    #   proceeds to process them, returning a CONFIG-compatible dictionary of
+    #   model names and their properties. It also moves or copies the model files
+    #  into the initial conditions directory as needed.
+    #
+    @abstractmethod
+    @classmethod
+    def _validate_input_model(cls, model: dict, existing_models: dict, **kwargs) -> dict:
+        # --- Check Required Keys [Invariant] --- #
+        # Ensure that all of the required keys are present. This is invariant
+        # across all subclasses and should not need to be overwritten.
+        for _required_key in cls._model_metadata_required_keys:
+            if _required_key not in model:
+                raise ValueError(f"Model definition is missing required key: {_required_key}.")
+
+        # --- Check Only Optional / Required Keys [Invariant] --- #
+        # Ensure that no unexpected keys are present. This is invariant
+        # across all subclasses and should not need to be overwritten.
+        allowed_keys = set(cls._model_metadata_required_keys).union(cls._model_metadata_allowed_keys)
+        for key in model.keys():
+            if key not in allowed_keys:
+                raise ValueError(f"Model definition contains unexpected key: {key}.")
+
+        # --- Model Name Uniqueness [Invariant] --- #
+        # Ensure that the model name is a string and is unique across
+        # all models in this IC set. This is invariant across all
+        # subclasses and should not need to be overwritten.
+        model["model_name"] = str(model["model_name"])
+        if model["model_name"] in existing_models:
+            suffix = 1
+            new_name = f"{model['model_name']}_{suffix}"
+            while new_name in existing_models:
+                suffix += 1
+                new_name = f"{model['model_name']}_{suffix}"
+            model["model_name"] = new_name
+
+        # --- Model Processing [Invariant] --- #
+        # At this stage, we validate the model itself and ensure
+        # that the model exists, convert the model to a path if
+        # necessary and then proceed.
+
+        # Ensure that the model specification is actually a path.
+        attached_model = model.pop("model")
+        if isinstance(attached_model, (str, Path)):
+            model_path = Path(attached_model)
+            if not model_path.exists() or not model_path.is_file():
+                raise FileNotFoundError(f"Model file '{model_path}' does not exist or is not a file.")
+            model["path"] = model_path
+        elif isinstance(attached_model, BaseModel):
+            model_path = Path(attached_model.__path__)
+            if not model_path.exists() or not model_path.is_file():
+                raise FileNotFoundError(f"Model file '{model_path}' does not exist or is not a file.")
+            model["path"] = model_path
+        else:
+            raise TypeError(
+                f"Model must be a string, Path, or BaseModel instance, not {type(attached_model).__name__}."
+            )
+
+        # --- Ensure Spherical Coordinate System --- #
+        # We access the model's grid and ensure that it is spherical and that
+        # we only have 1 active axis (r).
+        model_grid = inspect_model_grid(model["path"])
+
+        if model_grid.coordinate_system.__class__.__name__ != "SphericalCoordinateSystem":
+            raise ValueError(
+                f"Model '{model['model_name']}' must use a spherical coordinate system, "
+                f"not {model_grid.coordinate_system.__class__.__name__}."
+            )
+
+        if set(model_grid.active_axes) != {"r"}:
+            raise ValueError(
+                f"Model '{model['model_name']}' must have only a radial grid dependence, not {model_grid.active_axes}."
+            )
+
+        # Once we complete the validation, we return the model.
+        return model
+
+
+class InitialConditionsCartesian(InitialConditions, ABC):
+    """
+    Abstract base class for Cartesian initial conditions.
+
+    Provides a general framework for simulations defined in Cartesian
+    coordinates with ``ndim`` active spatial dimensions. This class
+    enforces the presence and dimensionality of ``position`` and ``velocity``
+    vectors and provides convenience accessors for them.
+
+    Key features:
+      - Ensures positions are length vectors of shape ``(ndim,)``.
+      - Ensures velocities are length/time vectors of shape ``(ndim,)``.
+      - Defines ``model_positions`` and ``model_velocities`` properties for
+        retrieving validated unyt arrays with physical units.
+
+    Subclasses specify the dimensionality by setting ``_ndim`` and may extend
+    validation to include orientation, spin, or other Cartesian-specific keys.
+    """
+
+    # ============================== #
+    # Class Flags                    #
+    # ============================== #
+    # These flags are easily modified settings that are used throughout
+    # the base class and should be easily accessible for modification
+    # by subclasses.
+    _model_metadata_required_keys = ["model_name", "model", "position", "velocity"]
+    _model_metadata_allowed_keys = ["particles"]
+    _ndim = 3
+
+    # ============================== #
+    # Initialization Methods         #
+    # ============================== #
+    @classmethod
+    def _validate_model(cls, model_name: str, model_info: dict) -> None:
+        super()._validate_model(model_name, model_info)
+
+    # ============================== #
+    # Properties                     #
+    # ============================== #
+    @property
+    def model_positions(self) -> dict[str, unyt.unyt_array]:
+        """
+        The positions of the models in the initial conditions.
+
+        Returns
+        -------
+        dict
+            A dictionary mapping model names to their position vectors as `unyt.array.unyt_array`.
+        """
+        return {name: unyt.unyt_array(info["position"], units="m") for name, info in self.models.items()}
+
+    @property
+    def model_velocities(self) -> dict[str, unyt.unyt_array]:
+        """
+        The velocities of the models in the initial conditions.
+
+        Returns
+        -------
+        dict
+            A dictionary mapping model names to their velocity vectors as `unyt.array.unyt_array`.
+        """
+        return {name: unyt.unyt_array(info["velocity"], units="km/s") for name, info in self.models.items()}
+
+    # ============================== #
+    # Generator Methods              #
+    # ============================== #
+    # These methods are used to generate the skeleton of an initial conditions
+    # object. The methods here should be overridden in subclasses to specialize
+    # the behavior of the initial conditions for a specific simulation code.
+    #
+    # ``_process_models`` takes a set of models and associated metadata and
+    #   proceeds to process them, returning a CONFIG-compatible dictionary of
+    #   model names and their properties. It also moves or copies the model files
+    #  into the initial conditions directory as needed.
+    #
+    @abstractmethod
+    @classmethod
+    def _validate_input_model(cls, model: dict, existing_models: dict, **kwargs) -> dict:
+        # Perform the super-class initialization to ensure that we
+        # have the basic structure in place.
+        model = super()._validate_input_model(model, existing_models, **kwargs)
+
+        # --- Parameter Processing [Extensible] --- #
+        # At this stage, we validate and process the other parameters
+        # in the model. This is the primary extension point for subclasses
+        # that need to enforce different dimensionalities, coordinate systems,
+        # or additional parameters.
+        # Ensure that the model has its location and velocity specified correctly.
+        model["position"] = unyt.unyt_array(model["position"])
+        if model["position"].units.dimensions != unyt.dimensions.length:
+            raise TypeError(f"Position must have length units, not {model['position'].units.dimensions}.")
+        if model["position"].shape != (cls._ndim,):
+            raise ValueError(f"Position must be a {cls._ndim}D vector, not shape {model['position'].shape}.")
+
+        model["velocity"] = unyt.unyt_array(model["velocity"])
+        if model["velocity"].units.dimensions != (unyt.dimensions.length / unyt.dimensions.time):
+            raise TypeError(f"Velocity must have length/time units, not {model['velocity'].units.dimensions}.")
+        if model["velocity"].shape != (cls._ndim,):
+            raise ValueError(f"Velocity must be a {cls._ndim}D vector, not shape {model['velocity'].shape}.")
+
+        # Once we complete the validation, we return the model.
+        return model
 
     # ============================== #
     # Physics Methods                #
@@ -1751,6 +2278,245 @@ class InitialConditions:
 
         return total_mass_sum
 
+
+class InitialConditions1DCartesian(InitialConditionsCartesian):
+    """
+    Initial conditions for 1D Cartesian simulations.
+
+    Specialized Cartesian subclass with ``ndim=1``. Models are placed along a
+    one-dimensional line with scalar position and velocity. This is useful for
+    toy models, 1D test problems, or simplified collapse/expansion scenarios.
+
+    Extends :class:`InitialConditionsCartesian` with physics utilities for:
+      - Mass-weighted center-of-mass (COM) position and velocity.
+      - Shifting models into the COM frame.
+      - Computing the total system mass.
+
+    Models must include:
+      - ``model_name`` and ``model`` (file reference).
+      - ``position`` (1D vector with length units).
+      - ``velocity`` (1D vector with length/time units).
+    """
+
+    # ============================== #
+    # Class Flags                    #
+    # ============================== #
+    # These flags are easily modified settings that are used throughout
+    # the base class and should be easily accessible for modification
+    # by subclasses.
+    _model_metadata_required_keys = ["model_name", "model", "position", "velocity"]
+    _model_metadata_allowed_keys = ["particles"]
+    _ndim = 1
+
+    # ============================== #
+    # Initialization Methods         #
+    # ============================== #
+    @classmethod
+    def _validate_model(cls, model_name: str, model_info: dict) -> None:
+        super()._validate_model(model_name, model_info)
+
+    # ============================== #
+    # Generator Methods              #
+    # ============================== #
+    # These methods are used to generate the skeleton of an initial conditions
+    # object. The methods here should be overridden in subclasses to specialize
+    # the behavior of the initial conditions for a specific simulation code.
+    #
+    # ``_process_models`` takes a set of models and associated metadata and
+    #   proceeds to process them, returning a CONFIG-compatible dictionary of
+    #   model names and their properties. It also moves or copies the model files
+    #  into the initial conditions directory as needed.
+    #
+    @abstractmethod
+    @classmethod
+    def _validate_input_model(cls, model: dict, existing_models: dict, **kwargs) -> dict:
+        # Perform the super-class initialization to ensure that we
+        # have the basic structure in place.
+        model = super()._validate_input_model(model, existing_models, **kwargs)
+
+        return model
+
+
+class InitialConditions2DCartesian(InitialConditionsCartesian):
+    """
+    Initial conditions for 2D Cartesian simulations.
+
+    Specialized Cartesian subclass with ``ndim=2``. Models are embedded in a
+    planar (x, y) geometry and may include an orientation vector to define
+    spin axes or angular alignment.
+
+    Key features:
+      - Validates that positions/velocities are 2D vectors with correct units.
+      - Normalizes orientation vectors to unit length.
+      - Provides ``model_orientations`` property for access.
+
+    Models must include:
+      - ``model_name``, ``model``, ``position``, ``velocity``.
+      - Optional ``orientation`` (default = [0, 1]).
+      - Optional ``particles``.
+    """
+
+    # ============================== #
+    # Class Flags                    #
+    # ============================== #
+    # These flags are easily modified settings that are used throughout
+    # the base class and should be easily accessible for modification
+    # by subclasses.
+    _model_metadata_required_keys = ["model_name", "model", "position", "velocity"]
+    _model_metadata_allowed_keys = ["particles", "orientation"]
+    _ndim = 2
+
+    # ============================== #
+    # Initialization Methods         #
+    # ============================== #
+    @classmethod
+    def _validate_model(cls, model_name: str, model_info: dict) -> None:
+        super()._validate_model(model_name, model_info)
+
+    # ============================== #
+    # Properties                     #
+    # ============================== #
+    @property
+    def model_orientations(self) -> dict[str, np.ndarray]:
+        """
+        The orientations of the models in the initial conditions.
+
+        Returns
+        -------
+        dict
+            A dictionary mapping model names to their orientation vectors as `np.ndarray`.
+        """
+        return {name: np.asarray(info["orientation"], dtype=float) for name, info in self.models.items()}
+
+    # ============================== #
+    # Generator Methods              #
+    # ============================== #
+    # These methods are used to generate the skeleton of an initial conditions
+    # object. The methods here should be overridden in subclasses to specialize
+    # the behavior of the initial conditions for a specific simulation code.
+    #
+    # ``_process_models`` takes a set of models and associated metadata and
+    #   proceeds to process them, returning a CONFIG-compatible dictionary of
+    #   model names and their properties. It also moves or copies the model files
+    #  into the initial conditions directory as needed.
+    #
+    @abstractmethod
+    @classmethod
+    def _validate_input_model(cls, model: dict, existing_models: dict, **kwargs) -> dict:
+        # Perform the super-class initialization to ensure that we
+        # have the basic structure in place.
+        model = super()._validate_input_model(model, existing_models, **kwargs)
+
+        # Now we check the orientation to ensure that they are both valid and
+        # correctly dimensioned. If they are not present, we set them to default values.
+        model["orientation"] = np.asarray(model.get("orientation", np.asarray([0, 1], dtype="f8")))
+        if model["orientation"].shape != (2,):
+            raise ValueError(f"Orientation must be a 3D vector, not shape {model['orientation'].shape}.")
+        if np.linalg.norm(model["orientation"]) <= 1e-8:
+            raise ValueError("Orientation vector cannot be the zero vector.")
+        model["orientation"] = model["orientation"] / np.linalg.norm(model["orientation"])
+
+        return model
+
+
+class InitialConditions3DCartesian(InitialConditionsCartesian):
+    """
+    Initial conditions for 3D Cartesian simulations.
+
+    Specialized Cartesian subclass with ``ndim=3``. This is the most general
+    Cartesian IC class, allowing full 3D positioning, velocities, orientations,
+    and spins. It is designed for galaxy, cluster, and cosmological ICs where
+    full spatial and kinematic degrees of freedom are needed.
+
+    Key features:
+      - Validates 3D position and velocity vectors.
+      - Ensures orientation is a valid nonzero 3D unit vector.
+      - Enforces ``spin`` to be a scalar float.
+      - Provides convenience properties: ``model_spins``.
+
+    Physics utilities include:
+      - Integration of point-mass orbits with the `rebound` N-body package.
+      - Future extensions may add angular momentum alignment, merging utilities,
+        or orbit fitting.
+
+    Models must include:
+      - ``model_name``, ``model``, ``position``, ``velocity``.
+      - Optional ``orientation`` (default = [0, 0, 1]).
+      - Optional ``spin`` (default = 0.0).
+      - Optional ``particles``.
+    """
+
+    # ============================== #
+    # Class Flags                    #
+    # ============================== #
+    # These flags are easily modified settings that are used throughout
+    # the base class and should be easily accessible for modification
+    # by subclasses.
+    _model_metadata_required_keys = ["model_name", "model", "position", "velocity"]
+    _model_metadata_allowed_keys = ["particles", "orientation", "spin"]
+    _ndim = 3
+
+    # ============================== #
+    # Initialization Methods         #
+    # ============================== #
+    @classmethod
+    def _validate_model(cls, model_name: str, model_info: dict) -> None:
+        super()._validate_model(model_name, model_info)
+
+    # ============================== #
+    # Properties                     #
+    # ============================== #
+    @property
+    def model_spins(self) -> dict[str, float]:
+        """
+        The spins of the models in the initial conditions.
+
+        Returns
+        -------
+        dict
+            A dictionary mapping model names to their spin values as `float`.
+        """
+        return {name: float(info["spin"]) for name, info in self.models.items()}
+
+    # ============================== #
+    # Generator Methods              #
+    # ============================== #
+    # These methods are used to generate the skeleton of an initial conditions
+    # object. The methods here should be overridden in subclasses to specialize
+    # the behavior of the initial conditions for a specific simulation code.
+    #
+    # ``_process_models`` takes a set of models and associated metadata and
+    #   proceeds to process them, returning a CONFIG-compatible dictionary of
+    #   model names and their properties. It also moves or copies the model files
+    #  into the initial conditions directory as needed.
+    #
+    @abstractmethod
+    @classmethod
+    def _validate_input_model(cls, model: dict, existing_models: dict, **kwargs) -> dict:
+        # Perform the super-class initialization to ensure that we
+        # have the basic structure in place.
+        model = super()._validate_input_model(model, existing_models, **kwargs)
+
+        # Now we check the orientation and the spin to ensure that they are both valid and
+        # correctly dimensioned. If they are not present, we set them to default values.
+        model["orientation"] = np.asarray(model.get("orientation", np.asarray([0, 0, 1], dtype="f8")))
+        if model["orientation"].shape != (3,):
+            raise ValueError(f"Orientation must be a 3D vector, not shape {model['orientation'].shape}.")
+        if np.linalg.norm(model["orientation"]) <= 1e-8:
+            raise ValueError("Orientation vector cannot be the zero vector.")
+        model["orientation"] = model["orientation"] / np.linalg.norm(model["orientation"])
+
+        # We now check the spin to ensure that it is a scalar value.
+        model["spin"] = float(model.get("spin", 0.0))
+        if not isinstance(model["spin"], float):
+            raise TypeError(f"Spin must be a float, not {type(model['spin']).__name__}.")
+
+        # Once we complete the validation, we return the model.
+        return model
+
+    # ============================== #
+    # Physics Methods                #
+    # ============================== #
     def integrate_point_mass_orbits(
         self,
         models: Union[str, list[str]] = "all",
@@ -1882,363 +2648,3 @@ class InitialConditions:
         sim.integrate(sim.t + t_end.to_value("Myr"))
 
         return sim
-
-    # ============================== #
-    # Generator Methods              #
-    # ============================== #
-    # These methods are used to generate the initial conditions
-    # from a set of models and particle datasets.
-    @classmethod
-    def _process_models(cls, directory, *models, **kwargs):
-        """
-        Process the list of models to generate initial conditions.
-
-        Parameters
-        ----------
-        directory : ~pathlib.Path
-            Directory where the models will be stored or processed.
-        models : tuple
-            Each model should be specified as:
-            (name, model, position, velocity[, orientation][, spin])
-        kwargs :
-            Additional keyword arguments, such as:
-            - ndim (int): The number of dimensions for the models (default is 3).
-
-        Returns
-        -------
-        dict
-            Dictionary mapping model names to their processed properties.
-        """
-        # Start by ensuring that the models are all specified in a valid format.
-        # That means we require (at a minimum) the model name, the model (or its path),
-        # its position, and its velocity. We allow the orientation and spin to be optional
-        # in each model.
-        processed_models = {}
-
-        for model_tuple in models:
-            # --- Unpack the model tuple --- #
-            try:
-                model_name, model, position, *extra_params = model_tuple
-            except ValueError as exp:
-                raise ValueError(
-                    f"Invalid model specification: {model_tuple}.\n"
-                    "Models should be specified as "
-                    "(name, model, position, velocity[, orientation][, spin])."
-                ) from exp
-
-            # --- Validate and uniquify the model name --- #
-            # If the name already exists in the set, append a numeric suffix.
-            model_name = str(model_name)
-            if model_name in processed_models:
-                suffix = 1
-                new_name = f"{model_name}_{suffix}"
-                while new_name in processed_models:
-                    suffix += 1
-                    new_name = f"{model_name}_{suffix}"
-                model_name = new_name
-
-            # --- Validate and resolve the model --- #
-            # If given a path, load the model from disk; if a BaseModel, use directly.
-            if isinstance(model, (str, Path)):
-                model_path = Path(model)
-                model = load_model(model_path)
-            elif isinstance(model, BaseModel):
-                model_path = Path(model.__path__)
-            else:
-                raise TypeError(f"Model must be a string, Path, or BaseModel instance, not {type(model).__name__}.")
-
-            if not model_path.exists():
-                raise FileNotFoundError(f"Model path '{model_path}' does not exist.")
-
-            model_ndim = model.coordinate_system.ndim
-            ndim = kwargs.get("ndim", 3)
-            if model_ndim != ndim:
-                raise ValueError(f"Model '{model_name}' has {model_ndim} dimensions, but expected {ndim}.")
-
-            processed_models[model_name] = {"path": model_path}
-
-            # --- Validate the position vector --- #
-            # Must be a unyt_array with length units and shape (ndim,).
-            if not isinstance(position, unyt.unyt_array):
-                raise TypeError(f"Position must be a unyt.unyt_array, not {type(position).__name__}.")
-            if position.units.dimensions != unyt.dimensions.length:
-                raise TypeError(f"Position must have units of length, not {position.units.dimensions}.")
-            if position.shape != (ndim,):
-                raise ValueError(f"Position must have shape ({ndim},), not {position.shape}.")
-
-            processed_models[model_name]["position"] = position
-
-            # --- Validate or set default velocity --- #
-            if extra_params:
-                velocity, *extra_params = extra_params
-            else:
-                velocity = unyt.unyt_array([0] * ndim, units="km/s")
-
-            if not isinstance(velocity, unyt.unyt_array):
-                raise TypeError(f"Velocity must be a unyt.unyt_array, not {type(velocity).__name__}.")
-            if velocity.units.dimensions != (unyt.dimensions.length / unyt.dimensions.time):
-                raise TypeError(f"Velocity must have length/time units, not {velocity.units.dimensions}.")
-            if velocity.shape != (ndim,):
-                raise ValueError(f"Velocity must have shape ({ndim},), not {velocity.shape}.")
-
-            processed_models[model_name]["velocity"] = velocity
-
-            # --- Handle the orientation vector --- #
-            # Default: aligned in standard orientation (unit vector along last axis).
-            if extra_params:
-                orientation, *extra_params = extra_params
-                orientation = np.asarray(orientation, dtype=float)
-                if orientation.shape != (ndim,):
-                    raise ValueError(f"Orientation must have shape ({ndim},), not {orientation.shape}.")
-            else:
-                orientation = np.zeros(ndim, dtype=float)
-                orientation[-1] = 1.0  # Unit vector along last coordinate axis
-
-            # Normalize the orientation vector to unit length.
-            orientation /= np.linalg.norm(orientation)
-            processed_models[model_name]["orientation"] = orientation
-
-            # --- Handle the spin parameter --- #
-            # Default: zero spin if not provided.
-            if extra_params:
-                spin, *extra_params = extra_params
-                try:
-                    spin = float(spin)
-                except (TypeError, ValueError) as exp:
-                    raise ValueError(f"Spin must be convertible to float, got {type(spin).__name__}.") from exp
-            else:
-                spin = 0.0
-
-            processed_models[model_name]["spin"] = spin
-
-            # Logging
-            cls.logger.debug(f"Added model '{model_name}' at position {position}.")
-
-        # --- Move / Manage the Model Files --- #
-        # With the models processed, we can check if we need to copy or move the
-        # models into the directory.
-        _mode = kwargs.get("file_processing_mode", "copy")
-        if _mode == "copy":
-            # We now move a copy of each of the model files into the directory
-            # and rename with the model name provided to use by the user.
-            for mname, minfo in processed_models.items():
-                model_path = minfo["path"]
-                new_model_path = directory / f"{mname}.hdf5"
-                shutil.copy(model_path, new_model_path)
-                minfo["path"] = new_model_path
-
-        elif _mode == "move":
-            # We move the model files and then rename them.
-            for mname, minfo in processed_models.items():
-                model_path = minfo["path"]
-                new_model_path = directory / f"{mname}.hdf5"
-                shutil.move(model_path, new_model_path)
-                minfo["path"] = new_model_path
-        else:
-            raise ValueError(f"Invalid file processing mode: {_mode}. Must be 'copy' or 'move'.")
-
-        return processed_models
-
-    @classmethod
-    def _process_particle_files(
-        cls, directory: Path, models: dict[str, dict], particle_files: dict[str, Union[str, Path]], **kwargs
-    ) -> dict[str, dict]:
-        # --- Setup --- #
-        # Setup the procedure and fetch relevant parameters.
-        mode = kwargs.get("file_processing_mode", "copy").lower()
-        if mode not in ("copy", "move"):
-            raise ValueError(f"Invalid file processing mode: {mode!r}. Must be 'copy' or 'move'.")
-
-        # --- Validate Particle Files --- #
-        # This method processes the particle files provided by the user.
-        # It checks that the files exist, are valid, and then copies or moves them
-        # into the target directory, renaming them to match the model names.
-        for model_name, particle_file in particle_files.items():
-            # Ensure that the model name actually exists in the models dictionary.
-            if model_name not in models:
-                raise ValueError(
-                    f"Particle dataset provided for unknown model '{model_name}'. "
-                    f"Ensure the model name matches one from the processed models."
-                )
-
-            # Ensure that the particle's path actually exists and is a file.
-            src_path = Path(particle_file)
-            if not src_path.exists() or not src_path.is_file():
-                raise FileNotFoundError(f"Particle file '{src_path}' does not exist or is not a file.")
-
-            # Now copy / move the file to the directory and add it as
-            # the particles field in the processed models.
-            dest_path = directory / f"{model_name}_p.hdf5"
-
-            if mode == "copy":
-                shutil.copy(src_path, dest_path)
-            elif mode == "move":
-                shutil.move(src_path, dest_path)
-            else:
-                raise ValueError(f"Invalid file processing mode: {mode}. Must be 'copy' or 'move'.")
-
-            # add the particle file path to the model's info.
-            models[model_name]["particles"] = dest_path
-
-        return models
-
-    @classmethod
-    def _process_metadata(cls, directory: Path, **kwargs) -> dict:
-        """
-        Generate metadata for the initial conditions set.
-
-        Parameters
-        ----------
-        directory : ~pathlib.Path
-            The directory where ICs are being created.
-        kwargs : dict
-            Additional keyword arguments (e.g., ndim) that may be used.
-
-        Returns
-        -------
-        dict
-            Metadata dictionary to be stored alongside model data.
-        """
-        ndim = kwargs.get("ndim", 3)
-        timestamp = datetime.datetime.now().isoformat() + "Z"
-
-        metadata = {
-            "metadata": {
-                "created_at": timestamp,
-                "class_name": cls.__name__,
-                "directory": str(directory.resolve()),
-                "ndim": ndim,
-            }
-        }
-
-        return metadata
-
-    @classmethod
-    def create_ics(
-        cls, directory: Union[str, Path], *models, particle_files: dict[str, Union[str, Path]] = None, **kwargs
-    ):
-        """
-        Create a new initial conditions (IC) directory with optional particle datasets.
-
-        This is a convenience constructor for building an `InitialConditions`
-        instance from scratch. It will:
-
-          1. Create (or overwrite) the target IC directory on disk.
-          2. Process and validate the provided models via
-             ``_process_models``, copying or moving model files into the IC
-             directory.
-          3. Optionally process particle dataset files via
-             ``_process_particle_files`` if ``particle_files`` is provided.
-          4. Generate the ``IC_CONFIG.yaml`` file containing metadata and model
-             configuration.
-
-        Parameters
-        ----------
-        directory : str or ~pathlib.Path
-            Path to the directory where the new initial conditions will be created.
-            If the directory already exists and is non-empty, ``overwrite=True`` must
-            be provided in ``kwargs`` to remove its contents before creation.
-        *models : tuple
-            One or more model specifications to include in the initial conditions.
-            Each model specification should be a tuple of the form:
-
-            .. code-block:: python
-
-                (name, model, position, velocity[, orientation][, spin])
-
-            Where:
-
-              - ``name`` : str
-                Unique name/identifier for the model.
-              - ``model`` : str, ~pathlib.Path or ~pisces.models.core.base.BaseModel
-                Path to a model file on disk **or** an already loaded
-                :class:`~pisces.models.core.base.BaseModel` instance.
-              - ``position`` : sequence or ~unyt.array.unyt_array
-                Position vector of length ``ndim`` with length units (default: meters).
-              - ``velocity`` : sequence or ~unyt.array.unyt_array
-                Velocity vector of length ``ndim`` with velocity units (default: km/s).
-              - ``orientation`` : optional, sequence or array
-                Orientation vector (shape: ``(ndim,)``) or rotation matrix
-                (shape: ``(ndim, ndim)``). If omitted, the identity is used.
-              - ``spin`` : optional, float
-                Scalar spin value (unitless). Defaults to ``0.0``.
-
-        particle_files : dict of {str: (str or Path)}, optional
-            Mapping from model name to path to a particle dataset file.
-            Only processed if provided. Files will be copied or moved into the
-            IC directory with the naming scheme ``<model_name>_p.hdf5``.
-        **kwargs :
-            Additional keyword arguments forwarded to ``_process_models`` and
-            ``_process_particle_files``. Common options include:
-
-              - ``file_processing_mode`` : {"copy", "move"}
-                Whether to copy (default) or move files into the IC directory.
-              - ``overwrite`` : bool
-                If ``True``, existing files or directories will be overwritten.
-
-        Returns
-        -------
-        InitialConditions
-            An initialized :class:`InitialConditions` instance for the newly
-            created directory.
-
-        Raises
-        ------
-        FileExistsError
-            If ``directory`` exists and is non-empty, and ``overwrite`` is not True.
-        FileNotFoundError
-            If any provided model or particle file does not exist.
-        ValueError
-            If model definitions are invalid or missing required parameters.
-
-        """
-        # --- DIRECTORY SETUP --- #
-        # Process the provided directory. We check that it is a valid directory
-        # and that it doesn't contain any existing files that need to be overwritten.
-        #
-        # This is a structural invariant of this class and should NOT be overwritten
-        # by subclasses to ensure that the structure is contiguous.
-        cls.logger.info("Creating initial conditions in directory: %s", directory)
-        directory = Path(directory)
-
-        if not directory.exists():
-            # Path is new, we just create it.
-            directory.mkdir(parents=True, exist_ok=True)
-            cls.logger.debug("Created new directory: %s", directory)
-        else:
-            # Path exists, if we have content, then we need to check overwrite.
-            _has_content = any(directory.iterdir())
-            if _has_content and kwargs.get("overwrite", False):
-                shutil.rmtree(directory)
-                directory.mkdir(parents=True, exist_ok=True)
-                cls.logger.debug("Overwriting existing directory: %s", directory)
-            elif _has_content:
-                raise FileExistsError(
-                    f"Directory `{directory}` already exists and is not empty. To overwrite, set `overwrite=True`."
-                )
-            else:
-                # The directory exists but is empty, we can use it.
-                pass
-
-        # --- MODEL MANAGEMENT --- #
-        # Taking the models provided by the user, we process them to get the
-        # processed models dictionary. This is a somewhat involved process of validation.
-        processed_models = cls._process_models(directory, *models, **kwargs)
-
-        # --- Particle Files --- #
-        # If the user provides particle files, we can process them now
-        # and do the same copy/move operation we did for the models.
-        if particle_files:
-            processed_models = cls._process_particle_files(directory, processed_models, particle_files, **kwargs)
-
-        # --- Create the IC_CONFIG File --- #
-        # We create a configuration file that contains the processed models
-        # and their properties. This is a simple YAML file that can be read later.
-        with open(directory / "IC_CONFIG.yaml", "w") as f:
-            metadata = cls._process_metadata(directory, **kwargs)
-            metadata["models"] = processed_models
-            cls.__YAML__.dump(metadata, f)
-
-        # Return the class initialized with the directory.
-        cls.logger.info("Initial conditions created successfully in %s", directory)
-        return cls(directory)
