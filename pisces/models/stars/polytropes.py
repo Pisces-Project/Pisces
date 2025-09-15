@@ -19,7 +19,7 @@ from unyt.physical_constants import G, kb, mp
 from pisces.geometry.coordinates import SphericalCoordinateSystem
 from pisces.geometry.grids.core import GenericGrid
 from pisces.math_utils.integration import (
-    compute_lame_emden_solution,
+    compute_lane_emden_solution,
     integrate,
     integrate_mass,
 )
@@ -380,14 +380,14 @@ class PolytropicStarModel(BaseModel, PolytropicParticleGenerationHook):
             metadata["K_constant"] = _K
             metadata["alpha_constant"] = _alpha.to("km")
 
-            # --- Solving Lame-Emden Equation --- #
+            # --- Solving Lane-Emden Equation --- #
             # (STEP 4)
             # In this step, we proceed with solving the Lane-Emden equation. To do so,
             # we construct a xi_array based on the radii and the alpha constant. We then
             # solve, compute the theta values and get the cutoff radius. From there, we're
             # ready to compute the density, pressure, and temperature profiles.
             progress_bar.update(1)
-            progress_bar.set_description("Solving Lame-Emden Eq...")
+            progress_bar.set_description("Solving Lane-Emden Eq...")
 
             # Setup the xi array for the evaluation. We also need to
             # minimum xi flag because of the numerical issues when solving
@@ -396,7 +396,7 @@ class PolytropicStarModel(BaseModel, PolytropicParticleGenerationHook):
             _xi_min = 1e-6
 
             # Compute the solution to the Lane-Emden equation.
-            le_solution = compute_lame_emden_solution(
+            le_solution = compute_lane_emden_solution(
                 xi_max=_xi.max(),
                 n=polytropic_index,
                 xi_min=_xi_min,
@@ -617,7 +617,7 @@ class PolytropicStarModel(BaseModel, PolytropicParticleGenerationHook):
         Notes
         -----
         For a given polytropic index :math:`n`, the Lane-Emden equation is solved numerically via a call to
-        the low-level :func:`~math_units.integration.compute_lame_emden_solution`. Given the truncation point
+        the low-level :func:`~math_units.integration.compute_lane_emden_solution`. Given the truncation point
         :math:`\xi_{\rm max}`, the scale parameter :math:`\alpha` is computed as the ratio of the total radius to the
         truncation point, i.e., :math:`\alpha = R / \xi_{\rm max}`.
 
@@ -639,7 +639,7 @@ class PolytropicStarModel(BaseModel, PolytropicParticleGenerationHook):
 
         # Use the polytropic index to compute the solution to the Lane-Emden equation.
         # This will then give us the maximum radius and we can use that to scale things.
-        le_solution = compute_lame_emden_solution(
+        le_solution = compute_lane_emden_solution(
             xi_max=xi_max,
             n=polytropic_index,
             end_at_first_zero=True,

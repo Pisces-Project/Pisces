@@ -31,7 +31,7 @@ and density:
     P = K \rho^{1 + 1/n}
 
 where :math:`K` is a constant of proportionality and :math:`n` is the *polytropic index*.
-This leads to the well-known **Lame-Emden Equation**, a second-order differential equation
+This leads to the well-known **Lane-Emden Equation**, a second-order differential equation
 whose solution governs the structure of the star.
 
 Polytropic models are widely used in astrophysics as simplified models of main-sequence stars,

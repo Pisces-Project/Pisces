@@ -147,7 +147,7 @@ def integrate_toinf(profile, rr, rmax=None, **kwargs):
     return integral
 
 
-def compute_lame_emden_solution(
+def compute_lane_emden_solution(
     xi_max: float, n: float = 1, xi_min: float = 1e-5, end_at_first_zero: bool = False, **kwargs
 ):
     r"""
@@ -218,10 +218,10 @@ def compute_lame_emden_solution(
     .. code-block:: python
 
         from pisces.math_utils.integration import (
-            compute_lame_emden_solution,
+            compute_lane_emden_solution,
         )
 
-        xi, theta = compute_lame_emden_solution(
+        xi, theta = compute_lane_emden_solution(
             xi_max=10.0,
             n=1.5,
             end_at_first_zero=True,
@@ -231,7 +231,7 @@ def compute_lame_emden_solution(
     """
 
     # Define the RHS of the ODE using our formalism.
-    def _lame_emden_rhs(xi, y):
+    def _lane_emden_rhs(xi, y):
         theta, psi = y
         dtheta_dxi = psi / xi**2
         dpsi_dxi = -(theta**n) * xi**2
@@ -260,7 +260,7 @@ def compute_lame_emden_solution(
         events = None
 
     # Solve the ODE
-    result = solve_ivp(_lame_emden_rhs, (xi_min, xi_max), y0, events=events, **kwargs)
+    result = solve_ivp(_lane_emden_rhs, (xi_min, xi_max), y0, events=events, **kwargs)
 
     # Check for failure in the solver and then
     # return the correct result.
