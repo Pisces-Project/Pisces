@@ -1,6 +1,0 @@
-profiles.temperature.AM06TemperatureProfile.parameter\_symbols
-==============================================================
-
-.. currentmodule:: profiles.temperature
-
-.. autoproperty:: AM06TemperatureProfile.parameter_symbols

@@ -1,6 +1,0 @@
-pisces.utilities.io\_tools.NullHDF5Serializer.deserialize\_unyt
-===============================================================
-
-.. currentmodule:: pisces.utilities.io_tools
-
-.. automethod:: NullHDF5Serializer.deserialize_unyt

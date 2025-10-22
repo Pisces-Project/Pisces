@@ -1,6 +1,0 @@
-profiles.density.FlaredDiskDensityProfile.from\_dict
-====================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: FlaredDiskDensityProfile.from_dict

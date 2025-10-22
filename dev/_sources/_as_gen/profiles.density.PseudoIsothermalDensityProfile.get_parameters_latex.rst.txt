@@ -1,6 +1,0 @@
-profiles.density.PseudoIsothermalDensityProfile.get\_parameters\_latex
-======================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: PseudoIsothermalDensityProfile.get_parameters_latex

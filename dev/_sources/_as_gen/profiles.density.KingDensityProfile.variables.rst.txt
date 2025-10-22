@@ -1,6 +1,0 @@
-profiles.density.KingDensityProfile.variables
-=============================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: KingDensityProfile.variables

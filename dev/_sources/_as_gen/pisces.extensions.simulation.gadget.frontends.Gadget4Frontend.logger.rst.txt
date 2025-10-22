@@ -1,6 +1,0 @@
-pisces.extensions.simulation.gadget.frontends.Gadget4Frontend.logger
-====================================================================
-
-.. currentmodule:: pisces.extensions.simulation.gadget.frontends
-
-.. autoproperty:: Gadget4Frontend.logger

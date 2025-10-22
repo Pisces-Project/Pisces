@@ -1,6 +1,0 @@
-profiles.density.CoredPowerLawDensityProfile.to\_hdf5
-=====================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredPowerLawDensityProfile.to_hdf5

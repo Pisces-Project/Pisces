@@ -1,6 +1,0 @@
-pisces.math\_utils.sampling.sample\_from\_cdf
-=============================================
-
-.. currentmodule:: pisces.math_utils.sampling
-
-.. autofunction:: sample_from_cdf

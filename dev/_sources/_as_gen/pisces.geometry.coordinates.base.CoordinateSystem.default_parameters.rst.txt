@@ -1,6 +1,0 @@
-pisces.geometry.coordinates.base.CoordinateSystem.default\_parameters
-=====================================================================
-
-.. currentmodule:: pisces.geometry.coordinates.base
-
-.. automethod:: CoordinateSystem.default_parameters

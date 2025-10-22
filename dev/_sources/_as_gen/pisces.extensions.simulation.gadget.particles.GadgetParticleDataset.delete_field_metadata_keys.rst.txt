@@ -1,6 +1,0 @@
-pisces.extensions.simulation.gadget.particles.GadgetParticleDataset.delete\_field\_metadata\_keys
-=================================================================================================
-
-.. currentmodule:: pisces.extensions.simulation.gadget.particles
-
-.. automethod:: GadgetParticleDataset.delete_field_metadata_keys

@@ -1,6 +1,0 @@
-pisces.models.stars.polytropes.PolytropicStarModel.metadata
-===========================================================
-
-.. currentmodule:: pisces.models.stars.polytropes
-
-.. autoproperty:: PolytropicStarModel.metadata

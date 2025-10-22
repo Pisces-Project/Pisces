@@ -1,6 +1,0 @@
-pisces.math\_utils.random\_fields.generate\_gaussian\_cutoff\_power\_spectrum
-=============================================================================
-
-.. currentmodule:: pisces.math_utils.random_fields
-
-.. autofunction:: generate_gaussian_cutoff_power_spectrum

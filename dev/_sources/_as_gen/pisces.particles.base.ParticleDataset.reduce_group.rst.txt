@@ -1,6 +1,0 @@
-pisces.particles.base.ParticleDataset.reduce\_group
-===================================================
-
-.. currentmodule:: pisces.particles.base
-
-.. automethod:: ParticleDataset.reduce_group

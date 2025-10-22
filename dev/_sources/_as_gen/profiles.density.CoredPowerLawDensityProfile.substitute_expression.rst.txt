@@ -1,6 +1,0 @@
-profiles.density.CoredPowerLawDensityProfile.substitute\_expression
-===================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredPowerLawDensityProfile.substitute_expression

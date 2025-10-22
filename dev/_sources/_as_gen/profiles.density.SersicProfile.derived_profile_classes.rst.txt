@@ -1,6 +1,0 @@
-profiles.density.SersicProfile.derived\_profile\_classes
-========================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: SersicProfile.derived_profile_classes

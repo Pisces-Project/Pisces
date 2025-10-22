@@ -1,6 +1,0 @@
-pisces.models.stars.polytropes.PolytropicStarModel.remove\_field
-================================================================
-
-.. currentmodule:: pisces.models.stars.polytropes
-
-.. automethod:: PolytropicStarModel.remove_field

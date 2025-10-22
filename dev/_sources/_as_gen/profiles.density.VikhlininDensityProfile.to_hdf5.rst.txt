@@ -1,6 +1,0 @@
-profiles.density.VikhlininDensityProfile.to\_hdf5
-=================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: VikhlininDensityProfile.to_hdf5

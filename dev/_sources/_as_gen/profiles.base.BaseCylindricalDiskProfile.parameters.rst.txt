@@ -1,6 +1,0 @@
-profiles.base.BaseCylindricalDiskProfile.parameters
-===================================================
-
-.. currentmodule:: profiles.base
-
-.. autoproperty:: BaseCylindricalDiskProfile.parameters

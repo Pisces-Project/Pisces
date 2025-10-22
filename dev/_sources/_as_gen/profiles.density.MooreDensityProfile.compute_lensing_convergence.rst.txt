@@ -1,6 +1,0 @@
-profiles.density.MooreDensityProfile.compute\_lensing\_convergence
-==================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: MooreDensityProfile.compute_lensing_convergence

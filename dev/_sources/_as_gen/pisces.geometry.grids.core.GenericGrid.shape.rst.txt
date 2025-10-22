@@ -1,6 +1,0 @@
-pisces.geometry.grids.core.GenericGrid.shape
-============================================
-
-.. currentmodule:: pisces.geometry.grids.core
-
-.. autoproperty:: GenericGrid.shape

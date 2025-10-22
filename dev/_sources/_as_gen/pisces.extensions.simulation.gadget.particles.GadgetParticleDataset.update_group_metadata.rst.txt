@@ -1,6 +1,0 @@
-pisces.extensions.simulation.gadget.particles.GadgetParticleDataset.update\_group\_metadata
-===========================================================================================
-
-.. currentmodule:: pisces.extensions.simulation.gadget.particles
-
-.. automethod:: GadgetParticleDataset.update_group_metadata

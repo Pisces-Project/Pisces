@@ -1,6 +1,0 @@
-profiles.density.BurkertDensityProfile.to\_hdf5
-===============================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BurkertDensityProfile.to_hdf5

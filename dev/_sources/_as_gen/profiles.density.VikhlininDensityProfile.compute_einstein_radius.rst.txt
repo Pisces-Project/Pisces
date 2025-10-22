@@ -1,6 +1,0 @@
-profiles.density.VikhlininDensityProfile.compute\_einstein\_radius
-==================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: VikhlininDensityProfile.compute_einstein_radius

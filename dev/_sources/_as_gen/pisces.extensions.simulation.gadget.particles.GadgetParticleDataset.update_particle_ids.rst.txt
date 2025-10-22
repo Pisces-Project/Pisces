@@ -1,6 +1,0 @@
-pisces.extensions.simulation.gadget.particles.GadgetParticleDataset.update\_particle\_ids
-=========================================================================================
-
-.. currentmodule:: pisces.extensions.simulation.gadget.particles
-
-.. automethod:: GadgetParticleDataset.update_particle_ids

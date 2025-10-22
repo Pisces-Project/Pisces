@@ -1,6 +1,0 @@
-profiles.density.SingularIsothermalDensityProfile.compute\_einstein\_radius
-===========================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: SingularIsothermalDensityProfile.compute_einstein_radius

@@ -1,6 +1,0 @@
-profiles.density.MooreDensityProfile.parameter\_symbols
-=======================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: MooreDensityProfile.parameter_symbols

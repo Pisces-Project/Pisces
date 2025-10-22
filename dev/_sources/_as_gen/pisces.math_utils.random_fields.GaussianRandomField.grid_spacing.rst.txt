@@ -1,6 +1,0 @@
-pisces.math\_utils.random\_fields.GaussianRandomField.grid\_spacing
-===================================================================
-
-.. currentmodule:: pisces.math_utils.random_fields
-
-.. autoproperty:: GaussianRandomField.grid_spacing

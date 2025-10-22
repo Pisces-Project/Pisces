@@ -1,6 +1,0 @@
-profiles.density.BurkertDensityProfile.parameters
-=================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: BurkertDensityProfile.parameters

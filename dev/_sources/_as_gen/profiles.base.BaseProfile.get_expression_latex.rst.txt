@@ -1,6 +1,0 @@
-profiles.base.BaseProfile.get\_expression\_latex
-================================================
-
-.. currentmodule:: profiles.base
-
-.. automethod:: BaseProfile.get_expression_latex

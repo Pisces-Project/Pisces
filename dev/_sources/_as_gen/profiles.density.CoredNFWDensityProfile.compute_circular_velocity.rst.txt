@@ -1,6 +1,0 @@
-profiles.density.CoredNFWDensityProfile.compute\_circular\_velocity
-===================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredNFWDensityProfile.compute_circular_velocity

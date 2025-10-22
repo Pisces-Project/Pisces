@@ -1,6 +1,0 @@
-profiles.density.PlummerDensityProfile.variable\_symbols
-========================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: PlummerDensityProfile.variable_symbols

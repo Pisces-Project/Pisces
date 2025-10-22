@@ -1,6 +1,0 @@
-pisces.math\_utils.random\_fields.GaussianRandomVectorField.envelope\_function
-==============================================================================
-
-.. currentmodule:: pisces.math_utils.random_fields
-
-.. autoproperty:: GaussianRandomVectorField.envelope_function

@@ -1,6 +1,0 @@
-profiles.density.SingularIsothermalDensityProfile.compute\_gravitational\_field
-===============================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: SingularIsothermalDensityProfile.compute_gravitational_field

@@ -1,6 +1,0 @@
-pisces.models.core.hooks.ParticleGenerationHook.generate\_particles
-===================================================================
-
-.. currentmodule:: pisces.models.core.hooks
-
-.. automethod:: ParticleGenerationHook.generate_particles

@@ -1,6 +1,0 @@
-profiles.density.VikhlininDensityProfile.compute\_gravitational\_field
-======================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: VikhlininDensityProfile.compute_gravitational_field

@@ -1,6 +1,0 @@
-profiles.density.CoredIsothermalDensityProfile.substitute\_expression
-=====================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoredIsothermalDensityProfile.substitute_expression

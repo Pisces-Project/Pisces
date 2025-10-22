@@ -1,6 +1,0 @@
-pisces.math\_utils.random\_fields.GaussianRandomField.dl
-========================================================
-
-.. currentmodule:: pisces.math_utils.random_fields
-
-.. autoproperty:: GaussianRandomField.dl
