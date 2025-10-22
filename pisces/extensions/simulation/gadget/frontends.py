@@ -174,24 +174,9 @@ class Gadget4Frontend(GadgetLikeFrontend):
             Name of the output HDF5 file to generate within the initial conditions
             directory (e.g., ``"ClusterICs.hdf5"``). The path is resolved automatically
             relative to :attr:`ic_directory`.
-        *args
-            Additional positional arguments forwarded to
-            :meth:`_validate_runtime_configuration` and
-            :meth:`_generate_initial_conditions`.
         overwrite : bool, default=False
             If ``True``, any existing file with the same name will be replaced.
             If ``False``, a :class:`FileExistsError` is raised when the file exists.
-        **kwargs
-            Additional keyword arguments forwarded to the underlying generation methods.
-            These may include code-specific options such as compression settings or
-            alternate file naming behavior.
-
-        Returns
-        -------
-        Gadget4ParticleDataset
-            A :class:`~pisces.particles.gadget.Gadget4ParticleDataset` instance
-            representing the generated Gadget-4 initial condition file. This object
-            provides read/write access to all particle fields and metadata.
 
         Notes
         -----
@@ -200,6 +185,5 @@ class Gadget4Frontend(GadgetLikeFrontend):
         - Subclasses should not override this method unless a different output mechanism
           is required.
         - All generated files conform to the standard Gadget-4 ``ICFormat=3`` HDF5 layout.
-
         """
         super().generate_initial_conditions(filename, *args, overwrite=overwrite, **kwargs)
