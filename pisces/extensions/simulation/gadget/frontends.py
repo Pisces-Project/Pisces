@@ -30,7 +30,7 @@ class Gadget4Frontend(GadgetLikeFrontend):
     This class provides frontend access for generating initial conditions which can
     be fed directly to Gadget-4 simulations. Detailed notes on the usage
     of this frontend and the relevant settings / configuration options found
-    in Gadget-4 can be found on the associated documentation page: #TODO: Link Documentation
+    in Gadget-4 can be found on the associated documentation page: :ref:`simulations_gadget`.
     """
 
     # --------------------------------------- #
