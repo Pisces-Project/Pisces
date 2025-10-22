@@ -1625,7 +1625,7 @@ class InitialConditions1DSpherical(InitialConditions):
     Use this class when constructing spherically symmetric ICs, e.g. radial
     gas/halo profiles. The class ensures that:
 
-    - The model grid uses :class:`~pisces.geometry.SphericalCoordinateSystem`.
+    - The model grid uses :class:`~pisces.geometry.coordinates.coordinate_systems.SphericalCoordinateSystem`.
     - The grid has exactly one active axis (``r``).
     - Only ``model_name`` and ``model`` are required keys; particles may be added.
 

@@ -18,6 +18,7 @@ from pisces.utilities.config import pisces_config
 
 if TYPE_CHECKING:
     from pisces._generic import Registry
+    from pisces.geometry.grids.base import Grid
     from pisces.models.core.base import BaseModel
 
 
@@ -261,12 +262,12 @@ def inspect_model_fields(
 def inspect_model_grid(
     path: Union[str, Path],
     registry: Optional["Registry"] = None,
-):
+) -> "Grid":
     """
     Load the grid from a model file without fully instantiating the model.
 
     This function opens the model's HDF5 file, navigates to the ``/GRID`` group,
-    and uses :func:`~pisces.models.core.grid.load_grid` to create and return
+    and uses :func:`~pisces.geometry.grids.utils.load_grid` to create and return
     the grid object directly.
 
     Parameters
@@ -279,7 +280,7 @@ def inspect_model_grid(
 
     Returns
     -------
-    ~pisces.models.core.grid.Grid
+    ~pisces.geometry.grids.base.Grid
         The grid instance loaded from the model file.
 
     Raises

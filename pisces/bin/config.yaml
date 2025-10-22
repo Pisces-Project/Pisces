@@ -36,7 +36,7 @@ system:
     # for the loggers attached to initial conditions. They can be
     # overridden in the initial conditions code or by the user.
     ics:
-      level: DEBUG
+      level: INFO
       enabled: true
       format: '[%(name)s]-%(levelname)s: %(message)s'
   # APPEARANCE

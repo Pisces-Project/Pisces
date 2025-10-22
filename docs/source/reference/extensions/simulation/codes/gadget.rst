@@ -1,215 +1,260 @@
 .. _simulations_gadget:
 
 ==========================
-Simulations with Gadget
+Simulations with Gadget-4
 ==========================
 
 .. currentmodule:: pisces.extensions.simulation.gadget
 
 `Gadget-4 <https://wwwmpa.mpa-garching.mpg.de/gadget/>`__ is a state-of-the-art code for cosmological
 N-body and smoothed particle hydrodynamics (SPH) simulations. It remains one of the most widely used
-and actively developed tools in the community, and is also among the more straightforward codes to
-set up and run with Pisces-generated initial conditions.
+and actively developed community codes and is among the easiest to configure and run with
+Pisces-generated initial conditions.
 
-Installing Gadget-4
--------------------
-
-Detailed installation instructions are provided in the official
+Detailed installation instructions are available in the official
 `Gadget-4 User Guide <https://wwwmpa.mpa-garching.mpg.de/gadget/users-guide.pdf>`__.
-For Pisces compatibility, you will also need to adjust certain compile-time options in the
-Makefile. See :ref:`gadget_makefile_settings` for a summary of the required changes.
+For Pisces compatibility, several compile-time options must be adjusted in the Gadget-4 Makefile.
+See :ref:`gadget_makefile_settings` for a summary of the required changes.
 
-Gadget Support in Pisces
+Overview of Pisces Support
+--------------------------
+
+Pisces includes native support for running simulations with **Gadget-4** through the
+:mod:`~pisces.extensions.simulation.gadget` extension module. This module provides the
+frontend for connection to gadget: :class:`~pisces.extensions.simulation.gadget.frontends.Gadget4Frontend`. The resulting
+output is a Gadget-4 compatible HDF5 file, which is represented in Pisces using the
+:class:`~pisces.particles.gadget.Gadget4ParticleDataset`. Here's how a typical workflow might progress:
+
+.. card:: 🧭 Workflow Steps
+   :class-card: shadow-sm p-2
+
+   1. **Build models** — Using Pisces, generate whatever models you'd like to use in the simulation. This
+      might be galaxy mergers, cosmological models, etc. See :ref:`models_overview` for an overview of Pisces model
+      generation. These are later composed into a set of initial conditions for the simulation.
+
+   2. **Assemble initial conditions** — Once the models are generated, they can be combined and oriented in space
+      to produce a set of initial conditions
+      (:class:`~pisces.extensions.simulation.core.initial_conditions.InitialConditions`). For a detailed description
+      of the different types of initial conditions available and how they work, see the documentation on
+      initial conditions: :ref:`initial_conditions_overview`.
+
+   3. **Generate particles** — Once you have constructed your initial conditions, it will be necessary to
+      to convert the constituent models into particle datasets. This can be done through the initial conditions
+      class you generated in the previous step; however, **not all models can generate particles**. See the examples
+      in :ref:`examples` for examples.
+
+   4. **Initialize the frontend** — Create a
+      :class:`~pisces.extensions.simulation.gadget.frontends.Gadget4Frontend`
+      instance around your initial conditions to set the stage for conversion to Gadget-4 format.
+
+   5. **Write Gadget-4 ICs** — Use
+      :meth:`~pisces.extensions.simulation.gadget.frontends.Gadget4Frontend.generate_initial_conditions`
+      to output HDF5 initial condition files readable by Gadget-4.
+
+
+.. admonition:: ⚠️ Compatibility Reminder
+   :class: warning
+
+   Gadget-4’s compile-time flags and runtime parameters **must match**
+   those used by Pisces when generating initial conditions.
+
+   - A 2D Gadget-4 build cannot run 3D Pisces ICs.
+   - Single-precision (32-bit) particle IDs in Gadget-4 are **incompatible**
+     with 64-bit IDs written by Pisces.
+
+   Always verify that your **Makefile settings** and **frontend configuration**
+   are consistent before running the simulation.
+
+------------------------
+The Gadget-4 Frontend
 ------------------------
 
-In order to support Gadget-4 initial conditions, Pisces provides the :mod:`~pisces.extensions.simulation.gadget`
-extension module which contains two useful classes:
+All simulation codes supported by Pisces are accessed through a *frontend*.
+For Gadget-4, this is implemented in
+:mod:`~pisces.extensions.simulation.gadget.frontends`, primarily via the
+:class:`~pisces.extensions.simulation.gadget.frontends.Gadget4Frontend` class.
 
-- :class:`~pisces.extensions.simulation.gadget.frontends.Gadget4Frontend`: A frontend for generating
-  Gadget-4 initial conditions from a :class:`~pisces.extensions.simulation.core.initial_conditions.InitialConditions`
-  object.
-- :class:`~pisces.extensions.simulation.gadget.particles.GadgetParticleDataset`: A particle dataset class for reading
-  and writing Gadget-4 HDF5 files.
-
-The general process for generating initial conditions in Pisces and transferring them to Gadget-4 is as follows:
-
-1. **Build the constituent models**: Create whatever models you are trying to simulate using
-   the Pisces ecosystem. If you are unsure of how to build the models you need, see the
-   modeling documentation: :ref:`models_overview`.
-2. **Build the ICs** With your models in hand, create an initial conditions object which combines the
-   relevant models into a single initial conditions dataset. See :ref:`initial_conditions_overview` for details.
-3. **Generate particles for each model**: Gadget-4 is a particle-based code, so each model in your
-   initial conditions must be converted to particles. Because this process can be somewhat dependent on
-   exactly what you, the user, want to achieve, Pisces does not do this step automatically. For each model
-   you'll need to use the
-   :meth:`~pisces.extensions.simulation.core.initial_conditions.InitialConditions.generate_particles` method
-   to generate particles. See :ref:`particles_overview` for details.
-4. **Initialize the Gadget-4 frontend**: With your initial conditions object fully specified, you can
-   create a :class:`~pisces.extensions.simulation.gadget.frontends.Gadget4Frontend` object. This will
-   generate a configuration file which you can modify to suit your needs. This document will provide all of
-   the details regarding the various configuration options. In this step, you'll provide some information about
-   your Gadget-4 installation, and you'll also specify how the models in your initial conditions should be
-   mapped to Gadget-4 particle types and fields.
-5. **Write the initial conditions**: Finally, you can call the :meth:`~frontends.Gadget4Frontend.generate_initial_conditions`
-   method to write the initial conditions to disk in a format that Gadget-4 can read.
-
-.. warning::
-
-    As is the case with all hydrodynamical simulation codes, Gadget-4 has a rather complicated set of
-    configuration options. Pisces attempts to make the process of generating compatible initial conditions
-    as straightforward as possible, but it is ultimately the user's responsibility to ensure that the
-    configuration options in the frontend match those used when compiling and running Gadget-4 itself.
-
-    For example, if you compile Gadget-4 to perform 2D simulations but then generate 3D initial conditions,
-    the simulation will likely fail to run. Similarly, if you compile Gadget-4 with single-precision
-    particle IDs but then generate initial conditions with 64-bit IDs, the simulation will likely
-    fail. Always double-check that the configuration options in your frontend match those used
-    when compiling and running Gadget-4.
-
-The Gadget-4 Frontend
-----------------------
-
-As with all simulation codes supported by Pisces, Gadget-4 is accessed through a dedicated *frontend*.
-The Gadget-4 frontend is implemented in :mod:`~pisces.extensions.simulation.gadget.frontends`, and the main
-entry point is the :class:`~frontends.Gadget4Frontend` class.
-
-To create a frontend, initialize it on an existing initial conditions object
-(:class:`~pisces.extensions.simulation.core.initial_conditions.InitialConditions`):
+To create a frontend:
 
 .. code-block:: python
 
-    from pisces.extensions.simulation.frontends import Gadget2Frontend
+    from pisces.extensions.simulation.gadget.frontends import Gadget4Frontend
     from pisces.extensions.simulation import InitialConditions
 
-    # Load the initial conditions object from disk.
-    ic = InitialConditions("path/to/initial/conditions/file")
+    ic = InitialConditions("path/to/initial_conditions_file")
+    frontend = Gadget4Frontend(ic)
 
-    # Initialize the Gadget-4 frontend.
-    frontend = Gadget2Frontend(ic)
+This creates a configuration file named ``Gadget4Frontend_config.yaml`` in the same directory
+as the initial conditions. The file can be edited manually or through the
+frontend API (see :class:`~pisces.extensions.simulation.core.frontends.SimulationFrontend`).
 
-This will generate a configuration file, ``Gadget4Frontend_config.yaml``, in the same directory as the
-initial conditions. The configuration file can be modified either by hand or through the frontend
-API (see :class:`~pisces.extensions.simulation.core.frontends.SimulationFrontend` for details).
+The setup process consists of three main steps:
 
-Frontend Configuration Options
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1. **Adjust compile-time settings**
+2. **Specify runtime parameters**
+3. **Map model fields to Gadget particle fields**
 
-The frontend's configuration options largely mirror the options available in Gadget-4's
-``parameterfile``. The configuration file is divided into sections, each corresponding to a
-section of the Gadget-4 parameter file. Each option is documented in the configuration file itself,
-and the Gadget-4 user guide should be consulted for further details on each option.
+Each is described below.
+
+Setting Up the Frontend
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Once initialized, the frontend automatically generates a default configuration describing
+your Gadget-4 build and IC layout. You **must** customize this file to match your specific
+Gadget-4 compilation and runtime settings.
+
+To inspect or modify the configuration in Python:
+
+.. code-block:: python
+
+    >>> print(dict(frontend.config["makefile"]))
+    {'simulation_type': '3D', 'number_of_particle_types': 6, 'nbits_id': 64}
+
+To locate the YAML configuration file on disk:
+
+.. code-block:: python
+
+    >>> print(frontend.config_path)
+    PosixPath(".../path/to/Gadget4Frontend_config.yaml")
 
 .. _gadget_makefile_settings:
-Makefile Settings
-`````````````````
+Compile-Time Settings
+^^^^^^^^^^^^^^^^^^^^^
 
-These settings concern the compile-time options from Gadget-4 and should be set to match those
-set when compiling Gadget-4 itself. They are stored in the ``makefile`` section of the
-frontend configuration file.
+Certain Gadget-4 Makefile options determine the binary format of the simulation files
+and must align with Pisces’ output. These are mirrored in the frontend configuration
+under ``makefile.*``.
 
-.. list-table:: Makefile Settings
-    :widths: 15 15 70
-    :header-rows: 1
+.. dropdown:: Relevant Compile-Time Settings
 
-    * - Makefile Option
-      - Frontend Option
-      - Notes
-    * - ``IDS_NBIT``
-      - ``makefile.nbits_id``
-      - Determines the number of bits used for particle IDs. Common values are ``32`` and ``64``.
-        The value here must match that used when compiling Gadget-4 itself. It is used to ensure
-        that the particle IDs in the initial conditions are compatible with the simulation.
-    * - ``NTYPES``
-      - ``makefile.number_of_particle_types``
-      - The number of particle types supported by the Gadget-4 installation. This value must be
-        greater than or equal to the number of unique particle types used in your initial conditions.
-        For example, if your initial conditions contain gas, dark matter, and star particles, you
-        will need to set this value to at least ``3``. Typically, 6 is chosen.
+    .. list-table::
+       :widths: 25 15 60
+       :header-rows: 1
 
-In addition to the settings above, the following makefile options are **required** for Pisces compatibility:
+       * - **Pisces Setting**
+         - **Makefile Flag**
+         - **Description**
+       * - ``makefile.simulation_type``
+         - ``TWODIM`` / ``ONEDIM``
+         - Sets the dimensionality (1D, 2D, or 3D). Must match the IC dimensionality.
+       * - ``makefile.number_of_particle_types``
+         - ``NTYPES``
+         - Number of particle types (gas, DM, stars, etc.). Must be ≥ the number in the ICs.
+       * - ``makefile.nbits_id``
+         - ``IDS_32BIT``, ``IDS_48BIT``, ``IDS_64BIT``
+         - Bit depth for particle IDs. Must match between Pisces and Gadget-4.
+       * - ``physics.cooling``
+         - ``COOLING``
+         - Enables Gadget cooling. Requires an ``ElectronAbundance`` field at runtime.
+       * -
+         - ``INITIAL_CONDITIONS_CONTAIN_ENTROPY``
+         - **Must be disabled** for Pisces ICs.
+       * -
+         - ``GAMMA`` / ``ISOTHERM_EQS``
+         - Ensure consistency with the thermodynamic assumptions of your model.
 
-.. list-table:: Makefile Settings
-   :widths: 15 15 70
-   :header-rows: 1
+.. warning::
 
-   * - Makefile Option
-     - Frontend Option
-     - Notes
-   * - ``GADGET2_HEADER``
-     - N/A
-     - Must not be active.
-   * - ``NGENIC``
-     - N/A
-     - Must not be active. This option is for the N-GenIC initial conditions generator, which
-       is not compatible with Pisces.
+   If you compile Gadget-4 with incompatible flags, your simulation may fail to initialize.
+   Double-check that these flags match both the frontend configuration and the physical model.
 
-Parameter File Settings
-```````````````````````
+Example — Adjusting Particle Types
+""""""""""""""""""""""""""""""""""
 
-Like the makefile settings, several parameter file settings from Gadget-4 are needed for Pisces to successfully
-generate compatible initial conditions. For the most part, these settings simply need to be consistent between
-your Pisces frontend configuration and your Gadget-4 parameter file. However, a few settings are required to
-be set to specific values for Pisces compatibility. They are marked as so in the below table:
+.. code-block:: python
 
-.. list-table:: Makefile Settings
-    :widths: 15 15 70
-    :header-rows: 1
+    from pisces.extensions.simulation.gadget.frontends import Gadget4Frontend
+    from pisces.extensions.simulation import InitialConditions
 
-    * - Option
-      - Frontend Flag
-      - Notes
-    * - ``ICFormat``
-      -
-      - Must be set to ``3`` to read HDF5 initial conditions. Pisces does not support the legacy binary format.
-    * - ``BoxSize``
-      - ``parameters.box_size``
-      - The size of the simulation box in code units. All of the models in the initial conditions
-        will be placed within this box ([0, BoxSize] in each dimension).
-    * - ``UnitVelocity_in_cm_per_s``
-      - ``parameters.units.velocity``
-      - Provide the Pisces configuration with an unyt unit equivalent to that used in your
-        Gadget-4 parameter file. Any velocities in the initial conditions will be converted to this unit.
-    * - ``UnitLength_in_cm``
-      - ``parameters.units.length``
-      - Provide the Pisces configuration with an unyt unit equivalent to that used in your
-        Gadget-4 parameter file. Any lengths in the initial conditions will be converted to this unit.
-    * - ``UnitMass_in_g``
-      - ``parameters.units.mass``
-      - Provide the Pisces configuration with an unyt unit equivalent to that used in your
-        Gadget-4 parameter file. Any masses in the initial conditions will be converted to this unit.
+    ic = InitialConditions("path/to/ic_file")
+    frontend = Gadget4Frontend(ic)
 
-Fields and Particle Types
-``````````````````````````
+    # Increase the number of particle types to 7
+    frontend.config["makefile.number_of_particle_types"] = 7
 
-Pisces follows a standard convention for naming particle types and data fields in its particle
-datasets (see :ref:`particles_overview`). In most cases, these conventions are applied automatically
-when generating initial conditions.
+Runtime Settings
+^^^^^^^^^^^^^^^^^
 
-There are situations, however, where a model may not conform to the standard naming scheme, or where
-you may want to explicitly control which fields are written to the Gadget-4 initial conditions.
-To support this, the frontend configuration file includes a ``models`` section. Each model defined
-in the input :class:`~pisces.extensions.simulation.core.initial_conditions.InitialConditions` object will have
-a corresponding entry here.
+At runtime, Gadget-4 requires a parameter file specifying the simulation domain, cosmology,
+and physical unit system. These must also align with the ICs.
 
-A typical model section looks like this:
+.. dropdown:: Relevant Runtime Settings
 
-.. code-block:: yaml
+    .. list-table::
+       :widths: 25 15 60
+       :header-rows: 1
 
-    [MODEL_NAME]:
-        PART_TYPE_0:
-            name: [name in model particle file]
+       * - **Pisces Setting**
+         - **Gadget Parameter**
+         - **Description**
+       * - ``parameters.boxsize``
+         - ``BoxSize``
+         - Box size in code units. All ICs are clipped to this domain.
+       * -
+         - ``Omega0``, ``OmegaLambda``, ``OmegaBaryon``, ``HubbleParam``
+         - Cosmological parameters. Should match your physical model.
+       * - ``parameters.units.length``, ``mass``, ``velocity``
+         - ``UnitLength_in_cm``, ``UnitMass_in_g``, ``UnitVelocity_in_cm_per_s``
+         - Defines the simulation unit system. Must match the IC units.
+       * -
+         - ``ICFormat``
+         - Must be set to ``3`` for HDF5 compatibility.
+
+Field Configuration
+^^^^^^^^^^^^^^^^^^^
+
+Finally, the frontend must know how to map Pisces particle fields to Gadget-4 field names.
+The configuration includes a ``model_template`` section, which is duplicated for each model
+in the ICs. A typical example:
+
+.. dropdown:: Example ``model_template``
+
+    .. code-block:: yaml
+
+        model_template:
+          ParticleType0:
+            name: gas
             fields:
-                GADGET_FIELD_1: [name in model particle file]
-                GADGET_FIELD_2: [name in model particle file]
+              Coordinates: particle_position
+              Velocities: particle_velocity
+              ParticleIDs: particle_id
+              Masses: particle_mass
+              InternalEnergy: particle_internal_energy
+          ParticleType1:
+            name: dark_matter
+            fields:
+              Coordinates: particle_position
+              Velocities: particle_velocity
+              ParticleIDs: particle_id
+              Masses: particle_mass
+          ParticleType2:
+            name: disk
+            fields:
+              Coordinates: particle_position
+              Velocities: particle_velocity
+              ParticleIDs: particle_id
+              Masses: particle_mass
+          ParticleType3:
+            name: bulge
+            fields:
+              Coordinates: particle_position
+              Velocities: particle_velocity
+              ParticleIDs: particle_id
+              Masses: particle_mass
+          ParticleType4:
+            name: stars
+            fields:
+              Coordinates: particle_position
+              Velocities: particle_velocity
+              ParticleIDs: particle_id
+              Masses: particle_mass
+          ParticleType5:
+            name: boundary
+            fields:
+              Coordinates: particle_position
+              Velocities: particle_velocity
+              ParticleIDs: particle_id
+              Masses: particle_mass
 
-In this mapping:
-
-- ``PART_TYPE_0`` refers to the Gadget-4 particle type (see the Gadget-4 user guide for available types).
-- ``name`` specifies the name of the model’s particle group to be associated with this particle type.
-- ``fields`` maps Gadget-4 field names to the corresponding field names in the model’s particle file.
-
-By default, Pisces generates these mappings according to its internal conventions. You only need to
-modify them if your model uses non-standard names or if you wish to customize the exported fields. A
-common scenario in which you might want to modify the field mappings is when your model includes
-star particles with additional attributes (e.g., metallicity, age) that you want to include in the
-Gadget-4 initial conditions. You may also have new particle types which need to be added to the configuration.
+If your particle datasets use different field names (e.g., ``pos`` instead of ``particle_position``),
+update the configuration accordingly so Gadget-4 can interpret the files correctly.

@@ -6,6 +6,7 @@ for reading, writing, and interacting with particle datasets in the Pisces frame
 
 from datetime import datetime
 from pathlib import Path
+from typing import overload
 
 import h5py
 import numpy as np
@@ -1921,13 +1922,20 @@ class ParticleDataset:
     # ------------------------------------- #
     # Generation Methods                    #
     # ------------------------------------- #
+    # noinspection PyMissingOrEmptyDocstring
+    @overload
     @classmethod
     def build_particle_dataset(
         cls,
         path: str | Path,
-        *args,
         fields: dict[str, unyt.unyt_array] = None,
         overwrite: bool = False,
+    ) -> "ParticleDataset": ...
+
+    @classmethod
+    def build_particle_dataset(
+        cls,
+        *args,
         **kwargs,
     ):
         """Create a new :class:`ParticleDataset` HDF5 file with the given fields.
@@ -1967,6 +1975,11 @@ class ParticleDataset:
             If any field name is not in dot notation or group fields mismatch in particle count.
 
         """
+        (
+            path,
+            *args,
+        ) = args
+        fields, overwrite = kwargs.pop("fields", None), kwargs.pop("overwrite", False)
         path = Path(path)
 
         # --- Path validation ---
@@ -1989,8 +2002,9 @@ class ParticleDataset:
             for k, v in cls.metadata_serializer.serialize_dict(initial_metadata).items():
                 f.attrs[k] = v
 
-            if fields:
+            if fields is not None:
                 group_registry: dict[str, int] = {}
+                fields = dict(fields)
 
                 for full_field_name, data in fields.items():
                     # Validate field name format
@@ -2022,4 +2036,4 @@ class ParticleDataset:
                     dset.attrs["UNITS"] = cls.metadata_serializer.serialize_data(data.units)
 
         # Return a validated ParticleDataset instance
-        return cls(path, *args, **kwargs)
+        return cls(path, **kwargs)

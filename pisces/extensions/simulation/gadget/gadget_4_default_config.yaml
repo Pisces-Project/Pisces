@@ -11,8 +11,15 @@
 # These are compile-time settings which are necessary to
 # ensure self-consistent / valid configurations.
 makefile:
+  simulation_type: "3D"         # The type of simulation (e.g., "3D", "2D"). This is set automatically.
   number_of_particle_types: 6   # The number of particle types expected.
   nbits_id: 64                  # The number of bits used for particle IDs.
+
+# -------------------------- #
+# Physics Settings           #
+# -------------------------- #
+physics:
+  cooling: false                 # Turn on cooling. Requires user to specify the electron_abundance.
 
 # -------------------------- #
 # Parameter File Options     #
@@ -41,7 +48,7 @@ parameters:
 #
 # Once initialized, the frontend will create a unique one of these
 # for each model so that it can have specific settings.
-model_DEFAULT:
+model_template:
   ParticleType0:
     name: "gas"
     fields:

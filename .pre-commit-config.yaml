@@ -21,7 +21,7 @@ repos:
         args: ["--unsafe"]
       - id: check-added-large-files
         name: "🚫 Prevent large files"
-        args: ["--maxkb=2000"]
+        args: ["--maxkb=4000"]
 
   # 2. Code Formatters
   - repo: https://github.com/astral-sh/ruff-pre-commit

@@ -1,14 +1,11 @@
 """
-Support for the Gadget SPH code and its descendants.
+Simulation frontends for using Pisces models with the Gadget simulation code.
 
-This module provides support for generating initial conditions for the
-Gadget-4 simulation code and its variants.
-
-For more information on Gadget, see the `official documentation <https://wwwmpa.mpa-garching.mpg.de/gadget4/>`_.
+For more information on Gadget, see the `official documentation <https://wwwmpa.mpa-garching.mpg.de/gadget4/>`_. For
+documentation on using this frontend with Pisces, see the :ref:`simulations_gadget` page.
 """
 
-__all__ = ["Gadget4Frontend", "GadgetParticleDataset"]
+__all__ = ["Gadget4Frontend"]
 
 # Provide access to the frontend.
 from .frontends import Gadget4Frontend
-from .particles import GadgetParticleDataset
