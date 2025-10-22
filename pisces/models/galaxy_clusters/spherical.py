@@ -1515,6 +1515,8 @@ class MagnetizedSphericalGalaxyClusterModel(SphericalGalaxyClusterModel):
             else:
                 fields["stellar_density"] = unyt_array(np.zeros_like(radii), units="Msun/kpc**3")
 
+            fields["dark_matter_density"] = fields["total_density"] - fields["gas_density"] - fields["stellar_density"]
+
             # --- Add the Beta Profile --- #
             # (STEP 4)
             # Add the beta profile as a field based on what we got
@@ -1620,6 +1622,10 @@ class MagnetizedSphericalGalaxyClusterModel(SphericalGalaxyClusterModel):
             # Compute the entropy.
             fields["entropy"] = fields["temperature"] / fields["electron_density"] ** (2 / 3)
             fields["entropy"].convert_to_units("keV*cm**2")
+
+            # Compute the internal energy / unit mass
+            fields["internal_energy_per_unit_mass"] = fields["temperature"] / (mp * mu * (2 / 3))
+            fields["internal_energy_per_unit_mass"].convert_to_units("km**2/s**2")
 
             # Complete and close the bar.
             progress_bar.set_description("COMPLETE")
