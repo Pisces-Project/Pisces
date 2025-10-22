@@ -150,3 +150,56 @@ class Gadget4Frontend(GadgetLikeFrontend):
                 )
 
         return ic_particles
+
+    def generate_initial_conditions(self, filename: str, *args, overwrite: bool = False, **kwargs):
+        """
+        Generate Gadget-4–compatible initial condition files for this frontend.
+
+        This method wraps the base
+        :meth:`~pisces.extensions.simulation.core.frontends.GadgetLikeFrontend.generate_initial_conditions`
+        lifecycle, providing the standard Gadget-4 interface for writing fully formatted
+        HDF5 initial condition files.
+
+        It performs a complete validation and generation sequence:
+
+        1. **Runtime validation** — Ensures that all models have generated particles
+           and that the current configuration is consistent with the Gadget-4
+           compile-time and runtime settings.
+        2. **Initial condition generation** — Constructs and writes the Gadget-4
+           particle dataset, including all particle types, field mappings, and metadata.
+
+        Parameters
+        ----------
+        filename : str
+            Name of the output HDF5 file to generate within the initial conditions
+            directory (e.g., ``"ClusterICs.hdf5"``). The path is resolved automatically
+            relative to :attr:`ic_directory`.
+        *args
+            Additional positional arguments forwarded to
+            :meth:`_validate_runtime_configuration` and
+            :meth:`_generate_initial_conditions`.
+        overwrite : bool, default=False
+            If ``True``, any existing file with the same name will be replaced.
+            If ``False``, a :class:`FileExistsError` is raised when the file exists.
+        **kwargs
+            Additional keyword arguments forwarded to the underlying generation methods.
+            These may include code-specific options such as compression settings or
+            alternate file naming behavior.
+
+        Returns
+        -------
+        Gadget4ParticleDataset
+            A :class:`~pisces.particles.gadget.Gadget4ParticleDataset` instance
+            representing the generated Gadget-4 initial condition file. This object
+            provides read/write access to all particle fields and metadata.
+
+        Notes
+        -----
+        - This is the preferred entry point for creating Gadget-4 initial conditions.
+          It provides automatic logging, file overwrite handling, and lifecycle consistency.
+        - Subclasses should not override this method unless a different output mechanism
+          is required.
+        - All generated files conform to the standard Gadget-4 ``ICFormat=3`` HDF5 layout.
+
+        """
+        super().generate_initial_conditions(filename, *args, overwrite=overwrite, **kwargs)

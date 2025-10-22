@@ -532,29 +532,57 @@ class SimulationFrontend(ABC):
 
     def generate_initial_conditions(self, *args, **kwargs) -> Any:
         """
-        Generate the necessary initial condition files from this frontend.
+        Generate all simulation-ready initial condition files for this frontend.
 
-        This method serves as the main entry point for generating initial
-        conditions. It first validates the runtime configuration using
-        :meth:`_validate_runtime_configuration`, and then calls
-        :meth:`_generate_initial_conditions` to perform the actual file
-        generation.
+        This method serves as the **main entry point** for converting a
+        Pisces :class:`~pisces.extensions.simulation.core.initial_conditions.InitialConditions`
+        object into the native input format required by an external simulation code.
 
-        Depending on the frontend implementation, this may involve
-        writing files in a specific format, creating metadata, or
-        performing additional setup steps.
+        It performs a complete two-step lifecycle:
+
+        1. **Validate runtime configuration** using
+           :meth:`_validate_runtime_configuration`, ensuring that the loaded
+           configuration and attached initial conditions are physically and
+           structurally consistent with the simulation code's expectations.
+
+        2. **Generate native input files** via
+           :meth:`_generate_initial_conditions`, which performs the actual
+           file-writing procedure defined by the subclass implementation.
+
+        Depending on the specific frontend, this process may involve:
+
+        - Writing HDF5 or binary particle data files.
+        - Generating code-specific metadata or parameter files.
+        - Performing pre-processing (e.g., orientation, bounding box cuts).
+        - Registering provenance or logging details to the IC directory.
 
         Parameters
         ----------
         *args
-            Positional arguments forwarded to both validation and generation.
+            Positional arguments forwarded to both
+            :meth:`_validate_runtime_configuration` and
+            :meth:`_generate_initial_conditions`.
         **kwargs
-            Keyword arguments forwarded to both validation and generation.
+            Keyword arguments forwarded to both methods. These may include
+            code-specific runtime options (e.g., ``filename``, ``overwrite=True``).
 
         Returns
         -------
-        The output from :meth:`_generate_initial_conditions`, which may vary
-        depending on the frontend implementation.
+        Any
+            The return value of :meth:`_generate_initial_conditions`, which varies
+            depending on the frontend implementation. For example, Gadget-like
+            frontends return a :class:`~pisces.particles.gadget.Gadget4ParticleDataset`
+            instance representing the generated file.
+
+        Notes
+        -----
+        - This method is **not** meant to be overridden in subclasses.
+          Instead, subclasses should implement the two private lifecycle methods:
+          :meth:`_validate_runtime_configuration` and
+          :meth:`_generate_initial_conditions`.
+        - Any log output or error handling performed here ensures a consistent
+          user experience across all simulation frontends.
+
         """
         self.logger.info(f"[{self.__class__.__name__}] Generating ICs - {self.initial_conditions}...")
 
@@ -1052,7 +1080,7 @@ class GadgetLikeFrontend(SimulationFrontend, ABC):
 
         return ic_particles
 
-    def _generate_initial_conditions(self, filename: str, overwrite: bool, *args, **kwargs):
+    def _generate_initial_conditions(self, filename: str, *args, overwrite: bool, **kwargs):
         # Begin by handling the file checking and overwrite language
         # before proceeding to the actual generation element of the method.
         path = self.ic_directory / filename
@@ -1104,3 +1132,60 @@ class GadgetLikeFrontend(SimulationFrontend, ABC):
         ic_particles.add_particle_ids(policy="global", overwrite=True, start_id=1, dtype=dtype)
 
         return ic_particles
+
+    def generate_initial_conditions(self, filename: str, *args, overwrite: bool = False, **kwargs):
+        """
+        Generate Gadget-compatible initial condition files for this frontend.
+
+        This method provides a convenience wrapper around the base
+        :meth:`~pisces.extensions.simulation.core.frontends.SimulationFrontend.generate_initial_conditions`
+        method, adding a standard ``filename`` and ``overwrite`` interface for
+        Gadget-like simulation codes.
+
+        It performs the complete frontend lifecycle:
+
+        1. **Validate runtime configuration** using
+           :meth:`_validate_runtime_configuration`, ensuring that the current
+           configuration and particle data are consistent and complete.
+        2. **Write the simulation input files** by calling the subclass-specific
+           :meth:`_generate_initial_conditions`, which performs file creation,
+           unit system setup, particle preprocessing, and ID assignment.
+
+        Parameters
+        ----------
+        filename : str
+            Name of the output file to be written within the initial conditions
+            directory (e.g., ``"ClusterICs.hdf5"``). The full path is automatically
+            resolved from :attr:`ic_directory`.
+        *args
+            Additional positional arguments forwarded to both
+            :meth:`_validate_runtime_configuration` and
+            :meth:`_generate_initial_conditions`.
+        overwrite : bool, default=False
+            If ``True``, any existing file with the same name will be replaced.
+            If ``False``, an existing file will raise a
+            :class:`FileExistsError`.
+        **kwargs
+            Additional keyword arguments forwarded to both
+            :meth:`_validate_runtime_configuration` and
+            :meth:`_generate_initial_conditions`. These may include
+            code-specific options (e.g., compression flags, chunking behavior, etc.).
+
+        Returns
+        -------
+        Any
+            The object returned by :meth:`_generate_initial_conditions`. For most
+            Gadget-like frontends, this will be a
+            :class:`~pisces.particles.gadget.Gadget4ParticleDataset` representing
+            the generated simulation file.
+
+        Notes
+        -----
+        - This method should not be overridden in subclasses unless the frontend
+          requires a fundamentally different call signature.
+        - The ``filename`` argument is always interpreted relative to
+          :attr:`ic_directory`.
+        - Logging messages will automatically indicate progress through
+          validation and file generation stages.
+        """
+        return super().generate_initial_conditions(filename, *args, overwrite=overwrite, **kwargs)
