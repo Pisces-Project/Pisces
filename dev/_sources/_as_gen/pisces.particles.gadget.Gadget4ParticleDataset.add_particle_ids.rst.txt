@@ -1,0 +1,6 @@
+pisces.particles.gadget.Gadget4ParticleDataset.add\_particle\_ids
+=================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: Gadget4ParticleDataset.add_particle_ids

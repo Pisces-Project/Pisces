@@ -1,0 +1,6 @@
+pisces.utilities.io\_tools.NumpyArrayHandler.\_\_init\_\_
+=========================================================
+
+.. currentmodule:: pisces.utilities.io_tools
+
+.. automethod:: NumpyArrayHandler.__init__

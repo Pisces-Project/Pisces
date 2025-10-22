@@ -1,0 +1,6 @@
+profiles.density.DoublePowerLawDensityProfile.compute\_total\_mass
+==================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DoublePowerLawDensityProfile.compute_total_mass

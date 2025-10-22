@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.extend\_group
+==========================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: AREPOParticleDataset.extend_group

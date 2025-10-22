@@ -1,0 +1,6 @@
+pisces.utilities.io\_tools.NumpyArrayHandler.to\_yaml
+=====================================================
+
+.. currentmodule:: pisces.utilities.io_tools
+
+.. automethod:: NumpyArrayHandler.to_yaml

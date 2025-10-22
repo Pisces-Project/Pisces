@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.rename\_field
+==========================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: AREPOParticleDataset.rename_field

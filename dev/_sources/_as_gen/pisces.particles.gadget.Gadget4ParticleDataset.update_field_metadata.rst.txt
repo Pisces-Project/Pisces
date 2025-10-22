@@ -1,0 +1,6 @@
+pisces.particles.gadget.Gadget4ParticleDataset.update\_field\_metadata
+======================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: Gadget4ParticleDataset.update_field_metadata

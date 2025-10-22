@@ -1,0 +1,70 @@
+ParticleDataset
+=====================================
+
+.. currentmodule:: pisces.particles.base
+
+.. autoclass:: pisces.particles.base.ParticleDataset
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~ParticleDataset.__init__
+      ~ParticleDataset.add_particle_field
+      ~ParticleDataset.add_particle_ids
+      ~ParticleDataset.add_particle_type
+      ~ParticleDataset.apply_linear_transformation
+      ~ParticleDataset.build_particle_dataset
+      ~ParticleDataset.concatenate_inplace
+      ~ParticleDataset.copy
+      ~ParticleDataset.cut_particles_to_bbox
+      ~ParticleDataset.delete_field_metadata_keys
+      ~ParticleDataset.delete_global_metadata_keys
+      ~ParticleDataset.delete_group_metadata_keys
+      ~ParticleDataset.extend_group
+      ~ParticleDataset.get_field_metadata
+      ~ParticleDataset.get_field_units
+      ~ParticleDataset.get_global_metadata
+      ~ParticleDataset.get_group_metadata
+      ~ParticleDataset.get_particle_field
+      ~ParticleDataset.get_particle_field_handle
+      ~ParticleDataset.get_particle_fields
+      ~ParticleDataset.get_particle_group_handle
+      ~ParticleDataset.offset_particle_positions
+      ~ParticleDataset.offset_particle_velocities
+      ~ParticleDataset.reduce_group
+      ~ParticleDataset.reload_global_metadata
+      ~ParticleDataset.remove_particle_field
+      ~ParticleDataset.remove_particle_group
+      ~ParticleDataset.rename_field
+      ~ParticleDataset.reorient_particles
+      ~ParticleDataset.rotate_particles
+      ~ParticleDataset.update_field_metadata
+      ~ParticleDataset.update_global_metadata
+      ~ParticleDataset.update_group_metadata
+      ~ParticleDataset.update_particle_ids
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~ParticleDataset.fields
+      ~ParticleDataset.global_metadata
+      ~ParticleDataset.handle
+      ~ParticleDataset.num_particles
+      ~ParticleDataset.particle_groups
+      ~ParticleDataset.path
+      ~ParticleDataset.total_particles
+   
+   

@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.get\_field\_units
+==============================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: AREPOParticleDataset.get_field_units

@@ -1,0 +1,6 @@
+profiles.density.BetaModelDensityProfile.parameter\_symbols
+===========================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: BetaModelDensityProfile.parameter_symbols

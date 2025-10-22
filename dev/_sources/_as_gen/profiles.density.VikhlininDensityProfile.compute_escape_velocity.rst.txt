@@ -1,0 +1,6 @@
+profiles.density.VikhlininDensityProfile.compute\_escape\_velocity
+==================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: VikhlininDensityProfile.compute_escape_velocity

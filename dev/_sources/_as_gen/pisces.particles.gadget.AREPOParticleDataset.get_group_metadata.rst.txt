@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.get\_group\_metadata
+=================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: AREPOParticleDataset.get_group_metadata

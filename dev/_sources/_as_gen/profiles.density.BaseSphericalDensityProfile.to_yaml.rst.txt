@@ -1,0 +1,6 @@
+profiles.density.BaseSphericalDensityProfile.to\_yaml
+=====================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseSphericalDensityProfile.to_yaml

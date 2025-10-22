@@ -1,0 +1,6 @@
+pisces.models.galaxy\_clusters.spherical.SphericalGalaxyClusterModel.from\_density\_and\_total\_density
+=======================================================================================================
+
+.. currentmodule:: pisces.models.galaxy_clusters.spherical
+
+.. automethod:: SphericalGalaxyClusterModel.from_density_and_total_density

@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.num\_particles
+===========================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. autoproperty:: AREPOParticleDataset.num_particles

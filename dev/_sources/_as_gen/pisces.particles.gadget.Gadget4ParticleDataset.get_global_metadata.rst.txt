@@ -1,0 +1,6 @@
+pisces.particles.gadget.Gadget4ParticleDataset.get\_global\_metadata
+====================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: Gadget4ParticleDataset.get_global_metadata

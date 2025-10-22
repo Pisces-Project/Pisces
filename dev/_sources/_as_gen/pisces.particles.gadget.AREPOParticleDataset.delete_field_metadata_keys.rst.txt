@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.delete\_field\_metadata\_keys
+==========================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: AREPOParticleDataset.delete_field_metadata_keys

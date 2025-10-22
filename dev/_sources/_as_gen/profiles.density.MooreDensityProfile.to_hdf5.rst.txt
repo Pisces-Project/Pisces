@@ -1,0 +1,6 @@
+profiles.density.MooreDensityProfile.to\_hdf5
+=============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: MooreDensityProfile.to_hdf5

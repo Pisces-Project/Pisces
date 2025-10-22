@@ -1,0 +1,6 @@
+profiles.density.BaseSphericalDensityProfile.derived\_profile\_classes
+======================================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: BaseSphericalDensityProfile.derived_profile_classes

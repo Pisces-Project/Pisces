@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.update\_field\_metadata
+====================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: AREPOParticleDataset.update_field_metadata

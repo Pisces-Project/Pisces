@@ -1,0 +1,6 @@
+pisces.math\_utils.random\_fields.GaussianRandomVectorField.compute\_wavenumber\_mgrid
+======================================================================================
+
+.. currentmodule:: pisces.math_utils.random_fields
+
+.. automethod:: GaussianRandomVectorField.compute_wavenumber_mgrid

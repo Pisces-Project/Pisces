@@ -1,0 +1,6 @@
+pisces.geometry.coordinates.coordinate\_systems.CylindricalCoordinateSystem.to\_dict
+====================================================================================
+
+.. currentmodule:: pisces.geometry.coordinates.coordinate_systems
+
+.. automethod:: CylindricalCoordinateSystem.to_dict

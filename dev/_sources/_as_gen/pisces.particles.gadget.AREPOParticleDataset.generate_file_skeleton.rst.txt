@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.generate\_file\_skeleton
+=====================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: AREPOParticleDataset.generate_file_skeleton

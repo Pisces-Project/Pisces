@@ -1,0 +1,6 @@
+profiles.density.BaseDiskDensityProfile.\_\_init\_\_
+====================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseDiskDensityProfile.__init__

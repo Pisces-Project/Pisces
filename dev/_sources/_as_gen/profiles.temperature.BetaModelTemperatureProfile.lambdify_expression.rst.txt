@@ -1,0 +1,6 @@
+profiles.temperature.BetaModelTemperatureProfile.lambdify\_expression
+=====================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: BetaModelTemperatureProfile.lambdify_expression

@@ -1,0 +1,6 @@
+pisces.particles.gadget.GadgetLikeParticleDataset.apply\_linear\_transformation
+===============================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: GadgetLikeParticleDataset.apply_linear_transformation

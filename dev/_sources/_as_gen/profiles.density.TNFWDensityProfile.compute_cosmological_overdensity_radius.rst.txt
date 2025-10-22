@@ -1,0 +1,6 @@
+profiles.density.TNFWDensityProfile.compute\_cosmological\_overdensity\_radius
+==============================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: TNFWDensityProfile.compute_cosmological_overdensity_radius

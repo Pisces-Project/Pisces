@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.delete\_group\_metadata\_keys
+==========================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: AREPOParticleDataset.delete_group_metadata_keys

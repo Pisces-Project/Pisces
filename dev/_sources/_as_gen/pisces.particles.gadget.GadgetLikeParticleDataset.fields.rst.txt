@@ -1,0 +1,6 @@
+pisces.particles.gadget.GadgetLikeParticleDataset.fields
+========================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. autoproperty:: GadgetLikeParticleDataset.fields

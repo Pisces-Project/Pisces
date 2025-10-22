@@ -1,0 +1,6 @@
+pisces.models.galaxy\_clusters.spherical.SphericalGalaxyClusterModel.list\_fields
+=================================================================================
+
+.. currentmodule:: pisces.models.galaxy_clusters.spherical
+
+.. automethod:: SphericalGalaxyClusterModel.list_fields

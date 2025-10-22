@@ -1,0 +1,6 @@
+profiles.density.BetaModelDensityProfile.compute\_lensing\_convergence
+======================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BetaModelDensityProfile.compute_lensing_convergence

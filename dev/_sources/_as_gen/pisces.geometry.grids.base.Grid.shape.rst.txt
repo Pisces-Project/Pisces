@@ -1,0 +1,6 @@
+pisces.geometry.grids.base.Grid.shape
+=====================================
+
+.. currentmodule:: pisces.geometry.grids.base
+
+.. autoproperty:: Grid.shape

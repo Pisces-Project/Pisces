@@ -1,0 +1,6 @@
+pisces.particles.gadget.GadgetLikeParticleDataset.get\_particle\_field\_handle
+==============================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: GadgetLikeParticleDataset.get_particle_field_handle

@@ -1,0 +1,6 @@
+profiles.density.GeneralizedNFWDensityProfile.\_\_init\_\_
+==========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: GeneralizedNFWDensityProfile.__init__

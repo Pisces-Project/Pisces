@@ -1,0 +1,6 @@
+pisces.particles.gadget.GadgetLikeParticleDataset.rename\_field
+===============================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: GadgetLikeParticleDataset.rename_field

@@ -1,0 +1,6 @@
+profiles.density.FlaredDiskDensityProfile.\_\_init\_\_
+======================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: FlaredDiskDensityProfile.__init__

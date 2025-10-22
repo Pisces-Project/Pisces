@@ -1,0 +1,6 @@
+pisces.geometry.grids.core.GenericGrid.coordinate\_system
+=========================================================
+
+.. currentmodule:: pisces.geometry.grids.core
+
+.. autoproperty:: GenericGrid.coordinate_system

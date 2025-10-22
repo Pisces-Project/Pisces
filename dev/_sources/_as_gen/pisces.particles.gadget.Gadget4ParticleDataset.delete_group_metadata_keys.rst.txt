@@ -1,0 +1,6 @@
+pisces.particles.gadget.Gadget4ParticleDataset.delete\_group\_metadata\_keys
+============================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: Gadget4ParticleDataset.delete_group_metadata_keys

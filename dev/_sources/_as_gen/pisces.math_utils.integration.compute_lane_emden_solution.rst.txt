@@ -1,0 +1,6 @@
+pisces.math\_utils.integration.compute\_lane\_emden\_solution
+=============================================================
+
+.. currentmodule:: pisces.math_utils.integration
+
+.. autofunction:: compute_lane_emden_solution

@@ -1,0 +1,6 @@
+pisces.models.galaxy\_clusters.spherical.SphericalGalaxyClusterModel.active\_grid\_axes
+=======================================================================================
+
+.. currentmodule:: pisces.models.galaxy_clusters.spherical
+
+.. autoproperty:: SphericalGalaxyClusterModel.active_grid_axes

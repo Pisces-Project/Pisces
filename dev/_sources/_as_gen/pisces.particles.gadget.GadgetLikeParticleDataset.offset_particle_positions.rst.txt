@@ -1,0 +1,6 @@
+pisces.particles.gadget.GadgetLikeParticleDataset.offset\_particle\_positions
+=============================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: GadgetLikeParticleDataset.offset_particle_positions

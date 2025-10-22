@@ -1,0 +1,6 @@
+profiles.density.DoublePowerLawDensityProfile.substitute\_expression
+====================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DoublePowerLawDensityProfile.substitute_expression

@@ -1,0 +1,52 @@
+BaseSphericalTemperatureProfile
+====================================================
+
+.. currentmodule:: profiles.temperature
+
+.. autoclass:: profiles.temperature.BaseSphericalTemperatureProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~BaseSphericalTemperatureProfile.__init__
+      ~BaseSphericalTemperatureProfile.from_dict
+      ~BaseSphericalTemperatureProfile.from_hdf5
+      ~BaseSphericalTemperatureProfile.from_json
+      ~BaseSphericalTemperatureProfile.from_yaml
+      ~BaseSphericalTemperatureProfile.get_derived_profile
+      ~BaseSphericalTemperatureProfile.get_expression_latex
+      ~BaseSphericalTemperatureProfile.get_output_units
+      ~BaseSphericalTemperatureProfile.get_parameters_latex
+      ~BaseSphericalTemperatureProfile.lambdify_expression
+      ~BaseSphericalTemperatureProfile.list_derived_profiles
+      ~BaseSphericalTemperatureProfile.substitute_expression
+      ~BaseSphericalTemperatureProfile.to_dict
+      ~BaseSphericalTemperatureProfile.to_hdf5
+      ~BaseSphericalTemperatureProfile.to_json
+      ~BaseSphericalTemperatureProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~BaseSphericalTemperatureProfile.AXES
+      ~BaseSphericalTemperatureProfile.DEFAULT_PARAMETERS
+      ~BaseSphericalTemperatureProfile.derived_profile_classes
+      ~BaseSphericalTemperatureProfile.parameter_symbols
+      ~BaseSphericalTemperatureProfile.parameters
+      ~BaseSphericalTemperatureProfile.variable_symbols
+      ~BaseSphericalTemperatureProfile.variables
+   
+   

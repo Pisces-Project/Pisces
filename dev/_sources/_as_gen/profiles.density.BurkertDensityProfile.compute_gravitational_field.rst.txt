@@ -1,0 +1,6 @@
+profiles.density.BurkertDensityProfile.compute\_gravitational\_field
+====================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BurkertDensityProfile.compute_gravitational_field

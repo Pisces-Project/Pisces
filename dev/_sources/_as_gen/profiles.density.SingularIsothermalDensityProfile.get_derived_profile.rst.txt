@@ -1,0 +1,6 @@
+profiles.density.SingularIsothermalDensityProfile.get\_derived\_profile
+=======================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SingularIsothermalDensityProfile.get_derived_profile

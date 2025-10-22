@@ -1,0 +1,6 @@
+pisces.geometry.grids.core.GenericGrid.full\_like
+=================================================
+
+.. currentmodule:: pisces.geometry.grids.core
+
+.. automethod:: GenericGrid.full_like

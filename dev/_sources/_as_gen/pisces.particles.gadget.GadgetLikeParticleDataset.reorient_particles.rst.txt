@@ -1,0 +1,6 @@
+pisces.particles.gadget.GadgetLikeParticleDataset.reorient\_particles
+=====================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: GadgetLikeParticleDataset.reorient_particles

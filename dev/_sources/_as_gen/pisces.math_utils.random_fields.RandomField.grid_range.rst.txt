@@ -1,0 +1,6 @@
+pisces.math\_utils.random\_fields.RandomField.grid\_range
+=========================================================
+
+.. currentmodule:: pisces.math_utils.random_fields
+
+.. autoproperty:: RandomField.grid_range

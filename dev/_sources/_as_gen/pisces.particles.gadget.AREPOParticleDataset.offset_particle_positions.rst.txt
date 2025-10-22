@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.offset\_particle\_positions
+========================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: AREPOParticleDataset.offset_particle_positions

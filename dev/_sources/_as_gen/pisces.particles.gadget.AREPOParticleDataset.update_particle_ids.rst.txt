@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.update\_particle\_ids
+==================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: AREPOParticleDataset.update_particle_ids

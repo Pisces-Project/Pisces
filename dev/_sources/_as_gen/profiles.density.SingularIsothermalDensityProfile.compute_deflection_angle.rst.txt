@@ -1,0 +1,6 @@
+profiles.density.SingularIsothermalDensityProfile.compute\_deflection\_angle
+============================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SingularIsothermalDensityProfile.compute_deflection_angle
