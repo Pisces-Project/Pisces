@@ -1,8 +1,8 @@
 # ================================================================ #
-# Default FRONTEND configuration for Gadget-4 simulations.         #
+# Default FRONTEND configuration for AREPO simulations.            #
 # ================================================================ #
 # This configuration file sets up the frontend parameters for running
-# Gadget-4 simulations within the Pisces framework. It includes settings
+# AREPO simulations within the Pisces framework. It includes settings
 # for simulation parameters, output options, and analysis routines.
 
 # -------------------------- #
@@ -11,16 +11,18 @@
 # These are compile-time settings which are necessary to
 # ensure self-consistent / valid configurations.
 makefile:
-  simulation_type: "3D"         # The type of simulation (e.g., "3D", "2D"). This is set automatically.
-  number_of_particle_types: 6   # The number of particle types expected.
-  nbits_id: 64                  # The number of bits used for particle IDs.
-  double_precision: true        # Use double precision for floating-point calculations.
+  simulation_type: "3D"                  # The type of simulation (e.g., "3D", "2D"). This is set automatically.
+  number_of_particle_types: 6            # The number of particle types expected.
+  nbits_id: 64                           # The number of bits used for particle IDs.
+  double_precision: true                 # Use double precision for floating-point calculations.
+  passive_scalars: 0                     # Number of passive scalars to include.
 
 # -------------------------- #
 # Physics Settings           #
 # -------------------------- #
 physics:
   cooling: false                 # Turn on cooling. Requires user to specify the electron_abundance.
+  mhd: false                     # Enable magneto-hydrodynamics (MHD) in the simulation.
 
 # -------------------------- #
 # Parameter File Options     #
@@ -33,7 +35,7 @@ parameters:
   # same units as the length units specified below.
   boxsize: 100.0
 
-  # Unit support. Gadget-4 includes velocity, length, and mass
+  # Unit support. AREPO includes velocity, length, and mass
   # units. The time unit is derived from L/V.
   units:
     length: !unyt_unit "Mpc"            # Length unit
@@ -44,7 +46,7 @@ parameters:
 # Model Parameters (default) #
 # -------------------------- #
 # Below is the default set of model configurations for
-# mapping Pisces particle data properties to Gadget-4 particle types.
+# mapping Pisces particle data properties to AREPO particle types.
 # The convention present here matches the standard convention for Pisces.
 #
 # Once initialized, the frontend will create a unique one of these

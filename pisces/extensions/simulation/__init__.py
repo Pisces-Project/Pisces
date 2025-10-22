@@ -16,12 +16,13 @@ the documentation page on running simulations with Pisces: :ref:`simulations`.
 
 __all__ = [
     "gadget",
+    "arepo",
     "frontends",
     "initial_conditions",
 ]
 
 # Import the relevant frontend modules for the different codes.
-from . import gadget
+from . import arepo, gadget
 
 # Make accessing the frontends easier by exposing them at the package level.
 from .core import frontends, initial_conditions
