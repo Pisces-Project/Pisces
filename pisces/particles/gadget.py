@@ -1050,9 +1050,22 @@ class AREPOParticleDataset(GadgetLikeParticleDataset):
     # --------------------------------- #
     # Class Constants / Flags           #
     # --------------------------------- #
-    _MAGNETIC_FIELD_NAME = "MagneticField"
-    _ELECTRON_ABUNDANCE_FIELD_NAME = "ElectronAbundance"
-    _PASSIVE_SCALARS_FIELD_NAME = "PassiveScalars"
+
+    # --- Field Name Conventions --- #
+    _POSITION_FIELD_NAME = "Coordinates"  # Required for all Ptypes
+    _VELOCITY_FIELD_NAME = "Velocities"  # Required for all Ptypes
+    _MASS_FIELD_NAME = "Masses"  # Required for all Ptypes
+    _ID_FIELD_NAME = "ParticleIDs"  # Required for all Ptypes
+    _INTERNAL_ENERGY_FIELD_NAME = "InternalEnergy"  # Required for gas only.
+    _ELECTRON_ABUNDANCE_FIELD_NAME = "ElectronAbundance"  # Required for gas if cooling enabled.
+    _MAGNETIC_FIELD_NAME = "MagneticField"  # Required for gas if MHD enabled.
+    _PASSIVE_SCALARS_FIELD_NAME = "PassiveScalars"  # Required for gas if scalars enabled.
+
+    # --- Class Settings --- #
+    _default_ntypes: int = 6
+    _default_unit_system = unyt.unit_systems.galactic_unit_system
+    _header_group_name: str = "Header"
+    _particle_type_name_prefix: str = "PartType"
 
     # ------------------------------------- #
     # Generation Methods                    #
@@ -1114,7 +1127,7 @@ class AREPOParticleDataset(GadgetLikeParticleDataset):
         - ``Redshift`` (float64): Redshift of the snapshot (0.0 for ICs).
         - ``BoxSize`` (float64): Physical size of the simulation box, converted to the specified unit system.
         - ``NumFilesPerSnapshot`` (int32): Not written here (implicit = 1).
-        - ``Omega0``, ``OmegaLambda``, ``OmegaBaryon`` (float64): Cosmology parameters. Written as 0.0/1.0 placeholders.
+        - ``Omega0``, ``OmegaLambda``: Cosmology parameters.
         - ``HubbleParam`` (float64): Hubble parameter (written as 1.0).
         - ``Flag_Sfr``, ``Flag_Cooling``, ``Flag_StellarAge``, ``Flag_Metals``,
           ``Flag_Feedback`` (int32): Physics flags. Always 0 for ICs.
