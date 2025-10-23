@@ -1,0 +1,931 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Developer Guide: Simulation Frontends &#8212; Pisces  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/extensions/simulation/frontends/frontends_dev';</script>
+    <link rel="icon" href="../../../../_static/pisces_favicon.svg"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/pisces.svg" class="logo__image only-light" alt="Pisces Documentation - Home"/>
+    <img src="../../../../_static/pisces.svg" class="logo__image only-dark pst-js-only" alt="Pisces Documentation - Home"/>
+  
+  
+    <p class="title logo__title">Pisces</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/pisces-project/pisces" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/pisces-project/pisces" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Developer Guide: Simulation Frontends</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="developer-guide-simulation-frontends">
+<span id="frontend-dev"></span><h1>Developer Guide: Simulation Frontends<a class="headerlink" href="#developer-guide-simulation-frontends" title="Link to this heading">#</a></h1>
+<p>This document is designed to help walk contributors / developers through
+the process of creating a new simulation frontend for Pisces. It assumes familiarity with the
+Pisces codebase and the general structure of simulation frontends. If you are not familiar
+with these concepts, it is recommended to first read the
+<a class="reference internal" href="frontends.html#simulation-frontends"><span class="std std-ref">Simulation Frontends in Pisces</span></a> documentation.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>It is often useful to take a look at the existing frontends to get a sense of what they’re doing
+and how they work before diving into this material. Doing so will give you a better picture of what
+elements are relevant to your use case.</p>
+</div>
+<section id="frontend-structure">
+<h2>Frontend Structure<a class="headerlink" href="#frontend-structure" title="Link to this heading">#</a></h2>
+<p>In this guide, we’ll assume that you are creating a new frontend for a simulation code (we’ll
+call it “MySim”) that is not currently supported by Pisces. To begin, you’ll want to create the new
+package <code class="docutils literal notranslate"><span class="pre">pisces.extensions.simulation.mysim</span></code>, which will contain all of the necessary code for the
+frontend that you’re writing. There are <em>generally</em> two modules within this package that you will
+need to create:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">frontend.py</span></code>: This module will contain the frontend(s) for your simulation code. It should
+inherit from the base class <a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.core.frontends.SimulationFrontend.html#pisces.extensions.simulation.core.frontends.SimulationFrontend" title="pisces.extensions.simulation.core.frontends.SimulationFrontend"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulationFrontend</span></code></a> and implement the necessary methods
+to interface with your simulation code. We’ll walk through the required methods in detail below.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initial_conditions.py</span></code>: (<strong>optional</strong>) This module is used if your simulation code requires a new initial
+conditions class beyond that provided by Pisces’ base class (<a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.core.initial_conditions.InitialConditions.html#pisces.extensions.simulation.core.initial_conditions.InitialConditions" title="pisces.extensions.simulation.core.initial_conditions.InitialConditions"><code class="xref py py-class docutils literal notranslate"><span class="pre">InitialConditions</span></code></a>).
+If that is the case, consult the documentation (<span class="xref std std-ref">initial_conditions_dev</span>) for how to implement a
+new initial conditions class.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In complex cases, your code may also need a <strong>problem initializer</strong>, which is written directly into the
+simulation code itself. This is relatively common in AMR codes, where initial conditions need to be deposited
+into the simulation grid. If you need to write a problem initializer, consult the
+<span class="xref std std-ref">problem_initializer_dev</span> documentation for details.</p>
+</div>
+<p>With the structure in place, you’re ready to start implementing the frontend.</p>
+</section>
+<section id="writing-the-frontend-class">
+<h2>Writing the Frontend Class<a class="headerlink" href="#writing-the-frontend-class" title="Link to this heading">#</a></h2>
+<p>Developing a frontend for a simulation code can be somewhat complex and often requires some
+deeper-level understanding of the code itself. It is our hope that none of that complexity comes
+from Pisces itself. Frontends themselves are relatively simple, they’ll subclass
+<a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.core.frontends.SimulationFrontend.html#pisces.extensions.simulation.core.frontends.SimulationFrontend" title="pisces.extensions.simulation.core.frontends.SimulationFrontend"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulationFrontend</span></code></a> and provide the following core functionality:</p>
+<ul class="simple">
+<li><p><strong>Configuration</strong>: Within your frontend package, you’ll need to create a configuration skeleton
+that is, when connected to an initial conditions object, copied and modified into the IC directory.
+The functionality here is to provide a location to store core-specific settings (from compile-time flags,
+parameter files, etc.) that are required to run the simulation code and which you need to know about from
+the user in order to run the simulation. See the section below for details on this.</p></li>
+<li><p><strong>Generation</strong>: Once the frontend is setup and connected to the user’s initial conditions, your frontend
+then needs to use all of the information available (model fields, particle data, etc.) to generate
+the necessary input files for the simulation code. This is done through the
+<a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.core.frontends.SimulationFrontend.generate_initial_conditions.html#pisces.extensions.simulation.core.frontends.SimulationFrontend.generate_initial_conditions" title="pisces.extensions.simulation.core.frontends.SimulationFrontend.generate_initial_conditions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">generate_initial_conditions()</span></code></a> method, which is described in detail below.</p></li>
+</ul>
+<section id="frontend-initialization">
+<h3>Frontend Initialization<a class="headerlink" href="#frontend-initialization" title="Link to this heading">#</a></h3>
+<p>The first steps we’ll cover all concern the initialization of the frontend. This is done in the
+<a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.core.frontends.SimulationFrontend.__init__.html#pisces.extensions.simulation.core.frontends.SimulationFrontend.__init__" title="pisces.extensions.simulation.core.frontends.SimulationFrontend.__init__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__init__()</span></code></a> method, which is called when the frontend is created.
+You should <strong>never need to modify</strong> this method directly because it is broken down into several
+sub-methods that you can override to customize the behavior of your frontend. The key methods to
+override are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">_validate_input_ic</span></code>: This method is called to validate the initial conditions object that the frontend is being
+initialized with. You should check that the initial conditions object is compatible with your simulation code
+and raise an exception if it is not.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_setup_config</span></code>: This method is called to setup the configuration for the frontend. This is the step that takes
+your default configuration skeleton and modifies it to match the initial conditions object. See the section below
+for details on how to implement this.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">__post_init__</span></code>: This method is called after the frontend has been initialized. You can use this method to
+perform any additional setup that is required for your frontend, such as loading additional
+data or setting up internal state.</p></li>
+</ul>
+</section>
+<section id="the-configuration-file">
+<h3>The Configuration File<a class="headerlink" href="#the-configuration-file" title="Link to this heading">#</a></h3>
+<p>The most critical element of a frontend is the configuration file. This file contains all of the
+necessary settings for your simulation code, including compile-time flags, parameter files, and other
+settings that are required to run the simulation. The idea is that when the user initializes the
+frontend, a configuration file is generated in the initial conditions directory that contains all of
+the necessary settings for the simulation code. This file can then be modified by the user to
+customize the simulation run. Once the simulation settings are all set, the user can run the
+generation step, which then uses those configuration settings and the initial conditions data to
+generate the necessary input files for the simulation code.</p>
+<p>To implement a configuration file for your frontend, you’ll need to first point the
+class to the default configuration skeleton. This is done by setting the class variable</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MySimFrontend</span><span class="p">(</span><span class="n">SimulationFrontend</span><span class="p">):</span>
+
+    <span class="c1"># --------------------------------------- #</span>
+    <span class="c1"># Class Variables and Constants           #</span>
+    <span class="c1"># --------------------------------------- #</span>
+    <span class="c1"># These are class-level variables which define connections to</span>
+    <span class="c1"># the configuration along with some other aspects of the</span>
+    <span class="c1"># frontend&#39;s behavior.</span>
+    <span class="n">__default_configuration_path__</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Path to the default configuration file template for this frontend.</span>
+
+<span class="sd">    This should be set in subclasses to point to the default YAML</span>
+<span class="sd">    configuration file that defines the expected parameters for</span>
+<span class="sd">    this frontend. The file should be located in the</span>
+<span class="sd">    `pisces/extensions/simulation/core/frontend_configs` directory.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>The configuration file may be configured however you choose, but it is often useful to remember
+that it is exposed to the user and should therefore be organized in some reasonable way. For example,
+you might use the following structure:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># ================================================================ #</span>
+<span class="c1"># Default FRONTEND configuration for Gadget-2 simulations.         #</span>
+<span class="c1"># ================================================================ #</span>
+<span class="c1"># This configuration file sets up the frontend parameters for running</span>
+<span class="c1"># Gadget-2 simulations within the Pisces framework. It includes settings</span>
+<span class="c1"># for simulation parameters, output options, and analysis routines.</span>
+
+<span class="c1"># -------------------------- #</span>
+<span class="c1"># Makefile Options           #</span>
+<span class="c1"># -------------------------- #</span>
+<span class="c1"># These are compile-time settings which are necessary to</span>
+<span class="c1"># ensure self-consistent / valid configurations.</span>
+<span class="nt">makefile</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">longids</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">                </span><span class="c1"># See ``LONGIDS`` in Makefile</span>
+
+
+<span class="c1"># -------------------------- #</span>
+<span class="c1"># Parameter File Options     #</span>
+<span class="c1"># -------------------------- #</span>
+<span class="c1"># These are runtime configuration settings which are necessary</span>
+<span class="c1"># to ensure that the simulation is run in a self-consistent manner.</span>
+<span class="nt">parameters</span><span class="p">:</span>
+
+<span class="w">  </span><span class="c1"># The simulation box size. This should be provided in the</span>
+<span class="w">  </span><span class="c1"># same units as the length units specified below.</span>
+<span class="w">  </span><span class="nt">boxsize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100.0</span>
+
+<span class="w">  </span><span class="c1"># Unit support. Gadget-2 includes velocity, length, and mass</span>
+<span class="w">  </span><span class="c1"># units. The time unit is derived from L/V.</span>
+<span class="w">  </span><span class="nt">units</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length</span><span class="p">:</span><span class="w"> </span><span class="kt">!unyt_unit</span><span class="w"> </span><span class="s">&quot;kpc&quot;</span><span class="w">            </span><span class="c1"># Length unit</span>
+<span class="w">    </span><span class="nt">mass</span><span class="p">:</span><span class="w"> </span><span class="kt">!unyt_unit</span><span class="w"> </span><span class="s">&quot;Msun&quot;</span><span class="w">             </span><span class="c1"># Mass unit</span>
+<span class="w">    </span><span class="nt">velocity</span><span class="p">:</span><span class="w"> </span><span class="kt">!unyt_unit</span><span class="w"> </span><span class="s">&quot;km/s&quot;</span><span class="w">         </span><span class="c1"># Velocity unit</span>
+
+<span class="c1"># -------------------------- #</span>
+<span class="c1"># Model Parameters (default) #</span>
+<span class="c1"># -------------------------- #</span>
+<span class="c1"># Below is the default set of model configurations for</span>
+<span class="c1"># mapping Pisces particle data properties to Gadget-2 particle types.</span>
+<span class="c1"># The convention present here matches the standard convention for Pisces.</span>
+<span class="c1">#</span>
+<span class="c1"># Once initialized, the frontend will create a unique one of these</span>
+<span class="c1"># for each model so that it can have specific settings.</span>
+<span class="nt">model_DEFAULT</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">Type0</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gas&quot;</span>
+<span class="w">    </span><span class="nt">fields</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">Coordinates</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_position&quot;</span>
+<span class="w">      </span><span class="nt">Velocities</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_velocity&quot;</span>
+<span class="w">      </span><span class="nt">ID</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_id&quot;</span>
+<span class="w">      </span><span class="nt">Masses</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_mass&quot;</span>
+<span class="w">      </span><span class="nt">InternalEnergy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_internal_energy&quot;</span>
+<span class="w">  </span><span class="nt">Type1</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;dark_matter&quot;</span>
+<span class="w">    </span><span class="nt">fields</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">Coordinates</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_position&quot;</span>
+<span class="w">      </span><span class="nt">Velocities</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_velocity&quot;</span>
+<span class="w">      </span><span class="nt">ID</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_id&quot;</span>
+<span class="w">      </span><span class="nt">Masses</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_mass&quot;</span>
+<span class="w">  </span><span class="nt">Type2</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;disk&quot;</span>
+<span class="w">    </span><span class="nt">fields</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">Coordinates</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_position&quot;</span>
+<span class="w">      </span><span class="nt">Velocities</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_velocity&quot;</span>
+<span class="w">      </span><span class="nt">ID</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_id&quot;</span>
+<span class="w">      </span><span class="nt">Masses</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_mass&quot;</span>
+<span class="w">  </span><span class="nt">Type3</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bulge&quot;</span>
+<span class="w">    </span><span class="nt">fields</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">Coordinates</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_position&quot;</span>
+<span class="w">      </span><span class="nt">Velocities</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_velocity&quot;</span>
+<span class="w">      </span><span class="nt">ID</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_id&quot;</span>
+<span class="w">      </span><span class="nt">Masses</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_mass&quot;</span>
+<span class="w">  </span><span class="nt">Type4</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;stars&quot;</span>
+<span class="w">    </span><span class="nt">fields</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">Coordinates</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_position&quot;</span>
+<span class="w">      </span><span class="nt">Velocities</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_velocity&quot;</span>
+<span class="w">      </span><span class="nt">ID</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_id&quot;</span>
+<span class="w">      </span><span class="nt">Masses</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_mass&quot;</span>
+<span class="w">  </span><span class="nt">Type5</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;boundary&quot;</span>
+<span class="w">    </span><span class="nt">fields</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">Coordinates</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_position&quot;</span>
+<span class="w">      </span><span class="nt">Velocities</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_velocity&quot;</span>
+<span class="w">      </span><span class="nt">ID</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_id&quot;</span>
+<span class="w">      </span><span class="nt">Masses</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;particle_mass&quot;</span>
+
+<span class="c1"># Model configurations which are filled dynamically</span>
+<span class="c1"># when initialized:</span>
+<span class="nt">models</span><span class="p">:</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>While you, as the developer, can choose to structure the configuration file however you like, there
+are a few design conventions to follow:</p>
+<ol class="arabic simple">
+<li><p><strong>Minimal Configuration</strong>: The configuration file should only contain the settings that are
+necessary to <strong>correctly build the initial conditions</strong>. This means that for any given code,
+you generally only need a small subset of the available parameters.</p></li>
+<li><p><strong>Default Values</strong>: The configuration file should provide default values for all parameters.
+Whenever possible these should match the defaults used by the simulation code itself.</p></li>
+<li><p><strong>Documentation</strong>: The configuration file should be well-documented, with comments explaining
+each parameter and its purpose. This will help users understand how to modify the configuration
+file to suit their needs. When possible, point to the equivalent setting in the simulation code’s
+documentation (e.g., the Gadget-2 user guide) so that users can find more information about
+the parameter and its expected values.</p></li>
+</ol>
+</div>
+<section id="the-configuration-manager">
+<h4>The Configuration Manager<a class="headerlink" href="#the-configuration-manager" title="Link to this heading">#</a></h4>
+<p>Within the code, the configuration file is managed by the <a class="reference internal" href="../../../../_as_gen/pisces.utilities.config.ConfigManager.html#pisces.utilities.config.ConfigManager" title="pisces.utilities.config.ConfigManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigManager</span></code></a> class
+or some subclass thereof. The purpose for this is somewhat multiplex:</p>
+<ul class="simple">
+<li><p>The <a class="reference internal" href="../../../../_as_gen/pisces.utilities.config.ConfigManager.html#pisces.utilities.config.ConfigManager" title="pisces.utilities.config.ConfigManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigManager</span></code></a> class abstracts away a lot of the nitty-gritty details of
+reading and writing configuration files, allowing you to focus on the high-level logic of your frontend. Specifically,
+the keys in the configuration file are accessed similarly to a dictionary and the values are automatically saved to
+the configuration file when modified.</p></li>
+<li><p>The <a class="reference internal" href="../../../../_as_gen/pisces.utilities.config.ConfigManager.html#pisces.utilities.config.ConfigManager" title="pisces.utilities.config.ConfigManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigManager</span></code></a> class provides a way to read complex classes from yaml
+files, allowing configuration files to contain more complex data structures than just simple key-value pairs.</p></li>
+</ul>
+<p>For the most part, you will not need to modify this aspect of the frontend, but there are two useful things that can
+be done if necessary:</p>
+<ol class="arabic">
+<li><p><strong>Custom Configuration Classes</strong>: If you need to read or write a custom class from the configuration file, you can
+create a subclass of <a class="reference internal" href="../../../../_as_gen/pisces.utilities.config.ConfigManager.html#pisces.utilities.config.ConfigManager" title="pisces.utilities.config.ConfigManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigManager</span></code></a> and override it’s behavior. Then register
+it as the configuration manager for your frontend by setting the
+<code class="docutils literal notranslate"><span class="pre">__default_configuration_manager_class__</span></code> class variable in your frontend class.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Generally, this is useful when you want to support types in YAML which are not already natively supported in
+the <a class="reference internal" href="../../../../_as_gen/pisces.utilities.config.ConfigManager.html#pisces.utilities.config.ConfigManager" title="pisces.utilities.config.ConfigManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigManager</span></code></a> class. You can create a custom YAML type (via
+<code class="docutils literal notranslate"><span class="pre">ruamel.yaml</span></code>) and then register it with a new configuration manager class which simply sets the <code class="docutils literal notranslate"><span class="pre">__YAML__</span></code>
+attribute to the custom yaml type. By default, the yaml reader fully supports unyt and pathlib.</p>
+</div>
+</li>
+<li><p>Following from the first element, <strong>make use of complex data types</strong>: instead of requiring users to provide their
+unit system in cgs or specify values in code units, you can use <code class="docutils literal notranslate"><span class="pre">unyt</span></code> to allow them to specify those things
+with actual units. This is done by using the <code class="docutils literal notranslate"><span class="pre">!unyt_unit</span></code> YAML tag in the configuration file, which allows you to
+specify a unit in the configuration file that will be automatically converted to an unyt unit when read by the
+configuration manager.</p></li>
+</ol>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The <a class="reference internal" href="../../../../_as_gen/pisces.utilities.config.html#module-pisces.utilities.config" title="pisces.utilities.config"><code class="xref py py-mod docutils literal notranslate"><span class="pre">config</span></code></a> and <a class="reference internal" href="../../../../_as_gen/pisces.utilities.io_tools.html#module-pisces.utilities.io_tools" title="pisces.utilities.io_tools"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io_tools</span></code></a> modules are the low-level utility modules
+where we have defined all of this. They are quite short and relatively simple. If you are confused by how this works
+or need to implement something more complex, you can look at the source code for these modules to see how they work.</p>
+</div>
+</section>
+<section id="setting-up-the-configuration">
+<h4>Setting Up the Configuration<a class="headerlink" href="#setting-up-the-configuration" title="Link to this heading">#</a></h4>
+<p>Once the default configuration file is loaded, every frontend calls the <code class="docutils literal notranslate"><span class="pre">_setup_config</span></code> method to
+modify the configuration file to match the initial conditions object that it is being initialized with.
+This method is where you will set the necessary parameters for your simulation code based on the
+initial conditions object. The method is called after the configuration file has been loaded, so you can
+access the configuration file through the <code class="docutils literal notranslate"><span class="pre">self.config</span></code> attribute.</p>
+<p>After <code class="docutils literal notranslate"><span class="pre">_setup_config</span></code> is called, the configuration file will then automatically process any <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> passed
+through <code class="docutils literal notranslate"><span class="pre">__init__</span></code> into the configuration file. This allows you to pass additional parameters to the frontend
+that are not part of the initial conditions object, such as compile-time flags or other settings that are
+specific to your simulation code. Equivalently, the user can just modify the configuration directly after the frontend
+is initialized, and the changes will be automatically saved to the configuration file.</p>
+</section>
+<section id="conventions">
+<h4>Conventions<a class="headerlink" href="#conventions" title="Link to this heading">#</a></h4>
+<p>To keep frontends consistent, portable, and easy to maintain across Pisces, follow these conventions:</p>
+<ul class="simple">
+<li><p><strong>Configuration file</strong></p>
+<ul>
+<li><p>Keep the default YAML <strong>minimal but runnable</strong>. Comment each key with what it does and (if relevant) the
+simulator’s equivalent setting.</p></li>
+<li><p>Prefer <strong>units with unyt</strong> (<code class="docutils literal notranslate"><span class="pre">!unyt_unit</span></code> and quantities) rather than
+raw scalars; convert explicitly at write time.</p></li>
+<li><p>Treat the per-IC YAML as the <strong>source of truth</strong>; do not rely on global
+templates after initialization.</p></li>
+</ul>
+</li>
+<li><p><strong>Field and particle mapping</strong></p>
+<ul>
+<li><p>Provide a clear <strong>models to simulator types/fields</strong> mapping in the YAML. For example,
+a per-model section that maps Pisces field names (e.g., <code class="docutils literal notranslate"><span class="pre">particle_position</span></code>) to simulator
+expectations (e.g., <code class="docutils literal notranslate"><span class="pre">Coordinates</span></code>).</p></li>
+<li><p>Make mappings <strong>explicit and opt-in</strong>; do not guess silently. If a required mapping
+is missing, <strong>fail fast</strong> with a helpful error and log which key is missing.</p></li>
+<li><p>Keep default mappings aligned with <strong>Pisces defaults</strong> and common
+simulator conventions.</p></li>
+</ul>
+</li>
+<li><p><strong>Initialization &amp; validation</strong></p>
+<ul>
+<li><p>Do not modify the base <code class="docutils literal notranslate"><span class="pre">__init__</span></code> flow of <a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.core.frontends.SimulationFrontend.html#pisces.extensions.simulation.core.frontends.SimulationFrontend" title="pisces.extensions.simulation.core.frontends.SimulationFrontend"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulationFrontend</span></code></a>. Use hooks:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">_validate_input_ic</span></code> to reject incompatible ICs early,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_setup_config</span></code> to populate per-model sections and derive defaults,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_validate_runtime_configuration</span></code> to perform final checks before generation.</p></li>
+</ul>
+</li>
+<li><p>Validation should be <strong>deterministic</strong> and <strong>loud</strong>: raise
+exceptions on missing/invalid config; log any normalization you perform.</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Conventions exist to keep frontends interchangeable and maintainable.
+If you must diverge, document the reason and preserve the <strong>behavioral contracts</strong>
+of the base class: deterministic validation, reproducible config,
+and predictable file layout under <code class="docutils literal notranslate"><span class="pre">ic.directory</span></code>.</p>
+</div>
+</section>
+</section>
+<section id="validation">
+<h3>Validation<a class="headerlink" href="#validation" title="Link to this heading">#</a></h3>
+<p>During the life-cycle of a frontend, there are two key validation steps:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">_validate_input_ic</span></code>: This method is called when the frontend is initialized with an
+<a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.core.initial_conditions.InitialConditions.html#pisces.extensions.simulation.core.initial_conditions.InitialConditions" title="pisces.extensions.simulation.core.initial_conditions.InitialConditions"><code class="xref py py-class docutils literal notranslate"><span class="pre">InitialConditions</span></code></a> object. It should validate that the initial conditions are
+compatible with the simulation code and raise an exception if they are not.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_validate_runtime_configuration</span></code>: This method is called after the configuration file has been loaded and
+before the initial conditions are generated. It should validate that the configuration file is complete and
+consistent, checking for required keys, unit consistency, and any other constraints that are specific to your
+simulation code. If anything is missing or invalid, it should raise an exception with a helpful message.</p>
+<p>A common and useful pattern here is to require that the user has generated things like particle files for each
+model in the initial conditions. If any of these are missing, you should raise an exception with a clear message
+indicating which model is missing the required files. This allows users to quickly identify and fix issues with
+their initial conditions before they attempt to generate the simulation inputs. It also saves having too much
+logic in the generation step that could fail later on, which would be more difficult to debug.</p>
+</li>
+</ul>
+</section>
+<section id="ic-generation">
+<h3>IC Generation<a class="headerlink" href="#ic-generation" title="Link to this heading">#</a></h3>
+<p>Frontends generate simulator-native inputs through
+<a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.core.frontends.SimulationFrontend.generate_initial_conditions.html#pisces.extensions.simulation.core.frontends.SimulationFrontend.generate_initial_conditions" title="pisces.extensions.simulation.core.frontends.SimulationFrontend.generate_initial_conditions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">generate_initial_conditions()</span></code></a>.
+The flow has <strong>two parts</strong>:</p>
+<ol class="arabic">
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">_validate_runtime_configuration()</span></code>
+Last-mile checks/normalization of the YAML before any files are written.
+Verify required keys, unit consistency, ranges, and cross-field constraints.
+If anything is missing or invalid, <strong>raise</strong> with a helpful message
+(and log any normalization you perform).</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">_generate_initial_conditions()</span></code>
+This is the meat of the generation step. It will utilize the linked initial conditions
+object (<a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.core.frontends.SimulationFrontend.initial_conditions.html#pisces.extensions.simulation.core.frontends.SimulationFrontend.initial_conditions" title="pisces.extensions.simulation.core.frontends.SimulationFrontend.initial_conditions"><code class="xref py py-attr docutils literal notranslate"><span class="pre">initial_conditions</span></code></a>) and the configuration
+(<a class="reference internal" href="../../../../_as_gen/pisces.extensions.simulation.core.frontends.SimulationFrontend.config.html#pisces.extensions.simulation.core.frontends.SimulationFrontend.config" title="pisces.extensions.simulation.core.frontends.SimulationFrontend.config"><code class="xref py py-attr docutils literal notranslate"><span class="pre">config</span></code></a>) to generate the necessary input files for the simulation code.</p>
+<p>This method is where the vast majority of the frontend logic lives.</p>
+</li>
+</ol>
+<section id="example">
+<h4>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h4>
+<p>As an extremely simplistic case, we can implement a frontend for a hypothetical simulation code “MySim” that requires
+specific initial conditions and configuration settings. The following example illustrates how to implement
+a frontend for “MySim” that validates the initial conditions, sets up the configuration, and generates the necessary
+input files. This example assumes that “MySim” requires 3D initial conditions with specific metadata for each model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pisces.extensions.simulation.core.frontend</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SimulationFrontend</span><span class="p">,</span> <span class="n">__frontend_bin_path__</span>
+<span class="p">)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MySimFrontend</span><span class="p">(</span><span class="n">SimulationFrontend</span><span class="p">):</span>
+    <span class="n">__default_configuration_path__</span> <span class="o">=</span> <span class="n">__frontend_bin_path__</span> <span class="o">/</span> <span class="s2">&quot;mysim_config.yaml&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_input_ic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ic</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ic</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">3</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">ic</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;MySim requires 3D ICs with at least one model.&quot;</span><span class="p">)</span>
+        <span class="c1"># Example: ensure each model has total_mass metadata</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">ic</span><span class="o">.</span><span class="n">list_models</span><span class="p">():</span>
+            <span class="k">if</span> <span class="s2">&quot;total_mass&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ic</span><span class="o">.</span><span class="n">get_model_metadata</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> missing &#39;total_mass&#39; in metadata.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_runtime_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span>
+        <span class="c1"># Enforce required runtime keys; set safe defaults if absent</span>
+        <span class="k">if</span> <span class="s2">&quot;io.output_dir&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+            <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;io.output_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;mysim_out&quot;</span>
+        <span class="n">nthreads</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;runtime.nthreads&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">nthreads</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;runtime.nthreads must be &gt;= 1&quot;</span><span class="p">)</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;runtime.nthreads&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nthreads</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_initial_conditions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">ic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_conditions</span>
+        <span class="n">outdir</span> <span class="o">=</span> <span class="n">ic</span><span class="o">.</span><span class="n">directory</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;io.output_dir&quot;</span><span class="p">]</span>
+        <span class="n">outdir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># (1) Optional: transform frame when requested</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;runtime.shift_to_com&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="n">ic</span><span class="o">.</span><span class="n">shift_to_COM_frame</span><span class="p">()</span>
+
+        <span class="c1"># (2) Write required inputs (example writer)</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">ic</span><span class="o">.</span><span class="n">list_models</span><span class="p">():</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">ic</span><span class="o">.</span><span class="n">model_positions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;pc&quot;</span><span class="p">)</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">ic</span><span class="o">.</span><span class="n">model_velocities</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;km/s&quot;</span><span class="p">)</span>
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">r</span><span class="p">,</span> <span class="o">*</span><span class="n">v</span><span class="p">])</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">outdir</span> <span class="o">/</span> <span class="s2">&quot;bodies.txt&quot;</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%.6e</span><span class="s2"> </span><span class="si">%.6e</span><span class="s2"> </span><span class="si">%.6e</span><span class="s2"> </span><span class="si">%.6e</span><span class="s2"> </span><span class="si">%.6e</span><span class="s2"> </span><span class="si">%.6e</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="putting-it-together-initialize-and-generate">
+<h3>Putting it together: initialize and generate<a class="headerlink" href="#putting-it-together-initialize-and-generate" title="Link to this heading">#</a></h3>
+<p>A minimal end-to-end example that creates the frontend, adjusts config, validates, and generates inputs:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pisces.extensions.simulation.core.initial_conditions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InitialConditions</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pisces.extensions.simulation.mysim.frontend</span><span class="w"> </span><span class="kn">import</span> <span class="n">MySimFrontend</span>
+
+<span class="c1"># 1) Load an existing IC directory (contains IC_CONFIG.yaml)</span>
+<span class="n">ic</span> <span class="o">=</span> <span class="n">InitialConditions</span><span class="p">(</span><span class="s2">&quot;/path/to/MyIC&quot;</span><span class="p">)</span>
+
+<span class="c1"># 2) Attach your frontend; pass overrides as kwargs or edit later</span>
+<span class="n">frontend</span> <span class="o">=</span> <span class="n">MySimFrontend</span><span class="p">(</span><span class="n">ic</span><span class="p">,</span> <span class="n">reset_configuration</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1234</span><span class="p">)</span>
+
+<span class="c1"># You can also tweak config via key access (dotted keys supported)</span>
+<span class="n">frontend</span><span class="p">[</span><span class="s2">&quot;io.output_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;mysim_out&quot;</span>
+<span class="n">frontend</span><span class="p">[</span><span class="s2">&quot;runtime.nthreads&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">frontend</span><span class="p">[</span><span class="s2">&quot;runtime.shift_to_com&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># 3) Generate simulator-native inputs</span>
+<span class="n">frontend</span><span class="o">.</span><span class="n">generate_initial_conditions</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#frontend-structure">Frontend Structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-the-frontend-class">Writing the Frontend Class</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#frontend-initialization">Frontend Initialization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-configuration-file">The Configuration File</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-configuration-manager">The Configuration Manager</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-the-configuration">Setting Up the Configuration</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conventions">Conventions</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validation">Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ic-generation">IC Generation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-together-initialize-and-generate">Putting it together: initialize and generate</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../_sources/reference/extensions/simulation/frontends/frontends_dev.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Eliza Diggins.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

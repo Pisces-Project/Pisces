@@ -1,0 +1,63 @@
+CoredPowerLawDensityProfile
+============================================
+
+.. currentmodule:: profiles.density
+
+.. autoclass:: profiles.density.CoredPowerLawDensityProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~CoredPowerLawDensityProfile.__init__
+      ~CoredPowerLawDensityProfile.compute_circular_velocity
+      ~CoredPowerLawDensityProfile.compute_cosmological_overdensity_profile
+      ~CoredPowerLawDensityProfile.compute_cosmological_overdensity_radius
+      ~CoredPowerLawDensityProfile.compute_deflection_angle
+      ~CoredPowerLawDensityProfile.compute_einstein_radius
+      ~CoredPowerLawDensityProfile.compute_enclosed_mass
+      ~CoredPowerLawDensityProfile.compute_escape_velocity
+      ~CoredPowerLawDensityProfile.compute_fractional_mass_radius
+      ~CoredPowerLawDensityProfile.compute_gravitational_field
+      ~CoredPowerLawDensityProfile.compute_gravitational_potential
+      ~CoredPowerLawDensityProfile.compute_lensing_convergence
+      ~CoredPowerLawDensityProfile.compute_surface_density
+      ~CoredPowerLawDensityProfile.compute_total_mass
+      ~CoredPowerLawDensityProfile.from_dict
+      ~CoredPowerLawDensityProfile.from_hdf5
+      ~CoredPowerLawDensityProfile.from_json
+      ~CoredPowerLawDensityProfile.from_yaml
+      ~CoredPowerLawDensityProfile.get_derived_profile
+      ~CoredPowerLawDensityProfile.get_expression_latex
+      ~CoredPowerLawDensityProfile.get_output_units
+      ~CoredPowerLawDensityProfile.get_parameters_latex
+      ~CoredPowerLawDensityProfile.lambdify_expression
+      ~CoredPowerLawDensityProfile.list_derived_profiles
+      ~CoredPowerLawDensityProfile.substitute_expression
+      ~CoredPowerLawDensityProfile.to_dict
+      ~CoredPowerLawDensityProfile.to_hdf5
+      ~CoredPowerLawDensityProfile.to_json
+      ~CoredPowerLawDensityProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~CoredPowerLawDensityProfile.derived_profile_classes
+      ~CoredPowerLawDensityProfile.parameter_symbols
+      ~CoredPowerLawDensityProfile.parameters
+      ~CoredPowerLawDensityProfile.variable_symbols
+      ~CoredPowerLawDensityProfile.variables
+   
+   

@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.particle\_groups
+=============================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. autoproperty:: AREPOParticleDataset.particle_groups

@@ -1,0 +1,6 @@
+pisces.math\_utils.random\_fields.RandomField.compute\_wavenumber\_arrays
+=========================================================================
+
+.. currentmodule:: pisces.math_utils.random_fields
+
+.. automethod:: RandomField.compute_wavenumber_arrays

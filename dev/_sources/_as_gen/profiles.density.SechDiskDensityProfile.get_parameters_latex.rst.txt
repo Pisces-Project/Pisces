@@ -1,0 +1,6 @@
+profiles.density.SechDiskDensityProfile.get\_parameters\_latex
+==============================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SechDiskDensityProfile.get_parameters_latex

@@ -1,0 +1,6 @@
+pisces.extensions.simulation.core.initial\_conditions.InitialConditionsCartesian.logger
+=======================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
+
+.. autoattribute:: InitialConditionsCartesian.logger

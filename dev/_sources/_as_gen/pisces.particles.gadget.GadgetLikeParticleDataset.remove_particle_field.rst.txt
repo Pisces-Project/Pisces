@@ -1,0 +1,6 @@
+pisces.particles.gadget.GadgetLikeParticleDataset.remove\_particle\_field
+=========================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: GadgetLikeParticleDataset.remove_particle_field

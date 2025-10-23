@@ -1,0 +1,26 @@
+PathHandler
+=====================================
+
+.. currentmodule:: pisces.utilities.io_tools
+
+.. autoclass:: pisces.utilities.io_tools.PathHandler
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~PathHandler.__init__
+      ~PathHandler.from_yaml
+      ~PathHandler.register
+      ~PathHandler.to_yaml
+   
+   
+
+   
+   
+   

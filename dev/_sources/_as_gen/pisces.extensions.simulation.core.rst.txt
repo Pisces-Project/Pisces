@@ -1,0 +1,35 @@
+pisces.extensions.simulation.core
+=================================
+
+.. automodule:: pisces.extensions.simulation.core
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Modules
+
+   .. autosummary::
+      :toctree:
+      :template: module.rst
+      :recursive:
+
+   
+      frontends
+      initial_conditions
+   
+   
+
+   
+   
+   
+
+   
+   
+   

@@ -1,0 +1,6 @@
+pisces.models.core.hooks.BaseHook.\_\_init\_\_
+==============================================
+
+.. currentmodule:: pisces.models.core.hooks
+
+.. automethod:: BaseHook.__init__

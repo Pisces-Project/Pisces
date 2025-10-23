@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.global\_metadata
+=============================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. autoproperty:: AREPOParticleDataset.global_metadata

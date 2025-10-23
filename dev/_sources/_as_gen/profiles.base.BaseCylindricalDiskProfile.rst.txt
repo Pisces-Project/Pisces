@@ -1,0 +1,50 @@
+BaseCylindricalDiskProfile
+========================================
+
+.. currentmodule:: profiles.base
+
+.. autoclass:: profiles.base.BaseCylindricalDiskProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~BaseCylindricalDiskProfile.__init__
+      ~BaseCylindricalDiskProfile.from_dict
+      ~BaseCylindricalDiskProfile.from_hdf5
+      ~BaseCylindricalDiskProfile.from_json
+      ~BaseCylindricalDiskProfile.from_yaml
+      ~BaseCylindricalDiskProfile.get_derived_profile
+      ~BaseCylindricalDiskProfile.get_expression_latex
+      ~BaseCylindricalDiskProfile.get_output_units
+      ~BaseCylindricalDiskProfile.get_parameters_latex
+      ~BaseCylindricalDiskProfile.lambdify_expression
+      ~BaseCylindricalDiskProfile.list_derived_profiles
+      ~BaseCylindricalDiskProfile.substitute_expression
+      ~BaseCylindricalDiskProfile.to_dict
+      ~BaseCylindricalDiskProfile.to_hdf5
+      ~BaseCylindricalDiskProfile.to_json
+      ~BaseCylindricalDiskProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~BaseCylindricalDiskProfile.derived_profile_classes
+      ~BaseCylindricalDiskProfile.parameter_symbols
+      ~BaseCylindricalDiskProfile.parameters
+      ~BaseCylindricalDiskProfile.variable_symbols
+      ~BaseCylindricalDiskProfile.variables
+   
+   

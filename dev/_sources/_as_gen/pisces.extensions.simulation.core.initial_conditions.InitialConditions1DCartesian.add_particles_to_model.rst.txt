@@ -1,0 +1,6 @@
+pisces.extensions.simulation.core.initial\_conditions.InitialConditions1DCartesian.add\_particles\_to\_model
+============================================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
+
+.. automethod:: InitialConditions1DCartesian.add_particles_to_model

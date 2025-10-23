@@ -1,0 +1,6 @@
+pisces.extensions.simulation.arepo.frontends.AREPOFrontend.ic\_directory
+========================================================================
+
+.. currentmodule:: pisces.extensions.simulation.arepo.frontends
+
+.. autoproperty:: AREPOFrontend.ic_directory

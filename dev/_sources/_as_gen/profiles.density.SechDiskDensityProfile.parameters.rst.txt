@@ -1,0 +1,6 @@
+profiles.density.SechDiskDensityProfile.parameters
+==================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: SechDiskDensityProfile.parameters

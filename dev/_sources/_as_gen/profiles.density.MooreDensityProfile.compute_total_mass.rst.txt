@@ -1,0 +1,6 @@
+profiles.density.MooreDensityProfile.compute\_total\_mass
+=========================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: MooreDensityProfile.compute_total_mass

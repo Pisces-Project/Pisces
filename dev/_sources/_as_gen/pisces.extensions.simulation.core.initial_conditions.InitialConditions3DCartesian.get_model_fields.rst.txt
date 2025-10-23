@@ -1,0 +1,6 @@
+pisces.extensions.simulation.core.initial\_conditions.InitialConditions3DCartesian.get\_model\_fields
+=====================================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
+
+.. automethod:: InitialConditions3DCartesian.get_model_fields

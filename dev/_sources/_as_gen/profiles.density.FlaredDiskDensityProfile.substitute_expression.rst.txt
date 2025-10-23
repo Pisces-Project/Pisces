@@ -1,0 +1,6 @@
+profiles.density.FlaredDiskDensityProfile.substitute\_expression
+================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: FlaredDiskDensityProfile.substitute_expression

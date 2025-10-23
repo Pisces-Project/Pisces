@@ -1,0 +1,6 @@
+profiles.density.AM06DensityProfile.get\_output\_units
+======================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: AM06DensityProfile.get_output_units

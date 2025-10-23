@@ -1,0 +1,6 @@
+pisces.particles.gadget.GadgetLikeParticleDataset.reload\_global\_metadata
+==========================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: GadgetLikeParticleDataset.reload_global_metadata

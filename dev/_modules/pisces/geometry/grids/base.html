@@ -1,0 +1,1464 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pisces.geometry.grids.base &#8212; Pisces  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pisces/geometry/grids/base';</script>
+    <link rel="icon" href="../../../../_static/pisces_favicon.svg"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/pisces.svg" class="logo__image only-light" alt="Pisces Documentation - Home"/>
+    <img src="../../../../_static/pisces.svg" class="logo__image only-dark pst-js-only" alt="Pisces Documentation - Home"/>
+  
+  
+    <p class="title logo__title">Pisces</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../reference/user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/pisces-project/pisces" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../reference/user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/pisces-project/pisces" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">pisces.geometry.grids.base</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for pisces.geometry.grids.base</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Base classes for grids in Pisces.</span>
+
+<span class="sd">This module defines the abstract base class `Grid` for representing structured</span>
+<span class="sd">and unstructured discretizations of coordinate systems in the Pisces geometry library.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">h5py</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">unyt</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pisces._generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">RegistryMeta</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pisces._registries</span><span class="w"> </span><span class="kn">import</span> <span class="n">__default_grid_registry__</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pisces.utilities.io_tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">HDF5Serializer</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pisces._generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">Registry</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pisces.geometry.coordinates.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoordinateSystem</span>
+
+
+<div class="viewcode-block" id="Grid">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.html#pisces.geometry.grids.core.Grid">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Grid</span><span class="p">(</span><span class="n">ABC</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">RegistryMeta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for all grids in Pisces.</span>
+
+<span class="sd">    A grid represents a discretization of a coordinate system into</span>
+<span class="sd">    a finite number of points or cells. This base class provides</span>
+<span class="sd">    the common interface and functionality for all grid types, including</span>
+<span class="sd">    structured and unstructured grids. For more details on grid structure,</span>
+<span class="sd">    see the relevant documentation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">metadata_serializer</span><span class="p">:</span> <span class="n">HDF5Serializer</span> <span class="o">=</span> <span class="n">HDF5Serializer</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;~pisces.utilities.io.HDF5Serializer: Serializer for model metadata.</span>
+
+<span class="sd">    This serializer is used to read and write grid metadata to HDF5 files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># ============================== #</span>
+    <span class="c1"># CLASS FLAGS                    #</span>
+    <span class="c1"># ============================== #</span>
+    <span class="n">__IS_ABSTRACT__</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Flag indicating that this is an abstract base class.&quot;&quot;&quot;</span>
+    <span class="n">__DEFAULT_REGISTRY__</span><span class="p">:</span> <span class="s2">&quot;Registry&quot;</span> <span class="o">=</span> <span class="n">__default_grid_registry__</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The default registry for grid types.&quot;&quot;&quot;</span>
+
+    <span class="c1"># ============================== #</span>
+    <span class="c1"># INITIALIZATION                 #</span>
+    <span class="c1"># ============================== #</span>
+    <span class="c1"># These methods determine the behavior of the grid</span>
+    <span class="c1"># vis-a-vis initialization. There are several methods placed</span>
+    <span class="c1"># here which dictate specific elements of the initialization process.</span>
+    <span class="c1">#</span>
+    <span class="c1"># To subclass effectively, you will need to override</span>
+    <span class="c1"># some (or all) of these methods to implement custom logic</span>
+    <span class="c1"># for your grid type.</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_configure_coordinate_system</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coordinate_system</span><span class="p">:</span> <span class="s2">&quot;CoordinateSystem&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Configure the coordinate system&#39;s grid.</span>
+
+<span class="sd">        This is the first step in the initialization of a grid and should</span>
+<span class="sd">        simply set the ``self.__coordinate_system__`` attribute.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__coordinate_system__</span><span class="p">:</span> <span class="n">CoordinateSystem</span> <span class="o">=</span> <span class="n">coordinate_system</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_configure_units</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">units</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">unyt</span><span class="o">.</span><span class="n">Unit</span><span class="p">]]]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Configure the units of the grid.</span>
+
+<span class="sd">        This method sets the ``__units__`` attribute, a dictionary mapping each</span>
+<span class="sd">        axis name to its corresponding unit.</span>
+
+<span class="sd">        All axes, including both active and filled axes, must have a unit.</span>
+<span class="sd">        If a unit is missing, it is filled with the dimensionless unit (i.e., &quot;&quot;).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        units : dict of str -&gt; (str or unyt.Unit)</span>
+<span class="sd">            A dictionary mapping axis names to unit strings or Unit objects.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If any axis in `units` is not in the coordinate system.</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            If a unit is not a string or a `unyt.Unit` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Ensure that we have a units dictionary to work with,</span>
+        <span class="c1"># even if the user passed through a `None` instance.</span>
+        <span class="n">units</span> <span class="o">=</span> <span class="n">units</span> <span class="k">if</span> <span class="n">units</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+
+        <span class="c1"># Extract the axis names from the coordinate system. This</span>
+        <span class="c1"># is run after the coordinate system has been configured.</span>
+        <span class="c1"># Then generate the dictionary that will contain our final</span>
+        <span class="c1"># units.</span>
+        <span class="n">axis_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coordinate_system__</span><span class="o">.</span><span class="n">axes</span>
+        <span class="n">unit_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">unyt</span><span class="o">.</span><span class="n">Unit</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># For each of the axes in the coordinate system, we sweep</span>
+        <span class="c1"># through the dictionary and extract / process the provided</span>
+        <span class="c1"># units.</span>
+        <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">axis_names</span><span class="p">:</span>
+            <span class="c1"># Fetch the user provided unit or declare it dimensionless.</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Coerce to a unit object.</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">unit_dict</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt</span><span class="o">.</span><span class="n">Unit</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid unit string for axis &#39;</span><span class="si">{</span><span class="n">axis</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">unyt</span><span class="o">.</span><span class="n">Unit</span><span class="p">):</span>
+                <span class="n">unit_dict</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unit for axis &#39;</span><span class="si">{</span><span class="n">axis</span><span class="si">}</span><span class="s2">&#39; must be a string or unyt.Unit, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__units__</span> <span class="o">=</span> <span class="n">unit_dict</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_configure_axes_and_fills</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]],</span> <span class="n">fill_values</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Configure the axes and fill values of the grid using axis labels.</span>
+
+<span class="sd">        This allows users to select which axes of the coordinate system are</span>
+<span class="sd">        &quot;active&quot; in the grid, and which are fixed using constant values.</span>
+
+<span class="sd">        Sets</span>
+<span class="sd">        ----</span>
+<span class="sd">        __axes__ : tuple of str</span>
+<span class="sd">            Names of the axes included in the grid. These must be valid</span>
+<span class="sd">            axis labels from the coordinate system in question.</span>
+<span class="sd">        __fill_values__ : dict of str, ~unyt.array.unyt_quantity</span>
+<span class="sd">            Fill values for the axes excluded from the grid.</span>
+
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        axes : str or tuple of str</span>
+<span class="sd">            The axes to include in the grid. This can be:</span>
+
+<span class="sd">            - A tuple of axis names (e.g., (&quot;r&quot;, &quot;z&quot;)).</span>
+<span class="sd">            - The string &#39;all&#39; to include all axes from the coordinate system.</span>
+
+<span class="sd">        fill_values : dict, optional</span>
+<span class="sd">            A dictionary mapping excluded axis names to constant fill values.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If axes are invalid or fill values are missing/misaligned.</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            If inputs are the wrong types.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Extract all of the axes from the coordinate</span>
+        <span class="c1"># system so that we can validate the input.</span>
+        <span class="n">all_axes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coordinate_system__</span><span class="o">.</span><span class="n">axes</span>
+
+        <span class="c1"># Normalize input axes. We need to look for either</span>
+        <span class="c1"># a list / tuple of strings for the axes or we need to get &#39;all&#39;.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">axes</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+                <span class="n">axes_tuple</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">all_axes</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid string for axes: </span><span class="si">{</span><span class="n">axes</span><span class="si">}</span><span class="s2">. Must be &#39;all&#39;.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;All axis names must be strings.&quot;</span><span class="p">)</span>
+            <span class="n">axes_tuple</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Axes must be a tuple of strings or &#39;all&#39;, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Validate axes are in the coordinate system</span>
+        <span class="n">invalid_axes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">axes_tuple</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">all_axes</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">invalid_axes</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown axis names </span><span class="si">{</span><span class="n">invalid_axes</span><span class="si">}</span><span class="s2"> not in coordinate system axes </span><span class="si">{</span><span class="n">all_axes</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Set the __axes__ attribute, ensuring consistent ordering</span>
+        <span class="c1"># (sorted according to the order in all_axes).</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__axes__</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">axes_tuple</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="n">all_axes</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+
+        <span class="c1"># Determine fill axes (those not present in __axes__)</span>
+        <span class="n">expected_fill_axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">ax</span> <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">all_axes</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__axes__</span><span class="p">]</span>
+
+        <span class="c1"># Validate and store fill values</span>
+        <span class="n">fill_values</span> <span class="o">=</span> <span class="n">fill_values</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fill_values</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;fill_values must be a dict mapping axis names (str) to values.&quot;</span><span class="p">)</span>
+
+        <span class="n">missing</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">expected_fill_axes</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">fill_values</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">extra</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">fill_values</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">expected_fill_axes</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">missing</span> <span class="ow">or</span> <span class="n">extra</span><span class="p">:</span>
+            <span class="n">messages</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">missing</span><span class="p">:</span>
+                <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing fill values for axes: </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">missing</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">extra</span><span class="p">:</span>
+                <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected fill values for axes not being filled: </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">messages</span><span class="p">))</span>
+
+        <span class="c1"># Set the __fill_values__ attribute. To do this, we&#39;ll cycle through</span>
+        <span class="c1"># and either assign units or convert units.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__fill_values__</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">fv_key</span><span class="p">,</span> <span class="n">fv_value</span> <span class="ow">in</span> <span class="n">fill_values</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">fv_value</span><span class="p">,</span> <span class="s2">&quot;units&quot;</span><span class="p">):</span>
+                <span class="c1"># This fill value has units so we want to</span>
+                <span class="c1"># coerce them to the correct units.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__fill_values__</span><span class="p">[</span><span class="n">fv_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">fv_value</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__units__</span><span class="p">[</span><span class="n">fv_key</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># This fill value has no units so we want to</span>
+                <span class="c1"># coerce it to a unyt quantity with the correct units.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__fill_values__</span><span class="p">[</span><span class="n">fv_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">fv_value</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">__units__</span><span class="p">[</span><span class="n">fv_key</span><span class="p">]</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_configure_grid_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Configure grid-specific attributes.</span>
+
+<span class="sd">        This method is called after the coordinate system, axes, fill values,</span>
+<span class="sd">        and units have been configured. It has the following required responsibilities:</span>
+
+<span class="sd">        - Set the ``__bbox__`` and ``__ddim__`` attributes so that we know what the</span>
+<span class="sd">          bounding box and dimensionality of the grid are. These are each numpy arrays</span>
+<span class="sd">          with shape (N, 2) and (N,) respectively, where N is the number of axes. The bounding</span>
+<span class="sd">          box should be float valued with the first column being the minimum and the second</span>
+<span class="sd">          column being the maximum for each axis. The dimensionality should be an integer</span>
+<span class="sd">          array indicating the number of grid points along each axis.</span>
+
+<span class="sd">          Only the active axes should appear in either of these attributes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        *args</span>
+<span class="sd">            Positional arguments specific to the grid type.</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Keyword arguments specific to the grid type.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        NotImplementedError</span>
+<span class="sd">            If not overridden in subclasses.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__bbox__</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ddim__</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> must implement _configure_grid_attributes().&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Grid.__init__">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.__init__.html#pisces.geometry.grids.core.Grid.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">coordinate_system</span><span class="p">:</span> <span class="s2">&quot;CoordinateSystem&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="n">axes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span>
+        <span class="n">fill_values</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">units</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">unyt</span><span class="o">.</span><span class="n">Unit</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="c1"># --- PRELIMINARY INITIALIZATION --- #</span>
+        <span class="c1"># These steps in the initialization process are largely</span>
+        <span class="c1"># about data coercion and just setting up the various</span>
+        <span class="c1"># relevant attributes.</span>
+
+        <span class="c1"># Begin by configuring the coordinate system. At this</span>
+        <span class="c1"># stage, we call out to _configure_coordinate_system and</span>
+        <span class="c1"># set the __coordinate_system__ attribute.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configure_coordinate_system</span><span class="p">(</span><span class="n">coordinate_system</span><span class="p">)</span>
+
+        <span class="c1"># With the coordinate system in place, we can instantiate</span>
+        <span class="c1"># the units for each of the axes and ensure that units are</span>
+        <span class="c1"># provided for all of them.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configure_units</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
+
+        <span class="c1"># With the coordinate system configured, we can now handle</span>
+        <span class="c1"># the axes and the fill values.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configure_axes_and_fills</span><span class="p">(</span>
+            <span class="n">axes</span><span class="p">,</span>
+            <span class="n">fill_values</span><span class="o">=</span><span class="n">fill_values</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># With the axes and the handles, we will want to</span>
+        <span class="c1"># also have ``__axes_indices__`` and ``__axes_mask__``</span>
+        <span class="c1"># as well as ``__fill_indices__`` and ``__fill_mask__``.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__axes_indices__</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__coordinate_system__</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span> <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__axes__</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__fill_indices__</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__coordinate_system__</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coordinate_system__</span><span class="o">.</span><span class="n">axes</span>
+            <span class="k">if</span> <span class="n">ax</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__axes__</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__axes_mask__</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__coordinate_system__</span><span class="o">.</span><span class="n">__NDIM__</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__axes_mask__</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__axes_indices__</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__fill_mask__</span> <span class="o">=</span> <span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">__axes_mask__</span>
+
+        <span class="c1"># Now we can handle the units. Once the units are in place,</span>
+        <span class="c1"># we can proceed to configure the fill values so that we</span>
+        <span class="c1"># don&#39;t retain any units.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configure_units</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
+
+        <span class="c1"># --- GRID-SPECIFIC INITIALIZATION --- #</span>
+        <span class="c1"># At this stage, we start performing configuration that</span>
+        <span class="c1"># really depends on the nature of the underlying grid and</span>
+        <span class="c1"># takes all of the args and kwargs.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configure_grid_attributes</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ============================== #</span>
+    <span class="c1"># DUNDER METHODS                 #</span>
+    <span class="c1"># ============================== #</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get coordinates corresponding to the given grid index or mask.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        key : slice, int, tuple, array-like, or boolean mask</span>
+<span class="sd">            Indexing expression for selecting grid points.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+
+<span class="sd">            If key selects a single point: coordinate tuple ``(x, y, ...)``.</span>
+<span class="sd">            If key selects multiple points: array of shape ``(N, D)`` of coordinates.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Handle ellipsis (e.g., grid[...]) so that</span>
+        <span class="c1"># we can pass on to the other cases more easily.</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="bp">Ellipsis</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_meshgrid</span><span class="p">(</span><span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Allow users to fetch a string of the coordinate array.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coordinate_system__</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_axis_array</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Axis &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39; not found in coordinate system axes </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__coordinate_system__</span><span class="o">.</span><span class="n">axes</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Handle the case where the key is a masking array. This might either</span>
+        <span class="c1"># be an array of indices or it might be a boolean mask. Either way,</span>
+        <span class="c1"># we handle that here.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
+                <span class="c1"># Boolean mask</span>
+                <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Boolean mask shape </span><span class="si">{</span><span class="n">key</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> does not match grid shape </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">flat_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_flat_coordinates</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">flat_coords</span><span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">ravel</span><span class="p">()]</span>
+            <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">):</span>
+                <span class="c1"># Index array</span>
+                <span class="n">mesh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_meshgrid</span><span class="p">(</span><span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+                <span class="n">stacked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">stacked</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+        <span class="c1"># Handle tuple indexing like grid[3, 5] or grid[:, 3]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">slice</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">key</span><span class="p">):</span>
+                <span class="c1"># Expand int -&gt; slice to match grid shape</span>
+                <span class="n">slices</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">else</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">key</span><span class="p">)</span>
+                <span class="n">coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_coordinates_slice</span><span class="p">(</span><span class="o">*</span><span class="n">slices</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">key</span><span class="p">):</span>
+                    <span class="c1"># All indices → return single coordinate tuple (x, y, ...)</span>
+                    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">coord</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Mixed indexing → return meshgrid</span>
+                    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="o">*</span><span class="n">coords</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported tuple key types in </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Handle single int or slice</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)):</span>
+            <span class="c1"># Promote to full-dim tuple with rest as slices</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">key</span><span class="p">,)</span> <span class="o">+</span> <span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),)</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported index type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">cls_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__axes__</span><span class="p">)</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="n">cls_name</span><span class="si">}</span><span class="s2"> axes=(</span><span class="si">{</span><span class="n">axes</span><span class="si">}</span><span class="s2">), shape=</span><span class="si">{</span><span class="n">shape</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterate over all grid coordinate points.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_flat_coordinates</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__array__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># Return a stacked array of coordinates. This (because of the</span>
+        <span class="c1"># stacking) will strip units off.</span>
+        <span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">d</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_meshgrid</span><span class="p">()),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">array</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span> <span class="k">if</span> <span class="n">dtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">array</span>
+
+    <span class="c1"># ============================== #</span>
+    <span class="c1"># PROPERTIES                     #</span>
+    <span class="c1"># ============================== #</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">active_axes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Tuple of axis names that are active in the grid.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__axes__</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fill_values</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Dictionary of fill values for axes not active in the grid.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fill_values__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">coordinate_system</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;CoordinateSystem&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The coordinate system associated with this grid.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coordinate_system__</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">active_axes_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean mask array indicating which axes are active in the grid.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__axes_mask__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ndim_active</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of active axes in the grid.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__axes__</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ndim_inactive</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of inactive (filled) axes in the grid.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coordinate_system__</span><span class="o">.</span><span class="n">__NDIM__</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__axes__</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ndim</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total number of axes in the coordinate system.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coordinate_system__</span><span class="o">.</span><span class="n">__NDIM__</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inactive_axes_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean mask array indicating which axes are filled (not active) in the grid.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fill_mask__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">units</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">unyt</span><span class="o">.</span><span class="n">Unit</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Dictionary mapping axis names to their units.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__units__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bounding_box</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The bounding box of the grid.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            An array of shape (N, 2) where N is the number of active axes.</span>
+<span class="sd">            Each row corresponds to an axis, with the first column being the</span>
+<span class="sd">            minimum and the second column being the maximum for that axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bbox__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dimensions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The number of grid points along each active axis.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            An array of shape (N,) where N is the number of active axes.</span>
+<span class="sd">            Each entry corresponds to the number of grid points along that axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ddim__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The shape of the grid.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of int</span>
+<span class="sd">            A tuple representing the number of grid points along each active axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ddim__</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The total number of grid points in the grid.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            The product of the number of grid points along each active axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ddim__</span><span class="p">))</span>
+
+    <span class="c1"># ============================== #</span>
+    <span class="c1"># COORDINATE CONVERSION METHODS  #</span>
+    <span class="c1"># ============================== #</span>
+    <span class="c1"># These methods form the meat of the grid&#39;s functionality.</span>
+    <span class="c1"># We need to be able to take a grid cell&#39;s indices and determine the</span>
+    <span class="c1"># coordinate of the cell.</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_slice_to_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">slc</span><span class="p">:</span> <span class="nb">slice</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert a slice along a given axis into coordinate values.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        axis : int</span>
+<span class="sd">            The axis along which the slice is defined (e.g., 0 for x).</span>
+<span class="sd">        slc : slice</span>
+<span class="sd">            A slice object representing the grid indices to convert.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ~unyt.array.unyt_array</span>
+<span class="sd">            1D array of coordinates corresponding to the given slice.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+<div class="viewcode-block" id="Grid.get_axis_coordinate_array">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.get_axis_coordinate_array.html#pisces.geometry.grids.core.Grid.get_axis_coordinate_array">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_axis_coordinate_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">slc</span><span class="p">:</span> <span class="nb">slice</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the coordinate values along a single axis for a given slice.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        axis : int or str</span>
+<span class="sd">            The index or name of the axis to extract coordinates for.</span>
+<span class="sd">        slc : slice</span>
+<span class="sd">            A slice object specifying the indices along the axis to extract.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        unyt.array.unyt_array</span>
+<span class="sd">            1D array of coordinate values for the selected slice along the axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">ax_string</span> <span class="o">=</span> <span class="n">axis</span>
+            <span class="n">ax_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__axes__</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">ax_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__axes__</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span>
+            <span class="n">ax_index</span> <span class="o">=</span> <span class="n">axis</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid axis </span><span class="si">{</span><span class="n">axis</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_slice_to_coordinates</span><span class="p">(</span><span class="n">ax_index</span><span class="p">,</span> <span class="n">slc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">[</span><span class="n">ax_string</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Grid.get_axis_array">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.get_axis_array.html#pisces.geometry.grids.core.Grid.get_axis_array">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_axis_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the full coordinate array for a single axis.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        axis : int or str</span>
+<span class="sd">            The index or name of the axis.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ~unyt.array.unyt_array</span>
+<span class="sd">            1D array of coordinate values for the entire axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_axis_coordinate_array</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Grid.get_axis_arrays">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.get_axis_arrays.html#pisces.geometry.grids.core.Grid.get_axis_arrays">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_axis_arrays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">unyt</span><span class="o">.</span><span class="n">unyt_array</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return 1D coordinate arrays for one or more axes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        axes : sequence of str or int, optional</span>
+<span class="sd">            The axes for which to retrieve coordinate arrays. If not provided,</span>
+<span class="sd">            all active axes are used.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of unyt.array.unyt_array</span>
+<span class="sd">            Tuple of 1D arrays, one for each axis specified.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span> <span class="k">if</span> <span class="n">axes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">__axes__</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_axis_array</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span> <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Grid.get_coordinates_slice">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.get_coordinates_slice.html#pisces.geometry.grids.core.Grid.get_coordinates_slice">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_coordinates_slice</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">slcs</span><span class="p">:</span> <span class="nb">slice</span><span class="p">,</span>
+        <span class="n">axes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">unyt</span><span class="o">.</span><span class="n">unyt_array</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return coordinate values for a sliced region of the grid.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        slcs : slice(s)</span>
+<span class="sd">            One slice per axis in the specified `axes`. The number of slices must</span>
+<span class="sd">            match the number of active axes.</span>
+<span class="sd">        axes : sequence of str, optional</span>
+<span class="sd">            The axes along which the slices apply. If not provided, all active axes</span>
+<span class="sd">            are assumed.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of ~unyt.array.unyt_array</span>
+<span class="sd">            Coordinate arrays (1D) for each axis in the full coordinate system.</span>
+<span class="sd">            Axes not included in `axes` are filled with the constant fill values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span> <span class="k">if</span> <span class="n">axes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">__axes__</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">slcs</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span><span class="si">}</span><span class="s2"> slices, got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">slcs</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="n">coords</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ax_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coordinate_system__</span><span class="o">.</span><span class="n">__AXES__</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ax_name</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ax_name</span><span class="p">)</span>
+                <span class="n">coords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_axis_coordinate_array</span><span class="p">(</span><span class="n">ax_name</span><span class="p">,</span> <span class="n">slcs</span><span class="p">[</span><span class="n">idx</span><span class="p">]))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fill_values__</span><span class="p">[</span><span class="n">ax_name</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">[</span><span class="n">ax_name</span><span class="p">]</span>
+                <span class="n">coords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Grid.get_meshgrid_slice">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.get_meshgrid_slice.html#pisces.geometry.grids.core.Grid.get_meshgrid_slice">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_meshgrid_slice</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">slcs</span><span class="p">:</span> <span class="nb">slice</span><span class="p">,</span>
+        <span class="n">axes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">indexing</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ij&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">unyt</span><span class="o">.</span><span class="n">unyt_array</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a meshgrid of coordinates for a sliced region of the grid.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        slcs : slice(s)</span>
+<span class="sd">            One slice per axis in the specified `axes`. The number of slices must</span>
+<span class="sd">            match the number of axes.</span>
+<span class="sd">        axes : sequence of str, optional</span>
+<span class="sd">            Axes for which to build the meshgrid. If not provided, all active axes</span>
+<span class="sd">            are used.</span>
+<span class="sd">        indexing : {&quot;ij&quot;, &quot;xy&quot;}, default=&quot;ij&quot;</span>
+<span class="sd">            Indexing convention for meshgrid construction.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of ~unyt.array.unyt_array</span>
+<span class="sd">            A tuple of N-dimensional arrays forming the meshgrid of coordinates,</span>
+<span class="sd">            one array for each axis in the full coordinate system.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">coords_1d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_coordinates_slice</span><span class="p">(</span><span class="o">*</span><span class="n">slcs</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">axes</span><span class="p">)</span>
+
+        <span class="n">coords_1d_units</span><span class="p">,</span> <span class="n">coords_1d_arrays</span> <span class="o">=</span> <span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">units</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">coords_1d</span><span class="p">],</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">d</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">coords_1d</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span>
+            <span class="n">mgrid</span> <span class="o">*</span> <span class="n">units</span>
+            <span class="k">for</span> <span class="n">mgrid</span><span class="p">,</span> <span class="n">units</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="o">*</span><span class="n">coords_1d_arrays</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="n">indexing</span><span class="p">),</span> <span class="n">coords_1d_units</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Grid.get_meshgrid">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.get_meshgrid.html#pisces.geometry.grids.core.Grid.get_meshgrid">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_meshgrid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">indexing</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ij&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">unyt</span><span class="o">.</span><span class="n">unyt_array</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the full meshgrid of coordinates for the specified axes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        axes : sequence of str, optional</span>
+<span class="sd">            The axes to include in the meshgrid. If not specified, all active</span>
+<span class="sd">            axes are used.</span>
+<span class="sd">        indexing : {&quot;ij&quot;, &quot;xy&quot;}, default=&quot;ij&quot;</span>
+<span class="sd">            Indexing convention for meshgrid construction.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of ~unyt.array.unyt_array</span>
+<span class="sd">            A tuple of N-dimensional arrays forming the full coordinate meshgrid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span> <span class="k">if</span> <span class="n">axes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">__axes__</span>
+        <span class="n">slcs</span> <span class="o">=</span> <span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_meshgrid_slice</span><span class="p">(</span><span class="o">*</span><span class="n">slcs</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">axes</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="n">indexing</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Grid.get_index_arrays">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.get_index_arrays.html#pisces.geometry.grids.core.Grid.get_index_arrays">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_index_arrays</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return 1D arrays of grid indices for each active axis.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of np.ndarray</span>
+<span class="sd">            A tuple of 1D arrays, one for each active axis, containing index values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Grid.get_index_meshgrid">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.get_index_meshgrid.html#pisces.geometry.grids.core.Grid.get_index_meshgrid">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_index_meshgrid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indexing</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ij&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a meshgrid of index values for each active axis.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        indexing : {&quot;ij&quot;, &quot;xy&quot;}, default=&quot;ij&quot;</span>
+<span class="sd">            Indexing convention to use in constructing the meshgrid.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of np.ndarray</span>
+<span class="sd">            A tuple of N-dimensional arrays, each containing the index values</span>
+<span class="sd">            along one axis of the grid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">get_index_arrays</span><span class="p">(),</span> <span class="n">indexing</span><span class="o">=</span><span class="n">indexing</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Grid.get_flat_coordinates">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.get_flat_coordinates.html#pisces.geometry.grids.core.Grid.get_flat_coordinates">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_flat_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a flattened array of coordinate vectors for all grid points.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            An array of shape (N_points, N_dims), where N_points is the total</span>
+<span class="sd">            number of grid points and N_dims is the number of dimensions in</span>
+<span class="sd">            the coordinate system. Each row represents the coordinates of one point.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_meshgrid</span><span class="p">(</span><span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+        <span class="n">flat</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">flat</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># shape (N_points, N_dims)</span></div>
+
+
+<div class="viewcode-block" id="Grid.get_coordinate_dict">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.get_coordinate_dict.html#pisces.geometry.grids.core.Grid.get_coordinate_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_coordinate_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meshgrid</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_array</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return coordinate arrays in dictionary form with axis names as keys.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        meshgrid : bool, default=False</span>
+<span class="sd">            If True, return meshgrid arrays. If False, return 1D arrays.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict of str -&gt; unyt.array.unyt_array</span>
+<span class="sd">            A dictionary mapping axis names to either 1D or meshgrid arrays</span>
+<span class="sd">            of coordinates, depending on the value of `meshgrid`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coordinate_system__</span><span class="o">.</span><span class="n">__AXES__</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_meshgrid</span><span class="p">()</span> <span class="k">if</span> <span class="n">meshgrid</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_axis_arrays</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span></div>
+
+
+    <span class="c1"># ============================== #</span>
+    <span class="c1"># GENERATOR METHODS              #</span>
+    <span class="c1"># ============================== #</span>
+    <span class="c1"># These are methods used to generate new arrays with shapes</span>
+    <span class="c1"># matching the grid.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_like</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fill_value</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">element_shape</span><span class="o">=</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a numpy array with a shape consistent with that of the grid.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fill_value: any</span>
+<span class="sd">            The value to fill the array with. Default is 0.</span>
+<span class="sd">        dtype: np.dtype, optional</span>
+<span class="sd">            The data type of the array. If None, defaults to float.</span>
+<span class="sd">        element_shape: tuple, optional</span>
+<span class="sd">            Additional shape to append to the grid shape. Default is (). This allows</span>
+<span class="sd">            users to get scalar, vector, or tensor fields on the grid.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            An array of shape `grid.shape + element_shape` filled with `fill_value`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">dtype</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dtype</span> <span class="o">=</span> <span class="nb">float</span>
+        <span class="n">full_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">element_shape</span><span class="p">)</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">full_shape</span><span class="p">,</span> <span class="n">fill_value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">arr</span>
+
+<div class="viewcode-block" id="Grid.zeros_like">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.zeros_like.html#pisces.geometry.grids.core.Grid.zeros_like">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">element_shape</span><span class="o">=</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a zero-filled array with the same shape as the grid.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dtype : np.dtype, optional</span>
+<span class="sd">            Desired data type. Defaults to float if not provided.</span>
+<span class="sd">        element_shape : tuple, optional</span>
+<span class="sd">            Extra shape appended to grid shape (e.g., for vector/tensor fields).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Array of shape `grid.shape + element_shape`, filled with zeros.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_like</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">element_shape</span><span class="o">=</span><span class="n">element_shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Grid.ones_like">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.ones_like.html#pisces.geometry.grids.core.Grid.ones_like">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ones_like</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">element_shape</span><span class="o">=</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a one-filled array with the same shape as the grid.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dtype : np.dtype, optional</span>
+<span class="sd">            Desired data type. Defaults to float if not provided.</span>
+<span class="sd">        element_shape : tuple, optional</span>
+<span class="sd">            Extra shape appended to grid shape (e.g., for vector/tensor fields).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Array of shape `grid.shape + element_shape`, filled with ones.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_like</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">element_shape</span><span class="o">=</span><span class="n">element_shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Grid.full_like">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.full_like.html#pisces.geometry.grids.core.Grid.full_like">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">full_like</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fill_value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">element_shape</span><span class="o">=</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a filled array with the same shape as the grid.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fill_value : Any</span>
+<span class="sd">            The value to fill the array with.</span>
+<span class="sd">        dtype : np.dtype, optional</span>
+<span class="sd">            Desired data type. Defaults to float if not provided.</span>
+<span class="sd">        element_shape : tuple, optional</span>
+<span class="sd">            Extra shape appended to grid shape (e.g., for vector/tensor fields).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Array of shape `grid.shape + element_shape`, filled with `fill_value`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_like</span><span class="p">(</span><span class="n">fill_value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">element_shape</span><span class="o">=</span><span class="n">element_shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Grid.empty_like">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.empty_like.html#pisces.geometry.grids.core.Grid.empty_like">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">empty_like</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">element_shape</span><span class="o">=</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an uninitialized array with the same shape as the grid.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dtype : np.dtype, optional</span>
+<span class="sd">            Desired data type. Defaults to float if not provided.</span>
+<span class="sd">        element_shape : tuple, optional</span>
+<span class="sd">            Extra shape appended to grid shape (e.g., for vector/tensor fields).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Array of shape `grid.shape + element_shape`, uninitialized (contents arbitrary).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">dtype</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dtype</span> <span class="o">=</span> <span class="nb">float</span>
+        <span class="n">full_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">element_shape</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">full_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ============================== #</span>
+    <span class="c1"># IO METHODS                     #</span>
+    <span class="c1"># ============================== #</span>
+    <span class="c1"># These methods are used to serialize and deserialize</span>
+    <span class="c1"># the grid. These are generally abstract methods to allow subclasses</span>
+    <span class="c1"># to define a custom behavior for the IO methods.</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_save_grid_to_hdf5_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save this grid to an HDF5 group.</span>
+
+<span class="sd">        This method forms the core of the HDF5 IO support for grids. It should</span>
+<span class="sd">        be written specially for any given grid to ensure that all relevant data is</span>
+<span class="sd">        saved and can be reloaded later.</span>
+
+<span class="sd">        Grids should store any metadata in the group&#39;s metadata attributes and then</span>
+<span class="sd">        make sure of datasets to store any more substantial data or arrays. Grids are required</span>
+<span class="sd">        to include the ``CLASS_NAME`` attribute in the group to indicate the class of the grid</span>
+<span class="sd">        being saved. This allows for recovery of the correct class later when loading.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        group : h5py.Group</span>
+<span class="sd">            The HDF5 group to which the grid should be saved.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="o">...</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_grid_from_hdf5_group</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a grid from an HDF5 group.</span>
+
+<span class="sd">        This method should be implemented by subclasses to read the relevant</span>
+<span class="sd">        metadata and datasets from the provided HDF5 group and reconstruct</span>
+<span class="sd">        an instance of the grid.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        group : h5py.Group</span>
+<span class="sd">            The HDF5 group from which to load the grid.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Grid</span>
+<span class="sd">            An instance of the grid reconstructed from the HDF5 data.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="o">...</span>
+
+<div class="viewcode-block" id="Grid.to_hdf5">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.to_hdf5.html#pisces.geometry.grids.core.Grid.to_hdf5">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_hdf5</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">group</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;grid&quot;</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save the grid to an HDF5 file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str or Path</span>
+<span class="sd">            Path to the HDF5 file.</span>
+<span class="sd">        group : str, default = &quot;grid&quot;</span>
+<span class="sd">            Name of the group within the file to store the grid.</span>
+<span class="sd">        overwrite : bool, default = False</span>
+<span class="sd">            Whether to overwrite the group if it already exists.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the group already exists and `overwrite` is False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">overwrite</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="n">f</span><span class="p">[</span><span class="n">group</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;HDF5 group &#39;</span><span class="si">{</span><span class="n">group</span><span class="si">}</span><span class="s2">&#39; already exists in file &#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+            <span class="n">g</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_save_grid_to_hdf5_group</span><span class="p">(</span><span class="n">g</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Grid.from_hdf5">
+<a class="viewcode-back" href="../../../../_as_gen/pisces.geometry.grids.base.Grid.from_hdf5.html#pisces.geometry.grids.core.Grid.from_hdf5">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_hdf5</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">group</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;grid&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Grid&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a grid from an HDF5 file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str or Path</span>
+<span class="sd">            Path to the HDF5 file.</span>
+<span class="sd">        group : str, default = &quot;grid&quot;</span>
+<span class="sd">            Name of the group within the file to load from.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        GenericGrid</span>
+<span class="sd">            Reconstructed grid instance.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        FileNotFoundError</span>
+<span class="sd">            If the file does not exist.</span>
+<span class="sd">        KeyError</span>
+<span class="sd">            If the group does not exist in the file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;HDF5 file not found: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">group</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Group &#39;</span><span class="si">{</span><span class="n">group</span><span class="si">}</span><span class="s2">&#39; not found in HDF5 file &#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_load_grid_from_hdf5_group</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">group</span><span class="p">])</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Eliza Diggins.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+pisces.extensions.simulation.core.frontends.GadgetLikeFrontend.ic\_directory
+============================================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.frontends
+
+.. autoproperty:: GadgetLikeFrontend.ic_directory

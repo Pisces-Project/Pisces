@@ -1,0 +1,6 @@
+pisces.math\_utils.random\_fields.GaussianRandomField.\_\_init\_\_
+==================================================================
+
+.. currentmodule:: pisces.math_utils.random_fields
+
+.. automethod:: GaussianRandomField.__init__

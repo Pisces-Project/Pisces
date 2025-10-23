@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.path
+=================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. autoproperty:: AREPOParticleDataset.path

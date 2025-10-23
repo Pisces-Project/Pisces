@@ -1,0 +1,6 @@
+pisces.geometry.grids.core.GenericGrid.zeros\_like
+==================================================
+
+.. currentmodule:: pisces.geometry.grids.core
+
+.. automethod:: GenericGrid.zeros_like

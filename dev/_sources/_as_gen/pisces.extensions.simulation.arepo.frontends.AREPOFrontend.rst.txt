@@ -1,0 +1,38 @@
+AREPOFrontend
+==========================================================
+
+.. currentmodule:: pisces.extensions.simulation.arepo.frontends
+
+.. autoclass:: pisces.extensions.simulation.arepo.frontends.AREPOFrontend
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~AREPOFrontend.__init__
+      ~AREPOFrontend.generate_initial_conditions
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~AREPOFrontend.config
+      ~AREPOFrontend.config_path
+      ~AREPOFrontend.default_configuration_path
+      ~AREPOFrontend.ic_directory
+      ~AREPOFrontend.initial_conditions
+      ~AREPOFrontend.logger
+      ~AREPOFrontend.unit_system
+   
+   

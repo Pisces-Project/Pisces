@@ -1,0 +1,6 @@
+profiles.density.CoredIsothermalDensityProfile.get\_derived\_profile
+====================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: CoredIsothermalDensityProfile.get_derived_profile

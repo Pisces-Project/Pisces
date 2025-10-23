@@ -1,0 +1,6 @@
+pisces.extensions.simulation.core.initial\_conditions.InitialConditionsCartesian.get\_model\_coordinate\_system
+===============================================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
+
+.. automethod:: InitialConditionsCartesian.get_model_coordinate_system

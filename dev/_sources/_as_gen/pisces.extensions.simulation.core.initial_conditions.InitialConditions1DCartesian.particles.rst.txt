@@ -1,0 +1,6 @@
+pisces.extensions.simulation.core.initial\_conditions.InitialConditions1DCartesian.particles
+============================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
+
+.. autoproperty:: InitialConditions1DCartesian.particles

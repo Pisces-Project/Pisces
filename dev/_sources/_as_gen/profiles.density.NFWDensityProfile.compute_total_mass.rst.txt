@@ -1,0 +1,6 @@
+profiles.density.NFWDensityProfile.compute\_total\_mass
+=======================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: NFWDensityProfile.compute_total_mass

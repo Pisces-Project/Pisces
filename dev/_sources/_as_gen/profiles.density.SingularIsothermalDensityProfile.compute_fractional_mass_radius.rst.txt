@@ -1,0 +1,6 @@
+profiles.density.SingularIsothermalDensityProfile.compute\_fractional\_mass\_radius
+===================================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SingularIsothermalDensityProfile.compute_fractional_mass_radius

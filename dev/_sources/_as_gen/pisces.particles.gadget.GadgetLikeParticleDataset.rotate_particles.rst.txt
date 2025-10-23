@@ -1,0 +1,6 @@
+pisces.particles.gadget.GadgetLikeParticleDataset.rotate\_particles
+===================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: GadgetLikeParticleDataset.rotate_particles

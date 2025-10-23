@@ -1,0 +1,6 @@
+pisces.particles.gadget.GadgetLikeParticleDataset.copy
+======================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: GadgetLikeParticleDataset.copy

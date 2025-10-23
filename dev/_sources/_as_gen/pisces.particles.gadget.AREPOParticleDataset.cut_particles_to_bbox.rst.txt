@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.cut\_particles\_to\_bbox
+=====================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: AREPOParticleDataset.cut_particles_to_bbox

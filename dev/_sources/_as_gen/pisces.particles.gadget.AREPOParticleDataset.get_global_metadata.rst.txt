@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.get\_global\_metadata
+==================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: AREPOParticleDataset.get_global_metadata

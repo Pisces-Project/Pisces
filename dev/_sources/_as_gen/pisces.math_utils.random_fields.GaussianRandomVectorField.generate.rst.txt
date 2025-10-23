@@ -1,0 +1,6 @@
+pisces.math\_utils.random\_fields.GaussianRandomVectorField.generate
+====================================================================
+
+.. currentmodule:: pisces.math_utils.random_fields
+
+.. automethod:: GaussianRandomVectorField.generate

@@ -1,0 +1,6 @@
+pisces.models.core.base.BaseModel.from\_components
+==================================================
+
+.. currentmodule:: pisces.models.core.base
+
+.. automethod:: BaseModel.from_components

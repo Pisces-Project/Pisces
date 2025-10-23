@@ -1,0 +1,6 @@
+profiles.density.TNFWDensityProfile.to\_json
+============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: TNFWDensityProfile.to_json

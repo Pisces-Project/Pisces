@@ -1,0 +1,6 @@
+profiles.density.BaseSphericalDensityProfile.from\_dict
+=======================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BaseSphericalDensityProfile.from_dict

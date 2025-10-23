@@ -1,0 +1,6 @@
+pisces.particles.gadget.GadgetLikeParticleDataset.header\_handle
+================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. autoproperty:: GadgetLikeParticleDataset.header_handle

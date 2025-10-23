@@ -1,0 +1,6 @@
+pisces.extensions.simulation.arepo.frontends.AREPOFrontend.default\_configuration\_path
+=======================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.arepo.frontends
+
+.. autoproperty:: AREPOFrontend.default_configuration_path

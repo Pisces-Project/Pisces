@@ -1,0 +1,6 @@
+pisces.extensions.simulation.core.initial\_conditions.InitialConditions1DCartesian.ndim
+=======================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
+
+.. autoproperty:: InitialConditions1DCartesian.ndim

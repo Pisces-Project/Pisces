@@ -1,0 +1,6 @@
+pisces.utilities.io\_tools.PathHandler.register
+===============================================
+
+.. currentmodule:: pisces.utilities.io_tools
+
+.. automethod:: PathHandler.register

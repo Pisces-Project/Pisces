@@ -1,0 +1,6 @@
+pisces.extensions.simulation.core.initial\_conditions.load\_ics
+===============================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
+
+.. autofunction:: load_ics

@@ -1,0 +1,6 @@
+pisces.particles.gadget.GadgetLikeParticleDataset.particle\_groups
+==================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. autoproperty:: GadgetLikeParticleDataset.particle_groups

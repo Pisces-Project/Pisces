@@ -1,0 +1,6 @@
+profiles.density.EinastoDensityProfile.compute\_gravitational\_potential
+========================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: EinastoDensityProfile.compute_gravitational_potential

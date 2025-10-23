@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.concatenate\_inplace
+=================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: AREPOParticleDataset.concatenate_inplace

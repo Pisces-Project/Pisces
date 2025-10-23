@@ -1,0 +1,73 @@
+GadgetLikeParticleDataset
+=================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. autoclass:: pisces.particles.gadget.GadgetLikeParticleDataset
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~GadgetLikeParticleDataset.__init__
+      ~GadgetLikeParticleDataset.add_particle_field
+      ~GadgetLikeParticleDataset.add_particle_ids
+      ~GadgetLikeParticleDataset.add_particle_type
+      ~GadgetLikeParticleDataset.apply_linear_transformation
+      ~GadgetLikeParticleDataset.build_particle_dataset
+      ~GadgetLikeParticleDataset.concatenate_inplace
+      ~GadgetLikeParticleDataset.copy
+      ~GadgetLikeParticleDataset.cut_particles_to_bbox
+      ~GadgetLikeParticleDataset.delete_field_metadata_keys
+      ~GadgetLikeParticleDataset.delete_global_metadata_keys
+      ~GadgetLikeParticleDataset.delete_group_metadata_keys
+      ~GadgetLikeParticleDataset.extend_group
+      ~GadgetLikeParticleDataset.generate_file_skeleton
+      ~GadgetLikeParticleDataset.get_field_metadata
+      ~GadgetLikeParticleDataset.get_field_units
+      ~GadgetLikeParticleDataset.get_global_metadata
+      ~GadgetLikeParticleDataset.get_group_metadata
+      ~GadgetLikeParticleDataset.get_particle_field
+      ~GadgetLikeParticleDataset.get_particle_field_handle
+      ~GadgetLikeParticleDataset.get_particle_fields
+      ~GadgetLikeParticleDataset.get_particle_group_handle
+      ~GadgetLikeParticleDataset.offset_particle_positions
+      ~GadgetLikeParticleDataset.offset_particle_velocities
+      ~GadgetLikeParticleDataset.reduce_group
+      ~GadgetLikeParticleDataset.reload_global_metadata
+      ~GadgetLikeParticleDataset.remove_particle_field
+      ~GadgetLikeParticleDataset.remove_particle_group
+      ~GadgetLikeParticleDataset.rename_field
+      ~GadgetLikeParticleDataset.reorient_particles
+      ~GadgetLikeParticleDataset.rotate_particles
+      ~GadgetLikeParticleDataset.update_field_metadata
+      ~GadgetLikeParticleDataset.update_global_metadata
+      ~GadgetLikeParticleDataset.update_group_metadata
+      ~GadgetLikeParticleDataset.update_particle_ids
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~GadgetLikeParticleDataset.fields
+      ~GadgetLikeParticleDataset.global_metadata
+      ~GadgetLikeParticleDataset.handle
+      ~GadgetLikeParticleDataset.header
+      ~GadgetLikeParticleDataset.header_handle
+      ~GadgetLikeParticleDataset.num_particles
+      ~GadgetLikeParticleDataset.particle_groups
+      ~GadgetLikeParticleDataset.path
+      ~GadgetLikeParticleDataset.total_particles
+   
+   

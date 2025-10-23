@@ -1,0 +1,34 @@
+pisces.extensions.simulation.arepo.frontends
+============================================
+
+.. automodule:: pisces.extensions.simulation.arepo.frontends
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class.rst
+      :recursive:
+   
+      AREPOFrontend
+   
+   
+
+   
+   
+   

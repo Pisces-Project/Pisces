@@ -1,0 +1,1949 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pisces.particles.gadget &#8212; Pisces  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pisces/particles/gadget';</script>
+    <link rel="icon" href="../../../_static/pisces_favicon.svg"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/pisces.svg" class="logo__image only-light" alt="Pisces Documentation - Home"/>
+    <img src="../../../_static/pisces.svg" class="logo__image only-dark pst-js-only" alt="Pisces Documentation - Home"/>
+  
+  
+    <p class="title logo__title">Pisces</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../reference/user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/pisces-project/pisces" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../reference/user_guide.html">
+    Pisces User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../auto_examples/index.html">
+    Pisces Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../getting_started.html">
+    Quickstart Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/pisces-project/pisces" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">pisces.particles.gadget</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for pisces.particles.gadget</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Gadget-style particle dataset support.</span>
+
+<span class="sd">This module provides classes and methods for handling particle datasets</span>
+<span class="sd">formatted in a Gadget-like manner. It includes functionality for reading,</span>
+<span class="sd">writing, and manipulating such datasets, with a focus on compatibility</span>
+<span class="sd">with the Gadget simulation code and its derivatives. The particle dataset</span>
+<span class="sd">classes in this module maintain the Pisces standard of descending from :class:`~particles.base.ParticleDataset`</span>
+<span class="sd">and therefore support all of the standard particle dataset operations.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">overload</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">h5py</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">unyt</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pisces.particles</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParticleDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pisces.utilities.io_tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">NullHDF5Serializer</span>
+
+
+<div class="viewcode-block" id="GadgetLikeParticleDataset">
+<a class="viewcode-back" href="../../../_as_gen/pisces.particles.gadget.GadgetLikeParticleDataset.html#pisces.particles.gadget.GadgetLikeParticleDataset">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GadgetLikeParticleDataset</span><span class="p">(</span><span class="n">ParticleDataset</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for Gadget/AREPO–style particle datasets.</span>
+
+<span class="sd">    This class implements the conventions and file layout used by Gadget-like</span>
+<span class="sd">    particle-based codes (e.g., Gadget-2, Gadget-4, AREPO). It provides</span>
+<span class="sd">    standard field names, default units, and header structures so that</span>
+<span class="sd">    simulation initial conditions and snapshots can be generated, inspected,</span>
+<span class="sd">    or modified in a consistent way.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">metadata_serializer</span> <span class="o">=</span> <span class="n">NullHDF5Serializer</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Serializer for Gadget particle metadata.</span>
+
+<span class="sd">    Gadget particle datasets do not require any special metadata</span>
+<span class="sd">    serialization, so a no-op (null) serializer is used. This means that</span>
+<span class="sd">    no specialized metadata classes are permissible. Additionally, we now</span>
+<span class="sd">    manually handle unit string conversion on dataset attributes because it</span>
+<span class="sd">    is not handled by the serializer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># --------------------------------- #</span>
+    <span class="c1"># Class Constants / Flags           #</span>
+    <span class="c1"># --------------------------------- #</span>
+    <span class="c1"># These flags provide standard names for built-in access to specific</span>
+    <span class="c1"># fields in the dataset. This ensures that those areas of the code are</span>
+    <span class="c1"># not hardcoded with string literals. These can be overridden in</span>
+    <span class="c1"># subclasses if the dataset uses different naming conventions.</span>
+
+    <span class="c1"># --- Field Name Conventions --- #</span>
+    <span class="n">_POSITION_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;Coordinates&quot;</span>
+    <span class="n">_VELOCITY_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;Velocities&quot;</span>
+    <span class="n">_MASS_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;Masses&quot;</span>
+    <span class="n">_ID_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;ParticleIDs&quot;</span>
+    <span class="n">_INTERNAL_ENERGY_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;InternalEnergy&quot;</span>
+    <span class="n">_DENSITY_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;Density&quot;</span>
+
+    <span class="c1"># --- Class Settings --- #</span>
+    <span class="n">_default_ntypes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;int: Default number of Gadget-like particle types.</span>
+
+<span class="sd">    By default, this is set to 6, corresponding to the standard Gadget</span>
+<span class="sd">    particle types; however, some simulations may have a different number.</span>
+<span class="sd">    This can also be specified by the user as a kwarg when building a dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_default_unit_system</span> <span class="o">=</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unit_systems</span><span class="o">.</span><span class="n">galactic_unit_system</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Default unit system for interpreting Gadget particle fields.</span>
+<span class="sd">    Gadget itself does not enforce units; this is provided for Pisces</span>
+<span class="sd">    consistency and metadata export.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_header_group_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Header&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;str: Name of the group containing the Gadget-like file header.</span>
+
+<span class="sd">    This can be overridden in subclasses if the header group has a different name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_particle_type_name_prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;PartType&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;str: Prefix for particle type groups in the HDF5 file.</span>
+
+<span class="sd">    This can be overridden in subclasses if the particle type groups have a different prefix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># ------------------------------------ #</span>
+    <span class="c1"># Properties                           #</span>
+    <span class="c1"># ------------------------------------ #</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">header_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Access the ``Header`` group of the Gadget particle dataset.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        h5py.Group</span>
+<span class="sd">            The HDF5 group object corresponding to the ``Header`` group.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        KeyError</span>
+<span class="sd">            If the ``Header`` group does not exist in the file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__handle__</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">_header_group_name</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">header</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve the attributes of the ``Header`` group as a dictionary.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dictionary containing the attributes of the ``Header`` group.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        KeyError</span>
+<span class="sd">            If the ``Header`` group does not exist in the file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_handle</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------ #</span>
+    <span class="c1"># Modification Methods                 #</span>
+    <span class="c1"># ------------------------------------ #</span>
+<div class="viewcode-block" id="GadgetLikeParticleDataset.add_particle_field">
+<a class="viewcode-back" href="../../../_as_gen/pisces.particles.gadget.GadgetLikeParticleDataset.add_particle_field.html#pisces.particles.gadget.GadgetLikeParticleDataset.add_particle_field">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_particle_field</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">group_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">field_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_array</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a new field (dataset) to an existing particle group.</span>
+
+<span class="sd">        This method creates and writes a new field to the specified particle group</span>
+<span class="sd">        within the dataset. The data can be a :class:`numpy.ndarray` or a :class:`~unyt.array.unyt_array`.</span>
+<span class="sd">        Units (if present) will be stored in the dataset metadata. Additional metadata</span>
+<span class="sd">        may also be included via the `metadata` argument.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        group_name : str</span>
+<span class="sd">            The name of the particle group to which the field will be added. This must</span>
+<span class="sd">            be a pre-existing group in the particle dataset.</span>
+<span class="sd">        field_name : str</span>
+<span class="sd">            The name of the new field to create (e.g., ``&quot;particle_mass&quot;``). If the `field_name` is</span>
+<span class="sd">            already specified in the group, it will raise an error unless `overwrite` is True.</span>
+<span class="sd">        data : ~unyt.array.unyt_array or ~numpy.ndarray</span>
+<span class="sd">            The data to write to the new field. The leading dimension must match the number of particles</span>
+<span class="sd">            in the group.</span>
+<span class="sd">        metadata : dict, optional</span>
+<span class="sd">            Optional dictionary of metadata to attach to the dataset. This is generally used</span>
+<span class="sd">            by subclasses of the base class to add type specific metadata.</span>
+<span class="sd">        overwrite : bool, optional</span>
+<span class="sd">            Whether to overwrite an existing dataset with the same name. Defaults to False.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        KeyError</span>
+<span class="sd">            If the group does not exist, or if the field exists and `overwrite` is False.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the field&#39;s leading dimension does not match the group&#39;s particle count.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Ensure that the group exists and that the field name is valid /</span>
+        <span class="c1"># correctly handle the overwrite behavior.</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_particle_group_handle</span><span class="p">(</span><span class="n">group_name</span><span class="p">)</span>
+        <span class="n">group_attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_group_metadata</span><span class="p">(</span><span class="n">group_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="c1"># The field already exists. Our behavior depends on the `overwrite` flag.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Field already exists. Set `overwrite=True` to replace it.&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">group</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span>
+
+        <span class="c1"># Determine the number of particles expected and</span>
+        <span class="c1"># ensure that the data matches this shape.</span>
+        <span class="n">num_particles</span> <span class="o">=</span> <span class="n">group_attrs</span><span class="p">[</span><span class="s2">&quot;NUMBER_OF_PARTICLES&quot;</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">num_particles</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Number of particles in field </span><span class="si">{</span><span class="n">field_name</span><span class="si">}</span><span class="s2"> does not match number of particles in group </span><span class="si">{</span><span class="n">group_name</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Validation has been completed and we can therefore now</span>
+        <span class="c1"># proceed with writing the field to the group.</span>
+        <span class="n">units</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;units&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_array</span><span class="p">):</span>
+            <span class="n">dset</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">field_name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">d</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dset</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">field_name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+        <span class="c1"># Handle the metadata.</span>
+        <span class="n">dset</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;UNITS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dset</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata_serializer</span><span class="o">.</span><span class="n">serialize_dict</span><span class="p">(</span><span class="n">metadata</span><span class="p">))</span></div>
+
+
+    <span class="c1"># ------------------------------------- #</span>
+    <span class="c1"># Generation Methods                    #</span>
+    <span class="c1"># ------------------------------------- #</span>
+<div class="viewcode-block" id="GadgetLikeParticleDataset.generate_file_skeleton">
+<a class="viewcode-back" href="../../../_as_gen/pisces.particles.gadget.GadgetLikeParticleDataset.generate_file_skeleton.html#pisces.particles.gadget.GadgetLikeParticleDataset.generate_file_skeleton">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_file_skeleton</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+        <span class="n">number_of_particles</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">box_size</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span><span class="p">,</span>
+        <span class="n">unit_system</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">UnitSystem</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate the basic file skeleton for a Gadget-like particle dataset.</span>
+
+<span class="sd">        This method creates the HDF5 file and populates it with the necessary</span>
+<span class="sd">        groups and datasets to conform to the Gadget-like format. It handles</span>
+<span class="sd">        writing the required metadata, file header, and particle type groups.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path: ~pathlib.Path</span>
+<span class="sd">            The file path where the HDF5 file will be created. There is no overwrite safety</span>
+<span class="sd">            in this method, so the caller must ensure that the path is valid. If it already exists,</span>
+<span class="sd">            then the data will be overwritten.</span>
+<span class="sd">        number_of_particles: numpy.ndarray</span>
+<span class="sd">            The number of particles of each type to include in the file. This should be an array</span>
+<span class="sd">            of length equal to the number of particle types (default is 6 for Gadget-like files).</span>
+
+<span class="sd">            If a particle type has zero particles, its group will not be created.</span>
+<span class="sd">        box_size: unyt.unyt_quantity</span>
+<span class="sd">            The size of the simulation box. This should be a unyt quantity with units of length.</span>
+<span class="sd">        unit_system: unyt.unit_systems.UnitSystem</span>
+<span class="sd">            The unit system in which to write the particle fields. This is used to set up the units</span>
+<span class="sd">            of each of the fields in the file.</span>
+<span class="sd">        kwargs:</span>
+<span class="sd">            Additional keyword arguments to pass to the header and particle field generation methods.</span>
+<span class="sd">            This can include any parameters that are needed to customize the file header or</span>
+<span class="sd">            particle fields, such as cosmological parameters, time information, etc.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This is a 3 step process:</span>
+
+<span class="sd">        1. Create the HDF5 file and write the Pisces metadata.</span>
+<span class="sd">        2. Write the Gadget-like file header.</span>
+<span class="sd">        3. Create the particle type groups and populate them with the required fields.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Construct the HDF5 file object. Each of the steps in</span>
+        <span class="c1"># the process of creating / modifying the file is handled by</span>
+        <span class="c1"># a separate submethod to keep things clean. These can be</span>
+        <span class="c1"># modified in subclasses as needed. Additionally, new processes</span>
+        <span class="c1"># can be added by overriding this method, calling super() and then</span>
+        <span class="c1"># re-opening the file to add new features.</span>
+        <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+            <span class="c1"># Write the required pisces metadata into the file&#39;s</span>
+            <span class="c1"># base directory attributes so that it can be recognized as</span>
+            <span class="c1"># a valid pisces dataset.</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_generate_pisces_metadata</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+
+            <span class="c1"># Write the Gadget-like header. This section of the code may require</span>
+            <span class="c1"># considerable modification in subclasses to ensure that the header</span>
+            <span class="c1"># maintains the correct structures. See notes in `_generate_file_header`.</span>
+            <span class="n">header_group</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">require_group</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_header_group_name</span><span class="p">)</span>
+            <span class="n">header_group</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;NOT_PARTICLE_GROUP&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_generate_file_header</span><span class="p">(</span><span class="n">header_group</span><span class="p">,</span> <span class="n">number_of_particles</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">unit_system</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="c1"># With the basic skeleton in place, we can now iterate through</span>
+            <span class="c1"># all of the particle types and generate the necessary fields for</span>
+            <span class="c1"># each type. This ensures that the file is fully compliant with</span>
+            <span class="c1"># the Gadget-like format.</span>
+            <span class="k">for</span> <span class="n">_type</span><span class="p">,</span> <span class="n">_count</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">number_of_particles</span><span class="p">):</span>
+                <span class="c1"># If the count is zero or lower, we just skip and don&#39;t do anything.</span>
+                <span class="k">if</span> <span class="n">_count</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># We do have particles of this type, so we ensure that the group</span>
+                <span class="c1"># for these particles exists.</span>
+                <span class="n">_particle_group</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">require_group</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_particle_type_name_prefix</span><span class="si">}{</span><span class="n">_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">_particle_group</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;NUMBER_OF_PARTICLES&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">(</span><span class="n">_count</span><span class="p">)</span>
+
+                <span class="c1"># We now offload to ``_generate_particle_fields`` to handle generating</span>
+                <span class="c1"># the fields individually. This permits subclasses to minimally modify the</span>
+                <span class="c1"># the fields being generated, including taking options and manipulating the fields</span>
+                <span class="c1"># that are present.</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">_generate_particle_fields</span><span class="p">(</span><span class="n">_particle_group</span><span class="p">,</span> <span class="n">_type</span><span class="p">,</span> <span class="n">_count</span><span class="p">,</span> <span class="n">unit_system</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="c1"># The file skeleton is now complete save for any additional features</span>
+            <span class="c1"># which can be added by subclasses.</span>
+        <span class="k">return</span></div>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_pisces_metadata</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Write required Pisces metadata to the HDF5 file.</span>
+
+<span class="sd">        In order for the file to be recognized as a valid Pisces dataset, it</span>
+<span class="sd">        requires that some metadata be stored in the root attributes of the</span>
+<span class="sd">        HDF5 file. This method handles writing that metadata.</span>
+
+<span class="sd">        By default, we only write the GEN_TIME and the CLASS_NAME attributes,</span>
+<span class="sd">        which are the minimal requirements for particle datasets in Pisces. This</span>
+<span class="sd">        also ensures that users can read these particle files as datasets later.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        stream : h5py.File</span>
+<span class="sd">            The HDF5 file object to write metadata to.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        In principle, this method can be extended in order to include additional</span>
+<span class="sd">        required metadata, but it is generally not necessary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># At least in this base class, we only need to keep track of the generation</span>
+        <span class="c1"># time and the class name for the particle dataset. This is then used</span>
+        <span class="c1"># to ensure that we can read from disk correctly later.</span>
+        <span class="n">initial_metadata</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;GEN_TIME&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;CLASS_NAME&quot;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">metadata_serializer</span><span class="o">.</span><span class="n">serialize_dict</span><span class="p">(</span><span class="n">initial_metadata</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_file_header</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">stream</span><span class="p">:</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">,</span>
+        <span class="n">number_of_particles</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">box_size</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span><span class="p">,</span>
+        <span class="n">unit_system</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">UnitSystem</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Write the Gadget-like file header to the HDF5 file.</span>
+
+<span class="sd">        In Gadget-like particle datasets, there is an additional group called</span>
+<span class="sd">        with a specific name (generally &quot;Header&quot;) that contains metadata about the</span>
+<span class="sd">        simulation snapshot. This method handles writing that header group and</span>
+<span class="sd">        populating it with the required attributes and datasets.</span>
+
+<span class="sd">        Because the structure of the header can vary so much with the structure of</span>
+<span class="sd">        the simulation code, this method is almost always overridden in subclasses. We provide</span>
+<span class="sd">        a template here to illustrate the general structure, but it is not intended</span>
+<span class="sd">        to be used directly.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_particle_fields</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">particle_group</span><span class="p">:</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">,</span>
+        <span class="n">particle_type</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">number_of_particles</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">unit_system</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">UnitSystem</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate the required fields for a given particle type.</span>
+
+<span class="sd">        This method is responsible for creating the datasets within a</span>
+<span class="sd">        particle type group (e.g., &quot;PartType0&quot;) that store the actual</span>
+<span class="sd">        particle data. The specific fields and their structures can vary</span>
+<span class="sd">        significantly between different simulation codes, so this method</span>
+<span class="sd">        is abstract and must be implemented in subclasses.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        particle_group : h5py.Group</span>
+<span class="sd">            The HDF5 group corresponding to the particle type (e.g., &quot;PartType0&quot;).</span>
+<span class="sd">        particle_type : int</span>
+<span class="sd">            The integer index of the particle type (e.g., 0 for gas, 1 for dark matter).</span>
+<span class="sd">        number_of_particles : int</span>
+<span class="sd">            The number of particles of this type.</span>
+<span class="sd">        unit_system : unyt.UnitSystem</span>
+<span class="sd">            The unit system to use for interpreting the fields.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This method should create datasets within `particle_group` for each of the</span>
+<span class="sd">        required fields, using the appropriate data types and shapes. It should also</span>
+<span class="sd">        handle any necessary unit conversions or metadata attributes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_particle_field_to_file</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">particle_group</span><span class="p">:</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">,</span>
+        <span class="n">field_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">number_of_particles</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">field_shape</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span>
+        <span class="n">field_dtype</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+        <span class="n">field_units</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">unyt</span><span class="o">.</span><span class="n">Unit</span><span class="p">],</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a new particle field dataset to a particle group.</span>
+
+<span class="sd">        This is a low level operation which abstracts out elements of dataset</span>
+<span class="sd">        creation that may lead to code duplication and / or errors when subclassing.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        particle_group : h5py.Group</span>
+<span class="sd">            The HDF5 group representing the particle type.</span>
+<span class="sd">        field_name : str</span>
+<span class="sd">            Name of the dataset to create (e.g., ``&quot;Coordinates&quot;``).</span>
+<span class="sd">        number_of_particles : int</span>
+<span class="sd">            Number of particles in the group (size of the leading dimension).</span>
+<span class="sd">        field_shape : tuple of int</span>
+<span class="sd">            Shape of a single particle entry (e.g., ``(3,)`` for vectors).</span>
+<span class="sd">        field_dtype : numpy.dtype</span>
+<span class="sd">            Data type of the dataset (e.g., ``np.float64``).</span>
+<span class="sd">        field_units : str or ~unyt.Unit</span>
+<span class="sd">            Units associated with the dataset. Stored in the ``UNITS`` attribute.</span>
+<span class="sd">        **kwargs :</span>
+<span class="sd">            Extra keyword arguments passed to :func:`h5py.Group.create_dataset`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        h5py.Dataset</span>
+<span class="sd">            The newly created dataset.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the dataset already exists and ``overwrite`` is False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">particle_group</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Field &#39;</span><span class="si">{</span><span class="n">field_name</span><span class="si">}</span><span class="s2">&#39; already exists in group &#39;</span><span class="si">{</span><span class="n">particle_group</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Create dataset</span>
+        <span class="n">dset</span> <span class="o">=</span> <span class="n">particle_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span>
+            <span class="n">field_name</span><span class="p">,</span>
+            <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">number_of_particles</span><span class="p">,</span> <span class="o">*</span><span class="n">field_shape</span><span class="p">),</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">field_dtype</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Attach required units attribute</span>
+        <span class="n">dset</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;UNITS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">field_units</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">dset</span>
+
+    <span class="nd">@overload</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_particle_dataset</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+        <span class="n">number_of_particles</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">,</span>
+        <span class="n">box_size</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">ntypes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span>
+        <span class="n">unit_system</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">UnitSystem</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GadgetLikeParticleDataset&quot;</span><span class="p">:</span> <span class="o">...</span>
+
+<div class="viewcode-block" id="GadgetLikeParticleDataset.build_particle_dataset">
+<a class="viewcode-back" href="../../../_as_gen/pisces.particles.gadget.GadgetLikeParticleDataset.build_particle_dataset.html#pisces.particles.gadget.GadgetLikeParticleDataset.build_particle_dataset">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_particle_dataset</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new Gadget-like particle dataset on disk.</span>
+
+<span class="sd">        This public factory method initializes a new HDF5 file containing the</span>
+<span class="sd">        header, particle groups, and required fields in the Gadget/AREPO format.</span>
+<span class="sd">        It is the main entry point for generating initial condition files or</span>
+<span class="sd">        empty snapshot skeletons.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path : str or pathlib.Path</span>
+<span class="sd">            Destination path for the new HDF5 file. If the file already exists</span>
+<span class="sd">            and ``overwrite`` is False, a :class:`FileExistsError` is raised.</span>
+<span class="sd">        number_of_particles : sequence of int</span>
+<span class="sd">            The number of particles of each type to include in the particle dataset.</span>
+<span class="sd">            This should be a sequence (e.g., list or tuple) of length ``ntypes``,</span>
+<span class="sd">            each element of which is a non-negative integer. If a particle type</span>
+<span class="sd">            has zero particles, its group will not be created.</span>
+<span class="sd">        box_size : unyt.unyt_quantity</span>
+<span class="sd">            The physical size of the simulation box. Must carry length units.</span>
+<span class="sd">        ntypes : int, default=6</span>
+<span class="sd">            Number of particle types to include. Gadget-like codes use six by</span>
+<span class="sd">            default (0=gas, 1=DM, 2=disk, 3=bulge, 4=stars, 5=BH).</span>
+<span class="sd">        unit_system : unyt.UnitSystem, optional</span>
+<span class="sd">            Unit system for tagging dataset attributes. If not provided, the</span>
+<span class="sd">            class default is used.</span>
+<span class="sd">        overwrite : bool, default=False</span>
+<span class="sd">            If True, overwrite any existing file at ``path``. If False, raise</span>
+<span class="sd">            :class:`FileExistsError` if the file exists.</span>
+<span class="sd">        fields : dict, optional</span>
+<span class="sd">            Extra particle fields to populate. Keys must be of the form</span>
+<span class="sd">            ``&quot;PartTypeX.FieldName&quot;`` where X is the particle type index.</span>
+<span class="sd">            Values must be :class:`unyt.array.unyt_array` or :class:`numpy.ndarray`</span>
+<span class="sd">            with the correct leading dimension.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        GadgetLikeParticleDataset</span>
+<span class="sd">            A dataset object representing the newly created HDF5 file.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        FileExistsError</span>
+<span class="sd">            If the target file exists and ``overwrite`` is False.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the number of particles does not match ``ntypes`` or if a field</span>
+<span class="sd">            shape is inconsistent with its particle group.</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            If ``unit_system`` is not a :class:`unyt.UnitSystem` instance.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        - This overload describes the base API. Subclasses may add further</span>
+<span class="sd">          keyword arguments for physics-specific fields (e.g. MHD, cooling).</span>
+<span class="sd">        - At minimum, each populated particle type will include the required</span>
+<span class="sd">          datasets: ``Coordinates``, ``Velocities``, ``ParticleIDs``, and</span>
+<span class="sd">          ``Masses``. Gas cells (PartType0) also include ``Density`` and</span>
+<span class="sd">          ``InternalEnergy``.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># --- Input Validation --- #</span>
+        <span class="c1"># To begin, we need to sort out the various args and kwargs that get passed through. We do all of</span>
+        <span class="c1"># this to permit a flexible / self-consistent interface for subclasses, but it comes at the cost</span>
+        <span class="c1"># of some boiler plate code here.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">path</span><span class="p">,</span> <span class="n">number_of_particles</span><span class="p">,</span> <span class="n">box_size</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;`path`, `number_of_particles`, and `box_size` must be provided as positional arguments.&quot;</span>
+            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">err</span>
+
+        <span class="c1"># Handle the path and overwrite management first. We attempt to</span>
+        <span class="c1"># coerce the path to a Path object, then check if it exists.</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">overwrite</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;overwrite&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">FileExistsError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File already exists: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">. Use overwrite=True to replace it.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="n">overwrite</span><span class="p">:</span>
+            <span class="n">path</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">IsADirectoryError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Path is a directory: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># We now ensure that the number of particles is valid and of the</span>
+        <span class="c1"># right length. We do permit users to provide us with a count of the number of</span>
+        <span class="c1"># particle types that is different from the default, but we do need to ensure</span>
+        <span class="c1"># that the provided number of particles matches the expected number of particle types.</span>
+        <span class="n">_expected_ntypes</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;number_of_particle_types&quot;</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_default_ntypes</span><span class="p">)</span>
+
+        <span class="c1"># coerce the number of particles to a list if it is not already</span>
+        <span class="n">number_of_particles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">number_of_particles</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">number_of_particles</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">_expected_ntypes</span><span class="p">,):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;`number_of_particles` must be of length </span><span class="si">{</span><span class="n">_expected_ntypes</span><span class="si">}</span><span class="s2"> to&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot; match the expected number of particle types.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Configure the unit system so that we have one available at all</span>
+        <span class="c1"># times. This is taken from the class defaults if it is not provided.</span>
+        <span class="n">unit_system</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;unit_system&quot;</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_default_unit_system</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">unit_system</span><span class="p">,</span> <span class="n">unyt</span><span class="o">.</span><span class="n">UnitSystem</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;`unit_system` must be a unyt.UnitSystem instance.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># We now process the box size to ensure that it is a correctly specified unyt</span>
+        <span class="c1"># quantity with units of length.</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">box_size</span><span class="p">,</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span><span class="p">):</span>
+            <span class="n">box_size</span> <span class="o">=</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_array</span><span class="p">(</span><span class="n">box_size</span><span class="o">.</span><span class="n">in_base</span><span class="p">(</span><span class="n">unit_system</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">box_size</span> <span class="o">=</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_array</span><span class="p">(</span><span class="n">box_size</span> <span class="o">*</span> <span class="n">unit_system</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+        <span class="c1"># Pop out fields so its not contaminant in the kwargs.</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;fields&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="c1"># --- File Generation --- #</span>
+        <span class="c1"># At this stage, we can proceed to generate the file skeleton. In doing</span>
+        <span class="c1"># so, we will first create the file, then write the Pisces metadata, then</span>
+        <span class="c1"># the Gadget header, then the file skeleton, and finally any fields that</span>
+        <span class="c1"># are provided to us.</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">generate_file_skeleton</span><span class="p">(</span>
+            <span class="n">path</span><span class="p">,</span>
+            <span class="n">number_of_particles</span><span class="p">,</span>
+            <span class="n">box_size</span><span class="p">,</span>
+            <span class="n">unit_system</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>  <span class="c1"># pass through any additional kwargs to the generation methods.</span>
+        <span class="p">)</span>
+
+        <span class="c1"># --- Field Population --- #</span>
+        <span class="c1"># If fields are provided, we can now populate them.</span>
+        <span class="c1"># These are provided as `&lt;particle_type_name&gt;.&lt;field_name&gt;`, so</span>
+        <span class="c1"># we can just split the names, then dump them to the correct dataset</span>
+        <span class="c1"># after some validation checks.</span>
+        <span class="k">if</span> <span class="n">fields</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
+
+            <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+                <span class="c1"># Cycle through all of the provided fields and</span>
+                <span class="c1"># populate them.</span>
+                <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field_data</span> <span class="ow">in</span> <span class="n">fields</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="c1"># Split the field name into particle type and</span>
+                    <span class="c1"># actual field name.</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">ptype_name</span><span class="p">,</span> <span class="n">f_name</span> <span class="o">=</span> <span class="n">field_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">exp</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Field name &#39;</span><span class="si">{</span><span class="n">field_name</span><span class="si">}</span><span class="s2">&#39; is not in the correct format.&quot;</span>
+                            <span class="s2">&quot; It must be of the form &#39;&lt;particle_type&gt;.&lt;field_name&gt;&#39;&quot;</span>
+                        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exp</span>
+
+                    <span class="c1"># Validate that the particle type group exists, and that</span>
+                    <span class="c1"># the field also exists as expected.</span>
+                    <span class="k">if</span> <span class="n">ptype_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stream</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Particle type group &#39;</span><span class="si">{</span><span class="n">ptype_name</span><span class="si">}</span><span class="s2">&#39; does not exist in the file.&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">f_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stream</span><span class="p">[</span><span class="n">ptype_name</span><span class="p">]:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Field &#39;</span><span class="si">{</span><span class="n">f_name</span><span class="si">}</span><span class="s2">&#39; does not exist in particle type group &#39;</span><span class="si">{</span><span class="n">ptype_name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+                    <span class="c1"># Validate that the shape of the provided data matches</span>
+                    <span class="c1"># the shape of the dataset.</span>
+                    <span class="n">dset</span> <span class="o">=</span> <span class="n">stream</span><span class="p">[</span><span class="n">ptype_name</span><span class="p">][</span><span class="n">f_name</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">dset</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">field_data</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Shape of provided data for field &#39;</span><span class="si">{</span><span class="n">field_name</span><span class="si">}</span><span class="s2">&#39; does not match dataset shape.&quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot; Provided shape: </span><span class="si">{</span><span class="n">field_data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, Dataset shape: </span><span class="si">{</span><span class="n">dset</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="p">)</span>
+
+                    <span class="c1"># If all checks pass, we can write the data to</span>
+                    <span class="c1"># the dataset. We still need to ensure that the data gets</span>
+                    <span class="c1"># cast to the correct units from the dataset.</span>
+                    <span class="n">_units</span> <span class="o">=</span> <span class="n">unyt</span><span class="o">.</span><span class="n">Unit</span><span class="p">(</span><span class="n">dset</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;UNITS&quot;</span><span class="p">,</span> <span class="s2">&quot;dimensionless&quot;</span><span class="p">))</span>
+                    <span class="n">dset</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_array</span><span class="p">(</span><span class="n">field_data</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="n">_units</span><span class="p">)</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="n">_units</span><span class="p">)</span>
+
+        <span class="c1"># Return a validated ParticleDataset instance</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+        <span class="c1"># Add the particle ids</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">add_particle_ids</span><span class="p">(</span><span class="n">policy</span><span class="o">=</span><span class="s2">&quot;global&quot;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Gadget4ParticleDataset">
+<a class="viewcode-back" href="../../../_as_gen/pisces.particles.gadget.Gadget4ParticleDataset.html#pisces.particles.gadget.Gadget4ParticleDataset">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Gadget4ParticleDataset</span><span class="p">(</span><span class="n">GadgetLikeParticleDataset</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Representation of a Gadget-4 style particle dataset.</span>
+
+<span class="sd">    This class specializes :class:`GadgetLikeParticleDataset` for the</span>
+<span class="sd">    conventions of Gadget-4 HDF5 initial conditions and snapshots. It</span>
+<span class="sd">    defines the expected header structure, field names, and dataset</span>
+<span class="sd">    generation logic for creating valid Gadget-4–compatible files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># --------------------------------- #</span>
+    <span class="c1"># Class Constants / Flags           #</span>
+    <span class="c1"># --------------------------------- #</span>
+    <span class="c1"># These flags provide standard names for built-in access to specific</span>
+    <span class="c1"># fields in the dataset. This ensures that those areas of the code are</span>
+    <span class="c1"># not hardcoded with string literals. These can be overridden in</span>
+    <span class="c1"># subclasses if the dataset uses different naming conventions.</span>
+
+    <span class="c1"># --- Field Name Conventions --- #</span>
+    <span class="n">_POSITION_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;Coordinates&quot;</span>
+    <span class="n">_VELOCITY_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;Velocities&quot;</span>
+    <span class="n">_MASS_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;Masses&quot;</span>
+    <span class="n">_ID_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;ParticleIDs&quot;</span>
+    <span class="n">_INTERNAL_ENERGY_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;InternalEnergy&quot;</span>
+    <span class="n">_ELECTRON_ABUNDANCE_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;ElectronAbundance&quot;</span>
+
+    <span class="c1"># --- Class Settings --- #</span>
+    <span class="n">_default_ntypes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;int: Default number of Gadget-like particle types.</span>
+
+<span class="sd">    By default, this is set to 6, corresponding to the standard Gadget</span>
+<span class="sd">    particle types; however, some simulations may have a different number.</span>
+<span class="sd">    This can also be specified by the user as a kwarg when building a dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_default_unit_system</span> <span class="o">=</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unit_systems</span><span class="o">.</span><span class="n">galactic_unit_system</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Default unit system for interpreting Gadget particle fields.</span>
+<span class="sd">    Gadget itself does not enforce units; this is provided for Pisces</span>
+<span class="sd">    consistency and metadata export.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_header_group_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Header&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;str: Name of the group containing the Gadget-like file header.</span>
+
+<span class="sd">    This can be overridden in subclasses if the header group has a different name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_particle_type_name_prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ParticleType&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;str: Prefix for particle type groups in the HDF5 file.</span>
+
+<span class="sd">    This can be overridden in subclasses if the particle type groups have a different prefix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># ------------------------------------- #</span>
+    <span class="c1"># Generation Methods                    #</span>
+    <span class="c1"># ------------------------------------- #</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_file_header</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">stream</span><span class="p">:</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">,</span>
+        <span class="n">number_of_particles</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">box_size</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span><span class="p">,</span>
+        <span class="n">unit_system</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">UnitSystem</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write Gadget-4 style header attributes to the HDF5 file.</span>
+
+<span class="sd">        This method writes the standard Gadget-4 header attributes</span>
+<span class="sd">        into the file’s ``Header`` group. These attributes describe</span>
+<span class="sd">        particle counts, box size, and basic cosmology metadata, and</span>
+<span class="sd">        must be present for Gadget-4 to interpret the file as valid.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        stream : h5py.File</span>
+<span class="sd">            The open HDF5 file handle to which attributes will be written.</span>
+<span class="sd">            Attributes are stored at the root or within the ``Header`` group.</span>
+<span class="sd">        number_of_particles : numpy.ndarray</span>
+<span class="sd">            Array of length ``ntypes`` giving the number of particles per type.</span>
+<span class="sd">            Values must fit into 32-bit integers since only single-file</span>
+<span class="sd">            snapshots are supported here.</span>
+<span class="sd">        box_size : unyt.unyt_quantity</span>
+<span class="sd">            Simulation box size with length units. Converted into the</span>
+<span class="sd">            provided unit system before being written.</span>
+<span class="sd">        unit_system : unyt.UnitSystem</span>
+<span class="sd">            Unit system used for box size conversion.</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Optional keyword arguments. Recognized:</span>
+<span class="sd">            - ``double_precision`` : bool (default True)</span>
+<span class="sd">              Indicates whether floating-point particle data is stored in</span>
+<span class="sd">              double precision. This does not change the header layout,</span>
+<span class="sd">              but is included for API consistency.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If any particle count exceeds the 32-bit integer limit.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        The following attributes are written:</span>
+
+<span class="sd">        - ``NumPart_ThisFile`` (int32[ntypes]) — per-file particle counts.</span>
+<span class="sd">        - ``NumPart_Total`` (uint64[ntypes]) — total particle counts.</span>
+<span class="sd">        - ``MassTable`` (float64[ntypes]) — per-type constant masses</span>
+<span class="sd">          (always zeros here, since individual masses are assumed).</span>
+<span class="sd">        - ``BoxSize`` (float64) — simulation box size.</span>
+<span class="sd">        - ``Time`` (float64) — simulation time (0.0 for ICs).</span>
+<span class="sd">        - ``Redshift`` (float64) — redshift (0.0 for ICs).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># --- Particle Count Management --- #</span>
+        <span class="c1"># Manage the particle count writing segment. We ensure that the counts we have</span>
+        <span class="c1"># from the user are 64 bit unsigned integers so that we can handle large counts.</span>
+        <span class="c1"># We then need to cast that down to 32 to ensure that we have the correct types. Because</span>
+        <span class="c1"># we don&#39;t support multi-file snapshots here, we need to ensure that the counts</span>
+        <span class="c1"># do not exceed the 32-bit limit.</span>
+        <span class="n">number_of_particles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">number_of_particles</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint64</span><span class="p">)</span>
+
+        <span class="c1"># Check that we don&#39;t surpass the 32-bit limit.</span>
+        <span class="n">int32_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span><span class="o">.</span><span class="n">max</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">number_of_particles</span> <span class="o">&gt;</span> <span class="n">int32_max</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Particle count exceeds 32-bit limit for single-file snapshots. &quot;</span>
+                <span class="s2">&quot;Either reduce particles per type or split snapshot into multiple files.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Because we are under the 32-bit limit, we can safely cast to the</span>
+        <span class="c1"># expected C-int.</span>
+        <span class="n">low_word</span> <span class="o">=</span> <span class="p">(</span><span class="n">number_of_particles</span> <span class="o">&amp;</span> <span class="mh">0xFFFFFFFF</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;NumPart_ThisFile&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">low_word</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;NumPart_Total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">low_word</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint64</span><span class="p">)</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;NumFilesPerSnapshot&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># --- Cosmology Parameters --- #</span>
+        <span class="c1"># Like the physics flags, the cosmological parameters are not actually</span>
+        <span class="c1"># used by AREPO, but are ready nonetheless. As such, we write them but</span>
+        <span class="c1"># they are set to zero values.</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;Redshift&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;Time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="c1"># --- Writing the Mass Table and the Box Size --- #</span>
+        <span class="c1"># The final two relevant elements of the header are the mass table</span>
+        <span class="c1"># and the box size. In AREPO, both of these are required. The mass table</span>
+        <span class="c1"># is (by our convention) zeros because we ALWAYS specify particle masses.</span>
+        <span class="c1"># The boxsize requires conversion.</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;MassTable&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">number_of_particles</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+        <span class="n">_native_boxsize</span> <span class="o">=</span> <span class="n">box_size</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="n">unit_system</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">])</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;BoxSize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="n">_native_boxsize</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_particle_fields</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">particle_group</span><span class="p">:</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">,</span>
+        <span class="n">particle_type</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">number_of_particles</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">unit_system</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">UnitSystem</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create required Gadget-4 particle fields for a particle group.</span>
+
+<span class="sd">        This method defines and initializes the standard datasets that</span>
+<span class="sd">        must exist for a given particle type in a Gadget-4 dataset.</span>
+<span class="sd">        Datasets are created with the correct shape, dtype, and unit</span>
+<span class="sd">        attributes. Precision and optional fields are controlled via</span>
+<span class="sd">        keyword arguments.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        particle_group : h5py.Group</span>
+<span class="sd">            HDF5 group corresponding to the particle type (e.g.,</span>
+<span class="sd">            ``ParticleType0`` for gas).</span>
+<span class="sd">        particle_type : int</span>
+<span class="sd">            Particle type index (0=gas, 1=DM, 4=stars, 5=BH, etc.).</span>
+<span class="sd">        number_of_particles : int</span>
+<span class="sd">            Number of particles of this type.</span>
+<span class="sd">        unit_system : unyt.UnitSystem</span>
+<span class="sd">            Unit system used for unit annotations.</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Configuration flags:</span>
+<span class="sd">            - ``double_precision`` : bool, default=True</span>
+<span class="sd">              Store float fields as float64 instead of float32.</span>
+<span class="sd">            - ``coordinates_precision`` : {32, 64}, default=32</span>
+<span class="sd">              Precision of ``Coordinates`` dataset.</span>
+<span class="sd">            - ``id_precision`` : {32, 64}, default=32</span>
+<span class="sd">              Bit-width of ``ParticleIDs`` dataset.</span>
+<span class="sd">            - ``enable_cooling`` : bool, default=False</span>
+<span class="sd">              If True, add ``ElectronAbundance`` field to gas.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        **Always created for all particle types**:</span>
+<span class="sd">        - ``Coordinates`` (N,3) float32/float64</span>
+<span class="sd">        - ``Velocities`` (N,3) float32/float64</span>
+<span class="sd">        - ``Masses`` (N,) float32/float64</span>
+<span class="sd">        - ``ParticleIDs`` (N,) uint32/uint64</span>
+
+<span class="sd">        **Created for gas (ParticleType0)**:</span>
+<span class="sd">        - ``InternalEnergy`` (N,) float32/float64</span>
+<span class="sd">        - ``ElectronAbundance`` (N,) float32/float64 if ``enable_cooling=True``</span>
+
+<span class="sd">        Units are stored in the ``UNITS`` attribute of each dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># --- Extract Basic Information --- #</span>
+        <span class="c1"># Handle the coordinate dtype based on the double precision flag.</span>
+        <span class="n">_coordinate_precision</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;coordinates_precision&quot;</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+        <span class="n">_id_precision</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id_precision&quot;</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+        <span class="n">_double_precision</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;double_precision&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">_coordinate_precision</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`coordinates_precision` must be either 32 or 64.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">_id_precision</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`id_precision` must be either 32 or 64.&quot;</span><span class="p">)</span>
+
+        <span class="n">coordinates_dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span> <span class="k">if</span> <span class="n">_double_precision</span> <span class="ow">or</span> <span class="p">(</span><span class="n">_coordinate_precision</span> <span class="o">==</span> <span class="mi">64</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span>
+        <span class="n">float_dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">_double_precision</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span>
+        <span class="n">id_dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint64</span> <span class="k">if</span> <span class="n">_id_precision</span> <span class="o">==</span> <span class="mi">64</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">uint32</span>
+
+        <span class="c1"># --- Specify Field Parameters --- #</span>
+        <span class="c1"># In order to make things reasonably clean, we specify each</span>
+        <span class="c1"># of the required fields in a dictionary, then iterate through</span>
+        <span class="c1"># that dictionary to create the datasets. This permits subclasses</span>
+        <span class="c1"># to minimally modify the fields that are created. We also provide</span>
+        <span class="c1"># access to hooks here so that users can configure the additional fields</span>
+        <span class="c1"># for particular flags.</span>
+        <span class="n">_required_field_data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_POSITION_FIELD_NAME</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,),</span>
+                <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">coordinates_dtype</span><span class="p">,</span>
+                <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">unit_system</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">],</span>
+            <span class="p">},</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_VELOCITY_FIELD_NAME</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,),</span>
+                <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">float_dtype</span><span class="p">,</span>
+                <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">unit_system</span><span class="p">[</span><span class="s2">&quot;velocity&quot;</span><span class="p">],</span>
+            <span class="p">},</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_MASS_FIELD_NAME</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(),</span>
+                <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">float_dtype</span><span class="p">,</span>
+                <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">unit_system</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">],</span>
+            <span class="p">},</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_ID_FIELD_NAME</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(),</span>
+                <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">id_dtype</span><span class="p">,</span>
+                <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;dimensionless&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_INTERNAL_ENERGY_FIELD_NAME</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(),</span>
+                <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">float_dtype</span><span class="p">,</span>
+                <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">unit_system</span><span class="p">[</span><span class="s2">&quot;specific_energy&quot;</span><span class="p">],</span>
+            <span class="p">},</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;enable_cooling&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="n">_required_field_data</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="o">**</span><span class="n">_required_field_data</span><span class="p">,</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">_ELECTRON_ABUNDANCE_FIELD_NAME</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(),</span>
+                    <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">float_dtype</span><span class="p">,</span>
+                    <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;dimensionless&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">}</span>
+
+        <span class="c1"># --- Create Fields --- #</span>
+        <span class="c1"># We now iterate through each required fields, check the particle type,</span>
+        <span class="c1"># and create the dataset if it is required for this particle type.</span>
+        <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field_info</span> <span class="ow">in</span> <span class="n">_required_field_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">particle_type</span> <span class="ow">in</span> <span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]):</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">_add_particle_field_to_file</span><span class="p">(</span>
+                    <span class="n">particle_group</span><span class="p">,</span>
+                    <span class="n">field_name</span><span class="p">,</span>
+                    <span class="n">number_of_particles</span><span class="p">,</span>
+                    <span class="n">field_shape</span><span class="o">=</span><span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;shape&quot;</span><span class="p">],</span>
+                    <span class="n">field_dtype</span><span class="o">=</span><span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;dtype&quot;</span><span class="p">],</span>
+                    <span class="n">field_units</span><span class="o">=</span><span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">],</span>
+                <span class="p">)</span>
+
+    <span class="nd">@overload</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_particle_dataset</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+        <span class="n">number_of_particles</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">,</span>
+        <span class="n">box_size</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">ntypes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span>
+        <span class="n">unit_system</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">UnitSystem</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">double_precision</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">coordinates_precision</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
+        <span class="n">id_precision</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
+        <span class="n">enable_cooling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Gadget4ParticleDataset&quot;</span><span class="p">:</span> <span class="o">...</span>
+
+<div class="viewcode-block" id="Gadget4ParticleDataset.build_particle_dataset">
+<a class="viewcode-back" href="../../../_as_gen/pisces.particles.gadget.Gadget4ParticleDataset.build_particle_dataset.html#pisces.particles.gadget.Gadget4ParticleDataset.build_particle_dataset">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_particle_dataset</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build a new Gadget-4 particle dataset.</span>
+
+<span class="sd">        This is the primary public constructor for Gadget-4 style</span>
+<span class="sd">        initial condition files. It writes the file header, particle</span>
+<span class="sd">        groups, and required fields according to Gadget-4 conventions.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path : str or pathlib.Path</span>
+<span class="sd">            Destination path for the new dataset.</span>
+<span class="sd">        number_of_particles : sequence of int</span>
+<span class="sd">            Particle counts per type. Length must equal ``ntypes``.</span>
+<span class="sd">        box_size : unyt.unyt_quantity</span>
+<span class="sd">            Simulation box size with length units.</span>
+<span class="sd">        ntypes : int, default=6</span>
+<span class="sd">            Number of particle types (Gadget standard).</span>
+<span class="sd">        unit_system : unyt.UnitSystem, optional</span>
+<span class="sd">            Unit system for annotating dataset units.</span>
+<span class="sd">            Defaults to galactic unit system.</span>
+<span class="sd">        overwrite : bool, default=False</span>
+<span class="sd">            Overwrite the file if it exists. If False, raise an error</span>
+<span class="sd">            instead.</span>
+<span class="sd">        fields : dict, optional</span>
+<span class="sd">            Additional fields to populate after dataset creation.</span>
+<span class="sd">            Keys must be of the form ``&quot;ParticleTypeX.FieldName&quot;``.</span>
+<span class="sd">        double_precision : bool, default=True</span>
+<span class="sd">            Use float64 for floating-point fields (except where overridden).</span>
+<span class="sd">        coordinates_precision : {32, 64}, default=32</span>
+<span class="sd">            Precision for ``Coordinates``.</span>
+<span class="sd">        id_precision : {32, 64}, default=32</span>
+<span class="sd">            Precision for ``ParticleIDs``.</span>
+<span class="sd">        enable_cooling : bool, default=False</span>
+<span class="sd">            If True, add ``ElectronAbundance`` to gas.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Gadget4ParticleDataset</span>
+<span class="sd">            A dataset object pointing to the newly created file.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        FileExistsError</span>
+<span class="sd">            If the file exists and ``overwrite=False``.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If particle counts or field shapes are inconsistent.</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            If units or parameters are of invalid types.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        Create a simple Gadget-4 IC file with gas and DM::</span>
+
+<span class="sd">            import unyt as u</span>
+
+<span class="sd">            ds = (</span>
+<span class="sd">                Gadget4ParticleDataset.build_particle_dataset(</span>
+<span class="sd">                    &quot;ics_gadget4.hdf5&quot;,</span>
+<span class="sd">                    number_of_particles=[</span>
+<span class="sd">                        1000,</span>
+<span class="sd">                        2000,</span>
+<span class="sd">                        0,</span>
+<span class="sd">                        0,</span>
+<span class="sd">                        0,</span>
+<span class="sd">                        0,</span>
+<span class="sd">                    ],</span>
+<span class="sd">                    box_size=1.0 * u.Mpc,</span>
+<span class="sd">                    overwrite=True,</span>
+<span class="sd">                )</span>
+<span class="sd">            )</span>
+
+<span class="sd">        Create a Gadget-4 IC file with cooling enabled::</span>
+
+<span class="sd">            ds = (</span>
+<span class="sd">                Gadget4ParticleDataset.build_particle_dataset(</span>
+<span class="sd">                    &quot;ics_cooling.hdf5&quot;,</span>
+<span class="sd">                    number_of_particles=[</span>
+<span class="sd">                        500,</span>
+<span class="sd">                        500,</span>
+<span class="sd">                        0,</span>
+<span class="sd">                        0,</span>
+<span class="sd">                        0,</span>
+<span class="sd">                        0,</span>
+<span class="sd">                    ],</span>
+<span class="sd">                    box_size=500.0 * u.kpc,</span>
+<span class="sd">                    enable_cooling=True,</span>
+<span class="sd">                )</span>
+<span class="sd">            )</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">build_particle_dataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AREPOParticleDataset">
+<a class="viewcode-back" href="../../../_as_gen/pisces.particles.gadget.AREPOParticleDataset.html#pisces.particles.gadget.AREPOParticleDataset">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AREPOParticleDataset</span><span class="p">(</span><span class="n">GadgetLikeParticleDataset</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Representation of an AREPO-style particle dataset.</span>
+
+<span class="sd">    This class specializes :class:`GadgetLikeParticleDataset` for</span>
+<span class="sd">    AREPO’s HDF5 initial condition format. It implements the header</span>
+<span class="sd">    layout, field conventions, and optional physics extensions expected</span>
+<span class="sd">    by the AREPO code.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    :class:`GadgetLikeParticleDataset`</span>
+<span class="sd">        Base class for all Gadget/AREPO-compatible formats.</span>
+<span class="sd">    :class:`Gadget4ParticleDataset`</span>
+<span class="sd">        Implementation for Gadget-4 format.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># --------------------------------- #</span>
+    <span class="c1"># Class Constants / Flags           #</span>
+    <span class="c1"># --------------------------------- #</span>
+
+    <span class="c1"># --- Field Name Conventions --- #</span>
+    <span class="n">_POSITION_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;Coordinates&quot;</span>  <span class="c1"># Required for all Ptypes</span>
+    <span class="n">_VELOCITY_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;Velocities&quot;</span>  <span class="c1"># Required for all Ptypes</span>
+    <span class="n">_MASS_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;Masses&quot;</span>  <span class="c1"># Required for all Ptypes</span>
+    <span class="n">_ID_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;ParticleIDs&quot;</span>  <span class="c1"># Required for all Ptypes</span>
+    <span class="n">_INTERNAL_ENERGY_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;InternalEnergy&quot;</span>  <span class="c1"># Required for gas only.</span>
+    <span class="n">_ELECTRON_ABUNDANCE_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;ElectronAbundance&quot;</span>  <span class="c1"># Required for gas if cooling enabled.</span>
+    <span class="n">_MAGNETIC_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;MagneticField&quot;</span>  <span class="c1"># Required for gas if MHD enabled.</span>
+    <span class="n">_PASSIVE_SCALARS_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;PassiveScalars&quot;</span>  <span class="c1"># Required for gas if scalars enabled.</span>
+
+    <span class="c1"># --- Class Settings --- #</span>
+    <span class="n">_default_ntypes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">_default_unit_system</span> <span class="o">=</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unit_systems</span><span class="o">.</span><span class="n">galactic_unit_system</span>
+    <span class="n">_header_group_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Header&quot;</span>
+    <span class="n">_particle_type_name_prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;PartType&quot;</span>
+
+    <span class="c1"># ------------------------------------- #</span>
+    <span class="c1"># Generation Methods                    #</span>
+    <span class="c1"># ------------------------------------- #</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_file_header</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">stream</span><span class="p">:</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">,</span>
+        <span class="n">number_of_particles</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">box_size</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span><span class="p">,</span>
+        <span class="n">unit_system</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">UnitSystem</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate and write the AREPO-style header attributes to the HDF5 file.</span>
+
+<span class="sd">        This method creates the ``Header`` attributes required for AREPO</span>
+<span class="sd">        initial conditions. The structure is modeled on the Gadget-2 snapshot</span>
+<span class="sd">        header format, with several additional attributes retained for</span>
+<span class="sd">        compatibility. While many of these fields are not used directly by</span>
+<span class="sd">        AREPO when reading ICs (e.g., star formation and cooling flags),</span>
+<span class="sd">        they are still written to maintain full Gadget-format compliance.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        stream : h5py.File</span>
+<span class="sd">            The open HDF5 group handle into which the header attributes will</span>
+<span class="sd">            be written. Attributes are stored at the root level (``stream.attrs``).</span>
+<span class="sd">        number_of_particles : numpy.ndarray</span>
+<span class="sd">            Array of shape (6,) giving the particle counts per type. Must be</span>
+<span class="sd">            convertible to 32-bit integers for single-file snapshots.</span>
+<span class="sd">        box_size : unyt.unyt_quantity</span>
+<span class="sd">            The size of the simulation box, with units of length.</span>
+<span class="sd">        unit_system : ~unyt.UnitSystem</span>
+<span class="sd">            The unit system into which the box size will be converted before</span>
+<span class="sd">            writing.</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Additional options for header customization. Recognized keys:</span>
+
+<span class="sd">            - ``double_precision`` : bool, optional</span>
+<span class="sd">              Whether particle positions/velocities are stored in double</span>
+<span class="sd">              precision. Default is True.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If any particle count exceeds the 32-bit signed integer limit,</span>
+<span class="sd">            which is not permitted in single-file snapshots.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        The following attributes are written:</span>
+
+<span class="sd">        - ``NumPart_ThisFile`` (int32[6]): Per-file particle counts (must fit in 32-bit).</span>
+<span class="sd">        - ``NumPart_Total`` (uint32[6]): Total particle counts (low word).</span>
+<span class="sd">        - ``NumPart_Total_HighWord`` (uint32[6]): High word of total counts (all zero in single-file mode).</span>
+<span class="sd">        - ``MassTable`` (float64[6]): Particle type masses. Always zeros here, since variable masses are used.</span>
+<span class="sd">        - ``Time`` (float64): Simulation time (written as 0.0 for ICs).</span>
+<span class="sd">        - ``Redshift`` (float64): Redshift of the snapshot (0.0 for ICs).</span>
+<span class="sd">        - ``BoxSize`` (float64): Physical size of the simulation box, converted to the specified unit system.</span>
+<span class="sd">        - ``NumFilesPerSnapshot`` (int32): Not written here (implicit = 1).</span>
+<span class="sd">        - ``Omega0``, ``OmegaLambda``: Cosmology parameters.</span>
+<span class="sd">        - ``HubbleParam`` (float64): Hubble parameter (written as 1.0).</span>
+<span class="sd">        - ``Flag_Sfr``, ``Flag_Cooling``, ``Flag_StellarAge``, ``Flag_Metals``,</span>
+<span class="sd">          ``Flag_Feedback`` (int32): Physics flags. Always 0 for ICs.</span>
+<span class="sd">        - ``Flag_DoublePrecision`` (int32): Precision flag for particle positions/velocities.</span>
+
+<span class="sd">        Although AREPO does not actually use the physics or cosmology flags</span>
+<span class="sd">        when reading ICs, they are included for full Gadget-format compliance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># --- Particle Count Management --- #</span>
+        <span class="c1"># Manage the particle count writing segment. We ensure that the counts we have</span>
+        <span class="c1"># from the user are 64 bit unsigned integers so that we can handle large counts.</span>
+        <span class="c1"># We then need to cast that down to 32 to ensure that we have the correct types. Because</span>
+        <span class="c1"># we don&#39;t support multi-file snapshots here, we need to ensure that the counts</span>
+        <span class="c1"># do not exceed the 32-bit limit.</span>
+        <span class="n">number_of_particles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">number_of_particles</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint64</span><span class="p">)</span>
+
+        <span class="c1"># Check that we don&#39;t surpass the 32-bit limit.</span>
+        <span class="n">int32_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span><span class="o">.</span><span class="n">max</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">number_of_particles</span> <span class="o">&gt;</span> <span class="n">int32_max</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Particle count exceeds 32-bit limit for single-file snapshots. &quot;</span>
+                <span class="s2">&quot;Either reduce particles per type or split snapshot into multiple files.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Because we are under the 32-bit limit, we can safely cast to the</span>
+        <span class="c1"># expected C-int.</span>
+        <span class="n">low_word</span> <span class="o">=</span> <span class="p">(</span><span class="n">number_of_particles</span> <span class="o">&amp;</span> <span class="mh">0xFFFFFFFF</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;NumPart_ThisFile&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">low_word</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;NumPart_Total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">low_word</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;NumPart_Total_HighWord&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">low_word</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+
+        <span class="c1"># --- IC File Flags --- #</span>
+        <span class="c1"># An inspection of the AREPO base code indicates that for IC files, these</span>
+        <span class="c1"># header flags are effectively ignored, so we just write them unilaterally</span>
+        <span class="c1"># to 0 even if they are actually enabled in the parameter file / configuration.</span>
+        <span class="c1">#</span>
+        <span class="c1"># The double-precision flag is important, however, as it indicates to the</span>
+        <span class="c1"># code whether the positions and velocities are stored as float32 or float64.</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;Flag_Sfr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;Flag_Cooling&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;Flag_StellarAge&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;Flag_Metals&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;Flag_Feedback&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;Flag_DoublePrecision&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;double_precision&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+
+        <span class="c1"># --- Cosmology Parameters --- #</span>
+        <span class="c1"># Like the physics flags, the cosmological parameters are not actually</span>
+        <span class="c1"># used by AREPO, but are ready nonetheless. As such, we write them but</span>
+        <span class="c1"># they are set to zero values.</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;Omega0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;OmegaLambda&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;OmegaBaryon&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;HubbleParam&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;Redshift&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;Time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="c1"># --- Writing the Mass Table and the Box Size --- #</span>
+        <span class="c1"># The final two relevant elements of the header are the mass table</span>
+        <span class="c1"># and the box size. In AREPO, both of these are required. The mass table</span>
+        <span class="c1"># is (by our convention) zeros because we ALWAYS specify particle masses.</span>
+        <span class="c1"># The boxsize requires conversion.</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;MassTable&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">number_of_particles</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+        <span class="n">_native_boxsize</span> <span class="o">=</span> <span class="n">box_size</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="n">unit_system</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">])</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;BoxSize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="n">_native_boxsize</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_particle_fields</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">particle_group</span><span class="p">:</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">,</span>
+        <span class="n">particle_type</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">number_of_particles</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">unit_system</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">UnitSystem</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create the HDF5 datasets for a given particle type.</span>
+
+<span class="sd">        This method defines and initializes the particle field datasets that</span>
+<span class="sd">        must exist in an AREPO–compatible IC file. The base implementation</span>
+<span class="sd">        guarantees creation of all *required* fields, and may conditionally add</span>
+<span class="sd">        fields depending on enabled physics modules (e.g., MHD, cooling,</span>
+<span class="sd">        passive scalars). Subclasses may extend or override this behavior</span>
+<span class="sd">        to support additional physics or code–specific conventions.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        particle_group : h5py.Group</span>
+<span class="sd">            The open HDF5 group corresponding to the particle type</span>
+<span class="sd">            (e.g., ``&quot;PartType0&quot;`` for gas).</span>
+<span class="sd">        particle_type : int</span>
+<span class="sd">            Particle type index (0 = gas, 1 = dark matter, 4 = stars, 5 = BHs, etc.).</span>
+<span class="sd">        number_of_particles : int</span>
+<span class="sd">            Number of particles of this type to allocate datasets for.</span>
+<span class="sd">        unit_system : unyt.UnitSystem</span>
+<span class="sd">            Unit system used to tag dataset attributes.</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Configuration flags that control optional fields:</span>
+
+<span class="sd">            - ``coordinates_in_double_precision`` : bool, default=True</span>
+<span class="sd">              Store coordinates as float64 instead of float32.</span>
+<span class="sd">            - ``double_precision`` : bool, default=True</span>
+<span class="sd">              Store all other float fields as float64 instead of float32.</span>
+<span class="sd">            - ``long_ids`` : bool, default=True</span>
+<span class="sd">              Store ``ParticleIDs`` as uint64 instead of uint32.</span>
+<span class="sd">            - ``enable_mhd`` : bool, default=False</span>
+<span class="sd">              Add ``MagneticField`` vector (3-component) for gas.</span>
+<span class="sd">            - ``enable_cooling`` : bool, default=False</span>
+<span class="sd">              Add ``ElectronAbundance`` scalar field for gas.</span>
+<span class="sd">            - ``passive_scalars`` : int, default=0</span>
+<span class="sd">              If &gt;0, add a ``PassiveScalars`` field with this many components.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        **Always created for all particle types:**</span>
+
+<span class="sd">        - ``Coordinates`` : float32[3] or float64[3]</span>
+<span class="sd">        - ``Velocities`` : float32[3] or float64[3]</span>
+<span class="sd">        - ``ParticleIDs`` : uint32 or uint64</span>
+<span class="sd">        - ``Masses`` : float32 or float64</span>
+
+<span class="sd">        **Always created for gas (PartType0):**</span>
+
+<span class="sd">        - ``InternalEnergy`` : float32 or float64</span>
+<span class="sd">        - ``Density`` : float32 or float64</span>
+
+<span class="sd">        **Conditionally created (if flags set):**</span>
+
+<span class="sd">        - ``MagneticField`` : float32[3] or float64[3] (gas, if ``enable_mhd``)</span>
+<span class="sd">        - ``ElectronAbundance`` : float32 or float64 (gas, if ``enable_cooling``)</span>
+<span class="sd">        - ``PassiveScalars`` : float32[N] or float64[N] (gas, if ``passive_scalars`` &gt; 0)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            Datasets are created directly in ``particle_group``. Attributes</span>
+<span class="sd">            describing units are also attached.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If required arguments are missing or inconsistent.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># --- Extract Basic Information --- #</span>
+        <span class="c1"># Handle the coordinate dtype based on the double precision flag.</span>
+        <span class="n">_coords_dp</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;coordinates_in_double_precision&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">_dp</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;double_precision&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">_id_dp</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;long_ids&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">coordinates_dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span> <span class="k">if</span> <span class="p">(</span><span class="n">_coords_dp</span> <span class="ow">or</span> <span class="n">_dp</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span>
+        <span class="n">float_dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span> <span class="k">if</span> <span class="n">_dp</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span>
+        <span class="n">id_dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint64</span> <span class="k">if</span> <span class="n">_id_dp</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">uint32</span>
+
+        <span class="c1"># --- Specify Field Parameters --- #</span>
+        <span class="c1"># In order to make things reasonably clean, we specify each</span>
+        <span class="c1"># of the required fields in a dictionary, then iterate through</span>
+        <span class="c1"># that dictionary to create the datasets. This permits subclasses</span>
+        <span class="c1"># to minimally modify the fields that are created. We also provide</span>
+        <span class="c1"># access to hooks here so that users can configure the additional fields</span>
+        <span class="c1"># for particular flags.</span>
+        <span class="n">_required_field_data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_POSITION_FIELD_NAME</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,),</span>
+                <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">coordinates_dtype</span><span class="p">,</span>
+                <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">unit_system</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">],</span>
+            <span class="p">},</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_VELOCITY_FIELD_NAME</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,),</span>
+                <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">float_dtype</span><span class="p">,</span>
+                <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">unit_system</span><span class="p">[</span><span class="s2">&quot;velocity&quot;</span><span class="p">],</span>
+            <span class="p">},</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_MASS_FIELD_NAME</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(),</span>
+                <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">float_dtype</span><span class="p">,</span>
+                <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">unit_system</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">],</span>
+            <span class="p">},</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_ID_FIELD_NAME</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(),</span>
+                <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">id_dtype</span><span class="p">,</span>
+                <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;dimensionless&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_INTERNAL_ENERGY_FIELD_NAME</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(),</span>
+                <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">float_dtype</span><span class="p">,</span>
+                <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">unit_system</span><span class="p">[</span><span class="s2">&quot;specific_energy&quot;</span><span class="p">],</span>
+            <span class="p">},</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_DENSITY_FIELD_NAME</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(),</span> <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">float_dtype</span><span class="p">,</span> <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">unit_system</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]},</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Add MHD fields if necessary.</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;enable_mhd&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="n">_required_field_data</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="o">**</span><span class="n">_required_field_data</span><span class="p">,</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">_MAGNETIC_FIELD_NAME</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,),</span>
+                    <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">float_dtype</span><span class="p">,</span>
+                    <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">unit_system</span><span class="p">[</span><span class="s2">&quot;magnetic_field&quot;</span><span class="p">],</span>
+                <span class="p">},</span>
+            <span class="p">}</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;enable_cooling&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="n">_required_field_data</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="o">**</span><span class="n">_required_field_data</span><span class="p">,</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">_ELECTRON_ABUNDANCE_FIELD_NAME</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(),</span>
+                    <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">float_dtype</span><span class="p">,</span>
+                    <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;dimensionless&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">}</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;passive_scalars&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">n_scalars</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;passive_scalars&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">_required_field_data</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="o">**</span><span class="n">_required_field_data</span><span class="p">,</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">_PASSIVE_SCALARS_FIELD_NAME</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">n_scalars</span><span class="p">,),</span>
+                    <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">float_dtype</span><span class="p">,</span>
+                    <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;dimensionless&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">}</span>
+
+        <span class="c1"># --- Create Fields --- #</span>
+        <span class="c1"># We now iterate through each required fields, check the particle type,</span>
+        <span class="c1"># and create the dataset if it is required for this particle type.</span>
+        <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field_info</span> <span class="ow">in</span> <span class="n">_required_field_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">particle_type</span> <span class="ow">in</span> <span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]):</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">_add_particle_field_to_file</span><span class="p">(</span>
+                    <span class="n">particle_group</span><span class="p">,</span>
+                    <span class="n">field_name</span><span class="p">,</span>
+                    <span class="n">number_of_particles</span><span class="p">,</span>
+                    <span class="n">field_shape</span><span class="o">=</span><span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;shape&quot;</span><span class="p">],</span>
+                    <span class="n">field_dtype</span><span class="o">=</span><span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;dtype&quot;</span><span class="p">],</span>
+                    <span class="n">field_units</span><span class="o">=</span><span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">],</span>
+                <span class="p">)</span>
+
+    <span class="nd">@overload</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_particle_dataset</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+        <span class="n">number_of_particles</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">,</span>
+        <span class="n">box_size</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">unyt_quantity</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">ntypes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span>
+        <span class="n">unit_system</span><span class="p">:</span> <span class="n">unyt</span><span class="o">.</span><span class="n">UnitSystem</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">double_precision</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">coordinates_in_double_precision</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">long_ids</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">enable_mhd</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">enable_cooling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">passive_scalars</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;AREPOParticleDataset&quot;</span><span class="p">:</span> <span class="o">...</span>
+
+<div class="viewcode-block" id="AREPOParticleDataset.build_particle_dataset">
+<a class="viewcode-back" href="../../../_as_gen/pisces.particles.gadget.AREPOParticleDataset.build_particle_dataset.html#pisces.particles.gadget.AREPOParticleDataset.build_particle_dataset">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_particle_dataset</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;AREPOParticleDataset&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new HDF5 particle dataset in AREPO IC format.</span>
+
+<span class="sd">        This is the **primary factory method** for generating particle datasets</span>
+<span class="sd">        that can be used as initial conditions in simulation codes. It writes a</span>
+<span class="sd">        complete, self-contained HDF5 file containing the particle fields</span>
+<span class="sd">        required by AREPO (and optional fields depending on physics</span>
+<span class="sd">        modules).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path : str or pathlib.Path</span>
+<span class="sd">            Destination file path for the new dataset. If the file exists and</span>
+<span class="sd">            ``overwrite=False``, a :class:`FileExistsError` is raised.</span>
+<span class="sd">        number_of_particles : sequence of int</span>
+<span class="sd">            Number of particles for each particle type. The length must match</span>
+<span class="sd">            ``ntypes``. For example, ``[1000, 2000, 0, 0, 500, 0]`` specifies</span>
+<span class="sd">            1000 gas cells, 2000 dark matter particles, 500 stars, and no others.</span>
+<span class="sd">        box_size : unyt.unyt_quantity</span>
+<span class="sd">            Physical size of the simulation box (must have length units).</span>
+<span class="sd">            This is written into the dataset metadata and header.</span>
+<span class="sd">        ntypes : int, default=6</span>
+<span class="sd">            Number of particle types to include. Gadget/AREPO use 6 by default</span>
+<span class="sd">            (0=gas, 1=DM, 2=disk, 3=bulge, 4=stars, 5=BHs), but this may be</span>
+<span class="sd">            larger in customized builds.</span>
+<span class="sd">        unit_system : unyt.UnitSystem, optional</span>
+<span class="sd">            Unit system for tagging dataset attributes (e.g., cgs or astrophysical).</span>
+<span class="sd">            If omitted, a default astrophysical unit system is used.</span>
+<span class="sd">        overwrite : bool, default=False</span>
+<span class="sd">            If True, overwrite an existing file at ``path``. If False, raise</span>
+<span class="sd">            :class:`FileExistsError` if the file exists.</span>
+<span class="sd">        fields : dict[str, unyt.unyt_array], optional</span>
+<span class="sd">            Optional dictionary of fields to write into the dataset at creation.</span>
+<span class="sd">            Keys must be of the form ``&quot;&lt;particle_type&gt;.&lt;field_name&gt;&quot;``, and each</span>
+<span class="sd">            value must be a :class:`unyt.array.unyt_array` instance with the correct</span>
+<span class="sd">            shape and units for the specified field.</span>
+
+<span class="sd">            Field may also be added, removed, and manipulated after creation. This</span>
+<span class="sd">            option simply permits populating fields at creation time.</span>
+<span class="sd">        double_precision : bool, default=True</span>
+<span class="sd">            Enable double precision initial conditions. This flag is equivalent to</span>
+<span class="sd">            AREPO&#39;s ``INPUT_IN_DOUBLEPRECISION`` compile-time option. If True,</span>
+<span class="sd">            all floating-point fields are stored as double precision floats as defined</span>
+<span class="sd">            by the local system. If False, single precision (float32) is used.</span>
+<span class="sd">        coordinates_in_double_precision : bool, default=True</span>
+<span class="sd">            If True, ``Coordinates`` are stored in double precision. If False, they are</span>
+<span class="sd">            stored as float32. Useful when positions need higher accuracy than</span>
+<span class="sd">            velocities or internal energy. This corresponds to the AREPO flag</span>
+<span class="sd">            ``INPUT_COORDINATES_IN_DOUBLEPRECISION``.</span>
+<span class="sd">        long_ids : bool, default=True</span>
+<span class="sd">            If True, ``ParticleIDs`` are stored as 64-bit unsigned integers.</span>
+<span class="sd">            If False, 32-bit IDs are used. 64-bit IDs are required for runs with</span>
+<span class="sd">            &gt;4 billion particles. This corresponds to the AREPO flag</span>
+<span class="sd">            ``LONGIDS``.</span>
+<span class="sd">        enable_mhd : bool, default=False</span>
+<span class="sd">            If True, adds ``MagneticField`` (3-component vector) to gas particles</span>
+<span class="sd">            (PartType0). Required if running with MHD enabled.</span>
+<span class="sd">        enable_cooling : bool, default=False</span>
+<span class="sd">            If True, adds ``ElectronAbundance`` scalar field to gas particles.</span>
+<span class="sd">            This initializes the ionization fraction for cooling modules.</span>
+<span class="sd">            Defaults to zero if not supplied.</span>
+<span class="sd">        passive_scalars : int, default=0</span>
+<span class="sd">            If &gt;0, adds a ``PassiveScalars`` field with the given number of</span>
+<span class="sd">            components for gas particles. These are advected tracers that do not</span>
+<span class="sd">            affect dynamics unless used by custom physics modules.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        AREPOParticleDataset</span>
+<span class="sd">            The newly created particle dataset object pointing to the file at</span>
+<span class="sd">            ``path``.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        FileExistsError</span>
+<span class="sd">            If the file exists and ``overwrite=False``.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If particle counts are inconsistent with field shapes or box size.</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            If provided fields are not :class:`unyt.unyt_array` instances.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">build_particle_dataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Eliza Diggins.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

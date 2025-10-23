@@ -1,0 +1,6 @@
+pisces.particles.gadget.GadgetLikeParticleDataset.add\_particle\_field
+======================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: GadgetLikeParticleDataset.add_particle_field

@@ -1,0 +1,6 @@
+pisces.models.stars.polytropes.PolytropicStarModel.rename\_field
+================================================================
+
+.. currentmodule:: pisces.models.stars.polytropes
+
+.. automethod:: PolytropicStarModel.rename_field

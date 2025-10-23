@@ -1,0 +1,6 @@
+profiles.density.GaussianRingProfile.from\_dict
+===============================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: GaussianRingProfile.from_dict

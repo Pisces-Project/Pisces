@@ -1,0 +1,6 @@
+profiles.density.BetaModelDensityProfile.compute\_gravitational\_field
+======================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: BetaModelDensityProfile.compute_gravitational_field

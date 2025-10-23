@@ -1,0 +1,69 @@
+InitialConditionsCartesian
+===============================================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
+
+.. autoclass:: pisces.extensions.simulation.core.initial_conditions.InitialConditionsCartesian
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~InitialConditionsCartesian.__init__
+      ~InitialConditionsCartesian.add_model
+      ~InitialConditionsCartesian.add_particles_to_model
+      ~InitialConditionsCartesian.compute_center_of_mass
+      ~InitialConditionsCartesian.compute_center_of_mass_frame_positions
+      ~InitialConditionsCartesian.compute_center_of_mass_frame_velocities
+      ~InitialConditionsCartesian.compute_center_of_mass_velocity
+      ~InitialConditionsCartesian.compute_total_mass
+      ~InitialConditionsCartesian.create_ics
+      ~InitialConditionsCartesian.generate_particles
+      ~InitialConditionsCartesian.get_model_coordinate_system
+      ~InitialConditionsCartesian.get_model_fields
+      ~InitialConditionsCartesian.get_model_grid
+      ~InitialConditionsCartesian.get_model_info
+      ~InitialConditionsCartesian.get_model_metadata
+      ~InitialConditionsCartesian.get_model_summary
+      ~InitialConditionsCartesian.get_particle_count
+      ~InitialConditionsCartesian.get_particle_fields
+      ~InitialConditionsCartesian.get_particle_path
+      ~InitialConditionsCartesian.get_particle_path_dict
+      ~InitialConditionsCartesian.get_particle_species
+      ~InitialConditionsCartesian.has_model
+      ~InitialConditionsCartesian.has_particles
+      ~InitialConditionsCartesian.list_models
+      ~InitialConditionsCartesian.list_models_with_particles
+      ~InitialConditionsCartesian.load_model
+      ~InitialConditionsCartesian.load_particles
+      ~InitialConditionsCartesian.remove_model
+      ~InitialConditionsCartesian.remove_particles_from_model
+      ~InitialConditionsCartesian.shift_to_COM_frame
+      ~InitialConditionsCartesian.update_model
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~InitialConditionsCartesian.config
+      ~InitialConditionsCartesian.directory
+      ~InitialConditionsCartesian.logger
+      ~InitialConditionsCartesian.metadata
+      ~InitialConditionsCartesian.model_positions
+      ~InitialConditionsCartesian.model_velocities
+      ~InitialConditionsCartesian.models
+      ~InitialConditionsCartesian.ndim
+      ~InitialConditionsCartesian.particles
+   
+   

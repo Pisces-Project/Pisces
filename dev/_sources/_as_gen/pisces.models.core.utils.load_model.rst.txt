@@ -1,0 +1,6 @@
+pisces.models.core.utils.load\_model
+====================================
+
+.. currentmodule:: pisces.models.core.utils
+
+.. autofunction:: load_model

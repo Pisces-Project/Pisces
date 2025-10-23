@@ -1,0 +1,6 @@
+profiles.temperature.CoolingFlowTemperatureProfile.get\_expression\_latex
+=========================================================================
+
+.. currentmodule:: profiles.temperature
+
+.. automethod:: CoolingFlowTemperatureProfile.get_expression_latex

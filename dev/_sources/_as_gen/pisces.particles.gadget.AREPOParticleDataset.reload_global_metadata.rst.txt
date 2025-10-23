@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.reload\_global\_metadata
+=====================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: AREPOParticleDataset.reload_global_metadata

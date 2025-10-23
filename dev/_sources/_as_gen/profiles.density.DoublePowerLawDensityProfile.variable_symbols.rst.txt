@@ -1,0 +1,6 @@
+profiles.density.DoublePowerLawDensityProfile.variable\_symbols
+===============================================================
+
+.. currentmodule:: profiles.density
+
+.. autoproperty:: DoublePowerLawDensityProfile.variable_symbols

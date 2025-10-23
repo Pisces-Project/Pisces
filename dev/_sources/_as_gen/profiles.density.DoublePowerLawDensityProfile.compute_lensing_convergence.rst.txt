@@ -1,0 +1,6 @@
+profiles.density.DoublePowerLawDensityProfile.compute\_lensing\_convergence
+===========================================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: DoublePowerLawDensityProfile.compute_lensing_convergence

@@ -1,0 +1,6 @@
+profiles.density.SechDiskDensityProfile.\_\_init\_\_
+====================================================
+
+.. currentmodule:: profiles.density
+
+.. automethod:: SechDiskDensityProfile.__init__

@@ -1,0 +1,6 @@
+pisces.extensions.simulation.arepo.frontends.AREPOFrontend.initial\_conditions
+==============================================================================
+
+.. currentmodule:: pisces.extensions.simulation.arepo.frontends
+
+.. autoproperty:: AREPOFrontend.initial_conditions

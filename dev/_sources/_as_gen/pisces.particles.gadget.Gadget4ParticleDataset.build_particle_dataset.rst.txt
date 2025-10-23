@@ -1,0 +1,6 @@
+pisces.particles.gadget.Gadget4ParticleDataset.build\_particle\_dataset
+=======================================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. automethod:: Gadget4ParticleDataset.build_particle_dataset

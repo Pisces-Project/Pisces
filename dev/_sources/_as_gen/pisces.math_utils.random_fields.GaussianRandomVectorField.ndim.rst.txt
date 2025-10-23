@@ -1,0 +1,6 @@
+pisces.math\_utils.random\_fields.GaussianRandomVectorField.ndim
+================================================================
+
+.. currentmodule:: pisces.math_utils.random_fields
+
+.. autoproperty:: GaussianRandomVectorField.ndim

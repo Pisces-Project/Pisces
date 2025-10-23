@@ -1,0 +1,6 @@
+pisces.particles.gadget.Gadget4ParticleDataset.total\_particles
+===============================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. autoproperty:: Gadget4ParticleDataset.total_particles

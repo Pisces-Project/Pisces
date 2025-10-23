@@ -1,0 +1,72 @@
+InitialConditions3DCartesian
+=================================================================================
+
+.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
+
+.. autoclass:: pisces.extensions.simulation.core.initial_conditions.InitialConditions3DCartesian
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~InitialConditions3DCartesian.__init__
+      ~InitialConditions3DCartesian.add_model
+      ~InitialConditions3DCartesian.add_particles_to_model
+      ~InitialConditions3DCartesian.compute_center_of_mass
+      ~InitialConditions3DCartesian.compute_center_of_mass_frame_positions
+      ~InitialConditions3DCartesian.compute_center_of_mass_frame_velocities
+      ~InitialConditions3DCartesian.compute_center_of_mass_velocity
+      ~InitialConditions3DCartesian.compute_total_mass
+      ~InitialConditions3DCartesian.create_ics
+      ~InitialConditions3DCartesian.generate_particles
+      ~InitialConditions3DCartesian.get_model_coordinate_system
+      ~InitialConditions3DCartesian.get_model_fields
+      ~InitialConditions3DCartesian.get_model_grid
+      ~InitialConditions3DCartesian.get_model_info
+      ~InitialConditions3DCartesian.get_model_metadata
+      ~InitialConditions3DCartesian.get_model_summary
+      ~InitialConditions3DCartesian.get_particle_count
+      ~InitialConditions3DCartesian.get_particle_fields
+      ~InitialConditions3DCartesian.get_particle_path
+      ~InitialConditions3DCartesian.get_particle_path_dict
+      ~InitialConditions3DCartesian.get_particle_species
+      ~InitialConditions3DCartesian.has_model
+      ~InitialConditions3DCartesian.has_particles
+      ~InitialConditions3DCartesian.integrate_point_mass_orbits
+      ~InitialConditions3DCartesian.list_models
+      ~InitialConditions3DCartesian.list_models_with_particles
+      ~InitialConditions3DCartesian.load_model
+      ~InitialConditions3DCartesian.load_particles
+      ~InitialConditions3DCartesian.remove_model
+      ~InitialConditions3DCartesian.remove_particles_from_model
+      ~InitialConditions3DCartesian.shift_to_COM_frame
+      ~InitialConditions3DCartesian.update_model
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~InitialConditions3DCartesian.config
+      ~InitialConditions3DCartesian.directory
+      ~InitialConditions3DCartesian.logger
+      ~InitialConditions3DCartesian.metadata
+      ~InitialConditions3DCartesian.model_orientations
+      ~InitialConditions3DCartesian.model_positions
+      ~InitialConditions3DCartesian.model_spins
+      ~InitialConditions3DCartesian.model_velocities
+      ~InitialConditions3DCartesian.models
+      ~InitialConditions3DCartesian.ndim
+      ~InitialConditions3DCartesian.particles
+   
+   

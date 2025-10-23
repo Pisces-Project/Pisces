@@ -1,0 +1,6 @@
+pisces.math\_utils.random\_fields.generate\_kolmogorov\_power\_spectrum
+=======================================================================
+
+.. currentmodule:: pisces.math_utils.random_fields
+
+.. autofunction:: generate_kolmogorov_power_spectrum

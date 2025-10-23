@@ -1,0 +1,63 @@
+DehnenDensityProfile
+=====================================
+
+.. currentmodule:: profiles.density
+
+.. autoclass:: profiles.density.DehnenDensityProfile
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~DehnenDensityProfile.__init__
+      ~DehnenDensityProfile.compute_circular_velocity
+      ~DehnenDensityProfile.compute_cosmological_overdensity_profile
+      ~DehnenDensityProfile.compute_cosmological_overdensity_radius
+      ~DehnenDensityProfile.compute_deflection_angle
+      ~DehnenDensityProfile.compute_einstein_radius
+      ~DehnenDensityProfile.compute_enclosed_mass
+      ~DehnenDensityProfile.compute_escape_velocity
+      ~DehnenDensityProfile.compute_fractional_mass_radius
+      ~DehnenDensityProfile.compute_gravitational_field
+      ~DehnenDensityProfile.compute_gravitational_potential
+      ~DehnenDensityProfile.compute_lensing_convergence
+      ~DehnenDensityProfile.compute_surface_density
+      ~DehnenDensityProfile.compute_total_mass
+      ~DehnenDensityProfile.from_dict
+      ~DehnenDensityProfile.from_hdf5
+      ~DehnenDensityProfile.from_json
+      ~DehnenDensityProfile.from_yaml
+      ~DehnenDensityProfile.get_derived_profile
+      ~DehnenDensityProfile.get_expression_latex
+      ~DehnenDensityProfile.get_output_units
+      ~DehnenDensityProfile.get_parameters_latex
+      ~DehnenDensityProfile.lambdify_expression
+      ~DehnenDensityProfile.list_derived_profiles
+      ~DehnenDensityProfile.substitute_expression
+      ~DehnenDensityProfile.to_dict
+      ~DehnenDensityProfile.to_hdf5
+      ~DehnenDensityProfile.to_json
+      ~DehnenDensityProfile.to_yaml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      :recursive:
+   
+      ~DehnenDensityProfile.derived_profile_classes
+      ~DehnenDensityProfile.parameter_symbols
+      ~DehnenDensityProfile.parameters
+      ~DehnenDensityProfile.variable_symbols
+      ~DehnenDensityProfile.variables
+   
+   

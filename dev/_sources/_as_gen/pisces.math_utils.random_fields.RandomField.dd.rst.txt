@@ -1,0 +1,6 @@
+pisces.math\_utils.random\_fields.RandomField.dd
+================================================
+
+.. currentmodule:: pisces.math_utils.random_fields
+
+.. autoproperty:: RandomField.dd

@@ -1,0 +1,6 @@
+pisces.particles.gadget.AREPOParticleDataset.header
+===================================================
+
+.. currentmodule:: pisces.particles.gadget
+
+.. autoproperty:: AREPOParticleDataset.header
