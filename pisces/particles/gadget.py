@@ -18,8 +18,9 @@ from typing import Union, overload
 import h5py
 import numpy as np
 import unyt
-from particles import ParticleDataset
-from utilities.io_tools import NullHDF5Serializer
+
+from pisces.particles import ParticleDataset
+from pisces.utilities.io_tools import NullHDF5Serializer
 
 
 class GadgetLikeParticleDataset(ParticleDataset, ABC):

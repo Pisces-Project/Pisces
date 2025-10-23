@@ -16,8 +16,8 @@ from typing import Any
 
 import numpy as np
 import unyt
-from particles import ParticleDataset
 
+from pisces.particles import ParticleDataset
 from pisces.utilities.config import ConfigManager
 
 from .initial_conditions import InitialConditions, InitialConditions3DCartesian
