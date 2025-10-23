@@ -1,6 +1,0 @@
-pisces.particles.gadget.AREPOParticleDataset.total\_particles
-=============================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. autoproperty:: AREPOParticleDataset.total_particles

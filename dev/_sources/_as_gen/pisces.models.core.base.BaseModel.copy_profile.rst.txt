@@ -1,6 +1,0 @@
-pisces.models.core.base.BaseModel.copy\_profile
-===============================================
-
-.. currentmodule:: pisces.models.core.base
-
-.. automethod:: BaseModel.copy_profile

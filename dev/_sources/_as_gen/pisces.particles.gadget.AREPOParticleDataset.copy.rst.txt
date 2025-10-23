@@ -1,6 +1,0 @@
-pisces.particles.gadget.AREPOParticleDataset.copy
-=================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: AREPOParticleDataset.copy

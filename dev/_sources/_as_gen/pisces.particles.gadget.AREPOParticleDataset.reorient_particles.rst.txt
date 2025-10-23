@@ -1,6 +1,0 @@
-pisces.particles.gadget.AREPOParticleDataset.reorient\_particles
-================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: AREPOParticleDataset.reorient_particles

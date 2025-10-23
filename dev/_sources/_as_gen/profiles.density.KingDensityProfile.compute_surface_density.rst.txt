@@ -1,6 +1,0 @@
-profiles.density.KingDensityProfile.compute\_surface\_density
-=============================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: KingDensityProfile.compute_surface_density

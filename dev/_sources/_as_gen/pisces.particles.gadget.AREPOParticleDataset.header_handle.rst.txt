@@ -1,6 +1,0 @@
-pisces.particles.gadget.AREPOParticleDataset.header\_handle
-===========================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. autoproperty:: AREPOParticleDataset.header_handle

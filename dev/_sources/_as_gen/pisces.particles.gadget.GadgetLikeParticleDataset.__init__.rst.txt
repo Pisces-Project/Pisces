@@ -1,6 +1,0 @@
-pisces.particles.gadget.GadgetLikeParticleDataset.\_\_init\_\_
-==============================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: GadgetLikeParticleDataset.__init__

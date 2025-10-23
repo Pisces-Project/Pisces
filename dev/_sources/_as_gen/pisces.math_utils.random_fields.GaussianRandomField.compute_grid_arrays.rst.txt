@@ -1,6 +1,0 @@
-pisces.math\_utils.random\_fields.GaussianRandomField.compute\_grid\_arrays
-===========================================================================
-
-.. currentmodule:: pisces.math_utils.random_fields
-
-.. automethod:: GaussianRandomField.compute_grid_arrays

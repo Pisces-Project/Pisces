@@ -1,6 +1,0 @@
-pisces.math\_utils.random\_fields.generate\_zh11\_power\_spectrum
-=================================================================
-
-.. currentmodule:: pisces.math_utils.random_fields
-
-.. autofunction:: generate_zh11_power_spectrum

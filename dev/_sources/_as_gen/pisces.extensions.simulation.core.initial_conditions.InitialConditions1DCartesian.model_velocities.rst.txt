@@ -1,6 +1,0 @@
-pisces.extensions.simulation.core.initial\_conditions.InitialConditions1DCartesian.model\_velocities
-====================================================================================================
-
-.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
-
-.. autoproperty:: InitialConditions1DCartesian.model_velocities

@@ -1,6 +1,0 @@
-pisces.extensions.simulation.core.initial\_conditions.InitialConditions.logger
-==============================================================================
-
-.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
-
-.. autoattribute:: InitialConditions.logger

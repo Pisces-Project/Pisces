@@ -1,6 +1,0 @@
-pisces.extensions.simulation.core.frontends.GadgetLikeFrontend.default\_configuration\_path
-===========================================================================================
-
-.. currentmodule:: pisces.extensions.simulation.core.frontends
-
-.. autoproperty:: GadgetLikeFrontend.default_configuration_path

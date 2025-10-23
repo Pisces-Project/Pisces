@@ -1,6 +1,0 @@
-pisces.particles.gadget.AREPOParticleDataset.rotate\_particles
-==============================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: AREPOParticleDataset.rotate_particles

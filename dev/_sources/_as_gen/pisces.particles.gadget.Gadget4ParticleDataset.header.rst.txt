@@ -1,6 +1,0 @@
-pisces.particles.gadget.Gadget4ParticleDataset.header
-=====================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. autoproperty:: Gadget4ParticleDataset.header

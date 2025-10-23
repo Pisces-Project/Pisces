@@ -1,6 +1,0 @@
-pisces.particles.gadget.AREPOParticleDataset.build\_particle\_dataset
-=====================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: AREPOParticleDataset.build_particle_dataset

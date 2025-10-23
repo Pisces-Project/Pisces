@@ -1,6 +1,0 @@
-pisces.particles.gadget.Gadget4ParticleDataset.extend\_group
-============================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: Gadget4ParticleDataset.extend_group

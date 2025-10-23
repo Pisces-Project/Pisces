@@ -1,6 +1,0 @@
-pisces.math\_utils.random\_fields.generate\_white\_noise\_power\_spectrum
-=========================================================================
-
-.. currentmodule:: pisces.math_utils.random_fields
-
-.. autofunction:: generate_white_noise_power_spectrum

@@ -1,6 +1,0 @@
-profiles.density.PseudoIsothermalDensityProfile.parameters
-==========================================================
-
-.. currentmodule:: profiles.density
-
-.. autoproperty:: PseudoIsothermalDensityProfile.parameters

@@ -1,6 +1,0 @@
-pisces.extensions.simulation.gadget.frontends.Gadget4Frontend.\_\_init\_\_
-==========================================================================
-
-.. currentmodule:: pisces.extensions.simulation.gadget.frontends
-
-.. automethod:: Gadget4Frontend.__init__

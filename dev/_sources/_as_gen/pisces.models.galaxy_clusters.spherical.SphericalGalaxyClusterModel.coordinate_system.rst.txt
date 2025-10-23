@@ -1,6 +1,0 @@
-pisces.models.galaxy\_clusters.spherical.SphericalGalaxyClusterModel.coordinate\_system
-=======================================================================================
-
-.. currentmodule:: pisces.models.galaxy_clusters.spherical
-
-.. autoproperty:: SphericalGalaxyClusterModel.coordinate_system

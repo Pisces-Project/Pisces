@@ -1,6 +1,0 @@
-pisces.particles.gadget.Gadget4ParticleDataset.remove\_particle\_field
-======================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: Gadget4ParticleDataset.remove_particle_field

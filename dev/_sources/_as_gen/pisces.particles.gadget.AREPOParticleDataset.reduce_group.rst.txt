@@ -1,6 +1,0 @@
-pisces.particles.gadget.AREPOParticleDataset.reduce\_group
-==========================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: AREPOParticleDataset.reduce_group

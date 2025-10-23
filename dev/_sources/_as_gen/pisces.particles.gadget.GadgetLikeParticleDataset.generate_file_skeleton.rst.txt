@@ -1,6 +1,0 @@
-pisces.particles.gadget.GadgetLikeParticleDataset.generate\_file\_skeleton
-==========================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: GadgetLikeParticleDataset.generate_file_skeleton

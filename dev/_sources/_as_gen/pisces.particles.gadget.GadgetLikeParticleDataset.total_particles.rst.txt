@@ -1,6 +1,0 @@
-pisces.particles.gadget.GadgetLikeParticleDataset.total\_particles
-==================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. autoproperty:: GadgetLikeParticleDataset.total_particles

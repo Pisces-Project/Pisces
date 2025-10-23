@@ -1,6 +1,0 @@
-pisces.models.stars.polytropes.PolytropicStarModel.has\_hook
-============================================================
-
-.. currentmodule:: pisces.models.stars.polytropes
-
-.. automethod:: PolytropicStarModel.has_hook

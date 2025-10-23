@@ -1,6 +1,0 @@
-pisces.particles.gadget.AREPOParticleDataset.fields
-===================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. autoproperty:: AREPOParticleDataset.fields

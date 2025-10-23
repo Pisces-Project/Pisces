@@ -1,6 +1,0 @@
-pisces.particles.gadget.GadgetLikeParticleDataset.delete\_field\_metadata\_keys
-===============================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: GadgetLikeParticleDataset.delete_field_metadata_keys

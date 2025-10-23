@@ -1,6 +1,0 @@
-profiles.density.MooreDensityProfile.compute\_gravitational\_potential
-======================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: MooreDensityProfile.compute_gravitational_potential

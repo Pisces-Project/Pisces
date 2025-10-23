@@ -1,6 +1,0 @@
-pisces.particles.gadget.GadgetLikeParticleDataset.reduce\_group
-===============================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: GadgetLikeParticleDataset.reduce_group

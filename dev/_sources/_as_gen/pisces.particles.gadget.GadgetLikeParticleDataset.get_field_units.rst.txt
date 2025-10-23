@@ -1,6 +1,0 @@
-pisces.particles.gadget.GadgetLikeParticleDataset.get\_field\_units
-===================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: GadgetLikeParticleDataset.get_field_units

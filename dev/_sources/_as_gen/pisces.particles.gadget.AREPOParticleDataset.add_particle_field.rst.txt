@@ -1,6 +1,0 @@
-pisces.particles.gadget.AREPOParticleDataset.add\_particle\_field
-=================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: AREPOParticleDataset.add_particle_field

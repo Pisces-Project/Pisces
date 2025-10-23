@@ -1,6 +1,0 @@
-pisces.extensions.simulation.core.initial\_conditions.InitialConditions2DCartesian.get\_particle\_path\_dict
-============================================================================================================
-
-.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
-
-.. automethod:: InitialConditions2DCartesian.get_particle_path_dict

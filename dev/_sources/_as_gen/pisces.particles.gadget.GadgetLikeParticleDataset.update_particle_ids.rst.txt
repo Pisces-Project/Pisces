@@ -1,6 +1,0 @@
-pisces.particles.gadget.GadgetLikeParticleDataset.update\_particle\_ids
-=======================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: GadgetLikeParticleDataset.update_particle_ids

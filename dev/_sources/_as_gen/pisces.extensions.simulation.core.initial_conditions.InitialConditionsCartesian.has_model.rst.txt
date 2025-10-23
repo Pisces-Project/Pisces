@@ -1,6 +1,0 @@
-pisces.extensions.simulation.core.initial\_conditions.InitialConditionsCartesian.has\_model
-===========================================================================================
-
-.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
-
-.. automethod:: InitialConditionsCartesian.has_model

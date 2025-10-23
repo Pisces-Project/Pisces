@@ -1,6 +1,0 @@
-pisces.geometry.coordinates.coordinate\_systems.PolarCoordinatesSystem.\_\_init\_\_
-===================================================================================
-
-.. currentmodule:: pisces.geometry.coordinates.coordinate_systems
-
-.. automethod:: PolarCoordinatesSystem.__init__

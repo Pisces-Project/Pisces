@@ -1,6 +1,0 @@
-pisces.particles.gadget.AREPOParticleDataset.\_\_init\_\_
-=========================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: AREPOParticleDataset.__init__

@@ -1,6 +1,0 @@
-profiles.density.BurkertDensityProfile.compute\_escape\_velocity
-================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BurkertDensityProfile.compute_escape_velocity

@@ -1,6 +1,0 @@
-profiles.density.BaseSphericalDensityProfile.compute\_gravitational\_field
-==========================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: BaseSphericalDensityProfile.compute_gravitational_field

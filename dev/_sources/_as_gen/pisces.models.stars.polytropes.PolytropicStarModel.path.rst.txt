@@ -1,6 +1,0 @@
-pisces.models.stars.polytropes.PolytropicStarModel.path
-=======================================================
-
-.. currentmodule:: pisces.models.stars.polytropes
-
-.. autoproperty:: PolytropicStarModel.path

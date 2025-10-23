@@ -1,6 +1,0 @@
-pisces.particles.gadget.GadgetLikeParticleDataset.global\_metadata
-==================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. autoproperty:: GadgetLikeParticleDataset.global_metadata

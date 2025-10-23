@@ -1,6 +1,0 @@
-profiles.density.CoreSersicProfile.lambdify\_expression
-=======================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: CoreSersicProfile.lambdify_expression

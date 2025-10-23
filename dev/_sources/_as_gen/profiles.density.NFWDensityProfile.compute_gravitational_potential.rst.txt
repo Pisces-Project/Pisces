@@ -1,6 +1,0 @@
-profiles.density.NFWDensityProfile.compute\_gravitational\_potential
-====================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: NFWDensityProfile.compute_gravitational_potential

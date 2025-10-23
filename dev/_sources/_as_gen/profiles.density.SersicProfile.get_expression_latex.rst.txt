@@ -1,6 +1,0 @@
-profiles.density.SersicProfile.get\_expression\_latex
-=====================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: SersicProfile.get_expression_latex

@@ -1,6 +1,0 @@
-pisces.extensions.simulation.core.frontends.SimulationFrontend.generate\_initial\_conditions
-============================================================================================
-
-.. currentmodule:: pisces.extensions.simulation.core.frontends
-
-.. automethod:: SimulationFrontend.generate_initial_conditions

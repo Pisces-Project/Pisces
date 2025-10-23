@@ -1,6 +1,0 @@
-profiles.density.TNFWDensityProfile.get\_expression\_latex
-==========================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: TNFWDensityProfile.get_expression_latex

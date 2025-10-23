@@ -1,6 +1,0 @@
-profiles.density.ExponentialDiskDensityProfile.get\_parameters\_latex
-=====================================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: ExponentialDiskDensityProfile.get_parameters_latex

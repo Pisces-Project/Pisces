@@ -1,6 +1,0 @@
-pisces.particles.gadget.GadgetLikeParticleDataset.path
-======================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. autoproperty:: GadgetLikeParticleDataset.path

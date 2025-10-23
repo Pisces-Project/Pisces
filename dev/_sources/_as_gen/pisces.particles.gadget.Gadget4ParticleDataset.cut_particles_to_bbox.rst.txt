@@ -1,6 +1,0 @@
-pisces.particles.gadget.Gadget4ParticleDataset.cut\_particles\_to\_bbox
-=======================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: Gadget4ParticleDataset.cut_particles_to_bbox

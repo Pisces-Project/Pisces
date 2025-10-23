@@ -1,6 +1,0 @@
-pisces.particles.gadget.Gadget4ParticleDataset.get\_particle\_group\_handle
-===========================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: Gadget4ParticleDataset.get_particle_group_handle

@@ -1,6 +1,0 @@
-pisces.geometry.coordinates.base.CoordinateSystem.convert\_to\_cartesian
-========================================================================
-
-.. currentmodule:: pisces.geometry.coordinates.base
-
-.. automethod:: CoordinateSystem.convert_to_cartesian

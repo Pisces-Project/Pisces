@@ -1,6 +1,0 @@
-pisces.physics.conversions.compute\_mean\_molecular\_weight
-===========================================================
-
-.. currentmodule:: pisces.physics.conversions
-
-.. autofunction:: compute_mean_molecular_weight

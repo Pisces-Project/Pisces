@@ -1,6 +1,0 @@
-pisces.particles.gadget.AREPOParticleDataset.remove\_particle\_field
-====================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: AREPOParticleDataset.remove_particle_field

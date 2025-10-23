@@ -1,6 +1,0 @@
-profiles.temperature.BaseSphericalTemperatureProfile.parameter\_symbols
-=======================================================================
-
-.. currentmodule:: profiles.temperature
-
-.. autoproperty:: BaseSphericalTemperatureProfile.parameter_symbols

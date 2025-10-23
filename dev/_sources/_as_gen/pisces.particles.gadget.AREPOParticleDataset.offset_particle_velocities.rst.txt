@@ -1,6 +1,0 @@
-pisces.particles.gadget.AREPOParticleDataset.offset\_particle\_velocities
-=========================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: AREPOParticleDataset.offset_particle_velocities

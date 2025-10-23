@@ -1,6 +1,0 @@
-pisces.particles.gadget.GadgetLikeParticleDataset.delete\_group\_metadata\_keys
-===============================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: GadgetLikeParticleDataset.delete_group_metadata_keys

@@ -1,6 +1,0 @@
-pisces.extensions.simulation.core.initial\_conditions.InitialConditions3DCartesian.integrate\_point\_mass\_orbits
-=================================================================================================================
-
-.. currentmodule:: pisces.extensions.simulation.core.initial_conditions
-
-.. automethod:: InitialConditions3DCartesian.integrate_point_mass_orbits

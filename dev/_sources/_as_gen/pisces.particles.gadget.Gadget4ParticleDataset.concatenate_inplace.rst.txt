@@ -1,6 +1,0 @@
-pisces.particles.gadget.Gadget4ParticleDataset.concatenate\_inplace
-===================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: Gadget4ParticleDataset.concatenate_inplace

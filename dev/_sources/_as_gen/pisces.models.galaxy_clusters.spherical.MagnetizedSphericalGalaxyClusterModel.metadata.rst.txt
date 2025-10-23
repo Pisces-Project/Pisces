@@ -1,6 +1,0 @@
-pisces.models.galaxy\_clusters.spherical.MagnetizedSphericalGalaxyClusterModel.metadata
-=======================================================================================
-
-.. currentmodule:: pisces.models.galaxy_clusters.spherical
-
-.. autoproperty:: MagnetizedSphericalGalaxyClusterModel.metadata

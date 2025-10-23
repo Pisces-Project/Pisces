@@ -1,6 +1,0 @@
-pisces.geometry.grids.core.GenericGrid.fill\_values
-===================================================
-
-.. currentmodule:: pisces.geometry.grids.core
-
-.. autoproperty:: GenericGrid.fill_values

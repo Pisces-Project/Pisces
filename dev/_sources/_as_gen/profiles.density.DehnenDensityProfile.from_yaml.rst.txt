@@ -1,6 +1,0 @@
-profiles.density.DehnenDensityProfile.from\_yaml
-================================================
-
-.. currentmodule:: profiles.density
-
-.. automethod:: DehnenDensityProfile.from_yaml

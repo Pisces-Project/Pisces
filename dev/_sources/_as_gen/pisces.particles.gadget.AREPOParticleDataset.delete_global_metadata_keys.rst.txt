@@ -1,6 +1,0 @@
-pisces.particles.gadget.AREPOParticleDataset.delete\_global\_metadata\_keys
-===========================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: AREPOParticleDataset.delete_global_metadata_keys

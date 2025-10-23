@@ -1,6 +1,0 @@
-pisces.particles.gadget.AREPOParticleDataset.get\_particle\_group\_handle
-=========================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: AREPOParticleDataset.get_particle_group_handle

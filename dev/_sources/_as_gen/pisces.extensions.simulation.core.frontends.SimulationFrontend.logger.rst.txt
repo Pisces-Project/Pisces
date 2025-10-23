@@ -1,6 +1,0 @@
-pisces.extensions.simulation.core.frontends.SimulationFrontend.logger
-=====================================================================
-
-.. currentmodule:: pisces.extensions.simulation.core.frontends
-
-.. autoproperty:: SimulationFrontend.logger

@@ -1,6 +1,0 @@
-pisces.extensions.simulation.gadget.frontends.Gadget4Frontend.unit\_system
-==========================================================================
-
-.. currentmodule:: pisces.extensions.simulation.gadget.frontends
-
-.. autoproperty:: Gadget4Frontend.unit_system

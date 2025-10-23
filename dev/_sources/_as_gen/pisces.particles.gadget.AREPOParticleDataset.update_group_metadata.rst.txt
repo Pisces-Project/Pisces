@@ -1,6 +1,0 @@
-pisces.particles.gadget.AREPOParticleDataset.update\_group\_metadata
-====================================================================
-
-.. currentmodule:: pisces.particles.gadget
-
-.. automethod:: AREPOParticleDataset.update_group_metadata
