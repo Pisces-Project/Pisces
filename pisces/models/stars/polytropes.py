@@ -671,18 +671,3 @@ class PolytropicStarModel(BaseModel, PolytropicParticleGenerationHook):
 
         # Return the values
         return rho_c, T_c
-
-
-if __name__ == "__main__":
-    # Example usage of the PolytropicStarModel class
-    model = PolytropicStarModel.from_density_and_temperature(
-        filename="polytropic_star_model.h5",
-        core_density=unyt.unyt_quantity(1e3, "kg/m**3"),
-        core_temperature=unyt.unyt_quantity(1e6, "K"),
-        polytropic_index=1.0,
-        rmin=unyt.unyt_quantity(1, "km"),
-        rmax=unyt.unyt_quantity(100_000, "km"),
-        num_points=1000,
-        overwrite=True,
-    )
-    print(model)
