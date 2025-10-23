@@ -25,6 +25,8 @@ from collections.abc import Callable
 from typing import Optional, Union
 
 import numpy as np
+import unyt
+from scipy.interpolate import InterpolatedUnivariateSpline
 
 from ._random_fields import (
     div_clean_c_2d,
@@ -87,6 +89,7 @@ def generate_white_noise_power_spectrum(amplitude: float = 1.0) -> Callable:
     """
 
     def _ps_func(*args):
+        print(args)
         return amplitude * np.ones_like(args[0])
 
     return _ps_func
@@ -641,9 +644,9 @@ class GaussianRandomField(RandomField):
 
         # --- Manage Defaults --- #
         # We now set up the power spectrum, envelope, and mean field
-        self._power_spectrum = kwargs.pop("power_spectrum", self._default_power_spectrum)
-        self._envelope_function = kwargs.pop("envelope_function", self._default_envelope_function)
-        self._mean_field = kwargs.pop("mean_field", self._default_mean_field)
+        self._power_spectrum = kwargs.pop("power_spectrum", self.__class__._default_power_spectrum)
+        self._envelope_function = kwargs.pop("envelope_function", self.__class__._default_envelope_function)
+        self._mean_field = kwargs.pop("mean_field", self.__class__._default_mean_field)
 
         # --- Initialize the Base Class --- #
         # This must come after setting the field shape
@@ -1054,3 +1057,115 @@ class GaussianRandomVectorField(GaussianRandomField):
             field *= field_rms / new_rms
 
         return field
+
+
+# ========================================= #
+# Physical Constructors                     #
+# ========================================= #
+def generate_spherical_magnetic_field(
+    domain_dimensions: np.ndarray,
+    r: unyt.unyt_array,
+    mag_field_rms: unyt.unyt_array,
+    power_spectrum: Callable,
+    divergence_cleaning: str = "discrete",
+) -> unyt.unyt_array:
+    r"""
+    Generate a random magnetic field with a spherically specified RMS profile.
+
+    This function takes an RMS magnetic field profile :math:`B_{\rm rms}(r)` defined at
+    discrete radii and constructs a 3D Gaussian random vector field whose RMS
+    matches the specified profile. The field is generated within a cubic domain
+    centered at the origin, with side length determined by the maximum radius
+    in the input profile.
+
+    In order to generate the random field, a Gaussian random field (GRF) generator
+    is used, with the specified power spectrum function :math:`P(k)`. The GRF is
+    modulated by an envelope function that scales the field amplitude according
+    to match the desired RMS profile as a function of radius. Divergence cleaning
+    is applied to ensure that the field has no variance.
+
+    Parameters
+    ----------
+    domain_dimensions : array-like of int
+        The number of cells to place in the grid along each axis ``(Nx, Ny, ...)``.
+        The value of the RMS magnetic field is evaluated at each point by interpolation. Also
+        determines the number of dimensions of the domain (e.g., 3 for a 3D field).
+    r : unyt.unyt_array
+        The spherical radii at which the RMS magnetic field values are defined. These
+        should have physical length units (e.g., 'kpc' or 'Mpc') and match the length of
+        `mag_field_rms`. Additionally, we require that ``r`` be strictly increasing. The maximum
+        value of ``r`` defines the size of the cubic domain.
+    mag_field_rms : unyt.unyt_array
+        The RMS magnetic field profile defined at the radii in `r`. These should have
+        physical magnetic field units (e.g., 'μG' or 'G') and match the length of `r`.
+    power_spectrum : Callable
+        The power spectrum function :math:`P(k_1,k_2,\\ldots,k_N)` defining the statistical properties
+        of the Gaussian random field. This function should accept arrays of wavenumber
+        components and return the power spectrum evaluated on that grid. In most cases,
+        this will be a function of the wavenumber magnitude only; however, it must still accept
+        each of the components in keeping with the convention for specifying power spectra in the GRF generator.
+    divergence_cleaning : {'discrete', 'continuous', False}, optional
+        Divergence cleaning mode passed to the GRF generator.
+        Default is 'discrete'.
+
+    Returns
+    -------
+    list of numpy.npdarray
+        A list of 1D arrays representing the grid coordinates along each axis.
+    unyt.unyt_array
+        A 4D array of shape ``(Nx, Ny, Nz, N)`` containing the magnetic
+        field vectors with physical magnetic field units.
+    """
+    # Validate the inputs and ensure that everything has valid types.
+    r, mag_field_rms = np.atleast_1d(r), np.atleast_1d(mag_field_rms)
+    if not isinstance(r, unyt.unyt_array):
+        raise ValueError(f"`r` must be an unyt array, not {type(r).__name__}.")
+    if not isinstance(mag_field_rms, unyt.unyt_array):
+        raise ValueError(f"`mag_field_rms` must be an unyt array, not {type(mag_field_rms).__name__}.")
+
+    # Ensure that these are 1D arrays of matching length and that r is increasing. We'll also
+    # ensure the units are reasonable.
+    if (r.ndim != 1) or (mag_field_rms.ndim != 1):
+        raise ValueError("Inputs `r` and `mag_field_rms` must be 1D arrays.")
+    if r.units.dimensions != unyt.dimensions.length:
+        raise ValueError(f"Input `r` must have physical length units (e.g., kpc, Mpc). Received units: {r.units}")
+    if mag_field_rms.units.dimensions != unyt.dimensions.magnetic_field_cgs:
+        raise ValueError(
+            f"Input `mag_field_rms` must have magnetic field units (e.g., μG, G). Received units: {mag_field_rms.units}"
+        )
+    if np.any(np.diff(r) < 0):
+        raise ValueError("Radii `r` must be strictly increasing.")
+    if np.any(mag_field_rms < 0):
+        raise ValueError("RMS magnetic field values must be non-negative.")
+
+    # Now build the interpolation of the BRMS function so that we can
+    # evaluate it at arbitrary radii.
+    rarr, barr = r.to_value(), mag_field_rms.to_value()
+
+    # We'll assume a cubic domain centered at 0 with edge 2 * r_max
+    bounding_box = [3 * [-np.max(rarr)], 3 * [np.max(rarr)]]
+
+    # Create the interpolator for B_rms(r)
+    b_interpolator = InterpolatedUnivariateSpline(rarr, barr)
+
+    # Now define the envelope function that will be used to
+    # scale the GRF to have the desired RMS profile.
+    def _envelope_function(*args):
+        R = np.sqrt(sum(arg**2 for arg in args))
+        return b_interpolator(R)
+
+    # Generate the gaussian random field.
+    grf = GaussianRandomVectorField(
+        domain_dimensions=domain_dimensions,
+        bounding_box=bounding_box,
+        power_spectrum=power_spectrum,
+        envelope_function=_envelope_function,
+    )
+    B_field = grf.generate(divergence_cleaning=divergence_cleaning)
+
+    # ------------------------
+    # 5. Reapply physical units
+    # ------------------------
+    B_field = unyt.unyt_array(B_field, mag_field_rms.units)
+
+    return grf.compute_grid_arrays(), B_field
