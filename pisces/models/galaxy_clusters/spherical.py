@@ -36,6 +36,7 @@ from pisces.profiles.base import BaseProfile
 from pisces.utilities import pisces_config
 
 if TYPE_CHECKING:
+    from pisces.particles.base import ParticleDataset
     from pisces.profiles.density import BaseSphericalDensityProfile
     from pisces.profiles.entropy import BaseSphericalEntropyProfile
     from pisces.profiles.temperature import BaseSphericalTemperatureProfile
@@ -2009,3 +2010,147 @@ class MagnetizedSphericalGalaxyClusterModel(SphericalGalaxyClusterModel):
             metadata=metadata,
             overwrite=overwrite,
         )
+
+    def generate_particles(
+        self,
+        filename: str | Path,
+        num_particles: dict[str, int],
+        overwrite: bool = False,
+        magnetic_grid_dimensions: tuple[int, int, int] = (256, 256, 256),
+        power_spectrum=None,
+    ) -> "ParticleDataset":
+        """Convert this galaxy cluster model into a particle dataset.
+
+        This method creates a particle representation of the model by sampling positions,
+        interpolating model fields onto particles, and (if appropriate) assigning velocities
+        via Eddington inversion. The output is written to disk in the form
+        of a :class:`particles.base.ParticleDataset`.
+
+        The magnetic field is realized as a Gaussian random field with a specified power spectrum
+        (by default, a Kolmogorov-like power spectrum is used). The field is then interpolated
+        onto the gas particles.
+
+        This is a common step in preparing a model for simulations as most simulation codes
+        require that the collisionless components of the model be represented as particles.
+
+        Parameters
+        ----------
+        filename : str or ~pathlib.Path
+            Filesystem path where the output particle dataset should be saved.
+            If the path already exists, it will be overwritten if `overwrite=True`.
+        num_particles : dict of str, int
+            The number of each type of particle to generate. The dictionary may contain any
+            of the following keys: ``['gas','dark_matter','stars']`` and values should correspond
+            to the number of particles to be generated of each species.
+
+            If a species is provided but is not one of the allowed particle types, then
+            an error will be raised.
+        overwrite : bool, optional
+            Whether to overwrite an existing file at `path`. Default is False.
+        magnetic_grid_dimensions : tuple[int, int, int], optional
+            Dimensions of the grid used to generate the Gaussian random magnetic field
+            for the gas particles (default: ``(128, 128, 128)``).
+        power_spectrum : callable, optional
+            Power spectrum function P(k) defining the magnetic field statistics.
+            If None, a default Kolmogorov-like spectrum is used.
+
+        Returns
+        -------
+        ~particles.base.ParticleDataset
+            The newly generated particle dataset with positions, velocities, masses,
+            and interpolated physical fields. Gas particles will additionally include
+            a ``magnetic_field`` vector field.
+
+        Notes
+        -----
+        The particle generation process follows three main steps:
+
+        1. **Sampling**: Radial positions are sampled from the species-specific mass profile
+           (interpreted as a CDF), and converted into 3D Cartesian coordinates. This ensures that
+           particles are distributed according to the model's density. Masses are assigned to each
+           particle species so that each species has equal masses across all particles.
+
+        2. **Interpolation**: Once the particle positions are established, the values of various model
+           fields can be assigned to each particle via interpolation.
+
+        3. **Velocity Assignment**: Velocity sampling is the most complex element of this procedure. For
+           the collisionless species (dark matter and stars), the velocities are sampled from the the
+           distribution function (the solution of the collisionless Boltzmann equation) using the Eddington
+           inversion method.
+
+           This ensures that the generated particles are correctly virialized.
+
+           For the gas particles, velocities are set uniformly to zero indicating that they have (by default)
+           no bulk motion and that their entire dispersive motion is thermal in nature.
+
+        4. **Magnetic Field Realization**: A Gaussian random magnetic field is generated on a 3D grid
+           using the specified power spectrum. The magnetic field values are then interpolated onto the gas
+           particles based on their positions. This ensures that the gas particles have magnetic field values
+           consistent with the desired statistical properties.
+
+        """
+        # Import the random field utilities that we use for the magnetic field generation.
+        from scipy.interpolate import RegularGridInterpolator
+
+        from pisces.math_utils.random_fields import (
+            generate_kolmogorov_power_spectrum,
+            generate_spherical_magnetic_field,
+        )
+
+        # --- Generate Base Particle Dataset --- #
+        # Since most of the procedure just mirrors the super-class, we can generate the particles
+        # using the superclass method and then just add in the magnetic field.
+        particle_dataset = super().generate_particles(
+            filename,
+            num_particles,
+            overwrite=overwrite,
+        )
+
+        # --- Manage Properties of the Magnetic Field --- #
+        # At this point, we need to handle the magnetic field generation from GRF. We'll first
+        # build a relevant power spectrum for the field if one was not provided.
+        # If the power spectrum is None, we'll use a pretty generic value from Bonafede+2010 of
+        # lambda_max = 100 kpc and lambda_min = 1 kpc.
+        if power_spectrum is None:
+            lambda_min, lambda_max = 100 * Unit("kpc"), 1 * Unit("kpc")
+            k0, k_cut = (
+                2 * np.pi / lambda_max.to_value(self["r"].units),
+                2 * np.pi / lambda_min.to_value(self["r"].units),
+            )
+
+            power_spectrum = generate_kolmogorov_power_spectrum(k0=k0, k_cut=k_cut)
+        elif callable(power_spectrum):
+            # we can just pass through.
+            pass
+        else:
+            raise ValueError("`power_spectrum` must be None or a callable function P(k1,k2,k3).")
+
+        # --- Generate the Magnetic Field Grid --- #
+        (x, y, z), magnetic_field = generate_spherical_magnetic_field(
+            magnetic_grid_dimensions,
+            self["r"],
+            self["magnetic_field"],
+            power_spectrum=power_spectrum,
+        )
+
+        # --- Build the Magnetic Field --- #
+        # Now we can build the magnetic field for the particles by sampling off of the
+        # grid we just generated. We need to first create the magnetic field particle field.
+        runit, munit = self["r"].units, self["magnetic_field"].units
+        particle_dataset.add_particle_field(
+            "gas", "magnetic_field", np.zeros_like(particle_dataset["gas.particle_position"] * munit)
+        )
+
+        # Now we can calculate the values and insert them into the
+        # particle field!
+        particle_positions = particle_dataset["gas.particle_position"].to_value(runit)
+        for idx in range(3):
+            interpolator = RegularGridInterpolator(
+                (x, y, z),
+                magnetic_field[:, :, :, idx].d,
+                bounds_error=False,
+                fill_value=0.0,
+            )
+            particle_dataset.handle["gas"]["magnetic_field"][:, idx] = interpolator(particle_positions)
+
+        return particle_dataset
